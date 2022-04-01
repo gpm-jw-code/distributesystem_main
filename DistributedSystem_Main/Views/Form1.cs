@@ -52,7 +52,16 @@ namespace DistributedSystem_Main
             DGV_SensorInfo.Rows.Add("", SensorInfo.EQName, SensorInfo.UnitName, SensorInfo.SensorName, SensorInfo.SensorType);
             DataGridViewRow TargetRow = DGV_SensorInfo.Rows.Cast<DataGridViewRow>().Where(r => r.Cells[3].Value.ToString() == SensorInfo.SensorName).First();
             TargetRow.Cells[0].Style.BackColor = Color.Lime;
+
+            Staobj.Dict_SensorProcessObject[SensorName].Event_UpdateChartSeries += UpdateSensorChart;
         }
+
+        private void UpdateSensorChart(string SensorName, Queue<DateTime> Queue_Time, Dictionary<string, Queue<double>> Dict_DataQueue)
+        {
+            Invoke((MethodInvoker)delegate { Staobj.Dict_SensorDataCharts[SensorName].ImportSensorDataSeries(Queue_Time, Dict_DataQueue); });
+            
+        }
+
         #endregion
 
 

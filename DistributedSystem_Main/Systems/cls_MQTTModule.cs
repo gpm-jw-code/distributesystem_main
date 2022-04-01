@@ -65,16 +65,19 @@ namespace DistributedSystem_Main.Systems
                 List<cls_SensorInfo_Mqtt> List_SensorInfo = Newtonsoft.Json.JsonConvert.DeserializeObject<List<cls_SensorInfo_Mqtt>>(Data);
                 Staobj.ReceiveSensorInfoList(List_SensorInfo);
             }
-            else if(TopicName.ToUpper().Contains("UpdateSensorInfo".ToUpper()))
+            else if(TopicName.ToUpper().Contains("UpdateSensorStatus".ToUpper()))
             {
                 cls_SensorStatus_Mqtt NewSensorStatus = Newtonsoft.Json.JsonConvert.DeserializeObject<cls_SensorStatus_Mqtt>(Data);
                 Staobj.UpdateSensorInfo(NewSensorStatus);
             }
             else
             {
-                string SensorName = Data.Split('/').Last();
+                string SensorName = TopicName.Split('/').Last();
                 Systems.cls_SensorData_Mqtt NewData = Newtonsoft.Json.JsonConvert.DeserializeObject<cls_SensorData_Mqtt>(Data);
-                Staobj.Dict_SensorProcessObject[SensorName].ImportNewSensorData(NewData.Dict_RawData,NewData.TimeLog);
+                if (Staobj.Dict_SensorProcessObject.ContainsKey(SensorName))
+                {
+                    Staobj.Dict_SensorProcessObject[SensorName].ImportNewSensorData(NewData.Dict_RawData, NewData.TimeLog);
+                }
             }
 
         }

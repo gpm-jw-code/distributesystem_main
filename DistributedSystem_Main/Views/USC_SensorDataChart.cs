@@ -45,7 +45,7 @@ namespace DistributedSystem_Main.Views
         private Dictionary<string, Series> Dict_SensorSeries = new Dictionary<string, Series>();
         private Dictionary<string, StripLine> Dict_SensorStripLines = new Dictionary<string, StripLine>();
 
-        public void ImportSensorDataSeries(IEnumerable<DateTime> TimeLogSeries ,Dictionary<string,IEnumerable<double>> Dict_DataSeries)
+        public void ImportSensorDataSeries(Queue<DateTime> TimeLogSeries ,Dictionary<string,Queue<double>> Dict_DataSeries)
         {
             foreach (var item in Dict_DataSeries)
             {
@@ -79,11 +79,13 @@ namespace DistributedSystem_Main.Views
                 ChartArea = "ChartArea1",
                 ChartType = SeriesChartType.Line,
                 Legend = "Legend1",
-                Name = "PM_0.3",
+                Name = DataName,
                 XValueType = ChartValueType.DateTime,
                 YValueType = ChartValueType.Double
             };
             Dict_SensorSeries.Add(DataName, NewDataSeries);
+
+            ChartForShow.Series.Add(NewDataSeries);
 
             var SeriesColor = NewDataSeries.Color;
             var StripLineColor = Color.FromArgb((int)(SeriesColor.R * 0.75), (int)(SeriesColor.G * 0.75), (int)(SeriesColor.B * 0.75));
@@ -94,6 +96,8 @@ namespace DistributedSystem_Main.Views
                 BorderDashStyle = ChartDashStyle.Dash
             };
             Dict_SensorStripLines.Add(DataName, NewStripLine);
+
+            ChartForShow.ChartAreas[0].AxisY.StripLines.Add(NewStripLine);
         }
 
 

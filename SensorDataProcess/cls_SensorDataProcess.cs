@@ -34,7 +34,10 @@ namespace SensorDataProcess
         public SensorInfo SensorInfo = new SensorInfo();
         public SensorStatus Status = new SensorStatus();
 
-        public Action<Queue<DateTime>, Dictionary<string, Queue<double>>> Event_SensorDataUpdate;
+
+        public delegate void UpdateSeriesDataEventHandler(string SensorName, Queue<DateTime> Queue_Time,Dictionary<string,Queue<double>> Dict_DataQueue);
+
+        public event UpdateSeriesDataEventHandler Event_UpdateChartSeries;
 
         public cls_SensorDataProcess(string IP, int Port, string EQName = null, string UnitName = null)
         {
@@ -66,7 +69,7 @@ namespace SensorDataProcess
                     item.Value.Dequeue();
                 }
             }
-            Event_SensorDataUpdate?.Invoke(Queue_TimeLog, Dict_SensorDataSeries);
+            Event_UpdateChartSeries?.Invoke(SensorInfo.SensorName,Queue_TimeLog,Dict_SensorDataSeries);
         }
 
     }
