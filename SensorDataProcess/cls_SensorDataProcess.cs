@@ -1,18 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace SensorDataProcess
 {
-    public class cls_SensorDataProcess
+    public class StaticParameters
     {
         public static int TemDataNumber = 1000;
+        private static string _DataSaveRootPath = "";
+        public static string DataSaveRootPath
+        {
+            set { _DataSaveRootPath = value; }
+        }
 
+        public static string RawDataSaveRootPath
+        {
+            get { return Path.Combine(_DataSaveRootPath, "RawData"); }
+        }
+
+        public static string LogDataSaveRootPath
+        {
+            get { return Path.Combine(_DataSaveRootPath, "Log"); }
+        }
+    }
+
+    public class cls_SensorDataProcess
+    {
         private Dictionary<string, Queue<double>> Dict_SensorDataSeries = new Dictionary<string, Queue<double>>();
-        private Queue<DateTime> Queue_TimeLog;
+        private Queue<DateTime> Queue_TimeLog = new Queue<DateTime>();
         public SensorInfo SensorInfo = new SensorInfo();
+        public SensorStatus Status = new SensorStatus();
 
         public Action<Queue<DateTime>, Dictionary<string, Queue<double>>> Event_SensorDataUpdate;
 
@@ -26,7 +46,7 @@ namespace SensorDataProcess
             SensorInfo.UnitName = UnitName ?? "";
         }
 
-        public void GetNewSensorData(Dictionary<string,double> Dict_NewData,DateTime TimeLog)
+        public void ImportNewSensorData(Dictionary<string,double> Dict_NewData,DateTime TimeLog)
         {
             Queue_TimeLog.Enqueue(TimeLog);
             foreach (var item in Dict_NewData)
@@ -38,7 +58,7 @@ namespace SensorDataProcess
                 }
                 Dict_SensorDataSeries[DataName].Enqueue(item.Value);
             }
-            while (Queue_TimeLog.Count>TemDataNumber)
+            while (Queue_TimeLog.Count>StaticParameters.TemDataNumber)
             {
                 Queue_TimeLog.Dequeue();
                 foreach (var item in Dict_SensorDataSeries)
@@ -57,6 +77,13 @@ namespace SensorDataProcess
         public int Port;
         public string SensorName;
         public string EQName;
+        public string SensorType;
         public string UnitName;
+    }
+
+    public class SensorStatus
+    {
+        public DateTime LastUpdateTime;
+        public bool ConnecStatus;
     }
 }

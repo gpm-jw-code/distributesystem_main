@@ -15,6 +15,14 @@ namespace DistributedSystem_Main.Systems
         public string DataUnit = "";
     }
 
+    public class cls_SensorStatus_Mqtt
+    {
+        public string SensorName = "";
+        public bool ConnecStatus = false;
+        public DateTime LastUpdateTime;
+
+    }
+
     public class cls_SensorData_Mqtt
     {
         public string SensorName = "";

@@ -44,10 +44,14 @@ namespace DistributedSystem_Main.Views
             this.LAB_SensorName = new System.Windows.Forms.Label();
             this.picSettingIcon = new System.Windows.Forms.PictureBox();
             this.ChartForShow = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.LAB_LastUpdateTime = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.labBatchModeStateShow)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picSettingIcon)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ChartForShow)).BeginInit();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel2
@@ -174,7 +178,7 @@ namespace DistributedSystem_Main.Views
             this.IPMRunningLabel.TabIndex = 10;
             this.IPMRunningLabel.Visible = false;
             // 
-            // labIP
+            // LAB_SensorName
             // 
             this.LAB_SensorName.AutoSize = true;
             this.LAB_SensorName.BackColor = System.Drawing.Color.Transparent;
@@ -183,7 +187,7 @@ namespace DistributedSystem_Main.Views
             this.LAB_SensorName.ForeColor = System.Drawing.Color.Silver;
             this.LAB_SensorName.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.LAB_SensorName.Location = new System.Drawing.Point(419, 0);
-            this.LAB_SensorName.Name = "labIP";
+            this.LAB_SensorName.Name = "LAB_SensorName";
             this.LAB_SensorName.Padding = new System.Windows.Forms.Padding(0, 7, 0, 0);
             this.LAB_SensorName.Size = new System.Drawing.Size(59, 23);
             this.LAB_SensorName.TabIndex = 9;
@@ -246,9 +250,52 @@ namespace DistributedSystem_Main.Views
             series1.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
             series1.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
             this.ChartForShow.Series.Add(series1);
-            this.ChartForShow.Size = new System.Drawing.Size(502, 311);
+            this.ChartForShow.Size = new System.Drawing.Size(502, 286);
             this.ChartForShow.TabIndex = 7;
             this.ChartForShow.Text = "chart1";
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.SystemColors.InfoText;
+            this.panel1.Controls.Add(this.LAB_LastUpdateTime);
+            this.panel1.Controls.Add(this.label3);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel1.Location = new System.Drawing.Point(0, 312);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(502, 25);
+            this.panel1.TabIndex = 8;
+            // 
+            // LAB_LastUpdateTime
+            // 
+            this.LAB_LastUpdateTime.AutoSize = true;
+            this.LAB_LastUpdateTime.BackColor = System.Drawing.Color.Transparent;
+            this.LAB_LastUpdateTime.Dock = System.Windows.Forms.DockStyle.Left;
+            this.LAB_LastUpdateTime.Font = new System.Drawing.Font("微軟正黑體", 9F);
+            this.LAB_LastUpdateTime.ForeColor = System.Drawing.Color.Silver;
+            this.LAB_LastUpdateTime.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.LAB_LastUpdateTime.Location = new System.Drawing.Point(91, 0);
+            this.LAB_LastUpdateTime.Name = "LAB_LastUpdateTime";
+            this.LAB_LastUpdateTime.Padding = new System.Windows.Forms.Padding(0, 7, 0, 0);
+            this.LAB_LastUpdateTime.Size = new System.Drawing.Size(141, 23);
+            this.LAB_LastUpdateTime.TabIndex = 10;
+            this.LAB_LastUpdateTime.Text = "yyyy/MM/dd HH:mm:ss";
+            this.LAB_LastUpdateTime.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.BackColor = System.Drawing.Color.Transparent;
+            this.label3.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label3.Font = new System.Drawing.Font("微軟正黑體", 9F);
+            this.label3.ForeColor = System.Drawing.Color.Silver;
+            this.label3.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.label3.Location = new System.Drawing.Point(0, 0);
+            this.label3.Name = "label3";
+            this.label3.Padding = new System.Windows.Forms.Padding(0, 7, 0, 0);
+            this.label3.Size = new System.Drawing.Size(91, 23);
+            this.label3.TabIndex = 11;
+            this.label3.Text = "Update Time : ";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // USC_SensorDataChart
             // 
@@ -256,6 +303,7 @@ namespace DistributedSystem_Main.Views
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.ChartForShow);
             this.Controls.Add(this.panel2);
+            this.Controls.Add(this.panel1);
             this.Name = "USC_SensorDataChart";
             this.Size = new System.Drawing.Size(502, 337);
             this.panel2.ResumeLayout(false);
@@ -263,6 +311,8 @@ namespace DistributedSystem_Main.Views
             ((System.ComponentModel.ISupportInitialize)(this.labBatchModeStateShow)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picSettingIcon)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ChartForShow)).EndInit();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -271,14 +321,17 @@ namespace DistributedSystem_Main.Views
 
         private System.Windows.Forms.Panel panel2;
         protected System.Windows.Forms.PictureBox labBatchModeStateShow;
-        public System.Windows.Forms.Label labUnitName;
-        public System.Windows.Forms.Label label7;
-        public System.Windows.Forms.Label labEqName;
+        private System.Windows.Forms.Label labUnitName;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label labEqName;
         protected System.Windows.Forms.Label label5;
-        public System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label IPMRunningLabel;
-        public System.Windows.Forms.Label LAB_SensorName;
+        private System.Windows.Forms.Label LAB_SensorName;
         private System.Windows.Forms.PictureBox picSettingIcon;
         private System.Windows.Forms.DataVisualization.Charting.Chart ChartForShow;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label LAB_LastUpdateTime;
+        private System.Windows.Forms.Label label3;
     }
 }

@@ -37,7 +37,10 @@ namespace DistributedSystem_Main.Views
             set { this._UnitName = value;this.labUnitName.Text = value; }
         }
 
-
+        public DateTime LastUpdateTime
+        {
+            set { LAB_LastUpdateTime.Text = value.ToString("yyyy/MM/dd HH:mm:ss"); }
+        }
 
         private Dictionary<string, Series> Dict_SensorSeries = new Dictionary<string, Series>();
         private Dictionary<string, StripLine> Dict_SensorStripLines = new Dictionary<string, StripLine>();
@@ -52,6 +55,7 @@ namespace DistributedSystem_Main.Views
                 }
                 Dict_SensorSeries[item.Key].Points.DataBindXY(TimeLogSeries, item.Value);
             }
+            LastUpdateTime = DateTime.Now;
         }
 
         public void SetSensorThreshold(Dictionary<string,double> Dict_Threshold)
