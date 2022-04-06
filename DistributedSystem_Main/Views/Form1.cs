@@ -17,7 +17,9 @@ namespace DistributedSystem_Main
         public Form1()
         {
             InitializeComponent();
-            Systems.cls_MQTTModule.BuildServer("127.0.0.1", 1883);
+            Staobj.SystemParam.LoadSystemParam();
+            Systems.cls_MQTTModule.BuildServer(Staobj.SystemParam.MqttServerIP, Staobj.SystemParam.MqttServerPort);
+            SensorDataProcess.cls_txtDataSaver.RootPath = Staobj.SystemParam.DataSaveRootPath;
             EventRegist();
         }
 
@@ -88,5 +90,12 @@ namespace DistributedSystem_Main
 
         #endregion
 
+        private void picbOFF_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("即將關閉系統", "Exit", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                this.Close();
+            } 
+        }
     }
 }

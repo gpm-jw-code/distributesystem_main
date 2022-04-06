@@ -57,12 +57,12 @@ namespace DistributedSystem_Main
             this.TabPage_Log = new System.Windows.Forms.TabPage();
             this.TabPage_SensorInfo = new System.Windows.Forms.TabPage();
             this.DGV_SensorInfo = new System.Windows.Forms.DataGridView();
-            this.Panel_EditSensorInfo = new System.Windows.Forms.Panel();
             this.Column_Status = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.EQName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.UnitName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SensorIP = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column_SensorType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Panel_EditSensorInfo = new System.Windows.Forms.Panel();
             this.TableLayout_WholeView.SuspendLayout();
             this.TableLayout_SideBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -198,7 +198,6 @@ namespace DistributedSystem_Main
             this.panLog.Controls.Add(this.btnLog);
             this.panLog.Controls.Add(this.pictureBox19);
             this.panLog.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panLog.Enabled = false;
             this.panLog.Location = new System.Drawing.Point(0, 72);
             this.panLog.Margin = new System.Windows.Forms.Padding(4);
             this.panLog.Name = "panLog";
@@ -304,15 +303,17 @@ namespace DistributedSystem_Main
             // picbOFF
             // 
             this.picbOFF.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picbOFF.Dock = System.Windows.Forms.DockStyle.Fill;
             this.picbOFF.Image = ((System.Drawing.Image)(resources.GetObject("picbOFF.Image")));
             this.picbOFF.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.picbOFF.Location = new System.Drawing.Point(4, 4);
             this.picbOFF.Margin = new System.Windows.Forms.Padding(4);
             this.picbOFF.Name = "picbOFF";
-            this.picbOFF.Size = new System.Drawing.Size(52, 65);
+            this.picbOFF.Size = new System.Drawing.Size(56, 66);
             this.picbOFF.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picbOFF.TabIndex = 0;
             this.picbOFF.TabStop = false;
+            this.picbOFF.Click += new System.EventHandler(this.picbOFF_Click);
             // 
             // picbRestart
             // 
@@ -488,14 +489,6 @@ namespace DistributedSystem_Main
             this.DGV_SensorInfo.Size = new System.Drawing.Size(1125, 612);
             this.DGV_SensorInfo.TabIndex = 1;
             // 
-            // Panel_EditSensorInfo
-            // 
-            this.Panel_EditSensorInfo.Dock = System.Windows.Forms.DockStyle.Top;
-            this.Panel_EditSensorInfo.Location = new System.Drawing.Point(3, 3);
-            this.Panel_EditSensorInfo.Name = "Panel_EditSensorInfo";
-            this.Panel_EditSensorInfo.Size = new System.Drawing.Size(1125, 56);
-            this.Panel_EditSensorInfo.TabIndex = 2;
-            // 
             // Column_Status
             // 
             this.Column_Status.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
@@ -530,6 +523,14 @@ namespace DistributedSystem_Main
             this.Column_SensorType.HeaderText = "SensorType";
             this.Column_SensorType.Name = "Column_SensorType";
             this.Column_SensorType.ReadOnly = true;
+            // 
+            // Panel_EditSensorInfo
+            // 
+            this.Panel_EditSensorInfo.Dock = System.Windows.Forms.DockStyle.Top;
+            this.Panel_EditSensorInfo.Location = new System.Drawing.Point(3, 3);
+            this.Panel_EditSensorInfo.Name = "Panel_EditSensorInfo";
+            this.Panel_EditSensorInfo.Size = new System.Drawing.Size(1125, 56);
+            this.Panel_EditSensorInfo.TabIndex = 2;
             // 
             // Form1
             // 

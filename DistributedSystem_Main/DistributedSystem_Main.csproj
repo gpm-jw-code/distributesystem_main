@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Systems\INI_utility.cs" />
     <Compile Include="Systems\Staobj.cs" />
     <Compile Include="Views\Form1.cs">
       <SubType>Form</SubType>

@@ -16,6 +16,7 @@ namespace DistributedSystem_Main.Views
         public USC_SensorDataChart()
         {
             InitializeComponent();
+            ChartForShow.Series.Clear();
         }
 
         private string _SensorName = "";

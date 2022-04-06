@@ -14,7 +14,7 @@ namespace DistributedSystem_Main.Systems
         public string SensorType = "";
         public string DataUnit = "";
     }
-
+     
     public class cls_SensorStatus_Mqtt
     {
         public string SensorName = "";

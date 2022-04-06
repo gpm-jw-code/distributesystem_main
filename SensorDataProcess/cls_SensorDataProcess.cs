@@ -33,24 +33,29 @@ namespace SensorDataProcess
         private Queue<DateTime> Queue_TimeLog = new Queue<DateTime>();
         public SensorInfo SensorInfo = new SensorInfo();
         public SensorStatus Status = new SensorStatus();
-
+        private cls_txtDataSaver TxtDataSaver;
 
         public delegate void UpdateSeriesDataEventHandler(string SensorName, Queue<DateTime> Queue_Time,Dictionary<string,Queue<double>> Dict_DataQueue);
 
         public event UpdateSeriesDataEventHandler Event_UpdateChartSeries;
 
-        public cls_SensorDataProcess(string IP, int Port, string EQName = null, string UnitName = null)
+        public cls_SensorDataProcess(string IP, int Port,string SensorName,string SensorType, string EQName = null, string UnitName = null)
         {
             if (IP == "127.0.0.1")
                 this.SensorInfo.SensorName = $"{IP}_{Port}";
             SensorInfo.IP = IP;
             SensorInfo.Port = Port;
+            SensorInfo.SensorName = SensorName;
+            SensorInfo.SensorType = SensorType;
             SensorInfo.EQName = EQName ?? "";
             SensorInfo.UnitName = UnitName ?? "";
+            TxtDataSaver = new cls_txtDataSaver(SensorInfo);
         }
 
         public void ImportNewSensorData(Dictionary<string,double> Dict_NewData,DateTime TimeLog)
         {
+            TxtDataSaver.WriteRawData(Dict_NewData, TimeLog);
+
             Queue_TimeLog.Enqueue(TimeLog);
             foreach (var item in Dict_NewData)
             {
@@ -61,6 +66,7 @@ namespace SensorDataProcess
                 }
                 Dict_SensorDataSeries[DataName].Enqueue(item.Value);
             }
+
             while (Queue_TimeLog.Count>StaticParameters.TemDataNumber)
             {
                 Queue_TimeLog.Dequeue();
@@ -78,9 +84,9 @@ namespace SensorDataProcess
     {
         public string IP;
         public int Port;
+        public string SensorType;
         public string SensorName;
         public string EQName;
-        public string SensorType;
         public string UnitName;
     }
 
