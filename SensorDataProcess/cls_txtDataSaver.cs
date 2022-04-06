@@ -66,6 +66,35 @@ namespace SensorDataProcess
             }
         }
 
+        public void WritePassRateLog(DataPassRateObject PassRateObject)
+        {
+            string FileName = Path.Combine(LogPath, $"{PassRateObject.TimeLog:yyyyMMdd_HH}.csv");
+            bool IsNeedHeader = !File.Exists(FileName);
+            try
+            {
+                using (FileStream FS = new FileStream(FileName, FileMode.Append, FileAccess.Write, FileShare.Read))
+                {
+                    using (StreamWriter SW = new StreamWriter(FS))
+                    {
+                        if (IsNeedHeader)
+                        {
+                            SW.WriteLine(SensorInfoString);
+                            SW.WriteLine(PassRateLogHeader(PassRateObject.Dict_PassCount.Keys));
+                        }
+                        SW.WriteLine(PassRateLogString(PassRateObject));
+                    }
+                }
+            }
+            catch (IOException exp)
+            {
+                if (!Directory.Exists(RawDataPath))
+                    Directory.CreateDirectory(RawDataPath);
+                if (!Directory.Exists(LogPath))
+                    Directory.CreateDirectory(LogPath);
+            }
+
+        }
+
         private string SensorInfoString
         {
             get
@@ -80,13 +109,6 @@ namespace SensorDataProcess
             }
         }
 
-        private string RawDataString(IEnumerable<double> DataValueList,DateTime TimeLog)
-        {
-            string DataString = $"{TimeLog:yyyy/MM/dd HH:mm:ss},";
-            DataString += string.Join(",", DataValueList);
-
-            return DataString;
-        }
 
         private string RawDataHeader(IEnumerable<string> DataNameList)
         {
@@ -95,5 +117,37 @@ namespace SensorDataProcess
 
             return Header;
         }
+
+        private string RawDataString(IEnumerable<double> DataValueList,DateTime TimeLog)
+        {
+            string DataString = $"{TimeLog:yyyy/MM/dd HH:mm:ss},";
+            DataString += string.Join(",", DataValueList);
+
+            return DataString;
+        }
+
+
+        private string PassRateLogHeader(IEnumerable<string> DataNameList)
+        {
+            string Header = "Time,";
+            foreach (var item in DataNameList)
+            {
+                Header += $"{item}_Pass,{item}_Total,{item}_PassRate,";
+            }
+            return Header;
+        }
+
+        private string PassRateLogString(DataPassRateObject PassResult)
+        {
+            string LogString = $"{PassResult.TimeLog:yyyy/MM/dd HH:mm},";
+            foreach (var item in PassResult.Dict_PassCount.Keys)
+            {
+                LogString += $"{PassResult.Dict_PassCount[item]},";
+                LogString += $"{PassResult.Dict_TotalCount[item]},";
+                LogString += $"{(PassResult.Dict_PassCount[item] / PassResult.Dict_TotalCount[item]):F2}";
+            }
+            return LogString;
+        }
+
     }
 }

@@ -29,12 +29,15 @@ namespace SensorDataProcess
 
     public class cls_SensorDataProcess
     {
-        private Dictionary<string, Queue<double>> Dict_SensorDataSeries = new Dictionary<string, Queue<double>>();
-        private Queue<DateTime> Queue_TimeLog = new Queue<DateTime>();
         public SensorInfo SensorInfo = new SensorInfo();
         public SensorStatus Status = new SensorStatus();
-        private cls_txtDataSaver TxtDataSaver;
         public Dictionary<string, double> Dict_DataThreshold = new Dictionary<string, double>();
+
+        private Dictionary<string, Queue<double>> Dict_SensorDataSeries = new Dictionary<string, Queue<double>>();
+        private Queue<DateTime> Queue_TimeLog = new Queue<DateTime>();
+        private DataPassRateObject PassRateObjejct;
+
+        private cls_txtDataSaver TxtDataSaver;
 
         public delegate void UpdateSeriesDataEventHandler(string SensorName, Queue<DateTime> Queue_Time,Dictionary<string,Queue<double>> Dict_DataQueue);
 
@@ -51,12 +54,22 @@ namespace SensorDataProcess
             SensorInfo.EQName = EQName ?? "";
             SensorInfo.UnitName = UnitName ?? "";
             TxtDataSaver = new cls_txtDataSaver(SensorInfo);
+            PassRateObjejct = new DataPassRateObject();
         }
+
+        public cls_SensorDataProcess(SensorInfo NewSensorInfo)
+        {
+            SensorInfo = NewSensorInfo;
+            TxtDataSaver = new cls_txtDataSaver(SensorInfo);
+            PassRateObjejct = new DataPassRateObject();
+            PassRateObjejct.Event_WriteNewDataLog += TxtDataSaver.WritePassRateLog;
+        }
+
 
         public void ImportNewSensorData(Dictionary<string,double> Dict_NewData,DateTime TimeLog)
         {
             TxtDataSaver.WriteRawData(Dict_NewData, TimeLog);
-            var CheckResult = CheckThreshold(Dict_NewData);
+            var CheckResult = CheckThreshold(Dict_NewData,TimeLog);
             Queue_TimeLog.Enqueue(TimeLog);
             foreach (var item in Dict_NewData)
             {
@@ -79,7 +92,7 @@ namespace SensorDataProcess
             Event_UpdateChartSeries?.Invoke(SensorInfo.SensorName,Queue_TimeLog,Dict_SensorDataSeries);
         }
 
-        private Dictionary<string,bool> CheckThreshold(Dictionary<string,double> Dict_NewData)
+        private Dictionary<string,bool> CheckThreshold(Dictionary<string,double> Dict_NewData,DateTime TimeLog)
         {
             Dictionary<string, bool> CheckResult = new Dictionary<string, bool>();
             foreach (var item in Dict_NewData)
@@ -88,11 +101,46 @@ namespace SensorDataProcess
                 {
                     Dict_DataThreshold.Add(item.Key, 999999);
                 }
-                CheckResult.Add(item.Key, item.Value > Dict_DataThreshold[item.Key]);
+                CheckResult.Add(item.Key, item.Value < Dict_DataThreshold[item.Key]);
             }
+            PassRateObjejct.AddNewCheckResult(CheckResult, TimeLog);
             return CheckResult;
         }
 
+    }
+
+    public class DataPassRateObject
+    {
+        public Dictionary<string, double> Dict_TotalCount = new Dictionary<string, double>();
+        public Dictionary<string, double> Dict_PassCount = new Dictionary<string, double>();
+        public DateTime TimeLog;
+        public Action<DataPassRateObject> Event_WriteNewDataLog;
+
+        public void AddNewCheckResult(Dictionary<string,bool> Dict_CheckResult,DateTime NewTimelog)
+        {
+            if (NewTimelog.Minute != this.TimeLog.Minute)
+            {
+                Event_WriteNewDataLog?.Invoke(this);
+
+                Dict_TotalCount = new Dictionary<string, double>();
+                Dict_PassCount = new Dictionary<string, double>();
+                foreach (var item in Dict_CheckResult.Keys)
+                {
+                    Dict_TotalCount.Add(item,0);
+                    Dict_PassCount.Add(item, 0);
+                }
+                this.TimeLog = new DateTime(NewTimelog.Year, NewTimelog.Month, NewTimelog.Day, NewTimelog.Hour, NewTimelog.Minute,0);
+            }
+
+            foreach (var item in Dict_CheckResult)
+            {
+                Dict_TotalCount[item.Key] += 1;
+                if (item.Value)
+                {
+                    Dict_PassCount[item.Key] += 1;
+                }
+            }
+        }
     }
 
     public class SensorInfo
