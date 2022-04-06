@@ -19,6 +19,8 @@ namespace DistributedSystem_Main.Views
             ChartForShow.Series.Clear();
         }
 
+        public static Action<string> Event_SettingButtonClicked;
+
         private string _SensorName = "";
         private string _EQName = "";
         private string _UnitName = "";
@@ -48,11 +50,15 @@ namespace DistributedSystem_Main.Views
 
         public void ImportSensorDataSeries(Queue<DateTime> TimeLogSeries ,Dictionary<string,Queue<double>> Dict_DataSeries)
         {
+            int IntForColor = 0;
             foreach (var item in Dict_DataSeries)
             {
+                IntForColor += 1;
                 if (!Dict_SensorSeries.ContainsKey(item.Key))
                 {
-                    CreateNewSensorUIObjects(item.Key);
+                    Color NewSeriesColor = ColorFromHSV(360*IntForColor / Dict_DataSeries.Count, 1, 1);
+                    Color StripLineColor = ColorFromHSV(360 * IntForColor / Dict_DataSeries.Count, 1, 0.5);
+                    CreateNewSensorUIObjects(item.Key, NewSeriesColor, StripLineColor);
                 }
                 Dict_SensorSeries[item.Key].Points.DataBindXY(TimeLogSeries, item.Value);
             }
@@ -61,11 +67,15 @@ namespace DistributedSystem_Main.Views
 
         public void SetSensorThreshold(Dictionary<string,double> Dict_Threshold)
         {
+            int IntForColor = 0;
             foreach (var item in Dict_Threshold)
             {
+                IntForColor += 1;
                 if (!Dict_SensorStripLines.ContainsKey(item.Key))
                 {
-                    CreateNewSensorUIObjects(item.Key);
+                    Color NewSeriesColor = ColorFromHSV(360 * IntForColor / Dict_Threshold.Count, 1, 1);
+                    Color StripLineColor = ColorFromHSV(360 * IntForColor / Dict_Threshold.Count, 1, 0.5);
+                    CreateNewSensorUIObjects(item.Key,NewSeriesColor, StripLineColor);
                 }
                 Dict_SensorStripLines[item.Key].IntervalOffset = item.Value;
             }
@@ -73,7 +83,7 @@ namespace DistributedSystem_Main.Views
 
         
 
-        private void CreateNewSensorUIObjects(string DataName)
+        private void CreateNewSensorUIObjects(string DataName,Color SeriesColor,Color StripLineColor )
         {
             Series NewDataSeries = new Series
             {
@@ -81,15 +91,13 @@ namespace DistributedSystem_Main.Views
                 ChartType = SeriesChartType.Line,
                 Legend = "Legend1",
                 Name = DataName,
+                Color = SeriesColor,
                 XValueType = ChartValueType.DateTime,
                 YValueType = ChartValueType.Double
             };
             Dict_SensorSeries.Add(DataName, NewDataSeries);
 
             ChartForShow.Series.Add(NewDataSeries);
-
-            var SeriesColor = NewDataSeries.Color;
-            var StripLineColor = Color.FromArgb((int)(SeriesColor.R * 0.75), (int)(SeriesColor.G * 0.75), (int)(SeriesColor.B * 0.75));
 
             StripLine NewStripLine = new StripLine
             {
@@ -101,6 +109,41 @@ namespace DistributedSystem_Main.Views
             ChartForShow.ChartAreas[0].AxisY.StripLines.Add(NewStripLine);
         }
 
+        private void picSettingIcon_Click(object sender, EventArgs e)
+        {
+            Event_SettingButtonClicked?.Invoke(_SensorName);
+        }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="hue">0~360</param>
+        /// <param name="saturation">0~1</param>
+        /// <param name="value">0~1</param>
+        /// <returns></returns>
+        public static Color ColorFromHSV(double hue, double saturation, double value)
+        {
+            int hi = Convert.ToInt32(Math.Floor(hue / 60)) % 6;
+            double f = hue / 60 - Math.Floor(hue / 60);
+
+            value = value * 255;
+            int v = Convert.ToInt32(value);
+            int p = Convert.ToInt32(value * (1 - saturation));
+            int q = Convert.ToInt32(value * (1 - f * saturation));
+            int t = Convert.ToInt32(value * (1 - (1 - f) * saturation));
+
+            if (hi == 0)
+                return Color.FromArgb(255, v, t, p);
+            else if (hi == 1)
+                return Color.FromArgb(255, q, v, p);
+            else if (hi == 2)
+                return Color.FromArgb(255, p, v, t);
+            else if (hi == 3)
+                return Color.FromArgb(255, p, q, v);
+            else if (hi == 4)
+                return Color.FromArgb(255, t, p, v);
+            else
+                return Color.FromArgb(255, v, p, q);
+        }
     }
 }

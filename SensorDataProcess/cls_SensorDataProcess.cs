@@ -34,6 +34,7 @@ namespace SensorDataProcess
         public SensorInfo SensorInfo = new SensorInfo();
         public SensorStatus Status = new SensorStatus();
         private cls_txtDataSaver TxtDataSaver;
+        public Dictionary<string, double> Dict_DataThreshold = new Dictionary<string, double>();
 
         public delegate void UpdateSeriesDataEventHandler(string SensorName, Queue<DateTime> Queue_Time,Dictionary<string,Queue<double>> Dict_DataQueue);
 
@@ -55,7 +56,7 @@ namespace SensorDataProcess
         public void ImportNewSensorData(Dictionary<string,double> Dict_NewData,DateTime TimeLog)
         {
             TxtDataSaver.WriteRawData(Dict_NewData, TimeLog);
-
+            var CheckResult = CheckThreshold(Dict_NewData);
             Queue_TimeLog.Enqueue(TimeLog);
             foreach (var item in Dict_NewData)
             {
@@ -76,6 +77,20 @@ namespace SensorDataProcess
                 }
             }
             Event_UpdateChartSeries?.Invoke(SensorInfo.SensorName,Queue_TimeLog,Dict_SensorDataSeries);
+        }
+
+        private Dictionary<string,bool> CheckThreshold(Dictionary<string,double> Dict_NewData)
+        {
+            Dictionary<string, bool> CheckResult = new Dictionary<string, bool>();
+            foreach (var item in Dict_NewData)
+            {
+                if (!Dict_DataThreshold.ContainsKey(item.Key))
+                {
+                    Dict_DataThreshold.Add(item.Key, 999999);
+                }
+                CheckResult.Add(item.Key, item.Value > Dict_DataThreshold[item.Key]);
+            }
+            return CheckResult;
         }
 
     }

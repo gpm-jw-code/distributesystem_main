@@ -28,6 +28,16 @@ namespace DistributedSystem_Main
         {
             Systems.Staobj.Event_ReceiveNewSensorInfo += AddNewSensorToUI;
             Systems.Staobj.Event_UpdateSensorStatus+= UpdateSensorConnectStatus;
+            Views.USC_SensorDataChart.Event_SettingButtonClicked += OpenSystemSettingForm;
+        }
+
+        private void OpenSystemSettingForm(string SensorName)
+        {
+            var TargetSensorProcessobject = Staobj.Dict_SensorProcessObject[SensorName];
+            Views.Form_SensorThresholdSetting ThresholdSettingForm = new Views.Form_SensorThresholdSetting(TargetSensorProcessobject.SensorInfo);
+            ThresholdSettingForm.ImportThresholdSettings(TargetSensorProcessobject.Dict_DataThreshold);
+            ThresholdSettingForm.ShowDialog();
+            Staobj.Dict_SensorDataCharts[SensorName].SetSensorThreshold(TargetSensorProcessobject.Dict_DataThreshold);
         }
 
         private void UpdateSensorConnectStatus(string SensorName)
@@ -61,7 +71,6 @@ namespace DistributedSystem_Main
         private void UpdateSensorChart(string SensorName, Queue<DateTime> Queue_Time, Dictionary<string, Queue<double>> Dict_DataQueue)
         {
             Invoke((MethodInvoker)delegate { Staobj.Dict_SensorDataCharts[SensorName].ImportSensorDataSeries(Queue_Time, Dict_DataQueue); });
-            
         }
 
         #endregion
