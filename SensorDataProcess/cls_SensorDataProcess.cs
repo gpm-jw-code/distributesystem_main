@@ -149,8 +149,8 @@ namespace SensorDataProcess
         public int Port;
         public string SensorType;
         public string SensorName;
-        public string EQName;
-        public string UnitName;
+        public string EQName = "undefined";
+        public string UnitName = "undefined";
     }
 
     public class SensorStatus

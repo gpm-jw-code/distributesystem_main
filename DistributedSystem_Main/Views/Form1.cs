@@ -27,7 +27,7 @@ namespace DistributedSystem_Main
         private void EventRegist()
         {
             Systems.Staobj.Event_ReceiveNewSensorInfo += AddNewSensorToUI;
-            Systems.Staobj.Event_UpdateSensorStatus+= UpdateSensorConnectStatus;
+            Systems.Staobj.Event_UpdateSensorStatus += UpdateSensorConnectStatus;
             Views.USC_SensorDataChart.Event_SettingButtonClicked += OpenSystemSettingForm;
         }
 
@@ -40,17 +40,37 @@ namespace DistributedSystem_Main
             Staobj.Dict_SensorDataCharts[SensorName].SetSensorThreshold(TargetSensorProcessobject.Dict_DataThreshold);
         }
 
-        private void UpdateSensorConnectStatus(string SensorName)
+
+
+        #endregion
+
+
+        #region SideBar
+        private void BTN_RawData_Click(object sender, EventArgs e)
         {
-            if (InvokeRequired)
-            {
-                this.Invoke((MethodInvoker)delegate { UpdateSensorConnectStatus(SensorName); });
-                return;
-            }
-            Staobj.Dict_SensorDataCharts[SensorName].LastUpdateTime=Staobj.Dict_SensorProcessObject[SensorName].Status.LastUpdateTime;
-            DataGridViewRow TargetRow = DGV_SensorInfo.Rows.Cast<DataGridViewRow>().Where(r => r.Cells[3].Value.ToString() == SensorName).First();
-            TargetRow.Cells[0].Style.BackColor = Staobj.Dict_SensorProcessObject[SensorName].Status.ConnecStatus ? Color.Lime : Color.Red;
+            TabControl_Main.SelectedTab = TabPage_Signal;
         }
+
+        private void btnLog_Click(object sender, EventArgs e)
+        {
+            TabControl_Main.SelectedTab = TabPage_Log;
+        }
+
+        private void btnStatus_Click(object sender, EventArgs e)
+        {
+            TabControl_Main.SelectedTab = TabPage_SensorInfo;
+        }
+
+        private void picbOFF_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("即將關閉系統", "Exit", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                this.Close();
+            }
+        }
+        #endregion
+
+        #region Chart
 
         private void AddNewSensorToUI(string SensorName)
         {
@@ -73,38 +93,47 @@ namespace DistributedSystem_Main
             Invoke((MethodInvoker)delegate { Staobj.Dict_SensorDataCharts[SensorName].ImportSensorDataSeries(Queue_Time, Dict_DataQueue); });
         }
 
-        #endregion
-
-
-        #region SideBar
-        private void BTN_RawData_Click(object sender, EventArgs e)
-        {
-            TabControl_Main.SelectedTab = TabPage_Signal;
-        }
-
-        private void btnLog_Click(object sender, EventArgs e)
-        {
-            TabControl_Main.SelectedTab = TabPage_Log;
-        }
-
-        private void btnStatus_Click(object sender, EventArgs e)
-        {
-            TabControl_Main.SelectedTab = TabPage_SensorInfo;
-        }
-        #endregion
-
-        #region Chart
-
-
 
         #endregion
 
-        private void picbOFF_Click(object sender, EventArgs e)
+        #region Status (SensorInfo)
+
+        private void UpdateSensorConnectStatus(string SensorName)
         {
-            if (MessageBox.Show("即將關閉系統", "Exit", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            if (InvokeRequired)
             {
-                this.Close();
-            } 
+                this.Invoke((MethodInvoker)delegate { UpdateSensorConnectStatus(SensorName); });
+                return;
+            }
+            Staobj.Dict_SensorDataCharts[SensorName].LastUpdateTime = Staobj.Dict_SensorProcessObject[SensorName].Status.LastUpdateTime;
+            DataGridViewRow TargetRow = DGV_SensorInfo.Rows.Cast<DataGridViewRow>().Where(r => r.Cells[3].Value.ToString() == SensorName).First();
+            TargetRow.Cells[0].Style.BackColor = Staobj.Dict_SensorProcessObject[SensorName].Status.ConnecStatus ? Color.Lime : Color.Red;
         }
+        private void BTN_EditSensorInfo_Click(object sender, EventArgs e)
+        {   
+            SetDGVSensorInfoEditEnable(true);
+        }
+
+        private void SetDGVSensorInfoEditEnable(bool Enable)
+        {
+            DGV_SensorInfo.Columns[1].ReadOnly = !Enable; //EQName
+            DGV_SensorInfo.Columns[2].ReadOnly = !Enable; //UnitName
+
+            BTN_EditSensorInfo.Enabled = !Enable;
+            BTN_SaveSensorInfo.Visible = BTN_CancelEditSensorInfo.Visible = Enable;
+        }
+
+        private void BTN_SaveSensorInfo_Click(object sender, EventArgs e)
+        {
+            foreach (var item in DGV_SensorInfo.Rows.Cast<DataGridViewRow>())
+            {
+                string SensorName = item.Cells[3].Value.ToString();
+                Staobj.Dict_SensorDataCharts[SensorName].EQName = Staobj.Dict_SensorProcessObject[SensorName].SensorInfo.EQName = item.Cells[1].Value.ToString();
+                Staobj.Dict_SensorDataCharts[SensorName].UnitName = Staobj.Dict_SensorProcessObject[SensorName].SensorInfo.UnitName = item.Cells[2].Value.ToString();
+                Staobj.SensorParam.SaveSensorInfoToFile(Staobj.Dict_SensorProcessObject[SensorName].SensorInfo);
+            }
+            SetDGVSensorInfoEditEnable(false);
+        }
+        #endregion
     }
 }
