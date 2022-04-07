@@ -23,6 +23,7 @@ namespace DistributedSystem_Main.Views
             this.LAB_EQName.Text = SensorInfo.EQName;
             this.LAB_UnitName.Text = SensorInfo.UnitName;
             this.LAB_SensorType.Text = SensorInfo.SensorType;
+            this.SensorType = SensorInfo.SensorType;
             this.SensorName = SensorInfo.SensorName;
         }
 
@@ -40,18 +41,19 @@ namespace DistributedSystem_Main.Views
             List<string> List_TargetSensor = new List<string>();
             if (CheckBox_ApplyToAll.Checked)
             {
-                List_TargetSensor = Systems.Staobj.Dict_SensorProcessObject.Where(item => item.Value.SensorInfo.SensorType == this.SensorType).Select(item => item.Key).ToList();
+                List_TargetSensor = Systems.Staobj.Dict_SensorProcessObject.Where(item => item.Value.SensorInfo.SensorType == this.SensorType).Select(item=>item.Key).ToList();
             }
             else
                 List_TargetSensor.Add(SensorName);
 
 
-            foreach (var SensorNames in List_TargetSensor)
+            foreach (var TargetSensorName in List_TargetSensor)
             {
                 foreach (var item in DGV_ThresholdSetting.Rows.Cast<DataGridViewRow>())
                 {
                     string DataName = item.Cells[0].Value.ToString();
-                    Systems.Staobj.Dict_SensorProcessObject[SensorName].Dict_DataThreshold[DataName] = Convert.ToDouble(item.Cells[1].Value);
+                    Systems.Staobj.Dict_SensorProcessObject[TargetSensorName].Dict_DataThreshold[DataName] = Convert.ToDouble(item.Cells[1].Value);
+                    Systems.Staobj.SensorParam.SaveThresholdToFile(Systems.Staobj.Dict_SensorProcessObject[TargetSensorName].Dict_DataThreshold, TargetSensorName);
                 }
             }
 

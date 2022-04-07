@@ -124,7 +124,7 @@ namespace DistributedSystem_Main.Systems
             public static void SaveThresholdToFile(Dictionary<string,double> Dict_Threshold,string SensorName)
             {
                 string SensorInfoDirectory = SensorDataRootPath(SensorName);
-                using (StreamWriter SW = new StreamWriter(SensorInfoDirectory))
+                using (StreamWriter SW = new StreamWriter(Path.Combine( SensorInfoDirectory, "Threshold.json")))
                 {
                     SW.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(Dict_Threshold, Newtonsoft.Json.Formatting.Indented));
                 }
