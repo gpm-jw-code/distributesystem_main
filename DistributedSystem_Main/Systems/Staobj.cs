@@ -11,7 +11,7 @@ namespace DistributedSystem_Main.Systems
     public class Staobj
     {
         public static Dictionary<string, cls_SensorDataProcess> Dict_SensorProcessObject = new Dictionary<string, cls_SensorDataProcess>();
-        public static Dictionary<string, Views.USC_SensorDataChart> Dict_SensorDataCharts = new Dictionary<string, Views.USC_SensorDataChart>();
+       public static Dictionary<string, User_Control.USC_SensorDataChart> Dict_SensorDataCharts = new Dictionary<string, User_Control.USC_SensorDataChart>();
 
         public static Action<string> Event_ReceiveNewSensorInfo;
         public static Action<string> Event_UpdateSensorStatus;
@@ -30,6 +30,7 @@ namespace DistributedSystem_Main.Systems
 
                 string RootDirectory = System.IO.Directory.GetDirectoryRoot(System.IO.Directory.GetCurrentDirectory());
                 DataSaveRootPath = SystemIniFile.IniReadAndWriteValue("Path", "RootPath", System.IO.Path.Combine(RootDirectory, "GPM", "DistributeSystem"));
+
             }
         }
 
@@ -43,13 +44,10 @@ namespace DistributedSystem_Main.Systems
                     continue;
 
                 var SensorInfo = SensorParam.LoadSensorInfoFromFile(item);
-
                 Dict_SensorProcessObject.Add(SensorName, new cls_SensorDataProcess(SensorInfo));
-                Dict_SensorDataCharts.Add(SensorName, new Views.USC_SensorDataChart() { SensorName = SensorName, Dock = System.Windows.Forms.DockStyle.Fill });
-
+                
                 var SensorThreshold = SensorParam.LoadThreasholdFromFile(SensorName);
                 Dict_SensorProcessObject[SensorName].Dict_DataThreshold = SensorThreshold;
-                Dict_SensorDataCharts[SensorName].SetSensorThreshold(SensorThreshold);
 
                 Event_ReceiveNewSensorInfo?.Invoke(SensorName);
             }

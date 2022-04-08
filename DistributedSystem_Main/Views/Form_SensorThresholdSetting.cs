@@ -53,8 +53,9 @@ namespace DistributedSystem_Main.Views
                 {
                     string DataName = item.Cells[0].Value.ToString();
                     Systems.Staobj.Dict_SensorProcessObject[TargetSensorName].Dict_DataThreshold[DataName] = Convert.ToDouble(item.Cells[1].Value);
-                    Systems.Staobj.SensorParam.SaveThresholdToFile(Systems.Staobj.Dict_SensorProcessObject[TargetSensorName].Dict_DataThreshold, TargetSensorName);
                 }
+                Systems.Staobj.Dict_SensorProcessObject[TargetSensorName].RefreshThreshold();
+                Systems.Staobj.SensorParam.SaveThresholdToFile(Systems.Staobj.Dict_SensorProcessObject[TargetSensorName].Dict_DataThreshold, TargetSensorName);
             }
 
             this.Close();

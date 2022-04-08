@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
-namespace DistributedSystem_Main.Views
+namespace DistributedSystem_Main.User_Control
 {
     public partial class USC_SensorDataChart : UserControl
     {
@@ -24,6 +24,7 @@ namespace DistributedSystem_Main.Views
         private string _SensorName = "";
         private string _EQName = "";
         private string _UnitName = "";
+        private string _SensorType = "";
         
         public string SensorName
         {
@@ -40,6 +41,29 @@ namespace DistributedSystem_Main.Views
             set { this._UnitName = value;this.labUnitName.Text = value; }
         }
 
+        public string SensorType
+        {
+            get
+            {
+                return _SensorType;
+            }
+            set
+            {
+                if (value != _SensorType)
+                {
+                    foreach (var item in Dict_SensorSeries)
+                    {
+                        item.Value.Enabled = false;
+                    }
+                    foreach (var item in Dict_SensorStripLines)
+                    {
+                        item.Value.StripWidth = 0;
+                    }
+                }
+                _SensorType = value;
+            }
+        }
+
         public DateTime LastUpdateTime
         {
             set { LAB_LastUpdateTime.Text = value.ToString("yyyy/MM/dd HH:mm:ss"); }
@@ -51,6 +75,14 @@ namespace DistributedSystem_Main.Views
         public void ImportSensorDataSeries(Queue<DateTime> TimeLogSeries ,Dictionary<string,Queue<double>> Dict_DataSeries)
         {
             int IntForColor = 0;
+            //還沒有數據進來    應該要改成Show狀態 
+            if (Dict_DataSeries.Count == 0)
+            {
+                foreach (var item in Dict_SensorSeries)
+                {
+                    item.Value.Enabled = false;
+                }
+            }
             foreach (var item in Dict_DataSeries)
             {
                 IntForColor += 1;
@@ -59,6 +91,10 @@ namespace DistributedSystem_Main.Views
                     Color NewSeriesColor = ColorFromHSV(360*IntForColor / Dict_DataSeries.Count, 1, 1);
                     Color StripLineColor = ColorFromHSV(360 * IntForColor / Dict_DataSeries.Count, 1, 0.5);
                     CreateNewSensorUIObjects(item.Key, NewSeriesColor, StripLineColor);
+                }
+                if (!Dict_SensorSeries[item.Key].Enabled )
+                {
+                    Dict_SensorSeries[item.Key].Enabled = true;
                 }
                 Dict_SensorSeries[item.Key].Points.DataBindXY(TimeLogSeries, item.Value);
             }
@@ -78,6 +114,11 @@ namespace DistributedSystem_Main.Views
                     CreateNewSensorUIObjects(item.Key,NewSeriesColor, StripLineColor);
                 }
                 Dict_SensorStripLines[item.Key].IntervalOffset = item.Value;
+                if (Dict_SensorStripLines[item.Key].StripWidth == 0)
+                {
+                    Dict_SensorStripLines[item.Key].StripWidth = default;
+                }
+                
             }
         }
 

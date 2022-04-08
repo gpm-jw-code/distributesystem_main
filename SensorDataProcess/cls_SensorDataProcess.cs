@@ -40,8 +40,10 @@ namespace SensorDataProcess
         private cls_txtDataSaver TxtDataSaver;
 
         public delegate void UpdateSeriesDataEventHandler(string SensorName, Queue<DateTime> Queue_Time,Dictionary<string,Queue<double>> Dict_DataQueue);
-
         public event UpdateSeriesDataEventHandler Event_UpdateChartSeries;
+
+        public Action<string> Event_RefreshSensorInfo;
+        public Action<string> Event_RefreshSensorThreshold;
 
         public cls_SensorDataProcess(string IP, int Port,string SensorName,string SensorType, string EQName = null, string UnitName = null)
         {
@@ -90,6 +92,21 @@ namespace SensorDataProcess
                 }
             }
             Event_UpdateChartSeries?.Invoke(SensorInfo.SensorName,Queue_TimeLog,Dict_SensorDataSeries);
+        }
+
+        public void RefreshSensorInfo()
+        {
+            Event_RefreshSensorInfo?.Invoke(SensorInfo.SensorName);
+        }
+
+        public void RefreshThreshold()
+        {
+            Event_RefreshSensorThreshold?.Invoke(SensorInfo.SensorName);
+        }
+
+        public void RefreshSignalChart()
+        {
+            Event_UpdateChartSeries?.Invoke(SensorInfo.SensorName, Queue_TimeLog, Dict_SensorDataSeries);
         }
 
         private Dictionary<string,bool> CheckThreshold(Dictionary<string,double> Dict_NewData,DateTime TimeLog)

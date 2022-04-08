@@ -53,8 +53,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Systems\cls_SignalsChartManager.cs" />
     <Compile Include="Systems\INI_utility.cs" />
     <Compile Include="Systems\Staobj.cs" />
+    <Compile Include="User_Control\PageSwitch.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="User_Control\PageSwitch.Designer.cs">
+      <DependentUpon>PageSwitch.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -71,12 +78,15 @@
     <Compile Include="Views\Form_SensorThresholdSetting.Designer.cs">
       <DependentUpon>Form_SensorThresholdSetting.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\USC_SensorDataChart.cs">
+    <Compile Include="User_Control\USC_SensorDataChart.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Views\USC_SensorDataChart.Designer.cs">
+    <Compile Include="User_Control\USC_SensorDataChart.Designer.cs">
       <DependentUpon>USC_SensorDataChart.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="User_Control\PageSwitch.resx">
+      <DependentUpon>PageSwitch.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -92,7 +102,7 @@
     <EmbeddedResource Include="Views\Form_SensorThresholdSetting.resx">
       <DependentUpon>Form_SensorThresholdSetting.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\USC_SensorDataChart.resx">
+    <EmbeddedResource Include="User_Control\USC_SensorDataChart.resx">
       <DependentUpon>USC_SensorDataChart.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />

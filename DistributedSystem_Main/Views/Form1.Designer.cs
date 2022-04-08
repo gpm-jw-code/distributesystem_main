@@ -57,15 +57,17 @@ namespace DistributedSystem_Main
             this.TabPage_Log = new System.Windows.Forms.TabPage();
             this.TabPage_SensorInfo = new System.Windows.Forms.TabPage();
             this.DGV_SensorInfo = new System.Windows.Forms.DataGridView();
-            this.Panel_EditSensorInfo = new System.Windows.Forms.Panel();
-            this.BTN_EditSensorInfo = new System.Windows.Forms.Button();
-            this.BTN_SaveSensorInfo = new System.Windows.Forms.Button();
-            this.BTN_CancelEditSensorInfo = new System.Windows.Forms.Button();
             this.Column_Status = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.EQName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.UnitName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SensorIP = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column_SensorType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Panel_EditSensorInfo = new System.Windows.Forms.Panel();
+            this.BTN_CancelEditSensorInfo = new System.Windows.Forms.Button();
+            this.BTN_SaveSensorInfo = new System.Windows.Forms.Button();
+            this.BTN_EditSensorInfo = new System.Windows.Forms.Button();
+            this.Panel_Signals_Function = new System.Windows.Forms.Panel();
+            this.PageSwitch_Signals = new DistributedSystem_Main.User_Control.PageSwitch();
             this.TableLayout_WholeView.SuspendLayout();
             this.TableLayout_SideBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -89,6 +91,7 @@ namespace DistributedSystem_Main
             this.TabPage_SensorInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGV_SensorInfo)).BeginInit();
             this.Panel_EditSensorInfo.SuspendLayout();
+            this.Panel_Signals_Function.SuspendLayout();
             this.SuspendLayout();
             // 
             // TableLayout_WholeView
@@ -424,6 +427,7 @@ namespace DistributedSystem_Main
             // 
             this.TabPage_Signal.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(72)))), ((int)(((byte)(93)))));
             this.TabPage_Signal.Controls.Add(this.TablePanel_SignalChart);
+            this.TabPage_Signal.Controls.Add(this.Panel_Signals_Function);
             this.TabPage_Signal.Location = new System.Drawing.Point(4, 24);
             this.TabPage_Signal.Margin = new System.Windows.Forms.Padding(4);
             this.TabPage_Signal.Name = "TabPage_Signal";
@@ -440,14 +444,14 @@ namespace DistributedSystem_Main
             this.TablePanel_SignalChart.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.TablePanel_SignalChart.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.TablePanel_SignalChart.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TablePanel_SignalChart.Location = new System.Drawing.Point(4, 4);
+            this.TablePanel_SignalChart.Location = new System.Drawing.Point(4, 47);
             this.TablePanel_SignalChart.Margin = new System.Windows.Forms.Padding(4);
             this.TablePanel_SignalChart.Name = "TablePanel_SignalChart";
             this.TablePanel_SignalChart.RowCount = 3;
             this.TablePanel_SignalChart.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.TablePanel_SignalChart.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.TablePanel_SignalChart.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.TablePanel_SignalChart.Size = new System.Drawing.Size(1123, 666);
+            this.TablePanel_SignalChart.Size = new System.Drawing.Size(1123, 623);
             this.TablePanel_SignalChart.TabIndex = 0;
             // 
             // TabPage_Log
@@ -492,57 +496,6 @@ namespace DistributedSystem_Main
             this.DGV_SensorInfo.Size = new System.Drawing.Size(1125, 608);
             this.DGV_SensorInfo.TabIndex = 1;
             // 
-            // Panel_EditSensorInfo
-            // 
-            this.Panel_EditSensorInfo.Controls.Add(this.BTN_CancelEditSensorInfo);
-            this.Panel_EditSensorInfo.Controls.Add(this.BTN_SaveSensorInfo);
-            this.Panel_EditSensorInfo.Controls.Add(this.BTN_EditSensorInfo);
-            this.Panel_EditSensorInfo.Dock = System.Windows.Forms.DockStyle.Top;
-            this.Panel_EditSensorInfo.Location = new System.Drawing.Point(3, 3);
-            this.Panel_EditSensorInfo.Name = "Panel_EditSensorInfo";
-            this.Panel_EditSensorInfo.Size = new System.Drawing.Size(1125, 60);
-            this.Panel_EditSensorInfo.TabIndex = 2;
-            // 
-            // BTN_EditSensorInfo
-            // 
-            this.BTN_EditSensorInfo.BackColor = System.Drawing.Color.Honeydew;
-            this.BTN_EditSensorInfo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BTN_EditSensorInfo.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.BTN_EditSensorInfo.Location = new System.Drawing.Point(10, 10);
-            this.BTN_EditSensorInfo.Name = "BTN_EditSensorInfo";
-            this.BTN_EditSensorInfo.Size = new System.Drawing.Size(75, 41);
-            this.BTN_EditSensorInfo.TabIndex = 0;
-            this.BTN_EditSensorInfo.Text = "Edit";
-            this.BTN_EditSensorInfo.UseVisualStyleBackColor = false;
-            this.BTN_EditSensorInfo.Click += new System.EventHandler(this.BTN_EditSensorInfo_Click);
-            // 
-            // BTN_SaveSensorInfo
-            // 
-            this.BTN_SaveSensorInfo.BackColor = System.Drawing.Color.PaleGreen;
-            this.BTN_SaveSensorInfo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BTN_SaveSensorInfo.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.BTN_SaveSensorInfo.Location = new System.Drawing.Point(91, 10);
-            this.BTN_SaveSensorInfo.Name = "BTN_SaveSensorInfo";
-            this.BTN_SaveSensorInfo.Size = new System.Drawing.Size(75, 41);
-            this.BTN_SaveSensorInfo.TabIndex = 0;
-            this.BTN_SaveSensorInfo.Text = "Save";
-            this.BTN_SaveSensorInfo.UseVisualStyleBackColor = false;
-            this.BTN_SaveSensorInfo.Visible = false;
-            this.BTN_SaveSensorInfo.Click += new System.EventHandler(this.BTN_SaveSensorInfo_Click);
-            // 
-            // BTN_CancelEditSensorInfo
-            // 
-            this.BTN_CancelEditSensorInfo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.BTN_CancelEditSensorInfo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BTN_CancelEditSensorInfo.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.BTN_CancelEditSensorInfo.Location = new System.Drawing.Point(172, 10);
-            this.BTN_CancelEditSensorInfo.Name = "BTN_CancelEditSensorInfo";
-            this.BTN_CancelEditSensorInfo.Size = new System.Drawing.Size(75, 41);
-            this.BTN_CancelEditSensorInfo.TabIndex = 0;
-            this.BTN_CancelEditSensorInfo.Text = "Cancel";
-            this.BTN_CancelEditSensorInfo.UseVisualStyleBackColor = false;
-            this.BTN_CancelEditSensorInfo.Visible = false;
-            // 
             // Column_Status
             // 
             this.Column_Status.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
@@ -577,6 +530,79 @@ namespace DistributedSystem_Main
             this.Column_SensorType.HeaderText = "SensorType";
             this.Column_SensorType.Name = "Column_SensorType";
             this.Column_SensorType.ReadOnly = true;
+            // 
+            // Panel_EditSensorInfo
+            // 
+            this.Panel_EditSensorInfo.Controls.Add(this.BTN_CancelEditSensorInfo);
+            this.Panel_EditSensorInfo.Controls.Add(this.BTN_SaveSensorInfo);
+            this.Panel_EditSensorInfo.Controls.Add(this.BTN_EditSensorInfo);
+            this.Panel_EditSensorInfo.Dock = System.Windows.Forms.DockStyle.Top;
+            this.Panel_EditSensorInfo.Location = new System.Drawing.Point(3, 3);
+            this.Panel_EditSensorInfo.Name = "Panel_EditSensorInfo";
+            this.Panel_EditSensorInfo.Size = new System.Drawing.Size(1125, 60);
+            this.Panel_EditSensorInfo.TabIndex = 2;
+            // 
+            // BTN_CancelEditSensorInfo
+            // 
+            this.BTN_CancelEditSensorInfo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.BTN_CancelEditSensorInfo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BTN_CancelEditSensorInfo.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.BTN_CancelEditSensorInfo.Location = new System.Drawing.Point(172, 10);
+            this.BTN_CancelEditSensorInfo.Name = "BTN_CancelEditSensorInfo";
+            this.BTN_CancelEditSensorInfo.Size = new System.Drawing.Size(75, 41);
+            this.BTN_CancelEditSensorInfo.TabIndex = 0;
+            this.BTN_CancelEditSensorInfo.Text = "Cancel";
+            this.BTN_CancelEditSensorInfo.UseVisualStyleBackColor = false;
+            this.BTN_CancelEditSensorInfo.Visible = false;
+            // 
+            // BTN_SaveSensorInfo
+            // 
+            this.BTN_SaveSensorInfo.BackColor = System.Drawing.Color.PaleGreen;
+            this.BTN_SaveSensorInfo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BTN_SaveSensorInfo.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.BTN_SaveSensorInfo.Location = new System.Drawing.Point(91, 10);
+            this.BTN_SaveSensorInfo.Name = "BTN_SaveSensorInfo";
+            this.BTN_SaveSensorInfo.Size = new System.Drawing.Size(75, 41);
+            this.BTN_SaveSensorInfo.TabIndex = 0;
+            this.BTN_SaveSensorInfo.Text = "Save";
+            this.BTN_SaveSensorInfo.UseVisualStyleBackColor = false;
+            this.BTN_SaveSensorInfo.Visible = false;
+            this.BTN_SaveSensorInfo.Click += new System.EventHandler(this.BTN_SaveSensorInfo_Click);
+            // 
+            // BTN_EditSensorInfo
+            // 
+            this.BTN_EditSensorInfo.BackColor = System.Drawing.Color.Honeydew;
+            this.BTN_EditSensorInfo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BTN_EditSensorInfo.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.BTN_EditSensorInfo.Location = new System.Drawing.Point(10, 10);
+            this.BTN_EditSensorInfo.Name = "BTN_EditSensorInfo";
+            this.BTN_EditSensorInfo.Size = new System.Drawing.Size(75, 41);
+            this.BTN_EditSensorInfo.TabIndex = 0;
+            this.BTN_EditSensorInfo.Text = "Edit";
+            this.BTN_EditSensorInfo.UseVisualStyleBackColor = false;
+            this.BTN_EditSensorInfo.Click += new System.EventHandler(this.BTN_EditSensorInfo_Click);
+            // 
+            // Panel_Signals_Function
+            // 
+            this.Panel_Signals_Function.Controls.Add(this.PageSwitch_Signals);
+            this.Panel_Signals_Function.Dock = System.Windows.Forms.DockStyle.Top;
+            this.Panel_Signals_Function.Location = new System.Drawing.Point(4, 4);
+            this.Panel_Signals_Function.Name = "Panel_Signals_Function";
+            this.Panel_Signals_Function.Size = new System.Drawing.Size(1123, 43);
+            this.Panel_Signals_Function.TabIndex = 1;
+            // 
+            // PageSwitch_Signals
+            // 
+            this.PageSwitch_Signals.AutoSize = true;
+            this.PageSwitch_Signals.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(92)))), ((int)(((byte)(131)))), ((int)(((byte)(169)))));
+            this.PageSwitch_Signals.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.PageSwitch_Signals.Location = new System.Drawing.Point(4, 8);
+            this.PageSwitch_Signals.Margin = new System.Windows.Forms.Padding(4);
+            this.PageSwitch_Signals.MinimumSize = new System.Drawing.Size(0, 27);
+            this.PageSwitch_Signals.Name = "PageSwitch_Signals";
+            this.PageSwitch_Signals.NowPageNumber = 1;
+            this.PageSwitch_Signals.Size = new System.Drawing.Size(92, 27);
+            this.PageSwitch_Signals.TabIndex = 0;
             // 
             // Form1
             // 
@@ -613,6 +639,8 @@ namespace DistributedSystem_Main
             this.TabPage_SensorInfo.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.DGV_SensorInfo)).EndInit();
             this.Panel_EditSensorInfo.ResumeLayout(false);
+            this.Panel_Signals_Function.ResumeLayout(false);
+            this.Panel_Signals_Function.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -655,6 +683,8 @@ namespace DistributedSystem_Main
         private System.Windows.Forms.DataGridViewTextBoxColumn UnitName;
         private System.Windows.Forms.DataGridViewTextBoxColumn SensorIP;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column_SensorType;
+        private System.Windows.Forms.Panel Panel_Signals_Function;
+        private User_Control.PageSwitch PageSwitch_Signals;
     }
 }
 

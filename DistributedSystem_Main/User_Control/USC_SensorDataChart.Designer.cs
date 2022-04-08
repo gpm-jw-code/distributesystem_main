@@ -1,5 +1,5 @@
 ﻿
-namespace DistributedSystem_Main.Views
+namespace DistributedSystem_Main.User_Control
 {
     partial class USC_SensorDataChart
     {
