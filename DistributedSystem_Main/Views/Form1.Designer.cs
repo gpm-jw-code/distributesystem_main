@@ -30,9 +30,10 @@ namespace DistributedSystem_Main
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.TableLayout_WholeView = new System.Windows.Forms.TableLayoutPanel();
             this.TableLayout_SideBar = new System.Windows.Forms.TableLayoutPanel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.PictureBox_Icon = new System.Windows.Forms.PictureBox();
             this.panMenu = new System.Windows.Forms.Panel();
             this.panStatus = new System.Windows.Forms.Panel();
             this.btnStatus = new System.Windows.Forms.Button();
@@ -40,7 +41,7 @@ namespace DistributedSystem_Main
             this.panLog = new System.Windows.Forms.Panel();
             this.btnLog = new System.Windows.Forms.Button();
             this.pictureBox19 = new System.Windows.Forms.PictureBox();
-            this.Panel_Environment = new System.Windows.Forms.Panel();
+            this.Panel_RawData = new System.Windows.Forms.Panel();
             this.BTN_RawData = new System.Windows.Forms.Button();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
@@ -51,9 +52,11 @@ namespace DistributedSystem_Main
             this.picbMinimun = new System.Windows.Forms.PictureBox();
             this.picbCaptureScreen = new System.Windows.Forms.PictureBox();
             this.picbSizableTool = new System.Windows.Forms.PictureBox();
-            this.TabControl_Main = new System.Windows.Forms.TabControl();
+            this.TabControl_Main = new DistributedSystem_Main.User_Control.TabControlEx();
             this.TabPage_Signal = new System.Windows.Forms.TabPage();
             this.TablePanel_SignalChart = new System.Windows.Forms.TableLayoutPanel();
+            this.Panel_Signals_Function = new System.Windows.Forms.Panel();
+            this.PageSwitch_Signals = new DistributedSystem_Main.User_Control.PageSwitch();
             this.TabPage_Log = new System.Windows.Forms.TabPage();
             this.TabPage_SensorInfo = new System.Windows.Forms.TabPage();
             this.DGV_SensorInfo = new System.Windows.Forms.DataGridView();
@@ -66,17 +69,15 @@ namespace DistributedSystem_Main
             this.BTN_CancelEditSensorInfo = new System.Windows.Forms.Button();
             this.BTN_SaveSensorInfo = new System.Windows.Forms.Button();
             this.BTN_EditSensorInfo = new System.Windows.Forms.Button();
-            this.Panel_Signals_Function = new System.Windows.Forms.Panel();
-            this.PageSwitch_Signals = new DistributedSystem_Main.User_Control.PageSwitch();
             this.TableLayout_WholeView.SuspendLayout();
             this.TableLayout_SideBar.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox_Icon)).BeginInit();
             this.panMenu.SuspendLayout();
             this.panStatus.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox20)).BeginInit();
             this.panLog.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox19)).BeginInit();
-            this.Panel_Environment.SuspendLayout();
+            this.Panel_RawData.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picbOFF)).BeginInit();
@@ -88,17 +89,17 @@ namespace DistributedSystem_Main
             ((System.ComponentModel.ISupportInitialize)(this.picbSizableTool)).BeginInit();
             this.TabControl_Main.SuspendLayout();
             this.TabPage_Signal.SuspendLayout();
+            this.Panel_Signals_Function.SuspendLayout();
             this.TabPage_SensorInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGV_SensorInfo)).BeginInit();
             this.Panel_EditSensorInfo.SuspendLayout();
-            this.Panel_Signals_Function.SuspendLayout();
             this.SuspendLayout();
             // 
             // TableLayout_WholeView
             // 
             this.TableLayout_WholeView.ColumnCount = 2;
-            this.TableLayout_WholeView.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15.3125F));
-            this.TableLayout_WholeView.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 84.6875F));
+            this.TableLayout_WholeView.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 170F));
+            this.TableLayout_WholeView.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.TableLayout_WholeView.Controls.Add(this.TableLayout_SideBar, 0, 0);
             this.TableLayout_WholeView.Controls.Add(this.TabControl_Main, 1, 0);
             this.TableLayout_WholeView.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -113,45 +114,47 @@ namespace DistributedSystem_Main
             // 
             this.TableLayout_SideBar.ColumnCount = 1;
             this.TableLayout_SideBar.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.TableLayout_SideBar.Controls.Add(this.pictureBox1, 0, 0);
+            this.TableLayout_SideBar.Controls.Add(this.PictureBox_Icon, 0, 0);
             this.TableLayout_SideBar.Controls.Add(this.panMenu, 0, 1);
             this.TableLayout_SideBar.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TableLayout_SideBar.Location = new System.Drawing.Point(3, 3);
+            this.TableLayout_SideBar.Location = new System.Drawing.Point(0, 0);
+            this.TableLayout_SideBar.Margin = new System.Windows.Forms.Padding(0);
             this.TableLayout_SideBar.Name = "TableLayout_SideBar";
             this.TableLayout_SideBar.RowCount = 2;
-            this.TableLayout_SideBar.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 18.62745F));
-            this.TableLayout_SideBar.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 81.37255F));
-            this.TableLayout_SideBar.Size = new System.Drawing.Size(201, 704);
+            this.TableLayout_SideBar.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 130F));
+            this.TableLayout_SideBar.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.TableLayout_SideBar.Size = new System.Drawing.Size(170, 710);
             this.TableLayout_SideBar.TabIndex = 7;
             // 
-            // pictureBox1
+            // PictureBox_Icon
             // 
-            this.pictureBox1.BackColor = System.Drawing.Color.White;
-            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.pictureBox1.Location = new System.Drawing.Point(4, 4);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(193, 123);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 4;
-            this.pictureBox1.TabStop = false;
+            this.PictureBox_Icon.BackColor = System.Drawing.Color.White;
+            this.PictureBox_Icon.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.PictureBox_Icon.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PictureBox_Icon.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox_Icon.Image")));
+            this.PictureBox_Icon.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.PictureBox_Icon.Location = new System.Drawing.Point(0, 0);
+            this.PictureBox_Icon.Margin = new System.Windows.Forms.Padding(0);
+            this.PictureBox_Icon.Name = "PictureBox_Icon";
+            this.PictureBox_Icon.Size = new System.Drawing.Size(170, 130);
+            this.PictureBox_Icon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.PictureBox_Icon.TabIndex = 4;
+            this.PictureBox_Icon.TabStop = false;
             // 
             // panMenu
             // 
             this.panMenu.AutoSize = true;
-            this.panMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(54)))), ((int)(((byte)(72)))));
+            this.panMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(82)))));
             this.panMenu.Controls.Add(this.panStatus);
             this.panMenu.Controls.Add(this.panLog);
-            this.panMenu.Controls.Add(this.Panel_Environment);
+            this.panMenu.Controls.Add(this.Panel_RawData);
             this.panMenu.Controls.Add(this.tableLayoutPanel2);
             this.panMenu.Controls.Add(this.tableLayoutPanel1);
             this.panMenu.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panMenu.Location = new System.Drawing.Point(4, 135);
-            this.panMenu.Margin = new System.Windows.Forms.Padding(4);
+            this.panMenu.Location = new System.Drawing.Point(0, 130);
+            this.panMenu.Margin = new System.Windows.Forms.Padding(0);
             this.panMenu.Name = "panMenu";
-            this.panMenu.Size = new System.Drawing.Size(193, 565);
+            this.panMenu.Size = new System.Drawing.Size(170, 580);
             this.panMenu.TabIndex = 6;
             // 
             // panStatus
@@ -162,12 +165,12 @@ namespace DistributedSystem_Main
             this.panStatus.Location = new System.Drawing.Point(0, 113);
             this.panStatus.Margin = new System.Windows.Forms.Padding(4);
             this.panStatus.Name = "panStatus";
-            this.panStatus.Size = new System.Drawing.Size(193, 41);
+            this.panStatus.Size = new System.Drawing.Size(170, 41);
             this.panStatus.TabIndex = 2;
             // 
             // btnStatus
             // 
-            this.btnStatus.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(54)))), ((int)(((byte)(72)))));
+            this.btnStatus.BackColor = System.Drawing.Color.Transparent;
             this.btnStatus.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnStatus.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(26)))), ((int)(((byte)(36)))));
             this.btnStatus.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(82)))), ((int)(((byte)(111)))), ((int)(((byte)(135)))));
@@ -177,10 +180,10 @@ namespace DistributedSystem_Main
             this.btnStatus.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Bold);
             this.btnStatus.ForeColor = System.Drawing.Color.White;
             this.btnStatus.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnStatus.Location = new System.Drawing.Point(40, 0);
+            this.btnStatus.Location = new System.Drawing.Point(30, 0);
             this.btnStatus.Margin = new System.Windows.Forms.Padding(4);
             this.btnStatus.Name = "btnStatus";
-            this.btnStatus.Size = new System.Drawing.Size(153, 41);
+            this.btnStatus.Size = new System.Drawing.Size(140, 41);
             this.btnStatus.TabIndex = 1;
             this.btnStatus.Text = "Status";
             this.btnStatus.UseVisualStyleBackColor = false;
@@ -194,7 +197,7 @@ namespace DistributedSystem_Main
             this.pictureBox20.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.pictureBox20.Location = new System.Drawing.Point(0, 0);
             this.pictureBox20.Name = "pictureBox20";
-            this.pictureBox20.Size = new System.Drawing.Size(40, 41);
+            this.pictureBox20.Size = new System.Drawing.Size(30, 41);
             this.pictureBox20.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox20.TabIndex = 25;
             this.pictureBox20.TabStop = false;
@@ -208,7 +211,7 @@ namespace DistributedSystem_Main
             this.panLog.Location = new System.Drawing.Point(0, 72);
             this.panLog.Margin = new System.Windows.Forms.Padding(4);
             this.panLog.Name = "panLog";
-            this.panLog.Size = new System.Drawing.Size(193, 41);
+            this.panLog.Size = new System.Drawing.Size(170, 41);
             this.panLog.TabIndex = 4;
             // 
             // btnLog
@@ -222,10 +225,10 @@ namespace DistributedSystem_Main
             this.btnLog.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Bold);
             this.btnLog.ForeColor = System.Drawing.Color.White;
             this.btnLog.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnLog.Location = new System.Drawing.Point(40, 0);
+            this.btnLog.Location = new System.Drawing.Point(30, 0);
             this.btnLog.Margin = new System.Windows.Forms.Padding(4);
             this.btnLog.Name = "btnLog";
-            this.btnLog.Size = new System.Drawing.Size(153, 41);
+            this.btnLog.Size = new System.Drawing.Size(140, 41);
             this.btnLog.TabIndex = 1;
             this.btnLog.Text = "Log";
             this.btnLog.UseVisualStyleBackColor = true;
@@ -239,22 +242,22 @@ namespace DistributedSystem_Main
             this.pictureBox19.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.pictureBox19.Location = new System.Drawing.Point(0, 0);
             this.pictureBox19.Name = "pictureBox19";
-            this.pictureBox19.Size = new System.Drawing.Size(40, 41);
+            this.pictureBox19.Size = new System.Drawing.Size(30, 41);
             this.pictureBox19.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox19.TabIndex = 18;
             this.pictureBox19.TabStop = false;
             this.pictureBox19.Tag = "TabPageLOG";
             // 
-            // Panel_Environment
+            // Panel_RawData
             // 
-            this.Panel_Environment.Controls.Add(this.BTN_RawData);
-            this.Panel_Environment.Controls.Add(this.pictureBox2);
-            this.Panel_Environment.Dock = System.Windows.Forms.DockStyle.Top;
-            this.Panel_Environment.Location = new System.Drawing.Point(0, 31);
-            this.Panel_Environment.Margin = new System.Windows.Forms.Padding(4);
-            this.Panel_Environment.Name = "Panel_Environment";
-            this.Panel_Environment.Size = new System.Drawing.Size(193, 41);
-            this.Panel_Environment.TabIndex = 6;
+            this.Panel_RawData.Controls.Add(this.BTN_RawData);
+            this.Panel_RawData.Controls.Add(this.pictureBox2);
+            this.Panel_RawData.Dock = System.Windows.Forms.DockStyle.Top;
+            this.Panel_RawData.Location = new System.Drawing.Point(0, 31);
+            this.Panel_RawData.Margin = new System.Windows.Forms.Padding(4);
+            this.Panel_RawData.Name = "Panel_RawData";
+            this.Panel_RawData.Size = new System.Drawing.Size(170, 41);
+            this.Panel_RawData.TabIndex = 6;
             // 
             // BTN_RawData
             // 
@@ -267,10 +270,10 @@ namespace DistributedSystem_Main
             this.BTN_RawData.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Bold);
             this.BTN_RawData.ForeColor = System.Drawing.Color.White;
             this.BTN_RawData.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.BTN_RawData.Location = new System.Drawing.Point(40, 0);
+            this.BTN_RawData.Location = new System.Drawing.Point(30, 0);
             this.BTN_RawData.Margin = new System.Windows.Forms.Padding(4);
             this.BTN_RawData.Name = "BTN_RawData";
-            this.BTN_RawData.Size = new System.Drawing.Size(153, 41);
+            this.BTN_RawData.Size = new System.Drawing.Size(140, 41);
             this.BTN_RawData.TabIndex = 1;
             this.BTN_RawData.Text = "Raw Data";
             this.BTN_RawData.UseVisualStyleBackColor = true;
@@ -284,7 +287,7 @@ namespace DistributedSystem_Main
             this.pictureBox2.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.pictureBox2.Location = new System.Drawing.Point(0, 0);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(40, 41);
+            this.pictureBox2.Size = new System.Drawing.Size(30, 41);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox2.TabIndex = 20;
             this.pictureBox2.TabStop = false;
@@ -299,12 +302,12 @@ namespace DistributedSystem_Main
             this.tableLayoutPanel2.Controls.Add(this.picbOFF, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.picbRestart, 2, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 491);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 506);
             this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(193, 74);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(170, 74);
             this.tableLayoutPanel2.TabIndex = 5;
             // 
             // picbOFF
@@ -316,7 +319,7 @@ namespace DistributedSystem_Main
             this.picbOFF.Location = new System.Drawing.Point(4, 4);
             this.picbOFF.Margin = new System.Windows.Forms.Padding(4);
             this.picbOFF.Name = "picbOFF";
-            this.picbOFF.Size = new System.Drawing.Size(56, 66);
+            this.picbOFF.Size = new System.Drawing.Size(48, 66);
             this.picbOFF.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picbOFF.TabIndex = 0;
             this.picbOFF.TabStop = false;
@@ -327,10 +330,10 @@ namespace DistributedSystem_Main
             this.picbRestart.Cursor = System.Windows.Forms.Cursors.Hand;
             this.picbRestart.Image = ((System.Drawing.Image)(resources.GetObject("picbRestart.Image")));
             this.picbRestart.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.picbRestart.Location = new System.Drawing.Point(132, 4);
+            this.picbRestart.Location = new System.Drawing.Point(116, 4);
             this.picbRestart.Margin = new System.Windows.Forms.Padding(4);
             this.picbRestart.Name = "picbRestart";
-            this.picbRestart.Size = new System.Drawing.Size(54, 65);
+            this.picbRestart.Size = new System.Drawing.Size(47, 65);
             this.picbRestart.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picbRestart.TabIndex = 1;
             this.picbRestart.TabStop = false;
@@ -353,7 +356,7 @@ namespace DistributedSystem_Main
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(193, 31);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(170, 31);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
             // picbExpand
@@ -364,7 +367,7 @@ namespace DistributedSystem_Main
             this.picbExpand.Location = new System.Drawing.Point(4, 4);
             this.picbExpand.Margin = new System.Windows.Forms.Padding(4);
             this.picbExpand.Name = "picbExpand";
-            this.picbExpand.Size = new System.Drawing.Size(30, 23);
+            this.picbExpand.Size = new System.Drawing.Size(26, 23);
             this.picbExpand.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picbExpand.TabIndex = 0;
             this.picbExpand.TabStop = false;
@@ -374,10 +377,10 @@ namespace DistributedSystem_Main
             this.picbMinimun.Dock = System.Windows.Forms.DockStyle.Fill;
             this.picbMinimun.Image = ((System.Drawing.Image)(resources.GetObject("picbMinimun.Image")));
             this.picbMinimun.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.picbMinimun.Location = new System.Drawing.Point(42, 4);
+            this.picbMinimun.Location = new System.Drawing.Point(38, 4);
             this.picbMinimun.Margin = new System.Windows.Forms.Padding(4);
             this.picbMinimun.Name = "picbMinimun";
-            this.picbMinimun.Size = new System.Drawing.Size(30, 23);
+            this.picbMinimun.Size = new System.Drawing.Size(26, 23);
             this.picbMinimun.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picbMinimun.TabIndex = 1;
             this.picbMinimun.TabStop = false;
@@ -386,10 +389,10 @@ namespace DistributedSystem_Main
             // 
             this.picbCaptureScreen.Image = ((System.Drawing.Image)(resources.GetObject("picbCaptureScreen.Image")));
             this.picbCaptureScreen.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.picbCaptureScreen.Location = new System.Drawing.Point(118, 4);
+            this.picbCaptureScreen.Location = new System.Drawing.Point(106, 4);
             this.picbCaptureScreen.Margin = new System.Windows.Forms.Padding(4);
             this.picbCaptureScreen.Name = "picbCaptureScreen";
-            this.picbCaptureScreen.Size = new System.Drawing.Size(30, 23);
+            this.picbCaptureScreen.Size = new System.Drawing.Size(24, 23);
             this.picbCaptureScreen.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picbCaptureScreen.TabIndex = 2;
             this.picbCaptureScreen.TabStop = false;
@@ -398,41 +401,41 @@ namespace DistributedSystem_Main
             // 
             this.picbSizableTool.Image = ((System.Drawing.Image)(resources.GetObject("picbSizableTool.Image")));
             this.picbSizableTool.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.picbSizableTool.Location = new System.Drawing.Point(80, 4);
+            this.picbSizableTool.Location = new System.Drawing.Point(72, 4);
             this.picbSizableTool.Margin = new System.Windows.Forms.Padding(4);
             this.picbSizableTool.Name = "picbSizableTool";
-            this.picbSizableTool.Size = new System.Drawing.Size(30, 23);
+            this.picbSizableTool.Size = new System.Drawing.Size(24, 23);
             this.picbSizableTool.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picbSizableTool.TabIndex = 3;
             this.picbSizableTool.TabStop = false;
             // 
             // TabControl_Main
             // 
-            this.TabControl_Main.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.TabControl_Main.Appearance = System.Windows.Forms.TabAppearance.FlatButtons;
             this.TabControl_Main.Controls.Add(this.TabPage_Signal);
             this.TabControl_Main.Controls.Add(this.TabPage_Log);
             this.TabControl_Main.Controls.Add(this.TabPage_SensorInfo);
+            this.TabControl_Main.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TabControl_Main.ItemSize = new System.Drawing.Size(50, 0);
-            this.TabControl_Main.Location = new System.Drawing.Point(211, 4);
-            this.TabControl_Main.Margin = new System.Windows.Forms.Padding(4);
+            this.TabControl_Main.Location = new System.Drawing.Point(170, 0);
+            this.TabControl_Main.Margin = new System.Windows.Forms.Padding(0);
             this.TabControl_Main.Name = "TabControl_Main";
             this.TabControl_Main.Padding = new System.Drawing.Point(6, 0);
             this.TabControl_Main.SelectedIndex = 0;
-            this.TabControl_Main.Size = new System.Drawing.Size(1139, 702);
+            this.TabControl_Main.Size = new System.Drawing.Size(1184, 710);
+            this.TabControl_Main.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.TabControl_Main.TabIndex = 5;
             // 
             // TabPage_Signal
             // 
-            this.TabPage_Signal.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(72)))), ((int)(((byte)(93)))));
+            this.TabPage_Signal.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(43)))), ((int)(((byte)(54)))));
             this.TabPage_Signal.Controls.Add(this.TablePanel_SignalChart);
             this.TabPage_Signal.Controls.Add(this.Panel_Signals_Function);
-            this.TabPage_Signal.Location = new System.Drawing.Point(4, 24);
+            this.TabPage_Signal.Location = new System.Drawing.Point(-1, 22);
             this.TabPage_Signal.Margin = new System.Windows.Forms.Padding(4);
             this.TabPage_Signal.Name = "TabPage_Signal";
             this.TabPage_Signal.Padding = new System.Windows.Forms.Padding(4);
-            this.TabPage_Signal.Size = new System.Drawing.Size(1131, 674);
+            this.TabPage_Signal.Size = new System.Drawing.Size(1186, 689);
             this.TabPage_Signal.TabIndex = 1;
             this.TabPage_Signal.Text = "Signal";
             // 
@@ -451,35 +454,57 @@ namespace DistributedSystem_Main
             this.TablePanel_SignalChart.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.TablePanel_SignalChart.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.TablePanel_SignalChart.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.TablePanel_SignalChart.Size = new System.Drawing.Size(1123, 623);
+            this.TablePanel_SignalChart.Size = new System.Drawing.Size(1178, 638);
             this.TablePanel_SignalChart.TabIndex = 0;
+            // 
+            // Panel_Signals_Function
+            // 
+            this.Panel_Signals_Function.Controls.Add(this.PageSwitch_Signals);
+            this.Panel_Signals_Function.Dock = System.Windows.Forms.DockStyle.Top;
+            this.Panel_Signals_Function.Location = new System.Drawing.Point(4, 4);
+            this.Panel_Signals_Function.Name = "Panel_Signals_Function";
+            this.Panel_Signals_Function.Size = new System.Drawing.Size(1178, 43);
+            this.Panel_Signals_Function.TabIndex = 1;
+            // 
+            // PageSwitch_Signals
+            // 
+            this.PageSwitch_Signals.AutoSize = true;
+            this.PageSwitch_Signals.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(92)))), ((int)(((byte)(131)))), ((int)(((byte)(169)))));
+            this.PageSwitch_Signals.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.PageSwitch_Signals.Location = new System.Drawing.Point(4, 8);
+            this.PageSwitch_Signals.Margin = new System.Windows.Forms.Padding(4);
+            this.PageSwitch_Signals.MinimumSize = new System.Drawing.Size(0, 27);
+            this.PageSwitch_Signals.Name = "PageSwitch_Signals";
+            this.PageSwitch_Signals.NowPageNumber = 1;
+            this.PageSwitch_Signals.Size = new System.Drawing.Size(92, 27);
+            this.PageSwitch_Signals.TabIndex = 0;
             // 
             // TabPage_Log
             // 
-            this.TabPage_Log.Location = new System.Drawing.Point(4, 24);
+            this.TabPage_Log.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(43)))), ((int)(((byte)(54)))));
+            this.TabPage_Log.Location = new System.Drawing.Point(-1, 22);
             this.TabPage_Log.Margin = new System.Windows.Forms.Padding(4);
             this.TabPage_Log.Name = "TabPage_Log";
-            this.TabPage_Log.Size = new System.Drawing.Size(1131, 674);
+            this.TabPage_Log.Size = new System.Drawing.Size(1186, 689);
             this.TabPage_Log.TabIndex = 2;
             this.TabPage_Log.Text = "Log";
-            this.TabPage_Log.UseVisualStyleBackColor = true;
             // 
             // TabPage_SensorInfo
             // 
+            this.TabPage_SensorInfo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(7)))), ((int)(((byte)(54)))), ((int)(((byte)(66)))));
             this.TabPage_SensorInfo.Controls.Add(this.DGV_SensorInfo);
             this.TabPage_SensorInfo.Controls.Add(this.Panel_EditSensorInfo);
-            this.TabPage_SensorInfo.Location = new System.Drawing.Point(4, 24);
+            this.TabPage_SensorInfo.Location = new System.Drawing.Point(-1, 22);
             this.TabPage_SensorInfo.Name = "TabPage_SensorInfo";
             this.TabPage_SensorInfo.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage_SensorInfo.Size = new System.Drawing.Size(1131, 674);
+            this.TabPage_SensorInfo.Size = new System.Drawing.Size(1186, 689);
             this.TabPage_SensorInfo.TabIndex = 4;
             this.TabPage_SensorInfo.Text = "SensorInfo";
-            this.TabPage_SensorInfo.UseVisualStyleBackColor = true;
             // 
             // DGV_SensorInfo
             // 
             this.DGV_SensorInfo.AllowUserToAddRows = false;
-            this.DGV_SensorInfo.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(179)))), ((int)(((byte)(217)))), ((int)(((byte)(217)))));
+            this.DGV_SensorInfo.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(7)))), ((int)(((byte)(54)))), ((int)(((byte)(66)))));
             this.DGV_SensorInfo.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DGV_SensorInfo.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column_Status,
@@ -488,12 +513,16 @@ namespace DistributedSystem_Main
             this.SensorIP,
             this.Column_SensorType});
             this.DGV_SensorInfo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.DGV_SensorInfo.Location = new System.Drawing.Point(3, 63);
+            this.DGV_SensorInfo.Location = new System.Drawing.Point(3, 46);
             this.DGV_SensorInfo.Name = "DGV_SensorInfo";
             this.DGV_SensorInfo.RowHeadersVisible = false;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
+            this.DGV_SensorInfo.RowsDefaultCellStyle = dataGridViewCellStyle1;
             this.DGV_SensorInfo.RowTemplate.Height = 24;
             this.DGV_SensorInfo.ShowCellErrors = false;
-            this.DGV_SensorInfo.Size = new System.Drawing.Size(1125, 608);
+            this.DGV_SensorInfo.Size = new System.Drawing.Size(1180, 640);
             this.DGV_SensorInfo.TabIndex = 1;
             // 
             // Column_Status
@@ -533,23 +562,24 @@ namespace DistributedSystem_Main
             // 
             // Panel_EditSensorInfo
             // 
+            this.Panel_EditSensorInfo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(43)))), ((int)(((byte)(54)))));
             this.Panel_EditSensorInfo.Controls.Add(this.BTN_CancelEditSensorInfo);
             this.Panel_EditSensorInfo.Controls.Add(this.BTN_SaveSensorInfo);
             this.Panel_EditSensorInfo.Controls.Add(this.BTN_EditSensorInfo);
             this.Panel_EditSensorInfo.Dock = System.Windows.Forms.DockStyle.Top;
             this.Panel_EditSensorInfo.Location = new System.Drawing.Point(3, 3);
             this.Panel_EditSensorInfo.Name = "Panel_EditSensorInfo";
-            this.Panel_EditSensorInfo.Size = new System.Drawing.Size(1125, 60);
+            this.Panel_EditSensorInfo.Size = new System.Drawing.Size(1180, 43);
             this.Panel_EditSensorInfo.TabIndex = 2;
             // 
             // BTN_CancelEditSensorInfo
             // 
             this.BTN_CancelEditSensorInfo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.BTN_CancelEditSensorInfo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BTN_CancelEditSensorInfo.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.BTN_CancelEditSensorInfo.Location = new System.Drawing.Point(172, 10);
+            this.BTN_CancelEditSensorInfo.Font = new System.Drawing.Font("微軟正黑體", 9.75F);
+            this.BTN_CancelEditSensorInfo.Location = new System.Drawing.Point(139, 7);
             this.BTN_CancelEditSensorInfo.Name = "BTN_CancelEditSensorInfo";
-            this.BTN_CancelEditSensorInfo.Size = new System.Drawing.Size(75, 41);
+            this.BTN_CancelEditSensorInfo.Size = new System.Drawing.Size(60, 30);
             this.BTN_CancelEditSensorInfo.TabIndex = 0;
             this.BTN_CancelEditSensorInfo.Text = "Cancel";
             this.BTN_CancelEditSensorInfo.UseVisualStyleBackColor = false;
@@ -559,10 +589,10 @@ namespace DistributedSystem_Main
             // 
             this.BTN_SaveSensorInfo.BackColor = System.Drawing.Color.PaleGreen;
             this.BTN_SaveSensorInfo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BTN_SaveSensorInfo.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.BTN_SaveSensorInfo.Location = new System.Drawing.Point(91, 10);
+            this.BTN_SaveSensorInfo.Font = new System.Drawing.Font("微軟正黑體", 9.75F);
+            this.BTN_SaveSensorInfo.Location = new System.Drawing.Point(73, 7);
             this.BTN_SaveSensorInfo.Name = "BTN_SaveSensorInfo";
-            this.BTN_SaveSensorInfo.Size = new System.Drawing.Size(75, 41);
+            this.BTN_SaveSensorInfo.Size = new System.Drawing.Size(60, 30);
             this.BTN_SaveSensorInfo.TabIndex = 0;
             this.BTN_SaveSensorInfo.Text = "Save";
             this.BTN_SaveSensorInfo.UseVisualStyleBackColor = false;
@@ -573,42 +603,22 @@ namespace DistributedSystem_Main
             // 
             this.BTN_EditSensorInfo.BackColor = System.Drawing.Color.Honeydew;
             this.BTN_EditSensorInfo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BTN_EditSensorInfo.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.BTN_EditSensorInfo.Location = new System.Drawing.Point(10, 10);
+            this.BTN_EditSensorInfo.Font = new System.Drawing.Font("微軟正黑體", 9.75F);
+            this.BTN_EditSensorInfo.Location = new System.Drawing.Point(7, 7);
             this.BTN_EditSensorInfo.Name = "BTN_EditSensorInfo";
-            this.BTN_EditSensorInfo.Size = new System.Drawing.Size(75, 41);
+            this.BTN_EditSensorInfo.Size = new System.Drawing.Size(60, 30);
             this.BTN_EditSensorInfo.TabIndex = 0;
             this.BTN_EditSensorInfo.Text = "Edit";
             this.BTN_EditSensorInfo.UseVisualStyleBackColor = false;
             this.BTN_EditSensorInfo.Click += new System.EventHandler(this.BTN_EditSensorInfo_Click);
             // 
-            // Panel_Signals_Function
-            // 
-            this.Panel_Signals_Function.Controls.Add(this.PageSwitch_Signals);
-            this.Panel_Signals_Function.Dock = System.Windows.Forms.DockStyle.Top;
-            this.Panel_Signals_Function.Location = new System.Drawing.Point(4, 4);
-            this.Panel_Signals_Function.Name = "Panel_Signals_Function";
-            this.Panel_Signals_Function.Size = new System.Drawing.Size(1123, 43);
-            this.Panel_Signals_Function.TabIndex = 1;
-            // 
-            // PageSwitch_Signals
-            // 
-            this.PageSwitch_Signals.AutoSize = true;
-            this.PageSwitch_Signals.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(92)))), ((int)(((byte)(131)))), ((int)(((byte)(169)))));
-            this.PageSwitch_Signals.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.PageSwitch_Signals.Location = new System.Drawing.Point(4, 8);
-            this.PageSwitch_Signals.Margin = new System.Windows.Forms.Padding(4);
-            this.PageSwitch_Signals.MinimumSize = new System.Drawing.Size(0, 27);
-            this.PageSwitch_Signals.Name = "PageSwitch_Signals";
-            this.PageSwitch_Signals.NowPageNumber = 1;
-            this.PageSwitch_Signals.Size = new System.Drawing.Size(92, 27);
-            this.PageSwitch_Signals.TabIndex = 0;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(82)))));
             this.ClientSize = new System.Drawing.Size(1354, 710);
+            this.ControlBox = false;
             this.Controls.Add(this.TableLayout_WholeView);
             this.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.Margin = new System.Windows.Forms.Padding(4);
@@ -617,13 +627,13 @@ namespace DistributedSystem_Main
             this.TableLayout_WholeView.ResumeLayout(false);
             this.TableLayout_SideBar.ResumeLayout(false);
             this.TableLayout_SideBar.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox_Icon)).EndInit();
             this.panMenu.ResumeLayout(false);
             this.panStatus.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox20)).EndInit();
             this.panLog.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox19)).EndInit();
-            this.Panel_Environment.ResumeLayout(false);
+            this.Panel_RawData.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.tableLayoutPanel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picbOFF)).EndInit();
@@ -636,11 +646,11 @@ namespace DistributedSystem_Main
             this.TabControl_Main.ResumeLayout(false);
             this.TabPage_Signal.ResumeLayout(false);
             this.TabPage_Signal.PerformLayout();
+            this.Panel_Signals_Function.ResumeLayout(false);
+            this.Panel_Signals_Function.PerformLayout();
             this.TabPage_SensorInfo.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.DGV_SensorInfo)).EndInit();
             this.Panel_EditSensorInfo.ResumeLayout(false);
-            this.Panel_Signals_Function.ResumeLayout(false);
-            this.Panel_Signals_Function.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -649,7 +659,7 @@ namespace DistributedSystem_Main
 
         private System.Windows.Forms.TableLayoutPanel TableLayout_WholeView;
         private System.Windows.Forms.TableLayoutPanel TableLayout_SideBar;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox PictureBox_Icon;
         private System.Windows.Forms.Panel panMenu;
         private System.Windows.Forms.Panel panStatus;
         private System.Windows.Forms.Button btnStatus;
@@ -657,7 +667,7 @@ namespace DistributedSystem_Main
         private System.Windows.Forms.Panel panLog;
         private System.Windows.Forms.Button btnLog;
         private System.Windows.Forms.PictureBox pictureBox19;
-        private System.Windows.Forms.Panel Panel_Environment;
+        private System.Windows.Forms.Panel Panel_RawData;
         private System.Windows.Forms.Button BTN_RawData;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
@@ -668,7 +678,7 @@ namespace DistributedSystem_Main
         private System.Windows.Forms.PictureBox picbMinimun;
         private System.Windows.Forms.PictureBox picbCaptureScreen;
         private System.Windows.Forms.PictureBox picbSizableTool;
-        private System.Windows.Forms.TabControl TabControl_Main;
+        private User_Control.TabControlEx TabControl_Main;
         private System.Windows.Forms.TabPage TabPage_Signal;
         private System.Windows.Forms.TableLayoutPanel TablePanel_SignalChart;
         private System.Windows.Forms.TabPage TabPage_Log;

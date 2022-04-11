@@ -22,6 +22,11 @@ namespace DistributedSystem_Main
             Systems.cls_SignalsChartManager.SetChartRowColumnNumber(2, 2);
             Systems.cls_MQTTModule.BuildServer(Staobj.SystemParam.MqttServerIP, Staobj.SystemParam.MqttServerPort);
             SensorDataProcess.cls_txtDataSaver.RootPath = Staobj.SystemParam.DataSaveRootPath;
+            TabControl_Main.ItemSize = new Size(0,1);
+            foreach (TabPage item in TabControl_Main.TabPages)
+            {
+                item.Text = "";
+            }
             EventRegist();
         }
 
@@ -51,16 +56,22 @@ namespace DistributedSystem_Main
         private void BTN_RawData_Click(object sender, EventArgs e)
         {
             TabControl_Main.SelectedTab = TabPage_Signal;
+            Panel_RawData.BackColor = Color.FromArgb(0, 43, 54);
+            panStatus.BackColor = panLog.BackColor = Color.FromArgb(0, 64, 82);
         }
 
         private void btnLog_Click(object sender, EventArgs e)
         {
             TabControl_Main.SelectedTab = TabPage_Log;
+            panLog.BackColor = Color.FromArgb(0, 43, 54);
+            panStatus.BackColor = Panel_RawData.BackColor = Color.FromArgb(0, 64, 82);
         }
 
         private void btnStatus_Click(object sender, EventArgs e)
         {
             TabControl_Main.SelectedTab = TabPage_SensorInfo;
+            panStatus.BackColor = Color.FromArgb(0, 43, 54);
+            Panel_RawData.BackColor = panLog.BackColor = Color.FromArgb(0, 64, 82);
         }
 
         private void picbOFF_Click(object sender, EventArgs e)

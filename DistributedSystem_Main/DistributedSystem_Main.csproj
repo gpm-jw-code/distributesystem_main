@@ -62,6 +62,9 @@
     <Compile Include="User_Control\PageSwitch.Designer.cs">
       <DependentUpon>PageSwitch.cs</DependentUpon>
     </Compile>
+    <Compile Include="User_Control\TabControlNoborder.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Views\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
