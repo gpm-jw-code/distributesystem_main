@@ -161,6 +161,7 @@ namespace DistributedSystem_Main
             // 
             this.panStatus.Controls.Add(this.btnStatus);
             this.panStatus.Controls.Add(this.pictureBox20);
+            this.panStatus.Cursor = System.Windows.Forms.Cursors.Hand;
             this.panStatus.Dock = System.Windows.Forms.DockStyle.Top;
             this.panStatus.Location = new System.Drawing.Point(0, 113);
             this.panStatus.Margin = new System.Windows.Forms.Padding(4);
@@ -175,7 +176,7 @@ namespace DistributedSystem_Main
             this.btnStatus.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(26)))), ((int)(((byte)(36)))));
             this.btnStatus.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(82)))), ((int)(((byte)(111)))), ((int)(((byte)(135)))));
             this.btnStatus.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(63)))), ((int)(((byte)(95)))), ((int)(((byte)(122)))));
-            this.btnStatus.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(78)))), ((int)(((byte)(108)))));
+            this.btnStatus.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(43)))), ((int)(((byte)(54)))));
             this.btnStatus.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnStatus.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Bold);
             this.btnStatus.ForeColor = System.Drawing.Color.White;
@@ -207,6 +208,7 @@ namespace DistributedSystem_Main
             // 
             this.panLog.Controls.Add(this.btnLog);
             this.panLog.Controls.Add(this.pictureBox19);
+            this.panLog.Cursor = System.Windows.Forms.Cursors.Hand;
             this.panLog.Dock = System.Windows.Forms.DockStyle.Top;
             this.panLog.Location = new System.Drawing.Point(0, 72);
             this.panLog.Margin = new System.Windows.Forms.Padding(4);
@@ -220,7 +222,7 @@ namespace DistributedSystem_Main
             this.btnLog.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(26)))), ((int)(((byte)(36)))));
             this.btnLog.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(82)))), ((int)(((byte)(111)))), ((int)(((byte)(135)))));
             this.btnLog.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(63)))), ((int)(((byte)(95)))), ((int)(((byte)(122)))));
-            this.btnLog.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(78)))), ((int)(((byte)(108)))));
+            this.btnLog.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(43)))), ((int)(((byte)(54)))));
             this.btnLog.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLog.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Bold);
             this.btnLog.ForeColor = System.Drawing.Color.White;
@@ -252,6 +254,7 @@ namespace DistributedSystem_Main
             // 
             this.Panel_RawData.Controls.Add(this.BTN_RawData);
             this.Panel_RawData.Controls.Add(this.pictureBox2);
+            this.Panel_RawData.Cursor = System.Windows.Forms.Cursors.Hand;
             this.Panel_RawData.Dock = System.Windows.Forms.DockStyle.Top;
             this.Panel_RawData.Location = new System.Drawing.Point(0, 31);
             this.Panel_RawData.Margin = new System.Windows.Forms.Padding(4);
@@ -265,7 +268,7 @@ namespace DistributedSystem_Main
             this.BTN_RawData.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(26)))), ((int)(((byte)(36)))));
             this.BTN_RawData.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(82)))), ((int)(((byte)(111)))), ((int)(((byte)(135)))));
             this.BTN_RawData.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(63)))), ((int)(((byte)(95)))), ((int)(((byte)(122)))));
-            this.BTN_RawData.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(78)))), ((int)(((byte)(108)))));
+            this.BTN_RawData.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(43)))), ((int)(((byte)(54)))));
             this.BTN_RawData.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BTN_RawData.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Bold);
             this.BTN_RawData.ForeColor = System.Drawing.Color.White;
@@ -575,6 +578,7 @@ namespace DistributedSystem_Main
             // BTN_CancelEditSensorInfo
             // 
             this.BTN_CancelEditSensorInfo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.BTN_CancelEditSensorInfo.Cursor = System.Windows.Forms.Cursors.Hand;
             this.BTN_CancelEditSensorInfo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BTN_CancelEditSensorInfo.Font = new System.Drawing.Font("微軟正黑體", 9.75F);
             this.BTN_CancelEditSensorInfo.Location = new System.Drawing.Point(139, 7);
@@ -588,6 +592,7 @@ namespace DistributedSystem_Main
             // BTN_SaveSensorInfo
             // 
             this.BTN_SaveSensorInfo.BackColor = System.Drawing.Color.PaleGreen;
+            this.BTN_SaveSensorInfo.Cursor = System.Windows.Forms.Cursors.Hand;
             this.BTN_SaveSensorInfo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BTN_SaveSensorInfo.Font = new System.Drawing.Font("微軟正黑體", 9.75F);
             this.BTN_SaveSensorInfo.Location = new System.Drawing.Point(73, 7);
@@ -602,6 +607,7 @@ namespace DistributedSystem_Main
             // BTN_EditSensorInfo
             // 
             this.BTN_EditSensorInfo.BackColor = System.Drawing.Color.Honeydew;
+            this.BTN_EditSensorInfo.Cursor = System.Windows.Forms.Cursors.Hand;
             this.BTN_EditSensorInfo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BTN_EditSensorInfo.Font = new System.Drawing.Font("微軟正黑體", 9.75F);
             this.BTN_EditSensorInfo.Location = new System.Drawing.Point(7, 7);

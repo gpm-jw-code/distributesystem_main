@@ -133,6 +133,11 @@ namespace SensorDataProcess
         public DateTime TimeLog;
         public Action<DataPassRateObject> Event_WriteNewDataLog;
 
+        public DataPassRateObject()
+        {
+            this.TimeLog = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute-1, 0);
+        }
+
         public void AddNewCheckResult(Dictionary<string,bool> Dict_CheckResult,DateTime NewTimelog)
         {
             if (NewTimelog.Minute != this.TimeLog.Minute)

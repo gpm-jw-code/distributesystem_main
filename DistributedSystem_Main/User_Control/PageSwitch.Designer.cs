@@ -65,6 +65,7 @@ namespace DistributedSystem_Main.User_Control
             // BTN_Next
             // 
             this.BTN_Next.BackColor = System.Drawing.Color.Transparent;
+            this.BTN_Next.Cursor = System.Windows.Forms.Cursors.Hand;
             this.BTN_Next.Dock = System.Windows.Forms.DockStyle.Left;
             this.BTN_Next.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BTN_Next.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
@@ -80,6 +81,7 @@ namespace DistributedSystem_Main.User_Control
             // BTN_Preview
             // 
             this.BTN_Preview.BackColor = System.Drawing.Color.Transparent;
+            this.BTN_Preview.Cursor = System.Windows.Forms.Cursors.Hand;
             this.BTN_Preview.Dock = System.Windows.Forms.DockStyle.Left;
             this.BTN_Preview.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BTN_Preview.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));

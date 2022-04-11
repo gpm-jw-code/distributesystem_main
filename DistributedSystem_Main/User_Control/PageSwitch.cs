@@ -57,12 +57,13 @@ namespace DistributedSystem_Main.User_Control
                 {
                     Button NewPageButton = new Button()
                     {
-                        Text = (i+1).ToString(),
-                        Tag = i+1,
-                        Size = new Size(35,BTN_Next.Height),
+                        Text = (i + 1).ToString(),
+                        Tag = i + 1,
+                        Size = new Size(35, BTN_Next.Height),
                         FlatStyle = BTN_Next.FlatStyle,
                         Font = BTN_Next.Font,
-                        Margin = new Padding(0)
+                        Margin = new Padding(0),
+                        Cursor = Cursors.Hand
                     };
                     NewPageButton.Click += BTN_PageChange;
                     List_PageButtons.Add(NewPageButton);
