@@ -562,6 +562,7 @@ namespace DistributedSystem_Main
             // 
             this.BTN_OpenSystemSetting.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("BTN_OpenSystemSetting.BackgroundImage")));
             this.BTN_OpenSystemSetting.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.BTN_OpenSystemSetting.Cursor = System.Windows.Forms.Cursors.Hand;
             this.BTN_OpenSystemSetting.Dock = System.Windows.Forms.DockStyle.Fill;
             this.BTN_OpenSystemSetting.FlatAppearance.BorderSize = 0;
             this.BTN_OpenSystemSetting.FlatStyle = System.Windows.Forms.FlatStyle.Flat;

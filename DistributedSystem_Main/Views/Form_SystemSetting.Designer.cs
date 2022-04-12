@@ -29,7 +29,7 @@ namespace DistributedSystem_Main.Views
         /// </summary>
         private void InitializeComponent()
         {
-            this.TabControl_Main = new DistributedSystem_Main.User_Control.TabControlEx();
+            this.TabControl_Main = new System.Windows.Forms.TabControl();
             this.TabPage_Mqtt = new System.Windows.Forms.TabPage();
             this.TablePanel_MqttClient = new System.Windows.Forms.TableLayoutPanel();
             this.Panel_MqttClientList = new System.Windows.Forms.Panel();
@@ -68,7 +68,7 @@ namespace DistributedSystem_Main.Views
             this.TabControl_Main.Location = new System.Drawing.Point(0, 0);
             this.TabControl_Main.Name = "TabControl_Main";
             this.TabControl_Main.SelectedIndex = 0;
-            this.TabControl_Main.Size = new System.Drawing.Size(675, 534);
+            this.TabControl_Main.Size = new System.Drawing.Size(636, 537);
             this.TabControl_Main.TabIndex = 0;
             // 
             // TabPage_Mqtt
@@ -76,10 +76,10 @@ namespace DistributedSystem_Main.Views
             this.TabPage_Mqtt.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.TabPage_Mqtt.Controls.Add(this.TablePanel_MqttClient);
             this.TabPage_Mqtt.Controls.Add(this.Panel_MqttSetting);
-            this.TabPage_Mqtt.Location = new System.Drawing.Point(-1, 21);
+            this.TabPage_Mqtt.Location = new System.Drawing.Point(4, 26);
             this.TabPage_Mqtt.Name = "TabPage_Mqtt";
             this.TabPage_Mqtt.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage_Mqtt.Size = new System.Drawing.Size(677, 514);
+            this.TabPage_Mqtt.Size = new System.Drawing.Size(628, 507);
             this.TabPage_Mqtt.TabIndex = 0;
             this.TabPage_Mqtt.Text = "Mqtt";
             // 
@@ -98,7 +98,7 @@ namespace DistributedSystem_Main.Views
             this.TablePanel_MqttClient.Name = "TablePanel_MqttClient";
             this.TablePanel_MqttClient.RowCount = 1;
             this.TablePanel_MqttClient.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.TablePanel_MqttClient.Size = new System.Drawing.Size(662, 341);
+            this.TablePanel_MqttClient.Size = new System.Drawing.Size(623, 344);
             this.TablePanel_MqttClient.TabIndex = 6;
             // 
             // Panel_MqttClientList
@@ -108,7 +108,7 @@ namespace DistributedSystem_Main.Views
             this.Panel_MqttClientList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Panel_MqttClientList.Location = new System.Drawing.Point(3, 3);
             this.Panel_MqttClientList.Name = "Panel_MqttClientList";
-            this.Panel_MqttClientList.Size = new System.Drawing.Size(214, 335);
+            this.Panel_MqttClientList.Size = new System.Drawing.Size(214, 338);
             this.Panel_MqttClientList.TabIndex = 0;
             // 
             // ListBox_ClientList
@@ -123,7 +123,7 @@ namespace DistributedSystem_Main.Views
             "Temperature"});
             this.ListBox_ClientList.Location = new System.Drawing.Point(0, 31);
             this.ListBox_ClientList.Name = "ListBox_ClientList";
-            this.ListBox_ClientList.Size = new System.Drawing.Size(214, 304);
+            this.ListBox_ClientList.Size = new System.Drawing.Size(214, 307);
             this.ListBox_ClientList.TabIndex = 1;
             this.ListBox_ClientList.SelectedIndexChanged += new System.EventHandler(this.ListBox_ClientList_SelectedIndexChanged);
             // 
@@ -152,16 +152,18 @@ namespace DistributedSystem_Main.Views
             this.Panel_ClientInfo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Panel_ClientInfo.Location = new System.Drawing.Point(223, 3);
             this.Panel_ClientInfo.Name = "Panel_ClientInfo";
-            this.Panel_ClientInfo.Size = new System.Drawing.Size(436, 335);
+            this.Panel_ClientInfo.Size = new System.Drawing.Size(397, 338);
             this.Panel_ClientInfo.TabIndex = 1;
             // 
             // Panel_MqttClientTopics
             // 
-            this.Panel_MqttClientTopics.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.Panel_MqttClientTopics.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.Panel_MqttClientTopics.AutoScroll = true;
             this.Panel_MqttClientTopics.Location = new System.Drawing.Point(30, 189);
             this.Panel_MqttClientTopics.Name = "Panel_MqttClientTopics";
-            this.Panel_MqttClientTopics.Size = new System.Drawing.Size(376, 142);
+            this.Panel_MqttClientTopics.Size = new System.Drawing.Size(337, 141);
             this.Panel_MqttClientTopics.TabIndex = 7;
             // 
             // LAB_MqttClientConnectTime
@@ -173,7 +175,7 @@ namespace DistributedSystem_Main.Views
             this.LAB_MqttClientConnectTime.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.LAB_MqttClientConnectTime.Location = new System.Drawing.Point(30, 114);
             this.LAB_MqttClientConnectTime.Name = "LAB_MqttClientConnectTime";
-            this.LAB_MqttClientConnectTime.Size = new System.Drawing.Size(376, 36);
+            this.LAB_MqttClientConnectTime.Size = new System.Drawing.Size(337, 36);
             this.LAB_MqttClientConnectTime.TabIndex = 6;
             this.LAB_MqttClientConnectTime.Text = "yyyy/MM/dd HH:mm:ss";
             this.LAB_MqttClientConnectTime.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -187,7 +189,7 @@ namespace DistributedSystem_Main.Views
             this.LAB_MqttClientID.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.LAB_MqttClientID.Location = new System.Drawing.Point(30, 31);
             this.LAB_MqttClientID.Name = "LAB_MqttClientID";
-            this.LAB_MqttClientID.Size = new System.Drawing.Size(376, 36);
+            this.LAB_MqttClientID.Size = new System.Drawing.Size(337, 36);
             this.LAB_MqttClientID.TabIndex = 6;
             this.LAB_MqttClientID.Text = "Client ID";
             this.LAB_MqttClientID.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -314,10 +316,10 @@ namespace DistributedSystem_Main.Views
             // 
             // tabPage2
             // 
-            this.tabPage2.Location = new System.Drawing.Point(-1, 21);
+            this.tabPage2.Location = new System.Drawing.Point(4, 26);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(677, 514);
+            this.tabPage2.Size = new System.Drawing.Size(667, 504);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -327,7 +329,7 @@ namespace DistributedSystem_Main.Views
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.ClientSize = new System.Drawing.Size(675, 534);
+            this.ClientSize = new System.Drawing.Size(636, 537);
             this.Controls.Add(this.TabControl_Main);
             this.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -349,7 +351,7 @@ namespace DistributedSystem_Main.Views
 
         #endregion
 
-        private User_Control.TabControlEx TabControl_Main;
+        private System.Windows.Forms.TabControl TabControl_Main;
         private System.Windows.Forms.TabPage TabPage_Mqtt;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TableLayoutPanel TablePanel_MqttClient;
