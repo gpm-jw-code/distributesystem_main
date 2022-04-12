@@ -53,6 +53,11 @@ namespace DistributedSystem_Main
 
 
         #region SideBar
+        private void BTN_OpenSystemSetting_Click(object sender, EventArgs e)
+        {
+            Views.Form_SystemSetting SettingForm = new Views.Form_SystemSetting();
+            SettingForm.ShowDialog();
+        }
         private void BTN_RawData_Click(object sender, EventArgs e)
         {
             TabControl_Main.SelectedTab = TabPage_Signal;
@@ -76,14 +81,18 @@ namespace DistributedSystem_Main
 
         private void picbOFF_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("即將關閉系統", "Exit", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            this.Close();
+        }
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (MessageBox.Show("即將關閉系統", "Exit", MessageBoxButtons.YesNo) != DialogResult.Yes)
             {
-                this.Close();
+                e.Cancel = true;
             }
         }
         #endregion
 
-        #region Chart
+        #region Raw Data Char
 
         private void AddNewSensorToUI(string SensorName)
         {
@@ -163,5 +172,6 @@ namespace DistributedSystem_Main
             SetDGVSensorInfoEditEnable(false);
         }
         #endregion
+
     }
 }

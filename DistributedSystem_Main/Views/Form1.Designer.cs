@@ -47,11 +47,6 @@ namespace DistributedSystem_Main
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.picbOFF = new System.Windows.Forms.PictureBox();
             this.picbRestart = new System.Windows.Forms.PictureBox();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.picbExpand = new System.Windows.Forms.PictureBox();
-            this.picbMinimun = new System.Windows.Forms.PictureBox();
-            this.picbCaptureScreen = new System.Windows.Forms.PictureBox();
-            this.picbSizableTool = new System.Windows.Forms.PictureBox();
             this.TabControl_Main = new DistributedSystem_Main.User_Control.TabControlEx();
             this.TabPage_Signal = new System.Windows.Forms.TabPage();
             this.TablePanel_SignalChart = new System.Windows.Forms.TableLayoutPanel();
@@ -69,6 +64,8 @@ namespace DistributedSystem_Main
             this.BTN_CancelEditSensorInfo = new System.Windows.Forms.Button();
             this.BTN_SaveSensorInfo = new System.Windows.Forms.Button();
             this.BTN_EditSensorInfo = new System.Windows.Forms.Button();
+            this.TablePanel_SideBarFunctions = new System.Windows.Forms.TableLayoutPanel();
+            this.BTN_OpenSystemSetting = new System.Windows.Forms.Button();
             this.TableLayout_WholeView.SuspendLayout();
             this.TableLayout_SideBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox_Icon)).BeginInit();
@@ -82,17 +79,13 @@ namespace DistributedSystem_Main
             this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picbOFF)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picbRestart)).BeginInit();
-            this.tableLayoutPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picbExpand)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picbMinimun)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picbCaptureScreen)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picbSizableTool)).BeginInit();
             this.TabControl_Main.SuspendLayout();
             this.TabPage_Signal.SuspendLayout();
             this.Panel_Signals_Function.SuspendLayout();
             this.TabPage_SensorInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGV_SensorInfo)).BeginInit();
             this.Panel_EditSensorInfo.SuspendLayout();
+            this.TablePanel_SideBarFunctions.SuspendLayout();
             this.SuspendLayout();
             // 
             // TableLayout_WholeView
@@ -149,7 +142,7 @@ namespace DistributedSystem_Main
             this.panMenu.Controls.Add(this.panLog);
             this.panMenu.Controls.Add(this.Panel_RawData);
             this.panMenu.Controls.Add(this.tableLayoutPanel2);
-            this.panMenu.Controls.Add(this.tableLayoutPanel1);
+            this.panMenu.Controls.Add(this.TablePanel_SideBarFunctions);
             this.panMenu.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panMenu.Location = new System.Drawing.Point(0, 130);
             this.panMenu.Margin = new System.Windows.Forms.Padding(0);
@@ -340,77 +333,6 @@ namespace DistributedSystem_Main
             this.picbRestart.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picbRestart.TabIndex = 1;
             this.picbRestart.TabStop = false;
-            // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.ColumnCount = 5;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.Controls.Add(this.picbExpand, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.picbMinimun, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.picbCaptureScreen, 3, 0);
-            this.tableLayoutPanel1.Controls.Add(this.picbSizableTool, 2, 0);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(170, 31);
-            this.tableLayoutPanel1.TabIndex = 1;
-            // 
-            // picbExpand
-            // 
-            this.picbExpand.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.picbExpand.Image = ((System.Drawing.Image)(resources.GetObject("picbExpand.Image")));
-            this.picbExpand.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.picbExpand.Location = new System.Drawing.Point(4, 4);
-            this.picbExpand.Margin = new System.Windows.Forms.Padding(4);
-            this.picbExpand.Name = "picbExpand";
-            this.picbExpand.Size = new System.Drawing.Size(26, 23);
-            this.picbExpand.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picbExpand.TabIndex = 0;
-            this.picbExpand.TabStop = false;
-            // 
-            // picbMinimun
-            // 
-            this.picbMinimun.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.picbMinimun.Image = ((System.Drawing.Image)(resources.GetObject("picbMinimun.Image")));
-            this.picbMinimun.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.picbMinimun.Location = new System.Drawing.Point(38, 4);
-            this.picbMinimun.Margin = new System.Windows.Forms.Padding(4);
-            this.picbMinimun.Name = "picbMinimun";
-            this.picbMinimun.Size = new System.Drawing.Size(26, 23);
-            this.picbMinimun.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picbMinimun.TabIndex = 1;
-            this.picbMinimun.TabStop = false;
-            // 
-            // picbCaptureScreen
-            // 
-            this.picbCaptureScreen.Image = ((System.Drawing.Image)(resources.GetObject("picbCaptureScreen.Image")));
-            this.picbCaptureScreen.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.picbCaptureScreen.Location = new System.Drawing.Point(106, 4);
-            this.picbCaptureScreen.Margin = new System.Windows.Forms.Padding(4);
-            this.picbCaptureScreen.Name = "picbCaptureScreen";
-            this.picbCaptureScreen.Size = new System.Drawing.Size(24, 23);
-            this.picbCaptureScreen.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picbCaptureScreen.TabIndex = 2;
-            this.picbCaptureScreen.TabStop = false;
-            // 
-            // picbSizableTool
-            // 
-            this.picbSizableTool.Image = ((System.Drawing.Image)(resources.GetObject("picbSizableTool.Image")));
-            this.picbSizableTool.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.picbSizableTool.Location = new System.Drawing.Point(72, 4);
-            this.picbSizableTool.Margin = new System.Windows.Forms.Padding(4);
-            this.picbSizableTool.Name = "picbSizableTool";
-            this.picbSizableTool.Size = new System.Drawing.Size(24, 23);
-            this.picbSizableTool.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picbSizableTool.TabIndex = 3;
-            this.picbSizableTool.TabStop = false;
             // 
             // TabControl_Main
             // 
@@ -618,18 +540,50 @@ namespace DistributedSystem_Main
             this.BTN_EditSensorInfo.UseVisualStyleBackColor = false;
             this.BTN_EditSensorInfo.Click += new System.EventHandler(this.BTN_EditSensorInfo_Click);
             // 
+            // TablePanel_SideBarFunctions
+            // 
+            this.TablePanel_SideBarFunctions.ColumnCount = 5;
+            this.TablePanel_SideBarFunctions.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.TablePanel_SideBarFunctions.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.TablePanel_SideBarFunctions.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.TablePanel_SideBarFunctions.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.TablePanel_SideBarFunctions.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.TablePanel_SideBarFunctions.Controls.Add(this.BTN_OpenSystemSetting, 0, 0);
+            this.TablePanel_SideBarFunctions.Dock = System.Windows.Forms.DockStyle.Top;
+            this.TablePanel_SideBarFunctions.Location = new System.Drawing.Point(0, 0);
+            this.TablePanel_SideBarFunctions.Margin = new System.Windows.Forms.Padding(4);
+            this.TablePanel_SideBarFunctions.Name = "TablePanel_SideBarFunctions";
+            this.TablePanel_SideBarFunctions.RowCount = 1;
+            this.TablePanel_SideBarFunctions.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.TablePanel_SideBarFunctions.Size = new System.Drawing.Size(170, 31);
+            this.TablePanel_SideBarFunctions.TabIndex = 1;
+            // 
+            // BTN_OpenSystemSetting
+            // 
+            this.BTN_OpenSystemSetting.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("BTN_OpenSystemSetting.BackgroundImage")));
+            this.BTN_OpenSystemSetting.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.BTN_OpenSystemSetting.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.BTN_OpenSystemSetting.FlatAppearance.BorderSize = 0;
+            this.BTN_OpenSystemSetting.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BTN_OpenSystemSetting.Location = new System.Drawing.Point(3, 3);
+            this.BTN_OpenSystemSetting.Name = "BTN_OpenSystemSetting";
+            this.BTN_OpenSystemSetting.Size = new System.Drawing.Size(28, 25);
+            this.BTN_OpenSystemSetting.TabIndex = 0;
+            this.BTN_OpenSystemSetting.UseVisualStyleBackColor = true;
+            this.BTN_OpenSystemSetting.Click += new System.EventHandler(this.BTN_OpenSystemSetting_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(82)))));
             this.ClientSize = new System.Drawing.Size(1354, 710);
-            this.ControlBox = false;
             this.Controls.Add(this.TableLayout_WholeView);
             this.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Control Center";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.TableLayout_WholeView.ResumeLayout(false);
             this.TableLayout_SideBar.ResumeLayout(false);
             this.TableLayout_SideBar.PerformLayout();
@@ -644,11 +598,6 @@ namespace DistributedSystem_Main
             this.tableLayoutPanel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picbOFF)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picbRestart)).EndInit();
-            this.tableLayoutPanel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.picbExpand)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picbMinimun)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picbCaptureScreen)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picbSizableTool)).EndInit();
             this.TabControl_Main.ResumeLayout(false);
             this.TabPage_Signal.ResumeLayout(false);
             this.TabPage_Signal.PerformLayout();
@@ -657,6 +606,7 @@ namespace DistributedSystem_Main
             this.TabPage_SensorInfo.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.DGV_SensorInfo)).EndInit();
             this.Panel_EditSensorInfo.ResumeLayout(false);
+            this.TablePanel_SideBarFunctions.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -679,11 +629,6 @@ namespace DistributedSystem_Main
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.PictureBox picbOFF;
         private System.Windows.Forms.PictureBox picbRestart;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.PictureBox picbExpand;
-        private System.Windows.Forms.PictureBox picbMinimun;
-        private System.Windows.Forms.PictureBox picbCaptureScreen;
-        private System.Windows.Forms.PictureBox picbSizableTool;
         private User_Control.TabControlEx TabControl_Main;
         private System.Windows.Forms.TabPage TabPage_Signal;
         private System.Windows.Forms.TableLayoutPanel TablePanel_SignalChart;
@@ -701,6 +646,8 @@ namespace DistributedSystem_Main
         private System.Windows.Forms.DataGridViewTextBoxColumn Column_SensorType;
         private System.Windows.Forms.Panel Panel_Signals_Function;
         private User_Control.PageSwitch PageSwitch_Signals;
+        private System.Windows.Forms.TableLayoutPanel TablePanel_SideBarFunctions;
+        private System.Windows.Forms.Button BTN_OpenSystemSetting;
     }
 }
 

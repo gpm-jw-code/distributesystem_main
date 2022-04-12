@@ -87,6 +87,12 @@
     <Compile Include="User_Control\USC_SensorDataChart.Designer.cs">
       <DependentUpon>USC_SensorDataChart.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\Form_SystemSetting.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Form_SystemSetting.Designer.cs">
+      <DependentUpon>Form_SystemSetting.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="User_Control\PageSwitch.resx">
       <DependentUpon>PageSwitch.cs</DependentUpon>
     </EmbeddedResource>
@@ -107,6 +113,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="User_Control\USC_SensorDataChart.resx">
       <DependentUpon>USC_SensorDataChart.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Form_SystemSetting.resx">
+      <DependentUpon>Form_SystemSetting.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

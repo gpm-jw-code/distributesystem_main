@@ -32,6 +32,14 @@ namespace DistributedSystem_Main.Systems
                 DataSaveRootPath = SystemIniFile.IniReadAndWriteValue("Path", "RootPath", System.IO.Path.Combine(RootDirectory, "GPM", "DistributeSystem"));
 
             }
+
+            public static async void SaveMqttParam()
+            {
+                string SectionName = "MqttSetting";
+                Ini.IniFile SystemIniFile = new Ini.IniFile(System.IO.Path.Combine("Parameters", "SystemParameters.ini"));
+                await SystemIniFile.IniWriteValue(SectionName, "ServerIP", MqttServerIP);
+                await SystemIniFile.IniWriteValue(SectionName, "ServerPort", MqttServerPort.ToString());
+            }
         }
 
 

@@ -16,6 +16,8 @@ namespace DistributedSystem_Main.Systems
     {
 
         private static IMqttServer DataMqttServer = null;
+        public static List<string> List_TopicNames = new List<string>();
+
         public static async void BuildServer(string IP, int Port)
         {
             try
@@ -34,6 +36,30 @@ namespace DistributedSystem_Main.Systems
             {
 
             }
+        }
+
+        public static async Task<bool> DestoryServer()
+        {
+            if (!DataMqttServer.IsStarted)
+            {
+                return true;
+            }
+            try
+            {
+                await DataMqttServer.StopAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public static List<MQTTnet.Server.Status.MqttClientStatus> GetClientList()
+        {
+            var Clients = DataMqttServer.GetClientStatusAsync();
+            List<MQTTnet.Server.Status.MqttClientStatus> List_MqttClientStatus = Clients.Result.Cast<MQTTnet.Server.Status.MqttClientStatus>().ToList();
+            return List_MqttClientStatus;
         }
 
         private static void ClientConnectEvent(MqttServerClientConnectedEventArgs obj)
@@ -59,6 +85,10 @@ namespace DistributedSystem_Main.Systems
         {
             string TopicName = ReceivedMessage.ApplicationMessage.Topic;
             string Data = Encoding.UTF8.GetString(ReceivedMessage.ApplicationMessage.Payload);
+            if (!List_TopicNames.Contains(TopicName))
+            {
+                List_TopicNames.Add(TopicName); 
+            }
 
             if (TopicName.ToUpper().Contains("SensorList".ToUpper()))
             {
