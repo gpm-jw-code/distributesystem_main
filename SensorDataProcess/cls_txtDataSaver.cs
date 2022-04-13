@@ -21,6 +21,14 @@ namespace SensorDataProcess
             }
         }
 
+        private string HourlyRawDataPath
+        {
+            get
+            {
+                return Path.Combine(RootPath, "HourlyRawData", SensorInfo.SensorName);
+            }
+        }
+
         private string LogPath
         {
             get
@@ -32,15 +40,22 @@ namespace SensorDataProcess
         public cls_txtDataSaver(SensorInfo SensorInfo)
         {
             this.SensorInfo = SensorInfo;
+            CheckDirectoryPath();
+        }
+
+        private void CheckDirectoryPath()
+        {
             if (!Directory.Exists(RawDataPath))
                 Directory.CreateDirectory(RawDataPath);
             if (!Directory.Exists(LogPath))
                 Directory.CreateDirectory(LogPath);
+            if (!Directory.Exists(HourlyRawDataPath))
+                Directory.CreateDirectory(HourlyRawDataPath);
         }
 
         public void WriteRawData(Dictionary<string, double> NewData,DateTime TimeLog)
         {
-            string FileName = Path.Combine(RawDataPath, $"{TimeLog:yyyyMMdd_HH}.csv");
+            string FileName = Path.Combine(RawDataPath, $"{TimeLog:yyyyMMdd}.csv");
             bool IsNeedHeader = !File.Exists(FileName);
             try
             {
@@ -59,10 +74,32 @@ namespace SensorDataProcess
             }
             catch (IOException exp)
             {
-                if (!Directory.Exists(RawDataPath))
-                    Directory.CreateDirectory(RawDataPath);
-                if (!Directory.Exists(LogPath))
-                    Directory.CreateDirectory(LogPath);
+                CheckDirectoryPath();
+            }
+        }
+
+        public void WriteHourlyRawData(Dictionary<string,double> NewData,DateTime TimeLog)
+        {
+            string FileName = Path.Combine(HourlyRawDataPath, $"{TimeLog:yyyyMMdd}.csv");
+            bool IsNeedHeader = !File.Exists(FileName);
+            try
+            {
+                using (FileStream FS = new FileStream(FileName, FileMode.Append, FileAccess.Write, FileShare.Read))
+                {
+                    using (StreamWriter SW = new StreamWriter(FS))
+                    {
+                        if (IsNeedHeader)
+                        {
+                            SW.WriteLine(SensorInfoString);
+                            SW.WriteLine(RawDataHeader(NewData.Keys));
+                        }
+                        SW.WriteLine(RawDataString(NewData.Values, TimeLog));
+                    }
+                }
+            }
+            catch (IOException exp)
+            {
+                CheckDirectoryPath();
             }
         }
 
@@ -87,10 +124,7 @@ namespace SensorDataProcess
             }
             catch (IOException exp)
             {
-                if (!Directory.Exists(RawDataPath))
-                    Directory.CreateDirectory(RawDataPath);
-                if (!Directory.Exists(LogPath))
-                    Directory.CreateDirectory(LogPath);
+                CheckDirectoryPath();
             }
 
         }
@@ -144,7 +178,7 @@ namespace SensorDataProcess
             {
                 LogString += $"{PassResult.Dict_PassCount[item]},";
                 LogString += $"{PassResult.Dict_TotalCount[item]},";
-                LogString += $"{(PassResult.Dict_PassCount[item] / PassResult.Dict_TotalCount[item]):F2}";
+                LogString += $"{(PassResult.Dict_PassCount[item] / PassResult.Dict_TotalCount[item]):F2},";
             }
             return LogString;
         }

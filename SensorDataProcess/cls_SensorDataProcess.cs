@@ -34,6 +34,7 @@ namespace SensorDataProcess
         public Dictionary<string, double> Dict_DataThreshold = new Dictionary<string, double>();
 
         private Dictionary<string, Queue<double>> Dict_SensorDataSeries = new Dictionary<string, Queue<double>>();
+        private cls_HourlyData HourlyData;
         private Queue<DateTime> Queue_TimeLog = new Queue<DateTime>();
         private DataPassRateObject PassRateObjejct;
 
@@ -47,30 +48,33 @@ namespace SensorDataProcess
 
         public cls_SensorDataProcess(string IP, int Port,string SensorName,string SensorType, string EQName = null, string UnitName = null)
         {
-            if (IP == "127.0.0.1")
-                this.SensorInfo.SensorName = $"{IP}_{Port}";
             SensorInfo.IP = IP;
             SensorInfo.Port = Port;
             SensorInfo.SensorName = SensorName;
             SensorInfo.SensorType = SensorType;
             SensorInfo.EQName = EQName ?? "";
             SensorInfo.UnitName = UnitName ?? "";
-            TxtDataSaver = new cls_txtDataSaver(SensorInfo);
-            PassRateObjejct = new DataPassRateObject();
+            SensorObjectsInitial(SensorInfo);
         }
 
         public cls_SensorDataProcess(SensorInfo NewSensorInfo)
         {
+            SensorObjectsInitial(NewSensorInfo);
+        }
+
+        private void SensorObjectsInitial(SensorInfo NewSensorInfo)
+        {
             SensorInfo = NewSensorInfo;
             TxtDataSaver = new cls_txtDataSaver(SensorInfo);
-            PassRateObjejct = new DataPassRateObject();
-            PassRateObjejct.Event_WriteNewDataLog += TxtDataSaver.WritePassRateLog;
+            PassRateObjejct = new DataPassRateObject(TxtDataSaver);
+            HourlyData = new cls_HourlyData(TxtDataSaver);
         }
 
 
         public void ImportNewSensorData(Dictionary<string,double> Dict_NewData,DateTime TimeLog)
         {
             TxtDataSaver.WriteRawData(Dict_NewData, TimeLog);
+            HourlyData.ImportNewData(Dict_NewData, TimeLog);
             var CheckResult = CheckThreshold(Dict_NewData,TimeLog);
             Queue_TimeLog.Enqueue(TimeLog);
             foreach (var item in Dict_NewData)
@@ -125,37 +129,72 @@ namespace SensorDataProcess
         }
 
     }
+    public class cls_HourlyData
+    {
+        private Dictionary<string, List<double>> Dict_HourlyData = new Dictionary<string, List<double>>();
+        private DateTime TimeLog = default;
+        private cls_txtDataSaver DataSaver;
+
+        public cls_HourlyData(cls_txtDataSaver DataSaver)
+        {
+            Dict_HourlyData = new Dictionary<string, List<double>>();
+            this.TimeLog = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, 0, 0 );
+            this.DataSaver = DataSaver;
+        }
+
+        public void ImportNewData(Dictionary<string,double> NewData,DateTime TimeLog)
+        {
+            if (TimeLog.Hour != this.TimeLog.Hour)
+            {
+                var AverageData = Dict_HourlyData.Select(item => new KeyValuePair<string, double>(item.Key, item.Value.Average())).ToDictionary(item=>item.Key,item=>item.Value);
+                DataSaver.WriteHourlyRawData(AverageData, TimeLog);
+                Dict_HourlyData = new Dictionary<string, List<double>>();
+                this.TimeLog = new DateTime(TimeLog.Year, TimeLog.Month, TimeLog.Day, TimeLog.Hour, 0, 0);
+            }
+
+            foreach (var item in NewData)
+            {
+                if (!Dict_HourlyData.ContainsKey(item.Key))
+                {
+                    Dict_HourlyData.Add(item.Key, new List<double>());
+                }
+                Dict_HourlyData[item.Key].Add(item.Value);
+            }
+        }
+
+    }
 
     public class DataPassRateObject
     {
         public Dictionary<string, double> Dict_TotalCount = new Dictionary<string, double>();
         public Dictionary<string, double> Dict_PassCount = new Dictionary<string, double>();
         public DateTime TimeLog;
-        public Action<DataPassRateObject> Event_WriteNewDataLog;
+        private cls_txtDataSaver TXT_DataSaver;
 
-        public DataPassRateObject()
+        public DataPassRateObject(cls_txtDataSaver DataSaver)
         {
-            this.TimeLog = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute-1, 0);
+            this.TimeLog = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, 0);
+            this.TXT_DataSaver = DataSaver;
         }
 
         public void AddNewCheckResult(Dictionary<string,bool> Dict_CheckResult,DateTime NewTimelog)
         {
             if (NewTimelog.Minute != this.TimeLog.Minute)
             {
-                Event_WriteNewDataLog?.Invoke(this);
+                TXT_DataSaver.WritePassRateLog(this);
 
                 Dict_TotalCount = new Dictionary<string, double>();
                 Dict_PassCount = new Dictionary<string, double>();
-                foreach (var item in Dict_CheckResult.Keys)
-                {
-                    Dict_TotalCount.Add(item,0);
-                    Dict_PassCount.Add(item, 0);
-                }
                 this.TimeLog = new DateTime(NewTimelog.Year, NewTimelog.Month, NewTimelog.Day, NewTimelog.Hour, NewTimelog.Minute,0);
             }
 
             foreach (var item in Dict_CheckResult)
             {
+                if (!Dict_TotalCount.ContainsKey(item.Key))
+                {
+                    Dict_TotalCount.Add(item.Key, 0);
+                    Dict_PassCount.Add(item.Key, 0);
+                }
                 Dict_TotalCount[item.Key] += 1;
                 if (item.Value)
                 {
