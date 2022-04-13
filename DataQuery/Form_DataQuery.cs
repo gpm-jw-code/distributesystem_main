@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace DataQuery
 {
-    public partial class Form_Main : Form
+    public partial class Form_DataQuery : Form
     {
-        public Form_Main()
+        public Form_DataQuery()
         {
             InitializeComponent();
         }

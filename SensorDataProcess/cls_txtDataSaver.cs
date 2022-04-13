@@ -17,7 +17,8 @@ namespace SensorDataProcess
         {
             get
             {
-                return Path.Combine(RootPath, "RawData", SensorInfo.SensorName);
+                var Edge_SensorNameArray = SensorInfo.SensorName.Split('-');
+                return Path.Combine(RootPath, "RawData",Edge_SensorNameArray[0],Edge_SensorNameArray[1]);
             }
         }
 
@@ -25,7 +26,8 @@ namespace SensorDataProcess
         {
             get
             {
-                return Path.Combine(RootPath, "HourlyRawData", SensorInfo.SensorName);
+                var Edge_SensorNameArray = SensorInfo.SensorName.Split('-');
+                return Path.Combine(RootPath, "HourlyRawData", Edge_SensorNameArray[0], Edge_SensorNameArray[1]);
             }
         }
 
@@ -33,7 +35,8 @@ namespace SensorDataProcess
         {
             get
             {
-                return Path.Combine(RootPath, "Log", SensorInfo.SensorName);
+                var Edge_SensorNameArray = SensorInfo.SensorName.Split('-');
+                return Path.Combine(RootPath, "Log", Edge_SensorNameArray[0], Edge_SensorNameArray[1]);
             }
         }
 

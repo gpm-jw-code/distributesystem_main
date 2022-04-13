@@ -85,6 +85,7 @@ namespace DistributedSystem_Main.Systems
         {
             string TopicName = ReceivedMessage.ApplicationMessage.Topic;
             string Data = Encoding.UTF8.GetString(ReceivedMessage.ApplicationMessage.Payload);
+            string EdgeName = TopicName.Split('/')[1];
             if (!List_TopicNames.Contains(TopicName))
             {
                 List_TopicNames.Add(TopicName); 
@@ -93,16 +94,16 @@ namespace DistributedSystem_Main.Systems
             if (TopicName.ToUpper().Contains("SensorList".ToUpper()))
             {
                 List<cls_SensorInfo_Mqtt> List_SensorInfo = Newtonsoft.Json.JsonConvert.DeserializeObject<List<cls_SensorInfo_Mqtt>>(Data);
-                Staobj.ReceiveSensorInfoList(List_SensorInfo);
+                Staobj.ReceiveSensorInfoList(List_SensorInfo,EdgeName);
             }
             else if(TopicName.ToUpper().Contains("UpdateSensorStatus".ToUpper()))
             {
                 cls_SensorStatus_Mqtt NewSensorStatus = Newtonsoft.Json.JsonConvert.DeserializeObject<cls_SensorStatus_Mqtt>(Data);
-                Staobj.UpdateSensorInfo(NewSensorStatus);
+                Staobj.UpdateSensorInfo(NewSensorStatus,EdgeName);
             }
             else
             {
-                string SensorName = TopicName.Split('/').Last();
+                string SensorName = $"{EdgeName}-{TopicName.Split('/').Last()}" ;
                 Systems.cls_SensorData_Mqtt NewData = Newtonsoft.Json.JsonConvert.DeserializeObject<cls_SensorData_Mqtt>(Data);
                 if (Staobj.Dict_SensorProcessObject.ContainsKey(SensorName))
                 {

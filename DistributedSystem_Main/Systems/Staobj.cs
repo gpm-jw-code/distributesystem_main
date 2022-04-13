@@ -43,29 +43,30 @@ namespace DistributedSystem_Main.Systems
         }
 
 
-        public static void ReceiveSensorInfoList(List<cls_SensorInfo_Mqtt> List_SensorInfo)
+        public static void ReceiveSensorInfoList(List<cls_SensorInfo_Mqtt> List_SensorInfo,string EdgeName)
         {
             foreach (var item in List_SensorInfo)
             {
-                string SensorName = item.SensorName;
-                if (Dict_SensorProcessObject.ContainsKey(SensorName))
+                item.SensorName = $"{EdgeName}-{item.SensorName}";
+                if (Dict_SensorProcessObject.ContainsKey(item.SensorName))
                     continue;
 
                 var SensorInfo = SensorParam.LoadSensorInfoFromFile(item);
-                Dict_SensorProcessObject.Add(SensorName, new cls_SensorDataProcess(SensorInfo));
+                Dict_SensorProcessObject.Add(item.SensorName, new cls_SensorDataProcess(SensorInfo));
                 
-                var SensorThreshold = SensorParam.LoadThreasholdFromFile(SensorName);
-                Dict_SensorProcessObject[SensorName].Dict_DataThreshold = SensorThreshold;
+                var SensorThreshold = SensorParam.LoadThreasholdFromFile(item.SensorName);
+                Dict_SensorProcessObject[item.SensorName].Dict_DataThreshold = SensorThreshold;
 
-                Event_ReceiveNewSensorInfo?.Invoke(SensorName);
+                Event_ReceiveNewSensorInfo?.Invoke(item.SensorName);
             }
         }
 
-        internal static void UpdateSensorInfo(cls_SensorStatus_Mqtt newSensorStatus)
+        internal static void UpdateSensorInfo(cls_SensorStatus_Mqtt newSensorStatus,string EdgeName)
         {
-            Dict_SensorProcessObject[newSensorStatus.SensorName].Status.ConnecStatus = newSensorStatus.ConnecStatus;
-            Dict_SensorProcessObject[newSensorStatus.SensorName].Status.LastUpdateTime = newSensorStatus.LastUpdateTime;
-            Event_UpdateSensorStatus?.Invoke(newSensorStatus.SensorName);
+            var SensorName = $"{EdgeName}-{newSensorStatus}";
+            Dict_SensorProcessObject[SensorName].Status.ConnecStatus = newSensorStatus.ConnecStatus;
+            Dict_SensorProcessObject[SensorName].Status.LastUpdateTime = newSensorStatus.LastUpdateTime;
+            Event_UpdateSensorStatus?.Invoke(SensorName);
         }
 
         public struct SensorParam
@@ -73,7 +74,8 @@ namespace DistributedSystem_Main.Systems
 
             public static string SensorDataRootPath(string SensorName)
             {
-                string SensorInfoDirectory = Path.Combine("Parameters", "SensorInfos", SensorName);
+                string[] Edge_SensorArray= SensorName.Split('-');
+                string SensorInfoDirectory = Path.Combine("Parameters", "SensorInfos",Edge_SensorArray[0], Edge_SensorArray[1]);
                 if (!Directory.Exists(SensorInfoDirectory))
                 {
                     Directory.CreateDirectory(SensorInfoDirectory);
