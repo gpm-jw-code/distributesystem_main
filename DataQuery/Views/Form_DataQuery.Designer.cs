@@ -90,6 +90,7 @@ namespace DataQuery
             this.TreeView_SensorList.Name = "TreeView_SensorList";
             this.TreeView_SensorList.Size = new System.Drawing.Size(187, 513);
             this.TreeView_SensorList.TabIndex = 0;
+            this.TreeView_SensorList.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.TreeView_SensorList_NodeMouseDoubleClick);
             // 
             // Panel_Functions
             // 
@@ -275,6 +276,7 @@ namespace DataQuery
             this.Controls.Add(this.Panel_Functions);
             this.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.ForeColor = System.Drawing.Color.White;
+            this.IsMdiContainer = true;
             this.Margin = new System.Windows.Forms.Padding(5);
             this.Name = "Form_DataQuery";
             this.Text = "Data Query";

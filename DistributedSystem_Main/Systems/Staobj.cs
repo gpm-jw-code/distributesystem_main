@@ -51,7 +51,7 @@ namespace DistributedSystem_Main.Systems
                 if (Dict_SensorProcessObject.ContainsKey(item.SensorName))
                     continue;
 
-                var SensorInfo = SensorParam.LoadSensorInfoFromFile(item);
+                var SensorInfo = SensorParam.LoadSensorInfoFromFile(item,EdgeName);
                 Dict_SensorProcessObject.Add(item.SensorName, new cls_SensorDataProcess(SensorInfo));
                 
                 var SensorThreshold = SensorParam.LoadThreasholdFromFile(item.SensorName);
@@ -83,10 +83,10 @@ namespace DistributedSystem_Main.Systems
                 return SensorInfoDirectory;
             }
 
-            public static SensorInfo LoadSensorInfoFromFile(cls_SensorInfo_Mqtt ReceiveInfo)
+            public static SensorInfo LoadSensorInfoFromFile(cls_SensorInfo_Mqtt ReceiveInfo,string EdgeName)
             {
                 string SensorInfoFileName = System.IO.Path.Combine(SensorDataRootPath(ReceiveInfo.SensorName), "SensorInfo.json");
-                SensorInfo OutputData = new SensorInfo() { SensorName = ReceiveInfo.SensorName, IP = ReceiveInfo.IP, Port = ReceiveInfo.Port, SensorType = ReceiveInfo.SensorType };
+                SensorInfo OutputData = new SensorInfo() { SensorName = ReceiveInfo.SensorName, IP = ReceiveInfo.IP, Port = ReceiveInfo.Port, SensorType = ReceiveInfo.SensorType,EdgeName = EdgeName };
 
                 if (System.IO.File.Exists(SensorInfoFileName))
                 {

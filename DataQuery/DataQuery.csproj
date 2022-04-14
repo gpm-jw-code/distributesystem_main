@@ -18,7 +18,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\DistributedSystem_Main\bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -33,8 +33,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,15 +50,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form_DataQuery.cs">
+    <Compile Include="Functions\cls_txtQuery.cs" />
+    <Compile Include="Functions\INI_utility.cs" />
+    <Compile Include="Views\Form_DataCharts.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form_DataQuery.Designer.cs">
+    <Compile Include="Views\Form_DataCharts.Designer.cs">
+      <DependentUpon>Form_DataCharts.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Form_DataQuery.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Form_DataQuery.Designer.cs">
       <DependentUpon>Form_DataQuery.cs</DependentUpon>
     </Compile>
+    <Compile Include="Functions\cls_SensorParametersProcess.cs" />
+    <Compile Include="Functions\staobj.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Form_DataQuery.resx">
+    <EmbeddedResource Include="Views\Form_DataCharts.resx">
+      <DependentUpon>Form_DataCharts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Form_DataQuery.resx">
       <DependentUpon>Form_DataQuery.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -66,6 +83,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -78,6 +96,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SensorDataProcess\SensorDataProcess.csproj">
+      <Project>{4cd2ee2a-4f87-40c6-bb99-e4a3ee87d9a9}</Project>
+      <Name>SensorDataProcess</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

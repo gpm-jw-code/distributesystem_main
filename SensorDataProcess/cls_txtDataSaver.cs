@@ -58,7 +58,7 @@ namespace SensorDataProcess
 
         public void WriteRawData(Dictionary<string, double> NewData,DateTime TimeLog)
         {
-            string FileName = Path.Combine(RawDataPath, $"{TimeLog:yyyyMMdd}.csv");
+            string FileName = Path.Combine(RawDataPath, $"{TimeLog:yyyyMMdd_HH}.csv");
             bool IsNeedHeader = !File.Exists(FileName);
             try
             {
