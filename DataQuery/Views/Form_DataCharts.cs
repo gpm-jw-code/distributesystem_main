@@ -13,24 +13,49 @@ namespace DataQuery.Views
 {
     public partial class Form_DataCharts : Form
     {
+        public SensorDataProcess.SensorInfo SensorInfo;
+        public Action<string> Event_FormClicked;
+
+        /// <summary>
+        /// Multi Mode專用
+        /// </summary>
+        /// <param name="NewSensorInfo"></param>
         public Form_DataCharts(SensorDataProcess.SensorInfo NewSensorInfo)
         {
             InitializeComponent();
             ImportSensorInfo(NewSensorInfo);
             ChartForShow.Series.Clear();
+            this.FormClosed += CloseMultiModeQueryChart;
+            this.SensorInfo = NewSensorInfo; 
         }
 
+        private void CloseMultiModeQueryChart(object sender, FormClosedEventArgs e)
+        {
+            Functions.staobj.QueryParam.Dict_SensorName_Chart.Remove(SensorInfo.SensorName);
+        }
+
+        /// <summary>
+        /// Single Mode專用
+        /// </summary>
         public Form_DataCharts()
         {
             InitializeComponent();
             ChartForShow.Series.Clear();
+            this.FormClosing += CancelClosingEvent;
+        }
+
+        private void CancelClosingEvent(object sender, FormClosingEventArgs e)
+        {
+            e.Cancel = true;
+            this.Hide();
         }
 
         Dictionary<string, Series> Dict_SensorSeries = new Dictionary<string, Series>();
 
         public void ImportSensorInfo(SensorDataProcess.SensorInfo SensorInfo)
         {
-            this.Text = $"{SensorInfo.EdgeName}-{SensorInfo.EQName}-{SensorInfo.UnitName}-{SensorInfo.SensorName}";
+            this.Text = $"{SensorInfo.EdgeName}-{SensorInfo.EQName}-{SensorInfo.UnitName}-{SensorInfo.SensorNameWithOutEdgeName}";
+            LAB_SensorName.Text= $"{SensorInfo.EdgeName}-{SensorInfo.EQName}-{SensorInfo.UnitName}-{SensorInfo.SensorNameWithOutEdgeName}";
         }
 
         public void ImportSensorDataSeries(List<DateTime> TimeLogSeries, Dictionary<string, List<double>> Dict_DataSeries)
@@ -106,6 +131,11 @@ namespace DataQuery.Views
                 return Color.FromArgb(255, t, p, v);
             else
                 return Color.FromArgb(255, v, p, q);
+        }
+
+        private void Form_DataCharts_MouseDown(object sender, MouseEventArgs e)
+        {
+            Event_FormClicked?.Invoke(SensorInfo.SensorName);
         }
     }
 }

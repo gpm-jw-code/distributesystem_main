@@ -12,7 +12,28 @@ namespace DataQuery.Functions
         
 
         public static Dictionary<string, Dictionary<string, SensorInfo>> Dict_EdgeName_SensroInfo = new Dictionary<string, Dictionary<string, SensorInfo>>();
-        public static Views.Form_DataCharts Form_MainQueryChart = new Views.Form_DataCharts();
+        public static Views.Form_DataCharts Form_MainQueryChart = new Views.Form_DataCharts()
+        {
+            FormBorderStyle = System.Windows.Forms.FormBorderStyle.None,
+        };
+
+
+       
+        public struct QueryParam
+        {
+            public enum ShowDataChartMode
+            {
+                Single, Multi
+            }
+            public static ShowDataChartMode NowShowChartMode = ShowDataChartMode.Single;
+            public static DateTime StartTime;
+            public static DateTime EndTime;
+            public static SensorDataProcess.SensorInfo NowQuerySensorInfo;
+
+            public static Dictionary<string, Views.Form_DataCharts> Dict_SensorName_Chart = new Dictionary<string, Views.Form_DataCharts>();
+
+        }
+
 
         public struct SystemParameters
         {

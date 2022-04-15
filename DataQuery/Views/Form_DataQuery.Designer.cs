@@ -119,6 +119,7 @@ namespace DataQuery
             this.LAB_ShowMulti.Size = new System.Drawing.Size(57, 20);
             this.LAB_ShowMulti.TabIndex = 5;
             this.LAB_ShowMulti.Text = "多視窗";
+            this.LAB_ShowMulti.Click += new System.EventHandler(this.LAB_ShowMulti_Click);
             // 
             // LAB_ShowSingle
             // 
@@ -131,6 +132,7 @@ namespace DataQuery
             this.LAB_ShowSingle.Size = new System.Drawing.Size(57, 20);
             this.LAB_ShowSingle.TabIndex = 5;
             this.LAB_ShowSingle.Text = "單視窗";
+            this.LAB_ShowSingle.Click += new System.EventHandler(this.LAB_ShowSingle_Click);
             // 
             // Panel_CustomQueryTime
             // 
@@ -147,6 +149,7 @@ namespace DataQuery
             // 
             // BTN_QueryCustomTime
             // 
+            this.BTN_QueryCustomTime.Cursor = System.Windows.Forms.Cursors.Hand;
             this.BTN_QueryCustomTime.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BTN_QueryCustomTime.Font = new System.Drawing.Font("微軟正黑體", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.BTN_QueryCustomTime.Location = new System.Drawing.Point(523, 6);
@@ -155,6 +158,7 @@ namespace DataQuery
             this.BTN_QueryCustomTime.TabIndex = 3;
             this.BTN_QueryCustomTime.Text = "Query";
             this.BTN_QueryCustomTime.UseVisualStyleBackColor = true;
+            this.BTN_QueryCustomTime.Click += new System.EventHandler(this.BTN_QueryCustomTime_Click);
             // 
             // label7
             // 
@@ -209,6 +213,7 @@ namespace DataQuery
             this.LAB_QueryCustom.Size = new System.Drawing.Size(41, 20);
             this.LAB_QueryCustom.TabIndex = 2;
             this.LAB_QueryCustom.Text = "自訂";
+            this.LAB_QueryCustom.Click += new System.EventHandler(this.LAB_QueryCustom_Click);
             // 
             // LAB_QueryAYear
             // 
@@ -220,6 +225,7 @@ namespace DataQuery
             this.LAB_QueryAYear.TabIndex = 2;
             this.LAB_QueryAYear.Tag = "365";
             this.LAB_QueryAYear.Text = "1年";
+            this.LAB_QueryAYear.Click += new System.EventHandler(this.LAB_QueryTime_Click);
             // 
             // LAB_QuerySixMonth
             // 
@@ -231,6 +237,7 @@ namespace DataQuery
             this.LAB_QuerySixMonth.TabIndex = 2;
             this.LAB_QuerySixMonth.Tag = "180";
             this.LAB_QuerySixMonth.Text = "6個月";
+            this.LAB_QuerySixMonth.Click += new System.EventHandler(this.LAB_QueryTime_Click);
             // 
             // LAB_QueryAMonth
             // 
@@ -242,6 +249,7 @@ namespace DataQuery
             this.LAB_QueryAMonth.TabIndex = 2;
             this.LAB_QueryAMonth.Tag = "30";
             this.LAB_QueryAMonth.Text = "1個月";
+            this.LAB_QueryAMonth.Click += new System.EventHandler(this.LAB_QueryTime_Click);
             // 
             // LAB_QueryAWeek
             // 
@@ -253,6 +261,7 @@ namespace DataQuery
             this.LAB_QueryAWeek.TabIndex = 2;
             this.LAB_QueryAWeek.Tag = "7";
             this.LAB_QueryAWeek.Text = "1周";
+            this.LAB_QueryAWeek.Click += new System.EventHandler(this.LAB_QueryTime_Click);
             // 
             // LAB_QueryADay
             // 
@@ -265,6 +274,7 @@ namespace DataQuery
             this.LAB_QueryADay.TabIndex = 2;
             this.LAB_QueryADay.Tag = "1";
             this.LAB_QueryADay.Text = "1天";
+            this.LAB_QueryADay.Click += new System.EventHandler(this.LAB_QueryTime_Click);
             // 
             // Form_DataQuery
             // 

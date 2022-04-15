@@ -28,8 +28,7 @@ namespace DataQuery.Functions
                         {
                             string SensorName = SensorDirectorys[j].Split('\\').Last();
                             var SensorInfo = Newtonsoft.Json.JsonConvert.DeserializeObject<SensorDataProcess.SensorInfo>(SR.ReadToEnd());
-                            SensorInfo.SensorName = SensorInfo.SensorName.Split('-').Last();
-                            staobj.Dict_EdgeName_SensroInfo[EdgeName].Add(SensorName,SensorInfo);
+                            staobj.Dict_EdgeName_SensroInfo[EdgeName].Add(SensorInfo.SensorName,SensorInfo);
                         }
                     }
                 }

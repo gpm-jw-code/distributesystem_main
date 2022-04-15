@@ -213,6 +213,13 @@ namespace SensorDataProcess
         public string EQName = "undefined";
         public string UnitName = "undefined";
         public string EdgeName ;
+        public string SensorNameWithOutEdgeName
+        {
+            get
+            {
+                return SensorName.Split('-').Last();
+            }
+        }
     }
 
     public class SensorStatus

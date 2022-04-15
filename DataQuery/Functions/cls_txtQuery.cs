@@ -15,7 +15,7 @@ namespace DataQuery.Functions
     {
         private static string RawDataDirectoryPath(SensorInfo SensorInfo)
         {
-            return Path.Combine(staobj.SystemParameters.DataSaveRootPath, "RawData", SensorInfo.EdgeName, SensorInfo.SensorName);
+            return Path.Combine(staobj.SystemParameters.DataSaveRootPath, "RawData", SensorInfo.EdgeName, SensorInfo.SensorNameWithOutEdgeName);
         }
 
         private static  string LogDirectoryPath(SensorInfo SensorInfo)
@@ -25,7 +25,7 @@ namespace DataQuery.Functions
 
         private static string HourlyRawDataDirectoryPath(SensorInfo SensorInfo)
         {
-            return Path.Combine(staobj.SystemParameters.DataSaveRootPath, "HourlyRawData", SensorInfo.EdgeName, SensorInfo.SensorName);
+            return Path.Combine(staobj.SystemParameters.DataSaveRootPath, "HourlyRawData", SensorInfo.EdgeName, SensorInfo.SensorNameWithOutEdgeName);
         }
 
         public static cls_RawDataObject QueryIntervalRawData(DateTime StartTime,DateTime EndTime,SensorInfo SensorInfo)
