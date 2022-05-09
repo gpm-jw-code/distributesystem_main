@@ -41,6 +41,14 @@ namespace DistributedSystem_Main.User_Control
             set { this._UnitName = value;this.labUnitName.Text = value; }
         }
 
+        public string DataUnit
+        {
+            set
+            {
+                ChartForShow.ChartAreas[0].AxisY.Title = value;
+            }
+        }
+
         public string SensorType
         {
             get

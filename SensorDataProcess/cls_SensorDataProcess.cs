@@ -212,6 +212,7 @@ namespace SensorDataProcess
         public string SensorName;
         public string EQName = "undefined";
         public string UnitName = "undefined";
+        public string DataUnit = "";
         public string EdgeName ;
         public string SensorNameWithOutEdgeName
         {

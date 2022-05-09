@@ -180,6 +180,8 @@ namespace DistributedSystem_Main.User_Control
             chartArea1.AxisY.LineColor = System.Drawing.Color.DimGray;
             chartArea1.AxisY.MajorGrid.LineColor = System.Drawing.Color.DimGray;
             chartArea1.AxisY.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dot;
+            chartArea1.AxisY.Title = "Unit";
+            chartArea1.AxisY.TitleForeColor = System.Drawing.Color.White;
             chartArea1.BackColor = System.Drawing.Color.Transparent;
             chartArea1.BorderColor = System.Drawing.Color.Transparent;
             chartArea1.Name = "ChartArea1";

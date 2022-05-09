@@ -120,6 +120,7 @@ namespace DistributedSystem_Main.Systems
             TargetChart.EQName = SensorInfo.EQName;
             TargetChart.UnitName = SensorInfo.UnitName;
             TargetChart.SensorName = SensorInfo.SensorName;
+            TargetChart.DataUnit= SensorInfo.DataUnit;
             TargetChart.SensorType = SensorInfo.SensorType;
         }
 

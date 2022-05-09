@@ -86,7 +86,7 @@ namespace DistributedSystem_Main.Systems
             public static SensorInfo LoadSensorInfoFromFile(cls_SensorInfo_Mqtt ReceiveInfo,string EdgeName)
             {
                 string SensorInfoFileName = System.IO.Path.Combine(SensorDataRootPath(ReceiveInfo.SensorName), "SensorInfo.json");
-                SensorInfo OutputData = new SensorInfo() { SensorName = ReceiveInfo.SensorName, IP = ReceiveInfo.IP, Port = ReceiveInfo.Port, SensorType = ReceiveInfo.SensorType,EdgeName = EdgeName };
+                SensorInfo OutputData = new SensorInfo() { SensorName = ReceiveInfo.SensorName, IP = ReceiveInfo.IP, Port = ReceiveInfo.Port, SensorType = ReceiveInfo.SensorType,EdgeName = EdgeName ,DataUnit = ReceiveInfo.DataUnit};
 
                 if (System.IO.File.Exists(SensorInfoFileName))
                 {
