@@ -18,7 +18,7 @@ namespace DistributedSystem_Main.Systems
     public class cls_SensorStatus_Mqtt
     {
         public string SensorName = "";
-        public bool ConnecStatus = false;
+        public bool ConnectStatus = false;
         public DateTime LastUpdateTime;
 
     }

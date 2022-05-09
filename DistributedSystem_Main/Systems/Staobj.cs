@@ -64,7 +64,7 @@ namespace DistributedSystem_Main.Systems
         internal static void UpdateSensorInfo(cls_SensorStatus_Mqtt newSensorStatus,string EdgeName)
         {
             var SensorName = $"{EdgeName}-{newSensorStatus}";
-            Dict_SensorProcessObject[SensorName].Status.ConnecStatus = newSensorStatus.ConnecStatus;
+            Dict_SensorProcessObject[SensorName].Status.ConnecStatus = newSensorStatus.ConnectStatus;
             Dict_SensorProcessObject[SensorName].Status.LastUpdateTime = newSensorStatus.LastUpdateTime;
             Event_UpdateSensorStatus?.Invoke(SensorName);
         }
