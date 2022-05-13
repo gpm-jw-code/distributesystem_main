@@ -18,6 +18,8 @@ namespace DistributedSystem_Main.Systems
         private static IMqttServer DataMqttServer = null;
         public static List<string> List_TopicNames = new List<string>();
 
+        public static Action<string> Event_ReceiveSensorRawData_Websocket;
+
         public static async void BuildServer(string IP, int Port)
         {
             try
@@ -103,11 +105,15 @@ namespace DistributedSystem_Main.Systems
             }
             else
             {
-                string SensorName = $"{EdgeName}-{TopicName.Split('/').Last()}" ;
+                string OriginSensorName = TopicName.Split('/').Last();
+                string SensorName = $"{EdgeName}-{OriginSensorName}" ;
                 Systems.cls_SensorData_Mqtt NewData = Newtonsoft.Json.JsonConvert.DeserializeObject<cls_SensorData_Mqtt>(Data);
                 if (Staobj.Dict_SensorProcessObject.ContainsKey(SensorName))
                 {
                     Staobj.Dict_SensorProcessObject[SensorName].ImportNewSensorData(NewData.Dict_RawData, NewData.TimeLog);
+
+                    Broadcast_Modules.cls_RawData RawData = new Broadcast_Modules.cls_RawData(OriginSensorName, EdgeName, NewData.TimeLog, NewData.Dict_RawData);
+                    Event_ReceiveSensorRawData_Websocket?.Invoke(Newtonsoft.Json.JsonConvert.SerializeObject(RawData));
                 }
             }
 

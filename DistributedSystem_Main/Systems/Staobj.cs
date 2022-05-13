@@ -16,6 +16,11 @@ namespace DistributedSystem_Main.Systems
         public static Action<string> Event_ReceiveNewSensorInfo;
         public static Action<string> Event_UpdateSensorStatus;
 
+        public static Action<string> Event_ReceiveSensorInfo_Websocket;
+        public static Action<string> Event_UpdateSensorStatus_Websocket;
+
+        public static Broadcast_Modules.cls_WebSocketModule WebsocketModule;
+
         public struct SystemParam
         {
             public static string MqttServerIP = "127.0.0.1";
@@ -58,15 +63,24 @@ namespace DistributedSystem_Main.Systems
                 Dict_SensorProcessObject[item.SensorName].Dict_DataThreshold = SensorThreshold;
 
                 Event_ReceiveNewSensorInfo?.Invoke(item.SensorName);
+                Event_ReceiveSensorInfo_Websocket?.Invoke(Newtonsoft.Json.JsonConvert.SerializeObject(SensorInfo));
             }
         }
 
         internal static void UpdateSensorInfo(cls_SensorStatus_Mqtt newSensorStatus,string EdgeName)
         {
-            var SensorName = $"{EdgeName}-{newSensorStatus}";
+            var SensorName = $"{EdgeName}-{newSensorStatus.SensorName}";
             Dict_SensorProcessObject[SensorName].Status.ConnecStatus = newSensorStatus.ConnectStatus;
             Dict_SensorProcessObject[SensorName].Status.LastUpdateTime = newSensorStatus.LastUpdateTime;
             Event_UpdateSensorStatus?.Invoke(SensorName);
+            Broadcast_Modules.cls_SensorStatus WebsocketSensorStatus = new Broadcast_Modules.cls_SensorStatus()
+            {
+                EdgeName = EdgeName,
+                SensorName = newSensorStatus.SensorName,
+                LastUpdateTime = newSensorStatus.LastUpdateTime,
+                Status = newSensorStatus.ConnectStatus
+            };
+            Event_UpdateSensorStatus_Websocket?.Invoke(Newtonsoft.Json.JsonConvert.SerializeObject(WebsocketSensorStatus));
         }
 
         public struct SensorParam

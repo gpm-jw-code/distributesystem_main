@@ -20,6 +20,7 @@ namespace DistributedSystem_Main
             Staobj.SystemParam.LoadSystemParam();
             Systems.cls_SignalsChartManager.InitialManager(TablePanel_SignalChart, PageSwitch_Signals);
             Systems.cls_SignalsChartManager.SetChartRowColumnNumber(2, 2);
+            Staobj.WebsocketModule = new Broadcast_Modules.cls_WebSocketModule("0.0.0.0", 8090);
             Systems.cls_MQTTModule.BuildServer(Staobj.SystemParam.MqttServerIP, Staobj.SystemParam.MqttServerPort);
             SensorDataProcess.cls_txtDataSaver.RootPath = Staobj.SystemParam.DataSaveRootPath;
             TabControl_Main.ItemSize = new Size(0,1);
