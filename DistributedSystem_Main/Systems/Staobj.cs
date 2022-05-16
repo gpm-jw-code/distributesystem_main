@@ -19,7 +19,9 @@ namespace DistributedSystem_Main.Systems
         public static Action<string> Event_ReceiveSensorInfo_Websocket;
         public static Action<string> Event_UpdateSensorStatus_Websocket;
 
-        public static Broadcast_Modules.cls_WebSocketModule WebsocketModule;
+        public static WebService.cls_WebSocketModule WebsocketModule;
+
+        public static WebAPIService.cls_WebService WebAPIObject;
 
         public struct SystemParam
         {
@@ -73,7 +75,7 @@ namespace DistributedSystem_Main.Systems
             Dict_SensorProcessObject[SensorName].Status.ConnecStatus = newSensorStatus.ConnectStatus;
             Dict_SensorProcessObject[SensorName].Status.LastUpdateTime = newSensorStatus.LastUpdateTime;
             Event_UpdateSensorStatus?.Invoke(SensorName);
-            Broadcast_Modules.cls_SensorStatus WebsocketSensorStatus = new Broadcast_Modules.cls_SensorStatus()
+            WebService.cls_SensorStatus WebsocketSensorStatus = new WebService.cls_SensorStatus()
             {
                 EdgeName = EdgeName,
                 SensorName = newSensorStatus.SensorName,

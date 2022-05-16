@@ -112,7 +112,7 @@ namespace DistributedSystem_Main.Systems
                 {
                     Staobj.Dict_SensorProcessObject[SensorName].ImportNewSensorData(NewData.Dict_RawData, NewData.TimeLog);
 
-                    Broadcast_Modules.cls_RawData RawData = new Broadcast_Modules.cls_RawData(OriginSensorName, EdgeName, NewData.TimeLog, NewData.Dict_RawData);
+                    WebService.cls_RawData RawData = new WebService.cls_RawData(OriginSensorName, EdgeName, NewData.TimeLog, NewData.Dict_RawData);
                     Event_ReceiveSensorRawData_Websocket?.Invoke(Newtonsoft.Json.JsonConvert.SerializeObject(RawData));
                 }
             }
