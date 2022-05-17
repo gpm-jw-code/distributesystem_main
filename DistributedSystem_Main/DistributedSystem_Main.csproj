@@ -159,6 +159,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\cls_PostgreSQL_Tool\cls_PostgreSQL_Tool.csproj">
+      <Project>{c5e4e1f9-07c3-4a4d-82b4-d4869d329c96}</Project>
+      <Name>cls_PostgreSQL_Tool</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SensorDataProcess\SensorDataProcess.csproj">
       <Project>{4cd2ee2a-4f87-40c6-bb99-e4a3ee87d9a9}</Project>
       <Name>SensorDataProcess</Name>

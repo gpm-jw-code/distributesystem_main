@@ -41,9 +41,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="cls_PostgreSQLSaver.cs" />
     <Compile Include="cls_SensorDataProcess.cs" />
     <Compile Include="cls_txtDataSaver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\cls_PostgreSQL_Tool\cls_PostgreSQL_Tool.csproj">
+      <Project>{C5E4E1F9-07C3-4A4D-82B4-D4869D329C96}</Project>
+      <Name>cls_PostgreSQL_Tool</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
