@@ -16,7 +16,7 @@ namespace DistributedSystem_Main.WebService
     {
         WebSocketServer _server;
         cls_PostgreSQL_Tool.SQL_controller SqlQueryItem;
-        public cls_WebSocketModule(string IP,int Port)
+        public cls_WebSocketModule(string IP, int Port)
         {
             try
             {
@@ -73,6 +73,8 @@ namespace DistributedSystem_Main.WebService
             {
                 sensor.Dict_DataThreshold.Add(thresholdKey, thresholdValue);
             }
+            Systems.Staobj.SensorParam.SaveThresholdToFile(sensor.Dict_DataThreshold, sensor.SensorInfo.SensorName);
+
         }
     }
 

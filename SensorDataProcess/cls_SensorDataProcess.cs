@@ -69,13 +69,20 @@ namespace SensorDataProcess
             TxtDataSaver = new cls_txtDataSaver(SensorInfo);
             PassRateObjejct = new DataPassRateObject(TxtDataSaver);
             HourlyData = new cls_HourlyData(TxtDataSaver);
-            SQLDataSaver = new cls_PostgreSQLSaver(NewSensorInfo.EdgeName, NewSensorInfo.SensorNameWithOutEdgeName);
+            try
+            {
+                SQLDataSaver = new cls_PostgreSQLSaver(NewSensorInfo.EdgeName, NewSensorInfo.SensorNameWithOutEdgeName);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
 
 
         public void ImportNewSensorData(Dictionary<string, double> Dict_NewData, DateTime TimeLog)
         {
-            SQLDataSaver.InsertRawData(Dict_NewData, TimeLog);
+            SQLDataSaver?.InsertRawData(Dict_NewData, TimeLog);
             TxtDataSaver.WriteRawData(Dict_NewData, TimeLog);
             HourlyData.ImportNewData(Dict_NewData, TimeLog);
             var CheckResult = CheckThreshold(Dict_NewData, TimeLog);
