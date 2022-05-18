@@ -1,6 +1,7 @@
 ﻿using cls_PostgreSQL_Tool;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -74,9 +75,32 @@ namespace SensorDataProcess
             SQL_ProcessItem.Create_Table(SchemaName, "rawdata", Dict_ColumnNameType);
         }
 
-        public void GetIntervalRawData(DateTime StartTime,DateTime EndTime,string SensorName,string EdgeName)
+        public cls_QueryReturn GetIntervalRawData(DateTime StartTime,DateTime EndTime)
         {
+            cls_QueryReturn OutputData = new cls_QueryReturn();
 
+            string Condition = $"timelog > '{StartTime:yyyy-MM-dd HH:mm:ss}' AND  timelog < '{EndTime:yyyy-MM-dd HH:mm:ss}' order by datetime asc";
+            DataTable RawDataTable = SQL_ProcessItem.Select_to_Datatable(SchemaName, "rawdata", Condition);
+            var AllColumnName = RawDataTable.Columns.Cast<DataColumn>().Select(item => item.ColumnName).ToList();
+            foreach (var item in AllColumnName)
+            {
+                OutputData.Dict_DataList.Add(item, new List<double>());
+            }
+            foreach (var EachRow in RawDataTable.Rows.Cast<DataRow>())
+            {
+                foreach (var ColumnName in AllColumnName)
+                {
+                    if (ColumnName == "timelog")
+                    {
+                        OutputData.List_TimeLog.Add((DateTime)EachRow[ColumnName]);
+                    }
+                    else
+                    {
+                        OutputData.Dict_DataList[ColumnName].Add((double)EachRow[ColumnName]);
+                    }
+                }
+            }
+            return OutputData;
         }
     }
 
@@ -84,6 +108,6 @@ namespace SensorDataProcess
     {
         public List<DateTime> List_TimeLog = new List<DateTime>();
         public Dictionary<string, List<double>> Dict_DataList = new Dictionary<string, List<double>>();
-        public Dictionary<string, string> Dict_DataUnit = new Dictionary<string, string>();
+        public string DataUnit ;
     }
 }

@@ -24,6 +24,7 @@ namespace DistributedSystem_Main.WebService
                 _server.AddWebSocketService<SensorInfoBehavior>("/GPM/SensorInfo");
                 _server.AddWebSocketService<SensorStatusBehavior>("/GPM/SensorStatus");
                 _server.AddWebSocketService<SensorRawDataBehavior>("/GPM/SensorRawData");
+                _server.AddWebSocketService<QuerySensorDataBehavior>("/GPM/QuerySensorRawData");
                 _server.AddWebSocketService<GetEqListOfEdgeBehavior>("/GPM/Query");
                 _server.AddWebSocketService<ThresholdValueSettingBehavior>("/GPM/ThresholdSetting");
                 _server.AddWebSocketService<AlarmResetBehavior>("/GPM/AlarmReset"); ///GPM/AlarmReset/?edgeName={edgename}&edid={eqid}&field={field}
@@ -33,6 +34,29 @@ namespace DistributedSystem_Main.WebService
             {
 
             }
+        }
+    }
+
+    internal class QuerySensorDataBehavior:WebSocketBehavior
+    {
+        protected override void OnOpen()
+        {
+            base.OnOpen();
+            var strStartTime = Context.QueryString[0];
+            var strEndTime = Context.QueryString[1];
+            var strEdgeName = Context.QueryString[2];
+            var strSensorName = Context.QueryString[3];
+
+            Send(JsonConvert.SerializeObject(QueryRawData(strStartTime,strEndTime,strEdgeName,strSensorName)));
+        }
+
+        private object QueryRawData(string strStartTime, string strEndTime,string EdgeName,string SenosorID)
+        {
+            string SensorName = $"{ EdgeName }-{ SenosorID}";
+            SensorDataProcess.cls_PostgreSQLHandler SqlHandler = new SensorDataProcess.cls_PostgreSQLHandler(EdgeName, SenosorID);
+            var ReturnData = SqlHandler.GetIntervalRawData(DateTime.Parse(strStartTime), DateTime.Parse(strEndTime));
+            ReturnData.DataUnit = Staobj.Dict_SensorProcessObject[SensorName].SensorInfo.DataUnit;
+            return ReturnData;
         }
     }
 
@@ -61,7 +85,8 @@ namespace DistributedSystem_Main.WebService
         }
         private void SettingThresholdValue(string edgeName, string eqid, string field, string thresholdType, double thresholdValue)
         {
-            SensorDataProcess.cls_SensorDataProcess sensor = Staobj.Dict_SensorProcessObject.Values.First(s => s.SensorInfo.EdgeName == edgeName && s.SensorInfo.IP == eqid);
+            string SensorName = $"{ edgeName }-{ eqid}";
+            SensorDataProcess.cls_SensorDataProcess sensor = Staobj.Dict_SensorProcessObject[SensorName];
             string thresholdKey = field + "_" + thresholdType;
             double _thresholdValue;
             bool thresholdExist = sensor.Dict_DataThreshold.TryGetValue(thresholdKey, out _thresholdValue);
@@ -166,6 +191,7 @@ namespace DistributedSystem_Main.WebService
             else if (action == "GetSensorTypeListOfEdge")
             {
                 List<string> typeList = Staobj.Dict_SensorProcessObject.Values.ToList().FindAll(x => x.SensorInfo.EdgeName == edgeName).Select(s => s.SensorInfo.SensorType).Distinct().ToList();
+                //Staobj.Dict_SensorProcessObject.Values.ToList().FindAll(x=>x.SensorInfo.EdgeName == edgeName).Select(s=>s.SensorInfo)
                 cls_QuerySensorTypeListOfEdge result = new cls_QuerySensorTypeListOfEdge { edgeName = edgeName };
 
                 foreach (var type in typeList)
