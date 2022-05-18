@@ -90,29 +90,29 @@ namespace DistributedSystem_Main.Systems
             string EdgeName = TopicName.Split('/')[1];
             if (!List_TopicNames.Contains(TopicName))
             {
-                List_TopicNames.Add(TopicName); 
+                List_TopicNames.Add(TopicName);
             }
 
             if (TopicName.ToUpper().Contains("SensorList".ToUpper()))
             {
                 List<cls_SensorInfo_Mqtt> List_SensorInfo = Newtonsoft.Json.JsonConvert.DeserializeObject<List<cls_SensorInfo_Mqtt>>(Data);
-                Staobj.ReceiveSensorInfoList(List_SensorInfo,EdgeName);
+                Staobj.ReceiveSensorInfoList(List_SensorInfo, EdgeName);
             }
-            else if(TopicName.ToUpper().Contains("UpdateSensorStatus".ToUpper()))
+            else if (TopicName.ToUpper().Contains("UpdateSensorStatus".ToUpper()))
             {
                 cls_SensorStatus_Mqtt NewSensorStatus = Newtonsoft.Json.JsonConvert.DeserializeObject<cls_SensorStatus_Mqtt>(Data);
-                Staobj.UpdateSensorInfo(NewSensorStatus,EdgeName);
+                Staobj.UpdateSensorInfo(NewSensorStatus, EdgeName);
             }
             else
             {
                 string OriginSensorName = TopicName.Split('/').Last();
-                string SensorName = $"{EdgeName}-{OriginSensorName}" ;
+                string SensorName = $"{EdgeName}-{OriginSensorName}";
                 Systems.cls_SensorData_Mqtt NewData = Newtonsoft.Json.JsonConvert.DeserializeObject<cls_SensorData_Mqtt>(Data);
                 if (Staobj.Dict_SensorProcessObject.ContainsKey(SensorName))
                 {
                     Staobj.Dict_SensorProcessObject[SensorName].ImportNewSensorData(NewData.Dict_RawData, NewData.TimeLog);
 
-                    WebService.cls_RawData RawData = new WebService.cls_RawData(OriginSensorName, EdgeName, NewData.TimeLog, NewData.Dict_RawData);
+                    WebService.cls_RawData RawData = new WebService.cls_RawData(OriginSensorName, EdgeName, NewData.TimeLog, NewData.Dict_RawData, Staobj.Dict_SensorProcessObject[SensorName].Dict_DataThreshold);
                     Event_ReceiveSensorRawData_Websocket?.Invoke(Newtonsoft.Json.JsonConvert.SerializeObject(RawData));
                 }
             }

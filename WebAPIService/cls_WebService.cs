@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.SelfHost;
+using System.Web.Routing;
 
 namespace WebAPIService
 {
@@ -16,7 +17,7 @@ namespace WebAPIService
         public string IP;
         public int Port;
 
-        public cls_WebService(string IP,int Port)
+        public cls_WebService(string IP, int Port)
         {
             this.IP = IP;
             this.Port = Port;
@@ -26,9 +27,10 @@ namespace WebAPIService
         {
             //開cmd執行這一段才不會跳錯 netsh http add urlacl url=http://+:{Port}/ user=machine\username
             var config = new HttpSelfHostConfiguration($"http://{IP}:{Port}");
-            config.Routes.MapHttpRoute(
-                "API Default", "GPM/{controller}/{id}",
-                new { id = RouteParameter.Optional });
+            config.Routes.MapHttpRoute("API Default", "GPM/{controller}/{id}", new { id = RouteParameter.Optional });
+            config.Routes.MapHttpRoute("GetEqListOfEdge", "GPM/{controller}/{action}/{edgeName}", new { edgeName = RouteParameter.Optional });
+            config.Routes.MapHttpRoute("GetSensorTypesOfEdge", "GPM/{controller}/{action}/{edgeName}", new { edgeName = RouteParameter.Optional });
+
             HttpSelfHostServer server = new HttpSelfHostServer(config);
             server.OpenAsync().Wait();
 
