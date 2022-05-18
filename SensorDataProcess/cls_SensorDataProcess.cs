@@ -32,6 +32,7 @@ namespace SensorDataProcess
         public SensorInfo SensorInfo = new SensorInfo();
         public SensorStatus Status = new SensorStatus();
         public Dictionary<string, double> Dict_DataThreshold = new Dictionary<string, double>();
+        public Dictionary<string, OutOfState> Dict_OutOfItemStatess = new Dictionary<string, OutOfState>();
 
         private Dictionary<string, Queue<double>> Dict_SensorDataSeries = new Dictionary<string, Queue<double>>();
         private cls_HourlyData HourlyData;
@@ -145,12 +146,37 @@ namespace SensorDataProcess
                 {
                     Dict_DataThreshold.Add(item.Key, 999999);
                 }
+                CheckOutOfThreshold(item.Key, item.Value);
                 CheckResult.Add(item.Key, item.Value < Dict_DataThreshold[item.Key]);
             }
             PassRateObjejct.AddNewCheckResult(CheckResult, TimeLog);
             return CheckResult;
         }
 
+        private void CheckOutOfThreshold(string fieldKey, double value)
+        {
+            string oocThreshodlKey = fieldKey + "_OOC";
+            string oosThreshodlKey = fieldKey + "_OOS";
+            double ooc_threshold = 999;
+            double oos_threshold = 999;
+            if (!Dict_DataThreshold.ContainsKey(oocThreshodlKey))
+                Dict_DataThreshold.Add(oocThreshodlKey, 999);
+            if (!Dict_DataThreshold.ContainsKey(oosThreshodlKey))
+                Dict_DataThreshold.Add(oosThreshodlKey, 999);
+
+            Dict_DataThreshold.TryGetValue(oocThreshodlKey, out ooc_threshold);
+            Dict_DataThreshold.TryGetValue(oosThreshodlKey, out oos_threshold);
+
+            if (!Dict_OutOfItemStatess.ContainsKey(fieldKey))
+                Dict_OutOfItemStatess.Add(fieldKey, new OutOfState());
+
+            OutOfState outofState = Dict_OutOfItemStatess[fieldKey];
+            if (!outofState.isOutofControl)
+                outofState.isOutofControl = value > ooc_threshold;
+            if (!outofState.isOutofSPEC)
+                outofState.isOutofSPEC = value > oos_threshold;
+
+        }
     }
     public class cls_HourlyData
     {
@@ -250,6 +276,17 @@ namespace SensorDataProcess
     {
         public DateTime LastUpdateTime;
         public bool ConnecStatus;
+    }
+
+    public class OutOfState
+    {
+        public bool isOutofSPEC { get; set; }
+        public bool isOutofControl { get; set; }
+        public void RESET()
+        {
+            isOutofControl = false;
+            isOutofSPEC = false;
+        }
     }
 
 }

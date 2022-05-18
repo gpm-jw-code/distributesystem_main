@@ -1,5 +1,6 @@
 ﻿using DistributedSystem_Main.Systems;
 using Newtonsoft.Json;
+using SensorDataProcess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,7 +62,7 @@ namespace DistributedSystem_Main.WebService
         }
         private void SettingThresholdValue(string edgeName, string eqid, string field, string thresholdType, double thresholdValue)
         {
-            SensorDataProcess.cls_SensorDataProcess sensor = Staobj.Dict_SensorProcessObject.Values.First(s => s.SensorInfo.EdgeName == edgeName && s.SensorInfo.IP == eqid);
+            SensorDataProcess.cls_SensorDataProcess sensor = Staobj.Dict_SensorProcessObject.Values.First(s => s.SensorInfo.EdgeName == edgeName && s.SensorInfo.IP == eqid && s.SensorInfo.SensorType == field);
             string thresholdKey = field + "_" + thresholdType;
             double _thresholdValue;
             bool thresholdExist = sensor.Dict_DataThreshold.TryGetValue(thresholdKey, out _thresholdValue);
@@ -101,6 +102,14 @@ namespace DistributedSystem_Main.WebService
         }
         private void ResetAlarm(string eqgeName, string eqid, string field)
         {
+
+            cls_SensorDataProcess sensor = Staobj.Dict_SensorProcessObject.Values.First(s => s.SensorInfo.EdgeName == eqgeName && s.SensorInfo.IP == eqid && s.SensorInfo.SensorType==field);
+            if (sensor == null) return;
+
+            if (sensor.Dict_OutOfItemStatess.TryGetValue(field, out OutOfState state))
+            {
+                state.RESET();
+            }
 
         }
     }

@@ -110,9 +110,11 @@ namespace DistributedSystem_Main.Systems
                 Systems.cls_SensorData_Mqtt NewData = Newtonsoft.Json.JsonConvert.DeserializeObject<cls_SensorData_Mqtt>(Data);
                 if (Staobj.Dict_SensorProcessObject.ContainsKey(SensorName))
                 {
-                    Staobj.Dict_SensorProcessObject[SensorName].ImportNewSensorData(NewData.Dict_RawData, NewData.TimeLog);
-
-                    WebService.cls_RawData RawData = new WebService.cls_RawData(OriginSensorName, EdgeName, NewData.TimeLog, NewData.Dict_RawData, Staobj.Dict_SensorProcessObject[SensorName].Dict_DataThreshold);
+                    var sensorPcrObj = Staobj.Dict_SensorProcessObject[SensorName];
+                    var sensorType = sensorPcrObj.SensorInfo.SensorType;
+                    sensorPcrObj.ImportNewSensorData(NewData.Dict_RawData, NewData.TimeLog);
+                    
+                    WebService.cls_RawData RawData = new WebService.cls_RawData(OriginSensorName, EdgeName, NewData.TimeLog, NewData.Dict_RawData, sensorPcrObj.Dict_DataThreshold, sensorPcrObj.Dict_OutOfItemStatess[sensorType]);
                     Event_ReceiveSensorRawData_Websocket?.Invoke(Newtonsoft.Json.JsonConvert.SerializeObject(RawData));
                 }
             }
