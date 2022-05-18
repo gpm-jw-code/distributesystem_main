@@ -41,13 +41,13 @@ namespace SensorDataProcess
         private cls_txtDataSaver TxtDataSaver;
         private cls_PostgreSQLHandler SQLDataSaver;
 
-        public delegate void UpdateSeriesDataEventHandler(string SensorName, Queue<DateTime> Queue_Time,Dictionary<string,Queue<double>> Dict_DataQueue);
+        public delegate void UpdateSeriesDataEventHandler(string SensorName, Queue<DateTime> Queue_Time, Dictionary<string, Queue<double>> Dict_DataQueue);
         public event UpdateSeriesDataEventHandler Event_UpdateChartSeries;
 
         public Action<string> Event_RefreshSensorInfo;
         public Action<string> Event_RefreshSensorThreshold;
 
-        public cls_SensorDataProcess(string IP, int Port,string SensorName,string SensorType, string EQName = null, string UnitName = null)
+        public cls_SensorDataProcess(string IP, int Port, string SensorName, string SensorType, string EQName = null, string UnitName = null)
         {
             SensorInfo.IP = IP;
             SensorInfo.Port = Port;
@@ -73,12 +73,12 @@ namespace SensorDataProcess
         }
 
 
-        public void ImportNewSensorData(Dictionary<string,double> Dict_NewData,DateTime TimeLog)
+        public void ImportNewSensorData(Dictionary<string, double> Dict_NewData, DateTime TimeLog)
         {
             SQLDataSaver.InsertRawData(Dict_NewData, TimeLog);
             TxtDataSaver.WriteRawData(Dict_NewData, TimeLog);
             HourlyData.ImportNewData(Dict_NewData, TimeLog);
-            var CheckResult = CheckThreshold(Dict_NewData,TimeLog);
+            var CheckResult = CheckThreshold(Dict_NewData, TimeLog);
             Queue_TimeLog.Enqueue(TimeLog);
             foreach (var item in Dict_NewData)
             {
@@ -86,11 +86,12 @@ namespace SensorDataProcess
                 if (!Dict_SensorDataSeries.ContainsKey(DataName))
                 {
                     Dict_SensorDataSeries.Add(DataName, new Queue<double>());
+
                 }
                 Dict_SensorDataSeries[DataName].Enqueue(item.Value);
             }
 
-            while (Queue_TimeLog.Count>StaticParameters.TemDataNumber)
+            while (Queue_TimeLog.Count > StaticParameters.TemDataNumber)
             {
                 Queue_TimeLog.Dequeue();
                 foreach (var item in Dict_SensorDataSeries)
@@ -98,8 +99,20 @@ namespace SensorDataProcess
                     item.Value.Dequeue();
                 }
             }
-            Event_UpdateChartSeries?.Invoke(SensorInfo.SensorName,Queue_TimeLog,Dict_SensorDataSeries);
+            Event_UpdateChartSeries?.Invoke(SensorInfo.SensorName, Queue_TimeLog, Dict_SensorDataSeries);
         }
+
+
+        public void ImportNewSensorData(Dictionary<string, double> Dict_NewData, DateTime TimeLog, out bool IsOutOfSpec, out bool IsOutOfControl)
+        {
+            ImportNewSensorData(Dict_NewData, TimeLog);
+
+            IsOutOfControl = false;
+            IsOutOfSpec = false;
+            var thres = Dict_DataThreshold;
+        }
+
+
 
         public void RefreshSensorInfo()
         {
@@ -116,7 +129,7 @@ namespace SensorDataProcess
             Event_UpdateChartSeries?.Invoke(SensorInfo.SensorName, Queue_TimeLog, Dict_SensorDataSeries);
         }
 
-        private Dictionary<string,bool> CheckThreshold(Dictionary<string,double> Dict_NewData,DateTime TimeLog)
+        private Dictionary<string, bool> CheckThreshold(Dictionary<string, double> Dict_NewData, DateTime TimeLog)
         {
             Dictionary<string, bool> CheckResult = new Dictionary<string, bool>();
             foreach (var item in Dict_NewData)
@@ -141,15 +154,15 @@ namespace SensorDataProcess
         public cls_HourlyData(cls_txtDataSaver DataSaver)
         {
             Dict_HourlyData = new Dictionary<string, List<double>>();
-            this.TimeLog = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, 0, 0 );
+            this.TimeLog = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, 0, 0);
             this.DataSaver = DataSaver;
         }
 
-        public void ImportNewData(Dictionary<string,double> NewData,DateTime TimeLog)
+        public void ImportNewData(Dictionary<string, double> NewData, DateTime TimeLog)
         {
             if (TimeLog.Hour != this.TimeLog.Hour)
             {
-                var AverageData = Dict_HourlyData.Select(item => new KeyValuePair<string, double>(item.Key, item.Value.Average())).ToDictionary(item=>item.Key,item=>item.Value);
+                var AverageData = Dict_HourlyData.Select(item => new KeyValuePair<string, double>(item.Key, item.Value.Average())).ToDictionary(item => item.Key, item => item.Value);
                 DataSaver.WriteHourlyRawData(AverageData, TimeLog);
                 Dict_HourlyData = new Dictionary<string, List<double>>();
                 this.TimeLog = new DateTime(TimeLog.Year, TimeLog.Month, TimeLog.Day, TimeLog.Hour, 0, 0);
@@ -180,7 +193,7 @@ namespace SensorDataProcess
             this.TXT_DataSaver = DataSaver;
         }
 
-        public void AddNewCheckResult(Dictionary<string,bool> Dict_CheckResult,DateTime NewTimelog)
+        public void AddNewCheckResult(Dictionary<string, bool> Dict_CheckResult, DateTime NewTimelog)
         {
             if (NewTimelog.Minute != this.TimeLog.Minute)
             {
@@ -188,7 +201,7 @@ namespace SensorDataProcess
 
                 Dict_TotalCount = new Dictionary<string, double>();
                 Dict_PassCount = new Dictionary<string, double>();
-                this.TimeLog = new DateTime(NewTimelog.Year, NewTimelog.Month, NewTimelog.Day, NewTimelog.Hour, NewTimelog.Minute,0);
+                this.TimeLog = new DateTime(NewTimelog.Year, NewTimelog.Month, NewTimelog.Day, NewTimelog.Hour, NewTimelog.Minute, 0);
             }
 
             foreach (var item in Dict_CheckResult)
@@ -216,7 +229,7 @@ namespace SensorDataProcess
         public string EQName = "undefined";
         public string UnitName = "undefined";
         public string DataUnit = "";
-        public string EdgeName ;
+        public string EdgeName;
         public string SensorNameWithOutEdgeName
         {
             get
@@ -231,4 +244,5 @@ namespace SensorDataProcess
         public DateTime LastUpdateTime;
         public bool ConnecStatus;
     }
+
 }
