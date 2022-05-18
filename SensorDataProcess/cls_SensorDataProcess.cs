@@ -39,7 +39,7 @@ namespace SensorDataProcess
         private DataPassRateObject PassRateObjejct;
 
         private cls_txtDataSaver TxtDataSaver;
-        private cls_PostgreSQLSaver SQLDataSaver;
+        private cls_PostgreSQLHandler SQLDataSaver;
 
         public delegate void UpdateSeriesDataEventHandler(string SensorName, Queue<DateTime> Queue_Time,Dictionary<string,Queue<double>> Dict_DataQueue);
         public event UpdateSeriesDataEventHandler Event_UpdateChartSeries;
@@ -69,7 +69,7 @@ namespace SensorDataProcess
             TxtDataSaver = new cls_txtDataSaver(SensorInfo);
             PassRateObjejct = new DataPassRateObject(TxtDataSaver);
             HourlyData = new cls_HourlyData(TxtDataSaver);
-            SQLDataSaver = new cls_PostgreSQLSaver(NewSensorInfo.EdgeName, NewSensorInfo.SensorNameWithOutEdgeName);
+            SQLDataSaver = new cls_PostgreSQLHandler(NewSensorInfo.EdgeName, NewSensorInfo.SensorNameWithOutEdgeName);
         }
 
 

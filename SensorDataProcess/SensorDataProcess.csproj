@@ -41,7 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="cls_PostgreSQLSaver.cs" />
+    <Compile Include="cls_PostgreSQLHandler.cs" />
     <Compile Include="cls_SensorDataProcess.cs" />
     <Compile Include="cls_txtDataSaver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

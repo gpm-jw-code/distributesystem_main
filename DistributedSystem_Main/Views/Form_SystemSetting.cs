@@ -25,8 +25,8 @@ namespace DistributedSystem_Main.Views
 
         private async void BTN_SaveMqttParameter_Click(object sender, EventArgs e)
         {
-            string ServerIP = Systems.Staobj.SystemParam.MqttServerIP = TXT_MqttServerIP.Text;
-            int port = Systems.Staobj.SystemParam.MqttServerPort = (int)NUM_MqttPort.Value;
+            string ServerIP = Systems.Staobj.SystemParam.Mqtt.MqttServerIP = TXT_MqttServerIP.Text;
+            int port = Systems.Staobj.SystemParam.Mqtt.MqttServerPort = (int)NUM_MqttPort.Value;
             await Systems.cls_MQTTModule.DestoryServer();
             Systems.cls_MQTTModule.BuildServer(ServerIP, port);
             Systems.Staobj.SystemParam.SaveMqttParam();

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SensorDataProcess
 {
-    public class cls_PostgreSQLSaver
+    public class cls_PostgreSQLHandler
     {
         public static string ServerIP = "127.0.0.1";
         public static string Port = "5432";
@@ -24,7 +24,7 @@ namespace SensorDataProcess
         }
         private SQL_controller SQL_ProcessItem ;
 
-        public cls_PostgreSQLSaver(string EdgeName, string SensorName)
+        public cls_PostgreSQLHandler(string EdgeName, string SensorName)
         {
             if (!Enable)
             {
@@ -73,5 +73,17 @@ namespace SensorDataProcess
             }
             SQL_ProcessItem.Create_Table(SchemaName, "rawdata", Dict_ColumnNameType);
         }
+
+        public void GetIntervalRawData(DateTime StartTime,DateTime EndTime,string SensorName,string EdgeName)
+        {
+
+        }
+    }
+
+    public class cls_QueryReturn
+    {
+        public List<DateTime> List_TimeLog = new List<DateTime>();
+        public Dictionary<string, List<double>> Dict_DataList = new Dictionary<string, List<double>>();
+        public Dictionary<string, string> Dict_DataUnit = new Dictionary<string, string>();
     }
 }
