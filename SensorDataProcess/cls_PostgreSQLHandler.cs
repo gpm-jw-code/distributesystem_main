@@ -1,13 +1,14 @@
 ﻿using cls_PostgreSQL_Tool;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace SensorDataProcess
 {
-    public class cls_PostgreSQLSaver
+    public class cls_PostgreSQLHandler
     {
         public static string ServerIP = "127.0.0.1";
         public static string Port = "5432";
@@ -24,7 +25,7 @@ namespace SensorDataProcess
         }
         private SQL_controller SQL_ProcessItem ;
 
-        public cls_PostgreSQLSaver(string EdgeName, string SensorName)
+        public cls_PostgreSQLHandler(string EdgeName, string SensorName)
         {
             if (!Enable)
             {
@@ -73,5 +74,40 @@ namespace SensorDataProcess
             }
             SQL_ProcessItem.Create_Table(SchemaName, "rawdata", Dict_ColumnNameType);
         }
+
+        public cls_QueryReturn GetIntervalRawData(DateTime StartTime,DateTime EndTime)
+        {
+            cls_QueryReturn OutputData = new cls_QueryReturn();
+
+            string Condition = $"timelog > '{StartTime:yyyy-MM-dd HH:mm:ss}' AND  timelog < '{EndTime:yyyy-MM-dd HH:mm:ss}' order by datetime asc";
+            DataTable RawDataTable = SQL_ProcessItem.Select_to_Datatable(SchemaName, "rawdata", Condition);
+            var AllColumnName = RawDataTable.Columns.Cast<DataColumn>().Select(item => item.ColumnName).ToList();
+            foreach (var item in AllColumnName)
+            {
+                OutputData.Dict_DataList.Add(item, new List<double>());
+            }
+            foreach (var EachRow in RawDataTable.Rows.Cast<DataRow>())
+            {
+                foreach (var ColumnName in AllColumnName)
+                {
+                    if (ColumnName == "timelog")
+                    {
+                        OutputData.List_TimeLog.Add((DateTime)EachRow[ColumnName]);
+                    }
+                    else
+                    {
+                        OutputData.Dict_DataList[ColumnName].Add((double)EachRow[ColumnName]);
+                    }
+                }
+            }
+            return OutputData;
+        }
+    }
+
+    public class cls_QueryReturn
+    {
+        public List<DateTime> List_TimeLog = new List<DateTime>();
+        public Dictionary<string, List<double>> Dict_DataList = new Dictionary<string, List<double>>();
+        public string DataUnit ;
     }
 }

@@ -40,7 +40,7 @@ namespace SensorDataProcess
         private DataPassRateObject PassRateObjejct;
 
         private cls_txtDataSaver TxtDataSaver;
-        private cls_PostgreSQLSaver SQLDataSaver;
+        private cls_PostgreSQLHandler SQLDataSaver;
 
         public delegate void UpdateSeriesDataEventHandler(string SensorName, Queue<DateTime> Queue_Time, Dictionary<string, Queue<double>> Dict_DataQueue);
         public event UpdateSeriesDataEventHandler Event_UpdateChartSeries;
