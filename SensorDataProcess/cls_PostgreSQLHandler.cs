@@ -54,7 +54,7 @@ namespace SensorDataProcess
             }
             if (!SQL_ProcessItem.CheckTableExist(SchemaName, "rawdata"))
             {
-                CreateRawDataTable(Dict_RawData.Keys.ToList());
+                CreateRawDataTable(Dict_RawData.Keys.ToList(), "rawdata");
             }
 
             List_ColumnName.Add("TimeLog");
@@ -63,24 +63,52 @@ namespace SensorDataProcess
             SQL_ProcessItem.insert_row(SchemaName, "rawdata", List_ColumnName, list_Value);
         }
 
-        private void CreateRawDataTable(List<string> List_DataName)
+        public void InsertHourlyRawData(Dictionary<string,double> Dict_HourlyAverageData,DateTime TimeLog)
+        {
+            if (!Enable)
+            {
+                return;
+            }
+            List<string> List_ColumnName = new List<string>();
+            List<object> list_Value = new List<object>();
+
+            TimeLog = new DateTime(TimeLog.Year, TimeLog.Month, TimeLog.Day, TimeLog.Hour, 0, 0);
+
+            foreach (var item in Dict_HourlyAverageData)
+            {
+                string ItemForSqlColumnName = item.Key.Replace('.', '_').Replace(' ', '_');
+                List_ColumnName.Add(ItemForSqlColumnName);
+                list_Value.Add(item.Value);
+            }
+            if (!SQL_ProcessItem.CheckTableExist(SchemaName, "hourly_rawdata"))
+            {
+                CreateRawDataTable(Dict_HourlyAverageData.Keys.ToList(), "hourly_rawdata");
+            }
+
+            List_ColumnName.Add("timelog");
+            list_Value.Add($"{TimeLog:yyyy-MM-dd HH:mm:ss.fff}");
+
+            SQL_ProcessItem.insert_row(SchemaName, "hourly_rawdata", List_ColumnName, list_Value);
+        }
+
+        private void CreateRawDataTable(List<string> List_DataName,string TableName)
         {
             Dictionary<string, string> Dict_ColumnNameType = new Dictionary<string, string>();
-            Dict_ColumnNameType.Add("TimeLog", StaString.DataTypeToSQLString(StaString.CShartDataType.DateTime));
+            Dict_ColumnNameType.Add("timelog", StaString.DataTypeToSQLString(StaString.CShartDataType.DateTime));
             foreach (var item in List_DataName)
             {
                 string ItemForSqlColumnName = item.Replace('.', '_').Replace(' ', '_');
                 Dict_ColumnNameType.Add(ItemForSqlColumnName, StaString.DataTypeToSQLString(StaString.CShartDataType.DoubleData));
             }
-            SQL_ProcessItem.Create_Table(SchemaName, "rawdata", Dict_ColumnNameType);
+            SQL_ProcessItem.Create_Table(SchemaName, TableName, Dict_ColumnNameType);
         }
 
         public cls_QueryReturn GetIntervalRawData(DateTime StartTime,DateTime EndTime)
         {
             cls_QueryReturn OutputData = new cls_QueryReturn();
-
+            string TableName = (EndTime - StartTime).TotalDays > 7? "rawdata": "hourly_rawdata";
             string Condition = $"timelog > '{StartTime:yyyy-MM-dd HH:mm:ss}' AND  timelog < '{EndTime:yyyy-MM-dd HH:mm:ss}' order by datetime asc";
-            DataTable RawDataTable = SQL_ProcessItem.Select_to_Datatable(SchemaName, "rawdata", Condition);
+            DataTable RawDataTable = SQL_ProcessItem.Select_to_Datatable(SchemaName, TableName, Condition);
             var AllColumnName = RawDataTable.Columns.Cast<DataColumn>().Select(item => item.ColumnName).ToList();
             foreach (var item in AllColumnName)
             {

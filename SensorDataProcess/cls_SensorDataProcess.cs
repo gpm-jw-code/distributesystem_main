@@ -85,7 +85,11 @@ namespace SensorDataProcess
         {
             SQLDataSaver?.InsertRawData(Dict_NewData, TimeLog);
             TxtDataSaver.WriteRawData(Dict_NewData, TimeLog);
-            HourlyData.ImportNewData(Dict_NewData, TimeLog);
+            bool IsWriteHourlyData = HourlyData.ImportNewData(Dict_NewData, TimeLog);
+            if (IsWriteHourlyData)
+            {
+                SQLDataSaver?.InsertHourlyRawData(HourlyData.Dict_AverageData, TimeLog);
+            }
             var CheckResult = CheckThreshold(Dict_NewData, TimeLog);
             Queue_TimeLog.Enqueue(TimeLog);
             foreach (var item in Dict_NewData)
@@ -184,6 +188,8 @@ namespace SensorDataProcess
         private DateTime TimeLog = default;
         private cls_txtDataSaver DataSaver;
 
+        public Dictionary<string, double> Dict_AverageData;
+
         public cls_HourlyData(cls_txtDataSaver DataSaver)
         {
             Dict_HourlyData = new Dictionary<string, List<double>>();
@@ -191,14 +197,16 @@ namespace SensorDataProcess
             this.DataSaver = DataSaver;
         }
 
-        public void ImportNewData(Dictionary<string, double> NewData, DateTime TimeLog)
+        public bool ImportNewData(Dictionary<string, double> NewData, DateTime TimeLog)
         {
+            bool IsWriteData = false;
             if (TimeLog.Hour != this.TimeLog.Hour)
             {
-                var AverageData = Dict_HourlyData.Select(item => new KeyValuePair<string, double>(item.Key, item.Value.Average())).ToDictionary(item => item.Key, item => item.Value);
-                DataSaver.WriteHourlyRawData(AverageData, TimeLog);
+                Dict_AverageData = Dict_HourlyData.Select(item => new KeyValuePair<string, double>(item.Key, item.Value.Average())).ToDictionary(item => item.Key, item => item.Value);
+                DataSaver.WriteHourlyRawData(Dict_AverageData, TimeLog);
                 Dict_HourlyData = new Dictionary<string, List<double>>();
                 this.TimeLog = new DateTime(TimeLog.Year, TimeLog.Month, TimeLog.Day, TimeLog.Hour, 0, 0);
+                IsWriteData = true;
             }
 
             foreach (var item in NewData)
@@ -209,6 +217,7 @@ namespace SensorDataProcess
                 }
                 Dict_HourlyData[item.Key].Add(item.Value);
             }
+            return IsWriteData;
         }
 
     }
