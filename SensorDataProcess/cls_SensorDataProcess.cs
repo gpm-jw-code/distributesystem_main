@@ -72,7 +72,7 @@ namespace SensorDataProcess
             HourlyData = new cls_HourlyData(TxtDataSaver);
             try
             {
-                SQLDataSaver = new cls_PostgreSQLSaver(NewSensorInfo.EdgeName, NewSensorInfo.SensorNameWithOutEdgeName);
+                SQLDataSaver = new cls_PostgreSQLHandler(NewSensorInfo.EdgeName, NewSensorInfo.SensorNameWithOutEdgeName);
             }
             catch (Exception ex)
             {
