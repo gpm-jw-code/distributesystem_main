@@ -66,11 +66,11 @@ namespace DistributedSystem_Main.Systems
                 Staobj.WebsocketModule = new WebService.cls_WebSocketModule(WebSocket.WebsocketIP, WebSocket.WebsocketPort);
 
                 SectionName = "PostgreSQL";
-                PostgreSQL.IP = SystemIniFile.IniReadAndWriteValue(SectionName, "IP", "localhost");
-                PostgreSQL.Port = SystemIniFile.IniReadAndWriteValue(SectionName, "Port", 5432);
-                PostgreSQL.DataBaseName = SystemIniFile.IniReadAndWriteValue(SectionName, "DataBaseName", "gpm_distribute");
-                PostgreSQL.UserName = SystemIniFile.IniReadAndWriteValue(SectionName, "UserName", "postgres");
-                PostgreSQL.Password = SystemIniFile.IniReadAndWriteValue(SectionName, "Password", "changeme");
+                cls_PostgreSQLHandler.ServerIP= PostgreSQL.IP = SystemIniFile.IniReadAndWriteValue(SectionName, "IP", "localhost");
+                cls_PostgreSQLHandler.Port = PostgreSQL.Port = SystemIniFile.IniReadAndWriteValue(SectionName, "Port", 5432);
+                cls_PostgreSQLHandler.Database = PostgreSQL.DataBaseName = SystemIniFile.IniReadAndWriteValue(SectionName, "DataBaseName", "gpm_distribute");
+                cls_PostgreSQLHandler.Username= PostgreSQL.UserName = SystemIniFile.IniReadAndWriteValue(SectionName, "UserName", "postgres");
+                cls_PostgreSQLHandler.Password = PostgreSQL.Password = SystemIniFile.IniReadAndWriteValue(SectionName, "Password", "changeme");
             }
 
             public static async void SaveMqttParam()

@@ -11,7 +11,7 @@ namespace SensorDataProcess
     public class cls_PostgreSQLHandler
     {
         public static string ServerIP = "127.0.0.1";
-        public static string Port = "5432";
+        public static int Port = 5432;
         public static string Username = "postgres";
         public static string Password = "changeme";
         public static string Database = "distrubute";
@@ -33,7 +33,7 @@ namespace SensorDataProcess
             }
             this.EdgeName = EdgeName;
             this.SensorName = SensorName.Replace('.','_');
-            SQL_ProcessItem = new SQL_controller(ServerIP, Username, Password, Database, Port);
+            SQL_ProcessItem = new SQL_controller(ServerIP, Username, Password, Database, Port.ToString());
             SQL_ProcessItem.Create_Schema(SchemaName);
         }
 
