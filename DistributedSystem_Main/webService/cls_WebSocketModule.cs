@@ -38,7 +38,7 @@ namespace DistributedSystem_Main.WebService
         }
     }
 
-    internal class QuerySensorDataBehavior:WebSocketBehavior
+    internal class QuerySensorDataBehavior : WebSocketBehavior
     {
         protected override void OnOpen()
         {
@@ -48,14 +48,14 @@ namespace DistributedSystem_Main.WebService
             var strEdgeName = Context.QueryString[2];
             var strSensorName = Context.QueryString[3];
 
-            Send(JsonConvert.SerializeObject(QueryRawData(strStartTime,strEndTime,strEdgeName,strSensorName)));
+            Send(JsonConvert.SerializeObject(QueryRawData(strStartTime, strEndTime, strEdgeName, strSensorName)));
         }
 
-        private object QueryRawData(string strStartTime, string strEndTime,string EdgeName,string SenosorID)
+        private object QueryRawData(string strStartTime, string strEndTime, string EdgeName, string SenosorID)
         {
             string SensorName = $"{ EdgeName }-{ SenosorID}";
             SensorDataProcess.cls_PostgreSQLHandler SqlHandler = new SensorDataProcess.cls_PostgreSQLHandler(EdgeName, SenosorID);
-            var ReturnData = SqlHandler.GetIntervalRawData(DateTime.Parse(strStartTime), DateTime.Parse(strEndTime));
+            var ReturnData = SqlHandler.GetIntervalRawData(DateTime.Parse(strStartTime), DateTime.Parse(strEndTime), "timelog");
             ReturnData.DataUnit = Staobj.Dict_SensorProcessObject[SensorName].SensorInfo.DataUnit;
             return ReturnData;
         }
@@ -127,7 +127,7 @@ namespace DistributedSystem_Main.WebService
         private void ResetAlarm(string eqgeName, string eqid, string field)
         {
 
-            cls_SensorDataProcess sensor = Staobj.Dict_SensorProcessObject.Values.First(s => s.SensorInfo.EdgeName == eqgeName && s.SensorInfo.IP == eqid && s.SensorInfo.SensorType==field);
+            cls_SensorDataProcess sensor = Staobj.Dict_SensorProcessObject.Values.First(s => s.SensorInfo.EdgeName == eqgeName && s.SensorInfo.IP == eqid && s.SensorInfo.SensorType == field);
             if (sensor == null) return;
 
             if (sensor.Dict_OutOfItemStatess.TryGetValue(field, out OutOfState state))
