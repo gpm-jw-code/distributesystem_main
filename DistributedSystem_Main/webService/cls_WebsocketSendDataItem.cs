@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SensorDataProcess;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -38,7 +39,7 @@ namespace DistributedSystem_Main.WebService
             this.Dict_RawData_WithState = Dict_RawData_WithState;
         }
 
-        public cls_RawData(string SensorName, string EdgeName, DateTime TimeLog, Dictionary<string, double> Dict_RawData, Dictionary<string, double> dict_DataThreshold) : this(SensorName, EdgeName, TimeLog, Dict_RawData)
+        public cls_RawData(string SensorName, string EdgeName, DateTime TimeLog, Dictionary<string, double> Dict_RawData, Dictionary<string, double> dict_DataThreshold, OutOfState outOfState) : this(SensorName, EdgeName, TimeLog, Dict_RawData)
         {
             this.SensorName = SensorName;
             this.EdgeName = EdgeName;
@@ -47,12 +48,11 @@ namespace DistributedSystem_Main.WebService
             Dict_DataThreshold = dict_DataThreshold;
             foreach (var item in Dict_RawData)
             {
-                bool isOutOfControl = item.Value > Dict_DataThreshold[item.Key];
                 Dict_RawData_WithState.Add(item.Key, new RawDataState
                 {
                     value = item.Value,
-                    isOutofControl = isOutOfControl,
-                    isOutOfSpec = isOutOfControl,
+                    isOutofControl = outOfState.isOutofControl,
+                    isOutofSpec = outOfState.isOutofSPEC,
                 });
             }
         }
@@ -62,7 +62,7 @@ namespace DistributedSystem_Main.WebService
     public class RawDataState
     {
         public double value { get; set; }
-        public bool isOutOfSpec { get; set; }
+        public bool isOutofSpec { get; set; }
         public bool isOutofControl { get; set; }
     }
 }

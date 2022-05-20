@@ -1,5 +1,6 @@
 ﻿using DistributedSystem_Main.Systems;
 using Newtonsoft.Json;
+using SensorDataProcess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace DistributedSystem_Main.WebService
     {
         WebSocketServer _server;
         cls_PostgreSQL_Tool.SQL_controller SqlQueryItem;
-        public cls_WebSocketModule(string IP,int Port)
+        public cls_WebSocketModule(string IP, int Port)
         {
             try
             {
@@ -85,8 +86,7 @@ namespace DistributedSystem_Main.WebService
         }
         private void SettingThresholdValue(string edgeName, string eqid, string field, string thresholdType, double thresholdValue)
         {
-            string SensorName = $"{ edgeName }-{ eqid}";
-            SensorDataProcess.cls_SensorDataProcess sensor = Staobj.Dict_SensorProcessObject[SensorName];
+            SensorDataProcess.cls_SensorDataProcess sensor = Staobj.Dict_SensorProcessObject.Values.First(s => s.SensorInfo.EdgeName == edgeName && s.SensorInfo.IP == eqid && s.SensorInfo.SensorType == field);
             string thresholdKey = field + "_" + thresholdType;
             double _thresholdValue;
             bool thresholdExist = sensor.Dict_DataThreshold.TryGetValue(thresholdKey, out _thresholdValue);
@@ -98,6 +98,8 @@ namespace DistributedSystem_Main.WebService
             {
                 sensor.Dict_DataThreshold.Add(thresholdKey, thresholdValue);
             }
+            Systems.Staobj.SensorParam.SaveThresholdToFile(sensor.Dict_DataThreshold, sensor.SensorInfo.SensorName);
+
         }
     }
 
@@ -124,6 +126,14 @@ namespace DistributedSystem_Main.WebService
         }
         private void ResetAlarm(string eqgeName, string eqid, string field)
         {
+
+            cls_SensorDataProcess sensor = Staobj.Dict_SensorProcessObject.Values.First(s => s.SensorInfo.EdgeName == eqgeName && s.SensorInfo.IP == eqid && s.SensorInfo.SensorType==field);
+            if (sensor == null) return;
+
+            if (sensor.Dict_OutOfItemStatess.TryGetValue(field, out OutOfState state))
+            {
+                state.RESET();
+            }
 
         }
     }
