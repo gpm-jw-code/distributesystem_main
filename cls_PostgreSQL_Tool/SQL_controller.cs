@@ -123,9 +123,12 @@ namespace cls_PostgreSQL_Tool
             this.Server = Server;
             this.Username = Username;
             this.Password = Password;
-            this.Database = Database;
             this.Port = Port;
             this.TimeZone = TimeZone;
+
+            this.Database = "postgres";
+            Create_Database(Database);
+            this.Database = Database;
             Reset_Connection();
 
             Schema_Table_Structure
@@ -817,10 +820,10 @@ namespace cls_PostgreSQL_Tool
             Command_Execute(sql_command, conn);
         }
 
-        public bool CheckTableExist(string Schema_Name,string Table_Name)
+        public bool CheckTableExist(string Schema_Name, string Table_Name)
         {
             string SqlCommand = $"Select From pg_tables where schemaname = '{Schema_Name}' and tablename='{Table_Name}'";
-             DataTable Data = Command_Execute_and_Return_DataTable(SqlCommand, conn);
+            DataTable Data = Command_Execute_and_Return_DataTable(SqlCommand, conn);
             return Data.Rows.Count > 0;
         }
 

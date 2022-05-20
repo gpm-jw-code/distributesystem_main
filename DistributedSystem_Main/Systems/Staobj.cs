@@ -71,6 +71,7 @@ namespace DistributedSystem_Main.Systems
                 cls_PostgreSQLHandler.Database = PostgreSQL.DataBaseName = SystemIniFile.IniReadAndWriteValue(SectionName, "DataBaseName", "gpm_distribute");
                 cls_PostgreSQLHandler.Username= PostgreSQL.UserName = SystemIniFile.IniReadAndWriteValue(SectionName, "UserName", "postgres");
                 cls_PostgreSQLHandler.Password = PostgreSQL.Password = SystemIniFile.IniReadAndWriteValue(SectionName, "Password", "changeme");
+                cls_PostgreSQLHandler A = new cls_PostgreSQLHandler("Test", "TestS");
             }
 
             public static async void SaveMqttParam()
