@@ -16,6 +16,7 @@ namespace SensorDataProcess
         public static string Password = "changeme";
         public static string Database = "distrubute";
         public static bool Enable = true;
+        public static int DownSamplePoint = 500;
 
         private string EdgeName = "";   
         private string SensorName = ""; 
@@ -114,8 +115,13 @@ namespace SensorDataProcess
             {
                 OutputData.Dict_DataList.Add(item, new List<double>());
             }
-            foreach (var EachRow in RawDataTable.Rows.Cast<DataRow>())
+            int DownSample_SampleRate = RawDataTable.Rows.Count / DownSamplePoint;
+            var AllDataRow = RawDataTable.Rows.Cast<DataRow>().ToArray();
+            for (int i = 0; i < AllDataRow.Length; i+=DownSample_SampleRate)
             {
+                if (i>AllDataRow.Length)
+                    break;
+                var EachRow = AllDataRow[i];
                 foreach (var ColumnName in AllColumnName)
                 {
                     if (ColumnName == "timelog")
@@ -127,7 +133,22 @@ namespace SensorDataProcess
                         OutputData.Dict_DataList[ColumnName].Add((double)EachRow[ColumnName]);
                     }
                 }
+
             }
+            //foreach (var EachRow in RawDataTable.Rows.Cast<DataRow>())
+            //{
+            //    foreach (var ColumnName in AllColumnName)
+            //    {
+            //        if (ColumnName == "timelog")
+            //        {
+            //            OutputData.List_TimeLog.Add((DateTime)EachRow[ColumnName]);
+            //        }
+            //        else
+            //        {
+            //            OutputData.Dict_DataList[ColumnName].Add((double)EachRow[ColumnName]);
+            //        }
+            //    }
+            //}
             return OutputData;
         }
     }
