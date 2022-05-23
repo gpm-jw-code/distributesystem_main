@@ -39,7 +39,7 @@ namespace DistributedSystem_Main.WebService
             this.Dict_RawData_WithState = Dict_RawData_WithState;
         }
 
-        public cls_RawData(string SensorName, string EdgeName, DateTime TimeLog, Dictionary<string, double> Dict_RawData, Dictionary<string, double> dict_DataThreshold, OutOfState outOfState) : this(SensorName, EdgeName, TimeLog, Dict_RawData)
+        public cls_RawData(string SensorName, string EdgeName, DateTime TimeLog, Dictionary<string, double> Dict_RawData, Dictionary<string, double> dict_DataThreshold, Dictionary<string, OutOfState> outOfState) : this(SensorName, EdgeName, TimeLog, Dict_RawData)
         {
             this.SensorName = SensorName;
             this.EdgeName = EdgeName;
@@ -51,8 +51,8 @@ namespace DistributedSystem_Main.WebService
                 Dict_RawData_WithState.Add(item.Key, new RawDataState
                 {
                     value = item.Value,
-                    isOutofControl = outOfState.isOutofControl,
-                    isOutofSpec = outOfState.isOutofSPEC,
+                    isOutofControl = outOfState[item.Key].isOutofControl,
+                    isOutofSpec = outOfState[item.Key].isOutofSPEC,
                 });
             }
         }

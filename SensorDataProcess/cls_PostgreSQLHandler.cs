@@ -32,10 +32,18 @@ namespace SensorDataProcess
             {
                 return;
             }
-            this.EdgeName = EdgeName;
-            this.SensorName = SensorName.Replace('.', '_');
-            SQL_ProcessItem = new SQL_controller(ServerIP, Username, Password, Database, Port.ToString());
-            SQL_ProcessItem.Create_Schema(SchemaName);
+            try
+            {
+                this.EdgeName = EdgeName;
+                this.SensorName = SensorName.Replace('.', '_');
+                SQL_ProcessItem = new SQL_controller(ServerIP, Username, Password, Database, Port.ToString());
+                SQL_ProcessItem.Create_Schema(SchemaName);
+            }
+            catch (Exception)
+            {
+                Enable = false;
+            }
+            
         }
 
         public void InsertRawData(Dictionary<string, double> Dict_RawData, DateTime TimeLog)
