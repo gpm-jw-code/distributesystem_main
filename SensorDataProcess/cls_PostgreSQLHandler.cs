@@ -18,13 +18,13 @@ namespace SensorDataProcess
         public static bool Enable = true;
         public static int DownSamplePoint = 500;
 
-        private string EdgeName = "";   
-        private string SensorName = ""; 
+        private string EdgeName = "";
+        private string SensorName = "";
         private string SchemaName
         {
             get { return $"{EdgeName}_{SensorName}".ToLower(); }
         }
-        private SQL_controller SQL_ProcessItem ;
+        private SQL_controller SQL_ProcessItem;
 
         public cls_PostgreSQLHandler(string EdgeName, string SensorName)
         {
@@ -33,12 +33,12 @@ namespace SensorDataProcess
                 return;
             }
             this.EdgeName = EdgeName;
-            this.SensorName = SensorName.Replace('.','_');
+            this.SensorName = SensorName.Replace('.', '_');
             SQL_ProcessItem = new SQL_controller(ServerIP, Username, Password, Database, Port.ToString());
             SQL_ProcessItem.Create_Schema(SchemaName);
         }
 
-        public void InsertRawData(Dictionary<string,double> Dict_RawData,DateTime TimeLog)
+        public void InsertRawData(Dictionary<string, double> Dict_RawData, DateTime TimeLog)
         {
             if (!Enable)
             {
@@ -59,7 +59,7 @@ namespace SensorDataProcess
             }
 
             List_ColumnName.Add("TimeLog");
-            list_Value.Add($"{TimeLog:yyyy-MM-dd HH:mm:ss.fff}"); 
+            list_Value.Add($"{TimeLog:yyyy-MM-dd HH:mm:ss.fff}");
 
             SQL_ProcessItem.insert_row(SchemaName, "rawdata", List_ColumnName, list_Value);
         }
@@ -104,11 +104,11 @@ namespace SensorDataProcess
             SQL_ProcessItem.Create_Table(SchemaName, TableName, Dict_ColumnNameType);
         }
 
-        public cls_QueryReturn GetIntervalRawData(DateTime StartTime,DateTime EndTime)
+        public cls_QueryReturn GetIntervalRawData(DateTime StartTime, DateTime EndTime, string timeColumnName = "datetime")
         {
             cls_QueryReturn OutputData = new cls_QueryReturn();
             string TableName = (EndTime - StartTime).TotalDays > 7? "rawdata": "hourly_rawdata";
-            string Condition = $"timelog > '{StartTime:yyyy-MM-dd HH:mm:ss}' AND  timelog < '{EndTime:yyyy-MM-dd HH:mm:ss}' order by datetime asc";
+            string Condition = $"{timeColumnName} > '{StartTime:yyyy-MM-dd HH:mm:ss}' AND  {timeColumnName} < '{EndTime:yyyy-MM-dd HH:mm:ss}' order by {timeColumnName} asc";
             DataTable RawDataTable = SQL_ProcessItem.Select_to_Datatable(SchemaName, TableName, Condition);
             var AllColumnName = RawDataTable.Columns.Cast<DataColumn>().Select(item => item.ColumnName).ToList();
             foreach (var item in AllColumnName)
@@ -157,6 +157,6 @@ namespace SensorDataProcess
     {
         public List<DateTime> List_TimeLog = new List<DateTime>();
         public Dictionary<string, List<double>> Dict_DataList = new Dictionary<string, List<double>>();
-        public string DataUnit ;
+        public string DataUnit;
     }
 }
