@@ -108,10 +108,15 @@ namespace DistributedSystem_Main.Systems
                 string OriginSensorName = TopicName.Split('/').Last();
                 string SensorName = $"{EdgeName}-{OriginSensorName}";
                 Systems.cls_SensorData_Mqtt NewData = Newtonsoft.Json.JsonConvert.DeserializeObject<cls_SensorData_Mqtt>(Data);
+                if (NewData.Dict_RawData.Count == 0)
+                {
+                    return;
+                }
                 if (Staobj.Dict_SensorProcessObject.ContainsKey(SensorName))
                 {
                     var sensorPcrObj = Staobj.Dict_SensorProcessObject[SensorName];
                     var sensorType = sensorPcrObj.SensorInfo.SensorType;
+                   
                     sensorPcrObj.ImportNewSensorData(NewData.Dict_RawData, NewData.TimeLog);
                     
                     WebService.cls_RawData RawData = new WebService.cls_RawData(OriginSensorName, EdgeName, NewData.TimeLog, NewData.Dict_RawData, sensorPcrObj.Dict_DataThreshold, sensorPcrObj.Dict_OutOfItemStatess[sensorType]);

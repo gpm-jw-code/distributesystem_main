@@ -239,7 +239,10 @@ namespace SensorDataProcess
         {
             if (NewTimelog.Minute != this.TimeLog.Minute)
             {
-                TXT_DataSaver.WritePassRateLog(this);
+                if (Dict_PassCount.Keys.Count != 0)
+                {
+                    TXT_DataSaver.WritePassRateLog(this);
+                }
 
                 Dict_TotalCount = new Dictionary<string, double>();
                 Dict_PassCount = new Dictionary<string, double>();
