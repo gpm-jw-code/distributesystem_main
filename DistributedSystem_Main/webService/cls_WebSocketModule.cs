@@ -56,7 +56,10 @@ namespace DistributedSystem_Main.WebService
             string SensorName = $"{ EdgeName }-{ SenosorID}";
             SensorDataProcess.cls_PostgreSQLHandler SqlHandler = new SensorDataProcess.cls_PostgreSQLHandler(EdgeName, SenosorID);
             var ReturnData = SqlHandler.GetIntervalRawData(DateTime.Parse(strStartTime), DateTime.Parse(strEndTime), "timelog");
-            ReturnData.DataUnit = Staobj.Dict_SensorProcessObject[SensorName].SensorInfo.DataUnit;
+            if(Staobj.Dict_SensorProcessObject.TryGetValue(SensorName, out cls_SensorDataProcess sensorDataProcess))
+            {
+                ReturnData.DataUnit= sensorDataProcess.SensorInfo.DataUnit;
+            }
             return ReturnData;
         }
     }
