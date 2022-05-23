@@ -15,7 +15,7 @@ namespace DistributedSystem_Main.Views
 
         string SensorName = "";
         string SensorType = "";
-
+        Dictionary<string, double> Dict_Threshold;
         public Form_SensorThresholdSetting(SensorDataProcess.SensorInfo SensorInfo)
         {
             InitializeComponent();
@@ -29,10 +29,18 @@ namespace DistributedSystem_Main.Views
 
         public void ImportThresholdSettings(Dictionary<string,double> Dict_Threshold)
         {
-            DGV_ThresholdSetting.Rows.Clear();
+            Combo_DataName.Items.Clear();
+            this.Dict_Threshold = new Dictionary<string, double>();
             foreach (var item in Dict_Threshold)
             {
-                DGV_ThresholdSetting.Rows.Add(item.Key,item.Value);
+                this.Dict_Threshold.Add(item.Key, item.Value);
+                string DataName = item.Key.Replace("_OOC", "");
+                DataName = DataName.Replace("_OOS", "");
+                if (Combo_DataName.Items.Contains(DataName))
+                {
+                    continue;
+                }
+                Combo_DataName.Items.Add(DataName);
             }
         }
 
@@ -49,16 +57,79 @@ namespace DistributedSystem_Main.Views
 
             foreach (var TargetSensorName in List_TargetSensor)
             {
-                foreach (var item in DGV_ThresholdSetting.Rows.Cast<DataGridViewRow>())
+                foreach (var item in Dict_Threshold)
                 {
-                    string DataName = item.Cells[0].Value.ToString();
-                    Systems.Staobj.Dict_SensorProcessObject[TargetSensorName].Dict_DataThreshold[DataName] = Convert.ToDouble(item.Cells[1].Value);
+                    Systems.Staobj.Dict_SensorProcessObject[TargetSensorName].Dict_DataThreshold[item.Key] = Convert.ToDouble(item.Value);
                 }
+                //foreach (var item in DGV_ThresholdSetting.Rows.Cast<DataGridViewRow>())
+                //{
+                //    string DataName = item.Cells[0].Value.ToString();
+                //    Systems.Staobj.Dict_SensorProcessObject[TargetSensorName].Dict_DataThreshold[DataName] = Convert.ToDouble(item.Cells[1].Value);
+                //}
                 Systems.Staobj.Dict_SensorProcessObject[TargetSensorName].RefreshThreshold();
                 Systems.Staobj.SensorParam.SaveThresholdToFile(Systems.Staobj.Dict_SensorProcessObject[TargetSensorName].Dict_DataThreshold, TargetSensorName);
             }
 
             this.Close();
+        }
+
+        private void Combo_DataName_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string DataName = Combo_DataName.Text;
+            NUM_OOC.Value = (decimal)Dict_Threshold[DataName + "_OOC"];
+            NUM_OOS.Value = (decimal)Dict_Threshold[DataName + "_OOS"];
+        }
+
+        private void BTN_ApplyThresholdSetting_Click(object sender, EventArgs e)
+        {
+            string DataName = Combo_DataName.Text;
+            Dict_Threshold[DataName + "_OOC"] = (double)NUM_OOC.Value;
+            Dict_Threshold[DataName + "_OOS"] = (double)NUM_OOS.Value;
+        }
+
+        private void BTN_CancelThresholdSetting_Click(object sender, EventArgs e)
+        {
+            string DataName = Combo_DataName.Text;
+            NUM_OOC.Value = (decimal)Dict_Threshold[DataName + "_OOC"];
+            NUM_OOS.Value = (decimal)Dict_Threshold[DataName + "_OOS"];
+        }
+
+        private void NUM_OOC_ValueChanged(object sender, EventArgs e)
+        {
+            if (Combo_DataName.Text =="")
+            {
+                return;
+            }
+
+            string DataName = Combo_DataName.Text;
+            try
+            {
+                Dict_Threshold[DataName + "_OOC"] = (double)NUM_OOC.Value;
+                Dict_Threshold[DataName + "_OOS"] = (double)NUM_OOS.Value;
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+
+        private void NUM_OOS_ValueChanged(object sender, EventArgs e)
+        {
+            if (Combo_DataName.Text == "")
+            {
+                return;
+            }
+
+            string DataName = Combo_DataName.Text;
+            try
+            {
+                Dict_Threshold[DataName + "_OOC"] = (double)NUM_OOC.Value;
+                Dict_Threshold[DataName + "_OOS"] = (double)NUM_OOS.Value;
+            }
+            catch (Exception)
+            {
+
+            }
         }
     }
 }

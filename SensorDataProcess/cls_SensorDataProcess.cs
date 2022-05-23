@@ -147,7 +147,6 @@ namespace SensorDataProcess
             foreach (var item in Dict_NewData)
             {
                 CheckOutOfThreshold(item.Key, item.Value);
-                //CheckResult.Add(item.Key, item.Value < Dict_DataThreshold[item.Key]);
             }
             PassRateObjejct.AddNewCheckResult(Dict_OutOfItemStates, TimeLog);
             return CheckResult;

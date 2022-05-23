@@ -63,9 +63,17 @@ namespace DistributedSystem_Main.User_Control
                     {
                         item.Value.Enabled = false;
                     }
-                    foreach (var item in Dict_SensorStripLines)
+                    foreach (var item in Dict_SensorOOC_StripLines)
                     {
                         item.Value.StripWidth = 0;
+                        item.Value.Text = "";
+                        item.Value.BorderWidth = 0;
+                    }
+                    foreach (var item in Dict_SensorOOS_StripLines)
+                    {
+                        item.Value.StripWidth = 0;
+                        item.Value.Text = "";
+                        item.Value.BorderWidth = 0;
                     }
                 }
                 _SensorType = value;
@@ -78,7 +86,8 @@ namespace DistributedSystem_Main.User_Control
         }
 
         private Dictionary<string, Series> Dict_SensorSeries = new Dictionary<string, Series>();
-        private Dictionary<string, StripLine> Dict_SensorStripLines = new Dictionary<string, StripLine>();
+        private Dictionary<string, StripLine> Dict_SensorOOC_StripLines = new Dictionary<string, StripLine>();
+        private Dictionary<string, StripLine> Dict_SensorOOS_StripLines = new Dictionary<string, StripLine>();
 
         public void ImportSensorDataSeries(Queue<DateTime> TimeLogSeries ,Dictionary<string,Queue<double>> Dict_DataSeries)
         {
@@ -114,19 +123,21 @@ namespace DistributedSystem_Main.User_Control
             int IntForColor = 0;
             foreach (var item in Dict_Threshold)
             {
+                string DataName=item.Key.Replace("_OOC", "");
+                DataName = DataName.Replace("_OOS", "");
                 IntForColor += 1;
-                if (!Dict_SensorStripLines.ContainsKey(item.Key))
+                if (!Dict_SensorOOC_StripLines.ContainsKey(DataName))
                 {
                     Color NewSeriesColor = ColorFromHSV(360 * IntForColor / Dict_Threshold.Count, 1, 1);
                     Color StripLineColor = ColorFromHSV(360 * IntForColor / Dict_Threshold.Count, 1, 0.5);
-                    CreateNewSensorUIObjects(item.Key,NewSeriesColor, StripLineColor);
+                    CreateNewSensorUIObjects(DataName, NewSeriesColor, StripLineColor);
                 }
-                Dict_SensorStripLines[item.Key].IntervalOffset = item.Value;
-                if (Dict_SensorStripLines[item.Key].StripWidth == 0)
-                {
-                    Dict_SensorStripLines[item.Key].StripWidth = default;
-                }
-                
+                Dict_SensorOOC_StripLines[DataName].IntervalOffset = Dict_Threshold[DataName + "_OOC"];
+                Dict_SensorOOS_StripLines[DataName].IntervalOffset = Dict_Threshold[DataName + "_OOS"];
+
+                Dict_SensorOOC_StripLines[DataName].BorderWidth = Dict_SensorOOS_StripLines[DataName].BorderWidth = 1;
+                Dict_SensorOOC_StripLines[DataName].Text= $"{DataName}_OOC";
+                Dict_SensorOOS_StripLines[DataName].Text = $"{DataName}_OOS";
             }
         }
 
@@ -151,11 +162,23 @@ namespace DistributedSystem_Main.User_Control
             StripLine NewStripLine = new StripLine
             {
                 BorderColor = StripLineColor,
-                BorderDashStyle = ChartDashStyle.Dash
+                BorderDashStyle = ChartDashStyle.Dash,
+                Text = $"{DataName}_OOC",
+                ForeColor = Color.White
             };
-            Dict_SensorStripLines.Add(DataName, NewStripLine);
+            Dict_SensorOOC_StripLines.Add(DataName, NewStripLine);
+
+            StripLine NewOOSStripLine = new StripLine
+            {
+                BorderColor = StripLineColor,
+                BorderDashStyle = ChartDashStyle.Dash,
+                Text = $"{DataName}_OOS",
+                ForeColor = Color.Yellow
+            };
+            Dict_SensorOOS_StripLines.Add(DataName, NewOOSStripLine);
 
             ChartForShow.ChartAreas[0].AxisY.StripLines.Add(NewStripLine);
+            ChartForShow.ChartAreas[0].AxisY.StripLines.Add(NewOOSStripLine);
         }
 
         private void picSettingIcon_Click(object sender, EventArgs e)
