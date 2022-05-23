@@ -29,6 +29,7 @@ namespace DistributedSystem_Main.User_Control
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(USC_SensorDataChart));
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
@@ -41,12 +42,16 @@ namespace DistributedSystem_Main.User_Control
             this.LAB_SensorName = new System.Windows.Forms.Label();
             this.picSettingIcon = new System.Windows.Forms.PictureBox();
             this.ChartForShow = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.ContextMenuStrip_ShowSeries = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.dataSeriesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.thresholdLineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
             this.LAB_LastUpdateTime = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picSettingIcon)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ChartForShow)).BeginInit();
+            this.ContextMenuStrip_ShowSeries.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -187,6 +192,7 @@ namespace DistributedSystem_Main.User_Control
             chartArea1.Name = "ChartArea1";
             chartArea1.ShadowColor = System.Drawing.Color.Transparent;
             this.ChartForShow.ChartAreas.Add(chartArea1);
+            this.ChartForShow.ContextMenuStrip = this.ContextMenuStrip_ShowSeries;
             this.ChartForShow.Dock = System.Windows.Forms.DockStyle.Fill;
             legend1.BackColor = System.Drawing.Color.Transparent;
             legend1.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Top;
@@ -208,6 +214,26 @@ namespace DistributedSystem_Main.User_Control
             this.ChartForShow.Size = new System.Drawing.Size(502, 286);
             this.ChartForShow.TabIndex = 7;
             this.ChartForShow.Text = "chart1";
+            // 
+            // ContextMenuStrip_ShowSeries
+            // 
+            this.ContextMenuStrip_ShowSeries.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.dataSeriesToolStripMenuItem,
+            this.thresholdLineToolStripMenuItem});
+            this.ContextMenuStrip_ShowSeries.Name = "ComtextMenu_ShowSeries";
+            this.ContextMenuStrip_ShowSeries.Size = new System.Drawing.Size(181, 70);
+            // 
+            // dataSeriesToolStripMenuItem
+            // 
+            this.dataSeriesToolStripMenuItem.Name = "dataSeriesToolStripMenuItem";
+            this.dataSeriesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.dataSeriesToolStripMenuItem.Text = "Data Series";
+            // 
+            // thresholdLineToolStripMenuItem
+            // 
+            this.thresholdLineToolStripMenuItem.Name = "thresholdLineToolStripMenuItem";
+            this.thresholdLineToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.thresholdLineToolStripMenuItem.Text = "Threshold Line";
             // 
             // panel1
             // 
@@ -265,6 +291,7 @@ namespace DistributedSystem_Main.User_Control
             this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picSettingIcon)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ChartForShow)).EndInit();
+            this.ContextMenuStrip_ShowSeries.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);
@@ -284,5 +311,9 @@ namespace DistributedSystem_Main.User_Control
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label LAB_LastUpdateTime;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ContextMenuStrip ContextMenuStrip_ShowSeries;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem dataSeriesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem thresholdLineToolStripMenuItem;
     }
 }

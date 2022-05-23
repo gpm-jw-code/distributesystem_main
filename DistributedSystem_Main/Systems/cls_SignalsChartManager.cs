@@ -99,9 +99,9 @@ namespace DistributedSystem_Main.Systems
             {
                 string SensorName = List_SelectedSensorNames[i];
                 List_NowShowSensorNames.Add(SensorName);
-                Staobj.Dict_SensorProcessObject[SensorName].RefreshSignalChart();
                 UpdateSensorInfoToChart(SensorName);
                 UpdateThresholdToChart(SensorName, Staobj.Dict_SensorProcessObject[SensorName].Dict_DataThreshold);
+                Staobj.Dict_SensorProcessObject[SensorName].RefreshSignalChart();
             }
         }
 
