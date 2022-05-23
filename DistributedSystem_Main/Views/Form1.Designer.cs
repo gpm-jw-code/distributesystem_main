@@ -1,7 +1,7 @@
 ﻿
 namespace DistributedSystem_Main
 {
-    partial class Form1
+    partial class FormMain
     {
         /// <summary>
         /// 設計工具所需的變數。
@@ -29,7 +29,7 @@ namespace DistributedSystem_Main
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.TableLayout_WholeView = new System.Windows.Forms.TableLayoutPanel();
             this.TableLayout_SideBar = new System.Windows.Forms.TableLayoutPanel();

@@ -18,6 +18,21 @@ namespace DistributedSystem_Main.Views
             ReloadMqttInfo();
         }
 
+        #region General
+        private void BTN_SaveChartSetting_Click(object sender, EventArgs e)
+        {
+            Systems.Staobj.SystemParam.ChartSetting.RowNumber = (int)NUM_Chart_RowNumber.Value;
+            Systems.Staobj.SystemParam.ChartSetting.ColumnNumber = (int)NUM_Chart_ColumnNumber.Value;
+            Systems.cls_SignalsChartManager.SetChartRowColumnNumber(Systems.Staobj.SystemParam.ChartSetting.RowNumber, Systems.Staobj.SystemParam.ChartSetting.ColumnNumber);
+            Systems.Staobj.SystemParam.SaveChartSetting();
+        }
+        private void BTN_CancelChartSetting_Click(object sender, EventArgs e)
+        {
+            NUM_Chart_RowNumber.Value = (decimal)Systems.Staobj.SystemParam.ChartSetting.RowNumber;
+            NUM_Chart_ColumnNumber.Value = (decimal)Systems.Staobj.SystemParam.ChartSetting.ColumnNumber;
+        }
+        #endregion
+
 
         #region MqttSetting
         int selectedIndexOfMqttListBox = -1;
@@ -79,6 +94,7 @@ namespace DistributedSystem_Main.Views
                 ListBox_ClientList.Items.Add(item.ClientId);
             }
         }
+
 
         #endregion
 

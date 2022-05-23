@@ -50,7 +50,15 @@ namespace DistributedSystem_Main.Views
             this.label4 = new System.Windows.Forms.Label();
             this.TXT_MqttServerIP = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.TabPage_UISetting = new System.Windows.Forms.TabPage();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.BTN_CancelChartSetting = new System.Windows.Forms.Button();
+            this.BTN_SaveChartSetting = new System.Windows.Forms.Button();
+            this.label7 = new System.Windows.Forms.Label();
+            this.NUM_Chart_ColumnNumber = new System.Windows.Forms.NumericUpDown();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.NUM_Chart_RowNumber = new System.Windows.Forms.NumericUpDown();
             this.TabControl_Main.SuspendLayout();
             this.TabPage_Mqtt.SuspendLayout();
             this.TablePanel_MqttClient.SuspendLayout();
@@ -58,12 +66,16 @@ namespace DistributedSystem_Main.Views
             this.Panel_ClientInfo.SuspendLayout();
             this.Panel_MqttSetting.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NUM_MqttPort)).BeginInit();
+            this.TabPage_UISetting.SuspendLayout();
+            this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NUM_Chart_ColumnNumber)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUM_Chart_RowNumber)).BeginInit();
             this.SuspendLayout();
             // 
             // TabControl_Main
             // 
+            this.TabControl_Main.Controls.Add(this.TabPage_UISetting);
             this.TabControl_Main.Controls.Add(this.TabPage_Mqtt);
-            this.TabControl_Main.Controls.Add(this.tabPage2);
             this.TabControl_Main.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TabControl_Main.Location = new System.Drawing.Point(0, 0);
             this.TabControl_Main.Name = "TabControl_Main";
@@ -314,15 +326,116 @@ namespace DistributedSystem_Main.Views
             this.label3.TabIndex = 1;
             this.label3.Text = "Server IP : ";
             // 
-            // tabPage2
+            // TabPage_UISetting
             // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 26);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(667, 504);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.TabPage_UISetting.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.TabPage_UISetting.Controls.Add(this.panel1);
+            this.TabPage_UISetting.Location = new System.Drawing.Point(4, 26);
+            this.TabPage_UISetting.Name = "TabPage_UISetting";
+            this.TabPage_UISetting.Padding = new System.Windows.Forms.Padding(3);
+            this.TabPage_UISetting.Size = new System.Drawing.Size(628, 507);
+            this.TabPage_UISetting.TabIndex = 1;
+            this.TabPage_UISetting.Text = "General";
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.panel1.Controls.Add(this.BTN_CancelChartSetting);
+            this.panel1.Controls.Add(this.BTN_SaveChartSetting);
+            this.panel1.Controls.Add(this.label7);
+            this.panel1.Controls.Add(this.NUM_Chart_RowNumber);
+            this.panel1.Controls.Add(this.NUM_Chart_ColumnNumber);
+            this.panel1.Controls.Add(this.label9);
+            this.panel1.Controls.Add(this.label10);
+            this.panel1.Location = new System.Drawing.Point(3, 6);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(220, 147);
+            this.panel1.TabIndex = 6;
+            // 
+            // BTN_CancelChartSetting
+            // 
+            this.BTN_CancelChartSetting.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.BTN_CancelChartSetting.Location = new System.Drawing.Point(152, 97);
+            this.BTN_CancelChartSetting.Name = "BTN_CancelChartSetting";
+            this.BTN_CancelChartSetting.Size = new System.Drawing.Size(56, 32);
+            this.BTN_CancelChartSetting.TabIndex = 5;
+            this.BTN_CancelChartSetting.Text = "Cancel";
+            this.BTN_CancelChartSetting.UseVisualStyleBackColor = true;
+            this.BTN_CancelChartSetting.Click += new System.EventHandler(this.BTN_CancelChartSetting_Click);
+            // 
+            // BTN_SaveChartSetting
+            // 
+            this.BTN_SaveChartSetting.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.BTN_SaveChartSetting.Location = new System.Drawing.Point(81, 97);
+            this.BTN_SaveChartSetting.Name = "BTN_SaveChartSetting";
+            this.BTN_SaveChartSetting.Size = new System.Drawing.Size(56, 32);
+            this.BTN_SaveChartSetting.TabIndex = 5;
+            this.BTN_SaveChartSetting.Text = "Save";
+            this.BTN_SaveChartSetting.UseVisualStyleBackColor = true;
+            this.BTN_SaveChartSetting.Click += new System.EventHandler(this.BTN_SaveChartSetting_Click);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.label7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.label7.Location = new System.Drawing.Point(2, 0);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(51, 20);
+            this.label7.TabIndex = 4;
+            this.label7.Text = "Chart";
+            // 
+            // NUM_Chart_ColumnNumber
+            // 
+            this.NUM_Chart_ColumnNumber.Location = new System.Drawing.Point(81, 66);
+            this.NUM_Chart_ColumnNumber.Maximum = new decimal(new int[] {
+            999999,
+            0,
+            0,
+            0});
+            this.NUM_Chart_ColumnNumber.Name = "NUM_Chart_ColumnNumber";
+            this.NUM_Chart_ColumnNumber.Size = new System.Drawing.Size(127, 25);
+            this.NUM_Chart_ColumnNumber.TabIndex = 4;
+            this.NUM_Chart_ColumnNumber.Value = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(5, 69);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(65, 17);
+            this.label9.TabIndex = 1;
+            this.label9.Text = "Column : ";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(5, 39);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(43, 17);
+            this.label10.TabIndex = 1;
+            this.label10.Text = "Row : ";
+            // 
+            // NUM_Chart_RowNumber
+            // 
+            this.NUM_Chart_RowNumber.Location = new System.Drawing.Point(81, 35);
+            this.NUM_Chart_RowNumber.Maximum = new decimal(new int[] {
+            999999,
+            0,
+            0,
+            0});
+            this.NUM_Chart_RowNumber.Name = "NUM_Chart_RowNumber";
+            this.NUM_Chart_RowNumber.Size = new System.Drawing.Size(127, 25);
+            this.NUM_Chart_RowNumber.TabIndex = 3;
+            this.NUM_Chart_RowNumber.Value = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
             // 
             // Form_SystemSetting
             // 
@@ -345,6 +458,11 @@ namespace DistributedSystem_Main.Views
             this.Panel_MqttSetting.ResumeLayout(false);
             this.Panel_MqttSetting.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NUM_MqttPort)).EndInit();
+            this.TabPage_UISetting.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NUM_Chart_ColumnNumber)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NUM_Chart_RowNumber)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -353,7 +471,7 @@ namespace DistributedSystem_Main.Views
 
         private System.Windows.Forms.TabControl TabControl_Main;
         private System.Windows.Forms.TabPage TabPage_Mqtt;
-        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage TabPage_UISetting;
         private System.Windows.Forms.TableLayoutPanel TablePanel_MqttClient;
         private System.Windows.Forms.Panel Panel_MqttClientList;
         private System.Windows.Forms.ListBox ListBox_ClientList;
@@ -373,5 +491,13 @@ namespace DistributedSystem_Main.Views
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Panel Panel_MqttClientTopics;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button BTN_CancelChartSetting;
+        private System.Windows.Forms.Button BTN_SaveChartSetting;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.NumericUpDown NUM_Chart_RowNumber;
+        private System.Windows.Forms.NumericUpDown NUM_Chart_ColumnNumber;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label10;
     }
 }

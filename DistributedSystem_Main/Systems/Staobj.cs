@@ -21,7 +21,10 @@ namespace DistributedSystem_Main.Systems
 
         public static WebService.cls_WebSocketModule WebsocketModule;
 
-        //public static WebAPIService.cls_WebService WebAPIObject;
+        public struct Forms
+        {
+            public static FormMain Form_Main;
+        }
 
         public struct SystemParam
         {
@@ -49,6 +52,12 @@ namespace DistributedSystem_Main.Systems
                 public static string Password = "changeme";
             }
 
+            public struct ChartSetting
+            {
+                public static int RowNumber = 2;
+                public static int ColumnNumber = 2;
+            }
+
             public static void LoadSystemParam()
             {
                 Ini.IniFile SystemIniFile = new Ini.IniFile(System.IO.Path.Combine("Parameters", "SystemParameters.ini"));
@@ -66,12 +75,15 @@ namespace DistributedSystem_Main.Systems
                 Staobj.WebsocketModule = new WebService.cls_WebSocketModule(WebSocket.WebsocketIP, WebSocket.WebsocketPort);
 
                 SectionName = "PostgreSQL";
-                cls_PostgreSQLHandler.ServerIP= PostgreSQL.IP = SystemIniFile.IniReadAndWriteValue(SectionName, "IP", "localhost");
+                cls_PostgreSQLHandler.ServerIP = PostgreSQL.IP = SystemIniFile.IniReadAndWriteValue(SectionName, "IP", "localhost");
                 cls_PostgreSQLHandler.Port = PostgreSQL.Port = SystemIniFile.IniReadAndWriteValue(SectionName, "Port", 5432);
                 cls_PostgreSQLHandler.Database = PostgreSQL.DataBaseName = SystemIniFile.IniReadAndWriteValue(SectionName, "DataBaseName", "gpm_distribute");
-                cls_PostgreSQLHandler.Username= PostgreSQL.UserName = SystemIniFile.IniReadAndWriteValue(SectionName, "UserName", "postgres");
+                cls_PostgreSQLHandler.Username = PostgreSQL.UserName = SystemIniFile.IniReadAndWriteValue(SectionName, "UserName", "postgres");
                 cls_PostgreSQLHandler.Password = PostgreSQL.Password = SystemIniFile.IniReadAndWriteValue(SectionName, "Password", "changeme");
-                cls_PostgreSQLHandler A = new cls_PostgreSQLHandler("Test", "TestS");
+
+                SectionName = "ChartSetting";
+                ChartSetting.RowNumber = SystemIniFile.IniReadAndWriteValue(SectionName, "RowNumber", 2);
+                ChartSetting.ColumnNumber = SystemIniFile.IniReadAndWriteValue(SectionName, "ColumnNumber", 2);
             }
 
             public static async void SaveMqttParam()
@@ -80,6 +92,15 @@ namespace DistributedSystem_Main.Systems
                 Ini.IniFile SystemIniFile = new Ini.IniFile(System.IO.Path.Combine("Parameters", "SystemParameters.ini"));
                 await SystemIniFile.IniWriteValue(SectionName, "ServerIP", Mqtt.MqttServerIP);
                 await SystemIniFile.IniWriteValue(SectionName, "ServerPort", Mqtt.MqttServerPort.ToString());
+            }
+
+            public static async void SaveChartSetting()
+            {
+                Ini.IniFile SystemIniFile = new Ini.IniFile(System.IO.Path.Combine("Parameters", "SystemParameters.ini"));
+
+                string SectionName = "ChartSetting";
+                await SystemIniFile.IniWriteValue(SectionName, "RowNumber", ChartSetting.RowNumber.ToString());
+                await SystemIniFile.IniWriteValue(SectionName, "ColumnNumber", ChartSetting.ColumnNumber.ToString());
             }
         }
 

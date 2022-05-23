@@ -12,15 +12,15 @@ using System.Windows.Forms;
 
 namespace DistributedSystem_Main
 {
-    public partial class Form1 : Form
+    public partial class FormMain : Form
     {
 
-        public Form1()
+        public FormMain()
         {
             InitializeComponent();
             Staobj.SystemParam.LoadSystemParam();
             Systems.cls_SignalsChartManager.InitialManager(TablePanel_SignalChart, PageSwitch_Signals);
-            Systems.cls_SignalsChartManager.SetChartRowColumnNumber(2, 2);
+            Systems.cls_SignalsChartManager.SetChartRowColumnNumber(Staobj.SystemParam.ChartSetting.RowNumber, Staobj.SystemParam.ChartSetting.ColumnNumber);
             Systems.cls_MQTTModule.BuildServer(Staobj.SystemParam.Mqtt.MqttServerIP, Staobj.SystemParam.Mqtt.MqttServerPort);
             SensorDataProcess.cls_txtDataSaver.RootPath = Staobj.SystemParam.DataSaveRootPath;
             TabControl_Main.ItemSize = new Size(0,1);
@@ -29,6 +29,7 @@ namespace DistributedSystem_Main
                 item.Text = "";
             }
             EventRegist();
+            Staobj.Forms.Form_Main = this;
         }
 
         #region System Initial

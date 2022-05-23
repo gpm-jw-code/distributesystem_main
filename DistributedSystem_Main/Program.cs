@@ -32,7 +32,7 @@ namespace DistributedSystem_Main
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new FormMain());
         }
 
         public class JsonContentNegotiator : IContentNegotiator
