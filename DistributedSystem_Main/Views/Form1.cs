@@ -29,13 +29,6 @@ namespace DistributedSystem_Main
                 item.Text = "";
             }
             EventRegist();
-            //SQL_controller SqlObject = new SQL_controller(Username:"postgres",Password:"changeme",Database:"postgres");
-            //SqlObject.Create_Database("distrubute");
-            //SqlObject.Database = "distrubute";
-            //SqlObject.Reset_Connection();
-            //SqlObject.Create_Schema("Test");
-            //SqlObject.Create_Table("Test","table_1",new Dictionary<string, string>());
-            //SqlObject.CheckTableExist("Test", "table_1");
         }
 
         #region System Initial

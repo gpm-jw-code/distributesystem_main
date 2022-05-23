@@ -32,7 +32,7 @@ namespace SensorDataProcess
         public SensorInfo SensorInfo = new SensorInfo();
         public SensorStatus Status = new SensorStatus();
         public Dictionary<string, double> Dict_DataThreshold = new Dictionary<string, double>();
-        public Dictionary<string, OutOfState> Dict_OutOfItemStatess = new Dictionary<string, OutOfState>();
+        public Dictionary<string, OutOfState> Dict_OutOfItemStates = new Dictionary<string, OutOfState>();
 
         private Dictionary<string, Queue<double>> Dict_SensorDataSeries = new Dictionary<string, Queue<double>>();
         private cls_HourlyData HourlyData;
@@ -146,14 +146,10 @@ namespace SensorDataProcess
             Dictionary<string, bool> CheckResult = new Dictionary<string, bool>();
             foreach (var item in Dict_NewData)
             {
-                if (!Dict_DataThreshold.ContainsKey(item.Key))
-                {
-                    Dict_DataThreshold.Add(item.Key, 999999);
-                }
                 CheckOutOfThreshold(item.Key, item.Value);
-                CheckResult.Add(item.Key, item.Value < Dict_DataThreshold[item.Key]);
+                //CheckResult.Add(item.Key, item.Value < Dict_DataThreshold[item.Key]);
             }
-            PassRateObjejct.AddNewCheckResult(CheckResult, TimeLog);
+            PassRateObjejct.AddNewCheckResult(Dict_OutOfItemStates, TimeLog);
             return CheckResult;
         }
 
@@ -171,10 +167,10 @@ namespace SensorDataProcess
             Dict_DataThreshold.TryGetValue(oocThreshodlKey, out ooc_threshold);
             Dict_DataThreshold.TryGetValue(oosThreshodlKey, out oos_threshold);
 
-            if (!Dict_OutOfItemStatess.ContainsKey(fieldKey))
-                Dict_OutOfItemStatess.Add(fieldKey, new OutOfState());
+            if (!Dict_OutOfItemStates.ContainsKey(fieldKey))
+                Dict_OutOfItemStates.Add(fieldKey, new OutOfState());
 
-            OutOfState outofState = Dict_OutOfItemStatess[fieldKey];
+            OutOfState outofState = Dict_OutOfItemStates[fieldKey];
             if (!outofState.isOutofControl)
                 outofState.isOutofControl = value > ooc_threshold;
             if (!outofState.isOutofSPEC)
@@ -225,7 +221,8 @@ namespace SensorDataProcess
     public class DataPassRateObject
     {
         public Dictionary<string, double> Dict_TotalCount = new Dictionary<string, double>();
-        public Dictionary<string, double> Dict_PassCount = new Dictionary<string, double>();
+        public Dictionary<string, double> Dict_OOC_Count = new Dictionary<string, double>();
+        public Dictionary<string, double> Dict_OOS_Count = new Dictionary<string, double>();
         public DateTime TimeLog;
         private cls_txtDataSaver TXT_DataSaver;
 
@@ -235,32 +232,34 @@ namespace SensorDataProcess
             this.TXT_DataSaver = DataSaver;
         }
 
-        public void AddNewCheckResult(Dictionary<string, bool> Dict_CheckResult, DateTime NewTimelog)
+        public void AddNewCheckResult(Dictionary<string, OutOfState> Dict_OutOfItemStates, DateTime NewTimelog)
         {
             if (NewTimelog.Minute != this.TimeLog.Minute)
             {
-                if (Dict_PassCount.Keys.Count != 0)
+                if (Dict_OOC_Count.Keys.Count != 0)
                 {
                     TXT_DataSaver.WritePassRateLog(this);
                 }
 
                 Dict_TotalCount = new Dictionary<string, double>();
-                Dict_PassCount = new Dictionary<string, double>();
+                Dict_OOC_Count = new Dictionary<string, double>();
+                Dict_OOS_Count = new Dictionary<string, double>();
                 this.TimeLog = new DateTime(NewTimelog.Year, NewTimelog.Month, NewTimelog.Day, NewTimelog.Hour, NewTimelog.Minute, 0);
             }
 
-            foreach (var item in Dict_CheckResult)
+            foreach (var item in Dict_OutOfItemStates)
             {
                 if (!Dict_TotalCount.ContainsKey(item.Key))
                 {
                     Dict_TotalCount.Add(item.Key, 0);
-                    Dict_PassCount.Add(item.Key, 0);
+                    Dict_OOC_Count.Add(item.Key, 0);
+                    Dict_OOS_Count.Add(item.Key, 0);
                 }
                 Dict_TotalCount[item.Key] += 1;
-                if (item.Value)
-                {
-                    Dict_PassCount[item.Key] += 1;
-                }
+                if (item.Value.isOutofControl)
+                    Dict_OOC_Count[item.Key]+= 1;
+                if (item.Value.isOutofSPEC)
+                    Dict_OOS_Count[item.Key] += 1;
             }
         }
     }

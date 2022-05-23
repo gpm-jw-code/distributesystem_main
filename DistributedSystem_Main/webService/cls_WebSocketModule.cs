@@ -130,7 +130,7 @@ namespace DistributedSystem_Main.WebService
             cls_SensorDataProcess sensor = Staobj.Dict_SensorProcessObject.Values.First(s => s.SensorInfo.EdgeName == eqgeName && s.SensorInfo.IP == eqid && s.SensorInfo.SensorType == field);
             if (sensor == null) return;
 
-            if (sensor.Dict_OutOfItemStatess.TryGetValue(field, out OutOfState state))
+            if (sensor.Dict_OutOfItemStates.TryGetValue(field, out OutOfState state))
             {
                 state.RESET();
             }
