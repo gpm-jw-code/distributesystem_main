@@ -131,6 +131,9 @@ namespace DistributedSystem_Main.User_Control
         {
             dataSeriesToolStripMenuItem.DropDownItems.Clear();
             thresholdLineToolStripMenuItem.DropDownItems.Clear();
+            AddNewSeriesToolItem("All");
+            AddNewThresholdToolItem("All");
+
             int IntForColor = 0;
             foreach (var item in Dict_Threshold)
             {
@@ -139,15 +142,8 @@ namespace DistributedSystem_Main.User_Control
                 IntForColor += 1;
                 if (!dataSeriesToolStripMenuItem.DropDownItems.ContainsKey($"Series_{DataName}"))
                 {
-                    var NewItem = dataSeriesToolStripMenuItem.DropDownItems.Add(DataName) as ToolStripMenuItem;
-                    NewItem.Name = $"Series_{DataName}";
-                    NewItem.Checked = NewItem.CheckOnClick = true;
-                    NewItem.Click += ContextMenuStrip_ShowSeries_ClickEvent;
-
-                    var NewThreshold = thresholdLineToolStripMenuItem.DropDownItems.Add(DataName) as ToolStripMenuItem;
-                    NewThreshold.Name = $"Threshold_{DataName}";
-                    NewThreshold.Checked = NewThreshold.CheckOnClick = true;
-                    NewThreshold.Click += ContextMenuStrip_ShowThreshold_ClickEvent;
+                    AddNewSeriesToolItem(DataName);
+                    AddNewThresholdToolItem(DataName);
                 }
 
                 if (!Dict_SensorSeries.ContainsKey(DataName))
@@ -173,29 +169,92 @@ namespace DistributedSystem_Main.User_Control
             }
         }
 
+        private void AddNewSeriesToolItem(string DataName)
+        {
+            var NewItem = dataSeriesToolStripMenuItem.DropDownItems.Add(DataName) as ToolStripMenuItem;
+            NewItem.Name = $"Series_{DataName}";
+            NewItem.Checked = NewItem.CheckOnClick = true;
+            NewItem.Click += ContextMenuStrip_ShowSeries_ClickEvent;
+        }
+
+        private void AddNewThresholdToolItem(string DataName)
+        {
+            var NewThreshold = thresholdLineToolStripMenuItem.DropDownItems.Add(DataName) as ToolStripMenuItem;
+            NewThreshold.Name = $"Threshold_{DataName}";
+            NewThreshold.Checked = NewThreshold.CheckOnClick = true;
+            NewThreshold.Click += ContextMenuStrip_ShowThreshold_ClickEvent;
+        }
+
         private void ContextMenuStrip_ShowThreshold_ClickEvent(object sender, EventArgs e)
         {
             ToolStripMenuItem TargetItem = sender as ToolStripMenuItem;
             string DataName = TargetItem.Name.Replace("Threshold_", "");
-            if (TargetItem.Checked)
+
+            if (DataName == "All")
             {
-                Dict_SensorOOC_StripLines[DataName].BorderWidth = Dict_SensorOOS_StripLines[DataName].BorderWidth = 1;
-                Dict_SensorOOC_StripLines[DataName].Text = $"{DataName}_OOC";
-                Dict_SensorOOS_StripLines[DataName].Text = $"{DataName}_OOS";
+                foreach (var item in thresholdLineToolStripMenuItem.DropDownItems.Cast<ToolStripMenuItem>())
+                {
+                    string EachDataName = item.Name.Replace("Threshold_", "");
+                    if (EachDataName == "All")
+                    {
+                        continue;
+                    }
+                    item.Checked = TargetItem.Checked;
+                    if (TargetItem.Checked)
+                    {
+                        Dict_SensorOOC_StripLines[EachDataName].BorderWidth = Dict_SensorOOS_StripLines[EachDataName].BorderWidth = 1;
+                        Dict_SensorOOC_StripLines[EachDataName].Text = $"{EachDataName}_OOC";
+                        Dict_SensorOOS_StripLines[EachDataName].Text = $"{EachDataName}_OOS";
+                    }
+                    else
+                    {
+                        Dict_SensorOOC_StripLines[EachDataName].BorderWidth = Dict_SensorOOS_StripLines[EachDataName].BorderWidth = 0;
+                        Dict_SensorOOC_StripLines[EachDataName].Text = "";
+                        Dict_SensorOOS_StripLines[EachDataName].Text = "";
+                    }
+                }
             }
             else
             {
-                Dict_SensorOOC_StripLines[DataName].BorderWidth = Dict_SensorOOS_StripLines[DataName].BorderWidth = 0;
-                Dict_SensorOOC_StripLines[DataName].Text = "";
-                Dict_SensorOOS_StripLines[DataName].Text = "";
+                if (TargetItem.Checked)
+                {
+                    Dict_SensorOOC_StripLines[DataName].BorderWidth = Dict_SensorOOS_StripLines[DataName].BorderWidth = 1;
+                    Dict_SensorOOC_StripLines[DataName].Text = $"{DataName}_OOC";
+                    Dict_SensorOOS_StripLines[DataName].Text = $"{DataName}_OOS";
+                }
+                else
+                {
+                    Dict_SensorOOC_StripLines[DataName].BorderWidth = Dict_SensorOOS_StripLines[DataName].BorderWidth = 0;
+                    Dict_SensorOOC_StripLines[DataName].Text = "";
+                    Dict_SensorOOS_StripLines[DataName].Text = "";
+                }
             }
+
+           
         }
 
         private void ContextMenuStrip_ShowSeries_ClickEvent(object sender, EventArgs e)
         {
             ToolStripMenuItem TargetItem = sender as ToolStripMenuItem;
             string DataName = TargetItem.Name.Replace("Series_", "");
-            Dict_SensorSeries[DataName].Enabled = TargetItem.Checked;
+            if (DataName == "All")
+            {
+                foreach (var item in dataSeriesToolStripMenuItem.DropDownItems.Cast<ToolStripMenuItem>())
+                {
+                    string EachDataName = item.Name.Replace("Series_", "");
+                    if (EachDataName == "All")
+                    {
+                        continue;
+                    }
+                    item.Checked = TargetItem.Checked;
+                    Dict_SensorSeries[EachDataName].Enabled = TargetItem.Checked;
+                }
+            }
+            else
+            {
+                Dict_SensorSeries[DataName].Enabled = TargetItem.Checked;
+            }
+           
         }
 
         private void CreateNewSensorUIObjects(string DataName, Color SeriesColor, Color StripLineColor)
