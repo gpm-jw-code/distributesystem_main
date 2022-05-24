@@ -4,7 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,6 +22,7 @@ namespace DistributedSystem_Main
             InitializeComponent();
             Staobj.SystemParam.LoadSystemParam();
             Systems.cls_SignalsChartManager.InitialManager(TablePanel_SignalChart, PageSwitch_Signals);
+            
             Systems.cls_SignalsChartManager.SetChartRowColumnNumber(Staobj.SystemParam.ChartSetting.RowNumber, Staobj.SystemParam.ChartSetting.ColumnNumber);
             Systems.cls_MQTTModule.BuildServer(Staobj.SystemParam.Mqtt.MqttServerIP, Staobj.SystemParam.Mqtt.MqttServerPort);
             SensorDataProcess.cls_txtDataSaver.RootPath = Staobj.SystemParam.DataSaveRootPath;
@@ -81,6 +84,34 @@ namespace DistributedSystem_Main
             Panel_RawData.BackColor = panLog.BackColor = Color.FromArgb(0, 64, 82);
         }
 
+        private void BTN_Query_Click(object sender, EventArgs e)
+        {
+            Process[] procs = Process.GetProcessesByName("DataQuery");
+            if ( procs.Length != 0)
+            {
+                MessageBox.Show("DataQuery已開啟");
+                return;
+            }
+
+            string dataQueryExeFilename = Path.Combine( Directory.GetCurrentDirectory() ,"DataQuery.exe");
+            if ( !File.Exists(dataQueryExeFilename))
+            {
+                MessageBox.Show("找不到DataQuery程式"); 
+                return;
+            }
+           
+
+            Task.Run(() =>
+            {
+                ProcessStartInfo startInfo = new ProcessStartInfo
+                {
+                    UseShellExecute = false,
+                    WorkingDirectory = Path.GetDirectoryName(dataQueryExeFilename),
+                    FileName = dataQueryExeFilename
+                };
+                Process.Start(startInfo);//呼叫Query程式(外部程式)
+            });
+        }
         private void picbOFF_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -94,7 +125,7 @@ namespace DistributedSystem_Main
         }
         #endregion
 
-        #region Raw Data Char
+        #region Raw Data Chart
 
         private void AddNewSensorToUI(string SensorName)
         {

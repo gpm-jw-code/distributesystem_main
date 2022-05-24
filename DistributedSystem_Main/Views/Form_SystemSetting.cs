@@ -16,9 +16,16 @@ namespace DistributedSystem_Main.Views
         {
             InitializeComponent();
             ReloadMqttInfo();
+            ReloadGeneralSetting();
         }
 
         #region General
+
+        private void ReloadGeneralSetting()
+        {
+            NUM_Chart_RowNumber.Value = (decimal)Systems.Staobj.SystemParam.ChartSetting.RowNumber;
+            NUM_Chart_ColumnNumber.Value = (decimal)Systems.Staobj.SystemParam.ChartSetting.ColumnNumber;
+        }
         private void BTN_SaveChartSetting_Click(object sender, EventArgs e)
         {
             Systems.Staobj.SystemParam.ChartSetting.RowNumber = (int)NUM_Chart_RowNumber.Value;

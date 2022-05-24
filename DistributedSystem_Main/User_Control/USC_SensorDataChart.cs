@@ -156,8 +156,8 @@ namespace DistributedSystem_Main.User_Control
 
                 if (!Dict_SensorOOC_StripLines.ContainsKey(DataName))
                 {
-                    Color NewSeriesColor = ColorFromHSV(360 * IntForColor / Dict_Threshold.Count, 1, 1);
-                    Color StripLineColor = ColorFromHSV(360 * IntForColor / Dict_Threshold.Count, 1, 0.5);
+                    Color NewSeriesColor = ColorFromHSV(360 * IntForColor / (Dict_Threshold.Count/2), 1, 1);
+                    Color StripLineColor = ColorFromHSV(360 * IntForColor / (Dict_Threshold.Count/2), 1, 0.5);
                     CreateNewSensorUIObjects(DataName, NewSeriesColor, StripLineColor);
                 }
 

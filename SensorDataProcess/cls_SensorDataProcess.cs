@@ -48,6 +48,8 @@ namespace SensorDataProcess
         public Action<string> Event_RefreshSensorInfo;
         public Action<string> Event_RefreshSensorThreshold;
 
+        private object RawDataDict_Lock = new object();
+
         public cls_SensorDataProcess(string IP, int Port, string SensorName, string SensorType, string EQName = null, string UnitName = null)
         {
             SensorInfo.IP = IP;
@@ -92,25 +94,29 @@ namespace SensorDataProcess
             }
             var CheckResult = CheckThreshold(Dict_NewData, TimeLog);
             Queue_TimeLog.Enqueue(TimeLog);
-            foreach (var item in Dict_NewData)
+            lock (RawDataDict_Lock)
             {
-                string DataName = item.Key;
-                if (!Dict_SensorDataSeries.ContainsKey(DataName))
+                foreach (var item in Dict_NewData)
                 {
-                    Dict_SensorDataSeries.Add(DataName, new Queue<double>());
+                    string DataName = item.Key;
+                    if (!Dict_SensorDataSeries.ContainsKey(DataName))
+                    {
+                        Dict_SensorDataSeries.Add(DataName, new Queue<double>());
 
+                    }
+                    Dict_SensorDataSeries[DataName].Enqueue(item.Value);
                 }
-                Dict_SensorDataSeries[DataName].Enqueue(item.Value);
-            }
 
-            while (Queue_TimeLog.Count > StaticParameters.TemDataNumber)
-            {
-                Queue_TimeLog.Dequeue();
-                foreach (var item in Dict_SensorDataSeries)
+                while (Queue_TimeLog.Count > StaticParameters.TemDataNumber)
                 {
-                    item.Value.Dequeue();
+                    Queue_TimeLog.Dequeue();
+                    foreach (var item in Dict_SensorDataSeries)
+                    {
+                        item.Value.Dequeue();
+                    }
                 }
             }
+           
             Event_UpdateChartSeries?.Invoke(SensorInfo.SensorName, Queue_TimeLog, Dict_SensorDataSeries);
         }
 
@@ -138,7 +144,10 @@ namespace SensorDataProcess
 
         public void RefreshSignalChart()
         {
-            Event_UpdateChartSeries?.Invoke(SensorInfo.SensorName, Queue_TimeLog, Dict_SensorDataSeries);
+            lock (RawDataDict_Lock)
+            {
+                Event_UpdateChartSeries?.Invoke(SensorInfo.SensorName, Queue_TimeLog, Dict_SensorDataSeries);
+            }
         }
 
         private Dictionary<string, bool> CheckThreshold(Dictionary<string, double> Dict_NewData, DateTime TimeLog)

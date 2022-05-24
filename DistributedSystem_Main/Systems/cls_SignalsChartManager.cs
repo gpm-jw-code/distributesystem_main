@@ -16,7 +16,6 @@ namespace DistributedSystem_Main.Systems
 
         public static List<string> List_NowShowSensorNames = new List<string>();
         public static List<string> List_SelectedSensorNames = new List<string>();
-        public static int NowPageNumber = 1;
         public static int TotalChartNumber = 6;
 
         private static string OriginFilterString = "";
@@ -59,6 +58,8 @@ namespace DistributedSystem_Main.Systems
             {
                 ParentControls.Controls.Add(item);
             }
+            SignalPageSwitch.NowPageNumber = 1;
+            FilterAndSortSensor();
         }
 
         public static void FilterAndSortSensor(string NewFilterString = null, SortType NewSortType = SortType.None)
