@@ -118,10 +118,6 @@ namespace DistributedSystem_Main.User_Control
                     Color StripLineColor = ColorFromHSV(360 * IntForColor / Dict_DataSeries.Count, 1, 0.5);
                     CreateNewSensorUIObjects(item.Key, NewSeriesColor, StripLineColor);
                 }
-                //if (!Dict_SensorSeries[item.Key].Enabled )
-                //{
-                //    Dict_SensorSeries[item.Key].Enabled = true;
-                //}
                 Dict_SensorSeries[item.Key].Points.DataBindXY(TimeLogSeries, item.Value);
             }
             LastUpdateTime = DateTime.Now;

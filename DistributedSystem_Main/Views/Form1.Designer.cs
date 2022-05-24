@@ -30,7 +30,7 @@ namespace DistributedSystem_Main
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.TableLayout_WholeView = new System.Windows.Forms.TableLayoutPanel();
             this.TableLayout_SideBar = new System.Windows.Forms.TableLayoutPanel();
             this.PictureBox_Icon = new System.Windows.Forms.PictureBox();
@@ -49,6 +49,9 @@ namespace DistributedSystem_Main
             this.picbRestart = new System.Windows.Forms.PictureBox();
             this.TablePanel_SideBarFunctions = new System.Windows.Forms.TableLayoutPanel();
             this.BTN_OpenSystemSetting = new System.Windows.Forms.Button();
+            this.Panel_Query = new System.Windows.Forms.Panel();
+            this.BTN_Query = new System.Windows.Forms.Button();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.TabControl_Main = new DistributedSystem_Main.User_Control.TabControlEx();
             this.TabPage_Signal = new System.Windows.Forms.TabPage();
             this.TablePanel_SignalChart = new System.Windows.Forms.TableLayoutPanel();
@@ -66,9 +69,6 @@ namespace DistributedSystem_Main
             this.BTN_CancelEditSensorInfo = new System.Windows.Forms.Button();
             this.BTN_SaveSensorInfo = new System.Windows.Forms.Button();
             this.BTN_EditSensorInfo = new System.Windows.Forms.Button();
-            this.Panel_Query = new System.Windows.Forms.Panel();
-            this.BTN_Query = new System.Windows.Forms.Button();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.TableLayout_WholeView.SuspendLayout();
             this.TableLayout_SideBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox_Icon)).BeginInit();
@@ -83,14 +83,14 @@ namespace DistributedSystem_Main
             ((System.ComponentModel.ISupportInitialize)(this.picbOFF)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picbRestart)).BeginInit();
             this.TablePanel_SideBarFunctions.SuspendLayout();
+            this.Panel_Query.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.TabControl_Main.SuspendLayout();
             this.TabPage_Signal.SuspendLayout();
             this.Panel_Signals_Function.SuspendLayout();
             this.TabPage_SensorInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGV_SensorInfo)).BeginInit();
             this.Panel_EditSensorInfo.SuspendLayout();
-            this.Panel_Query.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // TableLayout_WholeView
@@ -373,6 +373,54 @@ namespace DistributedSystem_Main
             this.BTN_OpenSystemSetting.UseVisualStyleBackColor = true;
             this.BTN_OpenSystemSetting.Click += new System.EventHandler(this.BTN_OpenSystemSetting_Click);
             // 
+            // Panel_Query
+            // 
+            this.Panel_Query.Controls.Add(this.BTN_Query);
+            this.Panel_Query.Controls.Add(this.pictureBox1);
+            this.Panel_Query.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Panel_Query.Dock = System.Windows.Forms.DockStyle.Top;
+            this.Panel_Query.Location = new System.Drawing.Point(0, 154);
+            this.Panel_Query.Margin = new System.Windows.Forms.Padding(4);
+            this.Panel_Query.Name = "Panel_Query";
+            this.Panel_Query.Size = new System.Drawing.Size(170, 41);
+            this.Panel_Query.TabIndex = 7;
+            // 
+            // BTN_Query
+            // 
+            this.BTN_Query.BackColor = System.Drawing.Color.Transparent;
+            this.BTN_Query.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.BTN_Query.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(26)))), ((int)(((byte)(36)))));
+            this.BTN_Query.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(82)))), ((int)(((byte)(111)))), ((int)(((byte)(135)))));
+            this.BTN_Query.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(63)))), ((int)(((byte)(95)))), ((int)(((byte)(122)))));
+            this.BTN_Query.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(43)))), ((int)(((byte)(54)))));
+            this.BTN_Query.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BTN_Query.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Bold);
+            this.BTN_Query.ForeColor = System.Drawing.Color.White;
+            this.BTN_Query.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.BTN_Query.Location = new System.Drawing.Point(43, 0);
+            this.BTN_Query.Margin = new System.Windows.Forms.Padding(4);
+            this.BTN_Query.Name = "BTN_Query";
+            this.BTN_Query.Size = new System.Drawing.Size(127, 41);
+            this.BTN_Query.TabIndex = 1;
+            this.BTN_Query.Text = "Status";
+            this.BTN_Query.UseVisualStyleBackColor = false;
+            this.BTN_Query.Click += new System.EventHandler(this.BTN_Query_Click);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.BackgroundImage")));
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.pictureBox1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(43, 41);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 25;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.Tag = "TabPageModuleManager";
+            // 
             // TabControl_Main
             // 
             this.TabControl_Main.Appearance = System.Windows.Forms.TabAppearance.FlatButtons;
@@ -446,10 +494,10 @@ namespace DistributedSystem_Main
             // TabPage_Log
             // 
             this.TabPage_Log.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(43)))), ((int)(((byte)(54)))));
-            this.TabPage_Log.Location = new System.Drawing.Point(-1, 22);
+            this.TabPage_Log.Location = new System.Drawing.Point(-1, 18);
             this.TabPage_Log.Margin = new System.Windows.Forms.Padding(4);
             this.TabPage_Log.Name = "TabPage_Log";
-            this.TabPage_Log.Size = new System.Drawing.Size(1186, 689);
+            this.TabPage_Log.Size = new System.Drawing.Size(1186, 693);
             this.TabPage_Log.TabIndex = 2;
             this.TabPage_Log.Text = "Log";
             // 
@@ -458,10 +506,10 @@ namespace DistributedSystem_Main
             this.TabPage_SensorInfo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(7)))), ((int)(((byte)(54)))), ((int)(((byte)(66)))));
             this.TabPage_SensorInfo.Controls.Add(this.DGV_SensorInfo);
             this.TabPage_SensorInfo.Controls.Add(this.Panel_EditSensorInfo);
-            this.TabPage_SensorInfo.Location = new System.Drawing.Point(-1, 22);
+            this.TabPage_SensorInfo.Location = new System.Drawing.Point(-1, 18);
             this.TabPage_SensorInfo.Name = "TabPage_SensorInfo";
             this.TabPage_SensorInfo.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage_SensorInfo.Size = new System.Drawing.Size(1186, 689);
+            this.TabPage_SensorInfo.Size = new System.Drawing.Size(1186, 693);
             this.TabPage_SensorInfo.TabIndex = 4;
             this.TabPage_SensorInfo.Text = "SensorInfo";
             // 
@@ -480,13 +528,13 @@ namespace DistributedSystem_Main
             this.DGV_SensorInfo.Location = new System.Drawing.Point(3, 46);
             this.DGV_SensorInfo.Name = "DGV_SensorInfo";
             this.DGV_SensorInfo.RowHeadersVisible = false;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
-            this.DGV_SensorInfo.RowsDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
+            this.DGV_SensorInfo.RowsDefaultCellStyle = dataGridViewCellStyle1;
             this.DGV_SensorInfo.RowTemplate.Height = 24;
             this.DGV_SensorInfo.ShowCellErrors = false;
-            this.DGV_SensorInfo.Size = new System.Drawing.Size(1180, 640);
+            this.DGV_SensorInfo.Size = new System.Drawing.Size(1180, 644);
             this.DGV_SensorInfo.TabIndex = 1;
             // 
             // Column_Status
@@ -579,54 +627,6 @@ namespace DistributedSystem_Main
             this.BTN_EditSensorInfo.UseVisualStyleBackColor = false;
             this.BTN_EditSensorInfo.Click += new System.EventHandler(this.BTN_EditSensorInfo_Click);
             // 
-            // Panel_Query
-            // 
-            this.Panel_Query.Controls.Add(this.BTN_Query);
-            this.Panel_Query.Controls.Add(this.pictureBox1);
-            this.Panel_Query.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.Panel_Query.Dock = System.Windows.Forms.DockStyle.Top;
-            this.Panel_Query.Location = new System.Drawing.Point(0, 154);
-            this.Panel_Query.Margin = new System.Windows.Forms.Padding(4);
-            this.Panel_Query.Name = "Panel_Query";
-            this.Panel_Query.Size = new System.Drawing.Size(170, 41);
-            this.Panel_Query.TabIndex = 7;
-            // 
-            // BTN_Query
-            // 
-            this.BTN_Query.BackColor = System.Drawing.Color.Transparent;
-            this.BTN_Query.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.BTN_Query.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(26)))), ((int)(((byte)(36)))));
-            this.BTN_Query.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(82)))), ((int)(((byte)(111)))), ((int)(((byte)(135)))));
-            this.BTN_Query.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(63)))), ((int)(((byte)(95)))), ((int)(((byte)(122)))));
-            this.BTN_Query.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(43)))), ((int)(((byte)(54)))));
-            this.BTN_Query.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BTN_Query.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Bold);
-            this.BTN_Query.ForeColor = System.Drawing.Color.White;
-            this.BTN_Query.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.BTN_Query.Location = new System.Drawing.Point(43, 0);
-            this.BTN_Query.Margin = new System.Windows.Forms.Padding(4);
-            this.BTN_Query.Name = "BTN_Query";
-            this.BTN_Query.Size = new System.Drawing.Size(127, 41);
-            this.BTN_Query.TabIndex = 1;
-            this.BTN_Query.Text = "Status";
-            this.BTN_Query.UseVisualStyleBackColor = false;
-            this.BTN_Query.Click += new System.EventHandler(this.BTN_Query_Click);
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.BackgroundImage")));
-            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.pictureBox1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(43, 41);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 25;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.Tag = "TabPageModuleManager";
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
@@ -654,6 +654,8 @@ namespace DistributedSystem_Main
             ((System.ComponentModel.ISupportInitialize)(this.picbOFF)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picbRestart)).EndInit();
             this.TablePanel_SideBarFunctions.ResumeLayout(false);
+            this.Panel_Query.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.TabControl_Main.ResumeLayout(false);
             this.TabPage_Signal.ResumeLayout(false);
             this.TabPage_Signal.PerformLayout();
@@ -662,8 +664,6 @@ namespace DistributedSystem_Main
             this.TabPage_SensorInfo.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.DGV_SensorInfo)).EndInit();
             this.Panel_EditSensorInfo.ResumeLayout(false);
-            this.Panel_Query.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
