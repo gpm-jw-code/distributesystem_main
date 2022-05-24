@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SensorDataProcess
@@ -115,9 +116,9 @@ namespace SensorDataProcess
                         item.Value.Dequeue();
                     }
                 }
+
+                Event_UpdateChartSeries?.Invoke(SensorInfo.SensorName, Queue_TimeLog, Dict_SensorDataSeries);
             }
-           
-            Event_UpdateChartSeries?.Invoke(SensorInfo.SensorName, Queue_TimeLog, Dict_SensorDataSeries);
         }
 
 
@@ -159,6 +160,23 @@ namespace SensorDataProcess
             }
             PassRateObjejct.AddNewCheckResult(Dict_OutOfItemStates, TimeLog);
             return CheckResult;
+        }
+
+        public Dictionary<string,double> CreateThresholdByTemData()
+        {
+            while(Queue_TimeLog.Count<100)
+            {
+                Thread.Sleep(1000);
+            }
+            Dictionary<string, double> OutputData = new Dictionary<string, double>();
+            foreach (var item in Dict_SensorDataSeries)
+            {
+                string DataName = item.Key;
+                double DataAverage = item.Value.Average();
+                OutputData.Add($"{DataName}_OOC", DataAverage * 1.3);
+                OutputData.Add($"{DataName}_OOS", DataAverage * 1.5);
+            }
+            return OutputData;
         }
 
         private void CheckOutOfThreshold(string fieldKey, double value)
@@ -265,7 +283,7 @@ namespace SensorDataProcess
                 }
                 Dict_TotalCount[item.Key] += 1;
                 if (item.Value.isOutofControl)
-                    Dict_OOC_Count[item.Key]+= 1;
+                    Dict_OOC_Count[item.Key] += 1;
                 if (item.Value.isOutofSPEC)
                     Dict_OOS_Count[item.Key] += 1;
             }

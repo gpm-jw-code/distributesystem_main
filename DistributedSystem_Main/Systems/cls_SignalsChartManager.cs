@@ -68,7 +68,7 @@ namespace DistributedSystem_Main.Systems
             OriginSortType = NewSortType == SortType.None ? OriginSortType : NewSortType;
 
             var List_SensorInfo = Staobj.Dict_SensorProcessObject.Select(item => item.Value.SensorInfo);
-            var List_FilterSensorInfos = List_SensorInfo.Where(item => item.IP.Contains(OriginFilterString) || item.EQName.Contains(OriginFilterString) || item.UnitName.Contains(OriginFilterString)).ToList();
+            var List_FilterSensorInfos = List_SensorInfo.Where(item =>item.SensorName.Contains(OriginFilterString)|| item.IP.Contains(OriginFilterString) || item.EQName.Contains(OriginFilterString) || item.UnitName.Contains(OriginFilterString)).ToList();
             switch (NewSortType)
             {
                 case SortType.IP:
@@ -129,7 +129,6 @@ namespace DistributedSystem_Main.Systems
         {
             if (!List_NowShowSensorNames.Contains(SensorName))
                 return;
-
             int ChartIndex = List_NowShowSensorNames.IndexOf(SensorName);
             List_AllSignalsChart[ChartIndex].SetSensorThreshold(DictThreshold);
         }
@@ -137,7 +136,6 @@ namespace DistributedSystem_Main.Systems
         {
             if (!List_NowShowSensorNames.Contains(SensorName))
                 return;
-
             int ChartIndex = List_NowShowSensorNames.IndexOf(SensorName);
             if (List_AllSignalsChart[ChartIndex].Visible ==false)
             {

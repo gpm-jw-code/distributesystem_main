@@ -46,6 +46,10 @@ namespace DistributedSystem_Main.Views
 
         private void BTN_Save_Click(object sender, EventArgs e)
         {
+            if (MessageBox.Show("是否保存並應用設定","Save",MessageBoxButtons.YesNo) != DialogResult.Yes)
+            {
+                return;
+            }
             List<string> List_TargetSensor = new List<string>();
             if (CheckBox_ApplyToAll.Checked)
             {
@@ -61,11 +65,6 @@ namespace DistributedSystem_Main.Views
                 {
                     Systems.Staobj.Dict_SensorProcessObject[TargetSensorName].Dict_DataThreshold[item.Key] = Convert.ToDouble(item.Value);
                 }
-                //foreach (var item in DGV_ThresholdSetting.Rows.Cast<DataGridViewRow>())
-                //{
-                //    string DataName = item.Cells[0].Value.ToString();
-                //    Systems.Staobj.Dict_SensorProcessObject[TargetSensorName].Dict_DataThreshold[DataName] = Convert.ToDouble(item.Cells[1].Value);
-                //}
                 Systems.Staobj.Dict_SensorProcessObject[TargetSensorName].RefreshThreshold();
                 Systems.Staobj.SensorParam.SaveThresholdToFile(Systems.Staobj.Dict_SensorProcessObject[TargetSensorName].Dict_DataThreshold, TargetSensorName);
             }
@@ -75,6 +74,10 @@ namespace DistributedSystem_Main.Views
 
         private void Combo_DataName_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (Combo_DataName.Text == "")
+            {
+                return;
+            }
             string DataName = Combo_DataName.Text;
             NUM_OOC.Value = (decimal)Dict_Threshold[DataName + "_OOC"];
             NUM_OOS.Value = (decimal)Dict_Threshold[DataName + "_OOS"];
@@ -105,7 +108,6 @@ namespace DistributedSystem_Main.Views
             try
             {
                 Dict_Threshold[DataName + "_OOC"] = (double)NUM_OOC.Value;
-                Dict_Threshold[DataName + "_OOS"] = (double)NUM_OOS.Value;
             }
             catch (Exception)
             {
@@ -123,13 +125,32 @@ namespace DistributedSystem_Main.Views
             string DataName = Combo_DataName.Text;
             try
             {
-                Dict_Threshold[DataName + "_OOC"] = (double)NUM_OOC.Value;
                 Dict_Threshold[DataName + "_OOS"] = (double)NUM_OOS.Value;
             }
             catch (Exception)
             {
 
             }
+        }
+
+        private void BTN_AutoSetThreshold_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("是否自動設定本Sensor的所有閥值","AutoSet",MessageBoxButtons.YesNo)!= DialogResult.Yes)
+            {
+                return;
+            }
+            BTN_AutoSetThreshold.Text = "自動設定中...";
+            BTN_SaveToFile.Enabled = BTN_AutoSetThreshold.Enabled = NUM_OOC.Enabled = NUM_OOS.Enabled = false;
+            Task.Run(() =>
+            {
+                Dict_Threshold = Systems.Staobj.Dict_SensorProcessObject[SensorName].CreateThresholdByTemData();
+                this.Invoke((MethodInvoker)delegate {
+                    Combo_DataName_SelectedIndexChanged(null, null);
+                    MessageBox.Show("設定完成");
+                    BTN_AutoSetThreshold.Text = "自動設定";
+                    BTN_SaveToFile.Enabled = BTN_AutoSetThreshold.Enabled = NUM_OOC.Enabled = NUM_OOS.Enabled = true;
+                });
+            });
         }
     }
 }

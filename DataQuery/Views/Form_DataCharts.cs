@@ -61,13 +61,10 @@ namespace DataQuery.Views
         public void ImportSensorDataSeries(List<DateTime> TimeLogSeries, Dictionary<string, List<double>> Dict_DataSeries)
         {
             int IntForColor = 0;
-            if (Dict_DataSeries.Count == 0)
-            {
                 foreach (var item in Dict_SensorSeries)
                 {
                     item.Value.Enabled = false;
                 }
-            }
             foreach (var item in Dict_DataSeries)
             {
                 IntForColor += 1;

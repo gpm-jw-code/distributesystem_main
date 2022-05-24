@@ -91,24 +91,24 @@ namespace DistributedSystem_Main.User_Control
         {
             int IntForColor = 0;
             //還沒有數據進來    應該要改成Show狀態 
-            if (Dict_DataSeries.Count == 0)
-            {
-                foreach (var item in Dict_SensorSeries)
-                {
-                    item.Value.Enabled = false;
-                }
-                foreach (var item in Dict_SensorOOC_StripLines)
-                {
-                    item.Value.Text = "";
-                    item.Value.BorderWidth = 0;
-                }
-                foreach (var item in Dict_SensorOOS_StripLines)
-                {
-                    item.Value.Text = "";
-                    item.Value.BorderWidth = 0;
-                }
-                return;
-            }
+            //if (Dict_DataSeries.Count == 0)
+            //{
+            //    foreach (var item in Dict_SensorSeries)
+            //    {
+            //        item.Value.Enabled = false;
+            //    }
+            //    foreach (var item in Dict_SensorOOC_StripLines)
+            //    {
+            //        item.Value.Text = "";
+            //        item.Value.BorderWidth = 0;
+            //    }
+            //    foreach (var item in Dict_SensorOOS_StripLines)
+            //    {
+            //        item.Value.Text = "";
+            //        item.Value.BorderWidth = 0;
+            //    }
+            //    return;
+            //}
             foreach (var item in Dict_DataSeries)
             {
                 IntForColor += 1;
@@ -150,7 +150,7 @@ namespace DistributedSystem_Main.User_Control
                     NewThreshold.Click += ContextMenuStrip_ShowThreshold_ClickEvent;
                 }
 
-                if (!Dict_SensorOOC_StripLines.ContainsKey(DataName))
+                if (!Dict_SensorSeries.ContainsKey(DataName))
                 {
                     Color NewSeriesColor = ColorFromHSV(360 * IntForColor / (Dict_Threshold.Count/2), 1, 1);
                     Color StripLineColor = ColorFromHSV(360 * IntForColor / (Dict_Threshold.Count/2), 1, 0.5);
@@ -166,6 +166,10 @@ namespace DistributedSystem_Main.User_Control
                 Dict_SensorOOC_StripLines[DataName].BorderWidth = Dict_SensorOOS_StripLines[DataName].BorderWidth = 1;
                 Dict_SensorOOC_StripLines[DataName].Text = $"{DataName}_OOC";
                 Dict_SensorOOS_StripLines[DataName].Text = $"{DataName}_OOS";
+            }
+            foreach (var item in Dict_SensorSeries)
+            {
+                item.Value.Points.Clear();
             }
         }
 

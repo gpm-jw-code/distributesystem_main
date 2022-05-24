@@ -127,6 +127,24 @@ namespace DistributedSystem_Main
 
         #region Raw Data Chart
 
+        private void TXT_RawDataChartFilter_KeyDown(object sender, KeyEventArgs e)
+        {
+      if (e.KeyCode == Keys.Enter)
+            {
+                Systems.cls_SignalsChartManager.FilterAndSortSensor(TXT_RawDataChartFilter.Text);
+                return;
+            }
+            if (e.KeyCode == Keys.Escape)
+            {
+                if (TXT_RawDataChartFilter.Text == "")
+                {
+                    return;
+                }
+                Systems.cls_SignalsChartManager.FilterAndSortSensor("");
+                TXT_RawDataChartFilter.Text = "";
+            }
+            
+        }
         private void AddNewSensorToUI(string SensorName)
         {
             if (InvokeRequired)

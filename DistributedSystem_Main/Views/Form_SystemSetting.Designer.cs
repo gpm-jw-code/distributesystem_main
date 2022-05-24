@@ -112,7 +112,7 @@ namespace DistributedSystem_Main.Views
             // BTN_CancelChartSetting
             // 
             this.BTN_CancelChartSetting.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.BTN_CancelChartSetting.Location = new System.Drawing.Point(152, 97);
+            this.BTN_CancelChartSetting.Location = new System.Drawing.Point(152, 104);
             this.BTN_CancelChartSetting.Name = "BTN_CancelChartSetting";
             this.BTN_CancelChartSetting.Size = new System.Drawing.Size(56, 32);
             this.BTN_CancelChartSetting.TabIndex = 5;
@@ -123,7 +123,7 @@ namespace DistributedSystem_Main.Views
             // BTN_SaveChartSetting
             // 
             this.BTN_SaveChartSetting.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.BTN_SaveChartSetting.Location = new System.Drawing.Point(81, 97);
+            this.BTN_SaveChartSetting.Location = new System.Drawing.Point(81, 104);
             this.BTN_SaveChartSetting.Name = "BTN_SaveChartSetting";
             this.BTN_SaveChartSetting.Size = new System.Drawing.Size(56, 32);
             this.BTN_SaveChartSetting.TabIndex = 5;
