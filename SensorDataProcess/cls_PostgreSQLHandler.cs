@@ -11,11 +11,12 @@ namespace SensorDataProcess
     public class cls_PostgreSQLHandler
     {
         public static string ServerIP = "127.0.0.1";
-        public static string Port = "5432";
+        public static int Port = 5432;
         public static string Username = "postgres";
         public static string Password = "changeme";
         public static string Database = "distrubute";
         public static bool Enable = true;
+        public static int DownSamplePoint = 500;
 
         private string EdgeName = "";
         private string SensorName = "";
@@ -31,10 +32,18 @@ namespace SensorDataProcess
             {
                 return;
             }
-            this.EdgeName = EdgeName;
-            this.SensorName = SensorName.Replace('.', '_');
-            SQL_ProcessItem = new SQL_controller(ServerIP, Username, Password, Database, Port);
-            SQL_ProcessItem.Create_Schema(SchemaName);
+            try
+            {
+                this.EdgeName = EdgeName;
+                this.SensorName = SensorName.Replace('.', '_');
+                SQL_ProcessItem = new SQL_controller(ServerIP, Username, Password, Database, Port.ToString());
+                SQL_ProcessItem.Create_Schema(SchemaName);
+            }
+            catch (Exception)
+            {
+                Enable = false;
+            }
+            
         }
 
         public void InsertRawData(Dictionary<string, double> Dict_RawData, DateTime TimeLog)
@@ -54,7 +63,7 @@ namespace SensorDataProcess
             }
             if (!SQL_ProcessItem.CheckTableExist(SchemaName, "rawdata"))
             {
-                CreateRawDataTable(Dict_RawData.Keys.ToList());
+                CreateRawDataTable(Dict_RawData.Keys.ToList(), "rawdata");
             }
 
             List_ColumnName.Add("TimeLog");
@@ -63,31 +72,64 @@ namespace SensorDataProcess
             SQL_ProcessItem.insert_row(SchemaName, "rawdata", List_ColumnName, list_Value);
         }
 
-        private void CreateRawDataTable(List<string> List_DataName)
+        public void InsertHourlyRawData(Dictionary<string,double> Dict_HourlyAverageData,DateTime TimeLog)
+        {
+            if (!Enable)
+            {
+                return;
+            }
+            List<string> List_ColumnName = new List<string>();
+            List<object> list_Value = new List<object>();
+
+            TimeLog = new DateTime(TimeLog.Year, TimeLog.Month, TimeLog.Day, TimeLog.Hour, 0, 0);
+
+            foreach (var item in Dict_HourlyAverageData)
+            {
+                string ItemForSqlColumnName = item.Key.Replace('.', '_').Replace(' ', '_');
+                List_ColumnName.Add(ItemForSqlColumnName);
+                list_Value.Add(item.Value);
+            }
+            if (!SQL_ProcessItem.CheckTableExist(SchemaName, "hourly_rawdata"))
+            {
+                CreateRawDataTable(Dict_HourlyAverageData.Keys.ToList(), "hourly_rawdata");
+            }
+
+            List_ColumnName.Add("timelog");
+            list_Value.Add($"{TimeLog:yyyy-MM-dd HH:mm:ss.fff}");
+
+            SQL_ProcessItem.insert_row(SchemaName, "hourly_rawdata", List_ColumnName, list_Value);
+        }
+
+        private void CreateRawDataTable(List<string> List_DataName,string TableName)
         {
             Dictionary<string, string> Dict_ColumnNameType = new Dictionary<string, string>();
-            Dict_ColumnNameType.Add("TimeLog", StaString.DataTypeToSQLString(StaString.CShartDataType.DateTime));
+            Dict_ColumnNameType.Add("timelog", StaString.DataTypeToSQLString(StaString.CShartDataType.DateTime));
             foreach (var item in List_DataName)
             {
                 string ItemForSqlColumnName = item.Replace('.', '_').Replace(' ', '_');
                 Dict_ColumnNameType.Add(ItemForSqlColumnName, StaString.DataTypeToSQLString(StaString.CShartDataType.DoubleData));
             }
-            SQL_ProcessItem.Create_Table(SchemaName, "rawdata", Dict_ColumnNameType);
+            SQL_ProcessItem.Create_Table(SchemaName, TableName, Dict_ColumnNameType);
         }
 
         public cls_QueryReturn GetIntervalRawData(DateTime StartTime, DateTime EndTime, string timeColumnName = "datetime")
         {
             cls_QueryReturn OutputData = new cls_QueryReturn();
-
+            string TableName = (EndTime - StartTime).TotalDays > 7? "rawdata": "hourly_rawdata";
             string Condition = $"{timeColumnName} > '{StartTime:yyyy-MM-dd HH:mm:ss}' AND  {timeColumnName} < '{EndTime:yyyy-MM-dd HH:mm:ss}' order by {timeColumnName} asc";
-            DataTable RawDataTable = SQL_ProcessItem.Select_to_Datatable(SchemaName, "rawdata", Condition);
+            DataTable RawDataTable = SQL_ProcessItem.Select_to_Datatable(SchemaName, TableName, Condition);
             var AllColumnName = RawDataTable.Columns.Cast<DataColumn>().Select(item => item.ColumnName).ToList();
             foreach (var item in AllColumnName)
             {
                 OutputData.Dict_DataList.Add(item, new List<double>());
             }
-            foreach (var EachRow in RawDataTable.Rows.Cast<DataRow>())
+            int DownSample_SampleRate = RawDataTable.Rows.Count / DownSamplePoint;
+            var AllDataRow = RawDataTable.Rows.Cast<DataRow>().ToArray();
+            for (int i = 0; i < AllDataRow.Length; i+=DownSample_SampleRate)
             {
+                if (i>AllDataRow.Length)
+                    break;
+                var EachRow = AllDataRow[i];
                 foreach (var ColumnName in AllColumnName)
                 {
                     if (ColumnName == "timelog")
@@ -99,7 +141,22 @@ namespace SensorDataProcess
                         OutputData.Dict_DataList[ColumnName].Add((double)EachRow[ColumnName]);
                     }
                 }
+
             }
+            //foreach (var EachRow in RawDataTable.Rows.Cast<DataRow>())
+            //{
+            //    foreach (var ColumnName in AllColumnName)
+            //    {
+            //        if (ColumnName == "timelog")
+            //        {
+            //            OutputData.List_TimeLog.Add((DateTime)EachRow[ColumnName]);
+            //        }
+            //        else
+            //        {
+            //            OutputData.Dict_DataList[ColumnName].Add((double)EachRow[ColumnName]);
+            //        }
+            //    }
+            //}
             return OutputData;
         }
     }

@@ -119,7 +119,7 @@ namespace SensorDataProcess
                         if (IsNeedHeader)
                         {
                             SW.WriteLine(SensorInfoString);
-                            SW.WriteLine(PassRateLogHeader(PassRateObject.Dict_PassCount.Keys));
+                            SW.WriteLine(PassRateLogHeader(PassRateObject.Dict_OOC_Count.Keys));
                         }
                         SW.WriteLine(PassRateLogString(PassRateObject));
                     }
@@ -169,7 +169,7 @@ namespace SensorDataProcess
             string Header = "Time,";
             foreach (var item in DataNameList)
             {
-                Header += $"{item}_Pass,{item}_Total,{item}_PassRate,";
+                Header += $"{item}_OOC,{item}_OOS,{item}_Total,{item}_OOCRate,{item}_OOSRate,";
             }
             return Header;
         }
@@ -177,11 +177,13 @@ namespace SensorDataProcess
         private string PassRateLogString(DataPassRateObject PassResult)
         {
             string LogString = $"{PassResult.TimeLog:yyyy/MM/dd HH:mm},";
-            foreach (var item in PassResult.Dict_PassCount.Keys)
+            foreach (var item in PassResult.Dict_OOC_Count.Keys)
             {
-                LogString += $"{PassResult.Dict_PassCount[item]},";
+                LogString += $"{PassResult.Dict_OOC_Count[item]},";
+                LogString += $"{PassResult.Dict_OOS_Count[item]},";
                 LogString += $"{PassResult.Dict_TotalCount[item]},";
-                LogString += $"{(PassResult.Dict_PassCount[item] / PassResult.Dict_TotalCount[item]):F2},";
+                LogString += $"{(PassResult.Dict_OOC_Count[item] / PassResult.Dict_TotalCount[item]):F2},";
+                LogString += $"{(PassResult.Dict_OOS_Count[item] / PassResult.Dict_TotalCount[item]):F2},";
             }
             return LogString;
         }

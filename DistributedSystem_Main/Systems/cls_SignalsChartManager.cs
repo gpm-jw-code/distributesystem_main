@@ -16,7 +16,6 @@ namespace DistributedSystem_Main.Systems
 
         public static List<string> List_NowShowSensorNames = new List<string>();
         public static List<string> List_SelectedSensorNames = new List<string>();
-        public static int NowPageNumber = 1;
         public static int TotalChartNumber = 6;
 
         private static string OriginFilterString = "";
@@ -59,6 +58,8 @@ namespace DistributedSystem_Main.Systems
             {
                 ParentControls.Controls.Add(item);
             }
+            SignalPageSwitch.NowPageNumber = 1;
+            FilterAndSortSensor();
         }
 
         public static void FilterAndSortSensor(string NewFilterString = null, SortType NewSortType = SortType.None)
@@ -67,7 +68,13 @@ namespace DistributedSystem_Main.Systems
             OriginSortType = NewSortType == SortType.None ? OriginSortType : NewSortType;
 
             var List_SensorInfo = Staobj.Dict_SensorProcessObject.Select(item => item.Value.SensorInfo);
-            var List_FilterSensorInfos = List_SensorInfo.Where(item => item.IP.Contains(OriginFilterString) || item.EQName.Contains(OriginFilterString) || item.UnitName.Contains(OriginFilterString)).ToList();
+
+            var List_FilterSensorInfos
+                = List_SensorInfo.Where(item => item.SensorName.ToUpper().Contains(OriginFilterString.ToUpper())
+                || item.IP.ToUpper().Contains(OriginFilterString.ToUpper())
+                || item.EQName.ToUpper().Contains(OriginFilterString.ToUpper())
+                || item.UnitName.ToUpper().Contains(OriginFilterString.ToUpper())).ToList();
+
             switch (NewSortType)
             {
                 case SortType.IP:
@@ -99,9 +106,9 @@ namespace DistributedSystem_Main.Systems
             {
                 string SensorName = List_SelectedSensorNames[i];
                 List_NowShowSensorNames.Add(SensorName);
-                Staobj.Dict_SensorProcessObject[SensorName].RefreshSignalChart();
                 UpdateSensorInfoToChart(SensorName);
                 UpdateThresholdToChart(SensorName, Staobj.Dict_SensorProcessObject[SensorName].Dict_DataThreshold);
+                Staobj.Dict_SensorProcessObject[SensorName].RefreshSignalChart();
             }
         }
 
@@ -128,7 +135,6 @@ namespace DistributedSystem_Main.Systems
         {
             if (!List_NowShowSensorNames.Contains(SensorName))
                 return;
-
             int ChartIndex = List_NowShowSensorNames.IndexOf(SensorName);
             List_AllSignalsChart[ChartIndex].SetSensorThreshold(DictThreshold);
         }
@@ -136,7 +142,6 @@ namespace DistributedSystem_Main.Systems
         {
             if (!List_NowShowSensorNames.Contains(SensorName))
                 return;
-
             int ChartIndex = List_NowShowSensorNames.IndexOf(SensorName);
             if (List_AllSignalsChart[ChartIndex].Visible ==false)
             {

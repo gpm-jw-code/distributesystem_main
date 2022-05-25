@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SensorDataProcess
@@ -32,7 +33,7 @@ namespace SensorDataProcess
         public SensorInfo SensorInfo = new SensorInfo();
         public SensorStatus Status = new SensorStatus();
         public Dictionary<string, double> Dict_DataThreshold = new Dictionary<string, double>();
-        public Dictionary<string, OutOfState> Dict_OutOfItemStatess = new Dictionary<string, OutOfState>();
+        public Dictionary<string, OutOfState> Dict_OutOfItemStates = new Dictionary<string, OutOfState>();
 
         private Dictionary<string, Queue<double>> Dict_SensorDataSeries = new Dictionary<string, Queue<double>>();
         private cls_HourlyData HourlyData;
@@ -47,6 +48,8 @@ namespace SensorDataProcess
 
         public Action<string> Event_RefreshSensorInfo;
         public Action<string> Event_RefreshSensorThreshold;
+
+        private object RawDataDict_Lock = new object();
 
         public cls_SensorDataProcess(string IP, int Port, string SensorName, string SensorType, string EQName = null, string UnitName = null)
         {
@@ -85,29 +88,37 @@ namespace SensorDataProcess
         {
             SQLDataSaver?.InsertRawData(Dict_NewData, TimeLog);
             TxtDataSaver.WriteRawData(Dict_NewData, TimeLog);
-            HourlyData.ImportNewData(Dict_NewData, TimeLog);
+            bool IsWriteHourlyData = HourlyData.ImportNewData(Dict_NewData, TimeLog);
+            if (IsWriteHourlyData)
+            {
+                SQLDataSaver?.InsertHourlyRawData(HourlyData.Dict_AverageData, TimeLog);
+            }
             var CheckResult = CheckThreshold(Dict_NewData, TimeLog);
             Queue_TimeLog.Enqueue(TimeLog);
-            foreach (var item in Dict_NewData)
+            lock (RawDataDict_Lock)
             {
-                string DataName = item.Key;
-                if (!Dict_SensorDataSeries.ContainsKey(DataName))
+                foreach (var item in Dict_NewData)
                 {
-                    Dict_SensorDataSeries.Add(DataName, new Queue<double>());
+                    string DataName = item.Key;
+                    if (!Dict_SensorDataSeries.ContainsKey(DataName))
+                    {
+                        Dict_SensorDataSeries.Add(DataName, new Queue<double>());
 
+                    }
+                    Dict_SensorDataSeries[DataName].Enqueue(item.Value);
                 }
-                Dict_SensorDataSeries[DataName].Enqueue(item.Value);
-            }
 
-            while (Queue_TimeLog.Count > StaticParameters.TemDataNumber)
-            {
-                Queue_TimeLog.Dequeue();
-                foreach (var item in Dict_SensorDataSeries)
+                while (Queue_TimeLog.Count > StaticParameters.TemDataNumber)
                 {
-                    item.Value.Dequeue();
+                    Queue_TimeLog.Dequeue();
+                    foreach (var item in Dict_SensorDataSeries)
+                    {
+                        item.Value.Dequeue();
+                    }
                 }
+
+                Event_UpdateChartSeries?.Invoke(SensorInfo.SensorName, Queue_TimeLog, Dict_SensorDataSeries);
             }
-            Event_UpdateChartSeries?.Invoke(SensorInfo.SensorName, Queue_TimeLog, Dict_SensorDataSeries);
         }
 
 
@@ -134,7 +145,10 @@ namespace SensorDataProcess
 
         public void RefreshSignalChart()
         {
-            Event_UpdateChartSeries?.Invoke(SensorInfo.SensorName, Queue_TimeLog, Dict_SensorDataSeries);
+            lock (RawDataDict_Lock)
+            {
+                Event_UpdateChartSeries?.Invoke(SensorInfo.SensorName, Queue_TimeLog, Dict_SensorDataSeries);
+            }
         }
 
         private Dictionary<string, bool> CheckThreshold(Dictionary<string, double> Dict_NewData, DateTime TimeLog)
@@ -142,15 +156,27 @@ namespace SensorDataProcess
             Dictionary<string, bool> CheckResult = new Dictionary<string, bool>();
             foreach (var item in Dict_NewData)
             {
-                if (!Dict_DataThreshold.ContainsKey(item.Key))
-                {
-                    Dict_DataThreshold.Add(item.Key, 999999);
-                }
                 CheckOutOfThreshold(item.Key, item.Value);
-                CheckResult.Add(item.Key, item.Value < Dict_DataThreshold[item.Key]);
             }
-            PassRateObjejct.AddNewCheckResult(CheckResult, TimeLog);
+            PassRateObjejct.AddNewCheckResult(Dict_OutOfItemStates, TimeLog);
             return CheckResult;
+        }
+
+        public Dictionary<string,double> CreateThresholdByTemData()
+        {
+            while(Queue_TimeLog.Count<100)
+            {
+                Thread.Sleep(1000);
+            }
+            Dictionary<string, double> OutputData = new Dictionary<string, double>();
+            foreach (var item in Dict_SensorDataSeries)
+            {
+                string DataName = item.Key;
+                double DataAverage = item.Value.Average();
+                OutputData.Add($"{DataName}_OOC", DataAverage * 1.3);
+                OutputData.Add($"{DataName}_OOS", DataAverage * 1.5);
+            }
+            return OutputData;
         }
 
         private void CheckOutOfThreshold(string fieldKey, double value)
@@ -167,10 +193,10 @@ namespace SensorDataProcess
             Dict_DataThreshold.TryGetValue(oocThreshodlKey, out ooc_threshold);
             Dict_DataThreshold.TryGetValue(oosThreshodlKey, out oos_threshold);
 
-            if (!Dict_OutOfItemStatess.ContainsKey(fieldKey))
-                Dict_OutOfItemStatess.Add(fieldKey, new OutOfState());
+            if (!Dict_OutOfItemStates.ContainsKey(fieldKey))
+                Dict_OutOfItemStates.Add(fieldKey, new OutOfState());
 
-            OutOfState outofState = Dict_OutOfItemStatess[fieldKey];
+            OutOfState outofState = Dict_OutOfItemStates[fieldKey];
             if (!outofState.isOutofControl)
                 outofState.isOutofControl = value > ooc_threshold;
             if (!outofState.isOutofSPEC)
@@ -184,6 +210,8 @@ namespace SensorDataProcess
         private DateTime TimeLog = default;
         private cls_txtDataSaver DataSaver;
 
+        public Dictionary<string, double> Dict_AverageData;
+
         public cls_HourlyData(cls_txtDataSaver DataSaver)
         {
             Dict_HourlyData = new Dictionary<string, List<double>>();
@@ -191,14 +219,16 @@ namespace SensorDataProcess
             this.DataSaver = DataSaver;
         }
 
-        public void ImportNewData(Dictionary<string, double> NewData, DateTime TimeLog)
+        public bool ImportNewData(Dictionary<string, double> NewData, DateTime TimeLog)
         {
+            bool IsWriteData = false;
             if (TimeLog.Hour != this.TimeLog.Hour)
             {
-                var AverageData = Dict_HourlyData.Select(item => new KeyValuePair<string, double>(item.Key, item.Value.Average())).ToDictionary(item => item.Key, item => item.Value);
-                DataSaver.WriteHourlyRawData(AverageData, TimeLog);
+                Dict_AverageData = Dict_HourlyData.Select(item => new KeyValuePair<string, double>(item.Key, item.Value.Average())).ToDictionary(item => item.Key, item => item.Value);
+                DataSaver.WriteHourlyRawData(Dict_AverageData, TimeLog);
                 Dict_HourlyData = new Dictionary<string, List<double>>();
                 this.TimeLog = new DateTime(TimeLog.Year, TimeLog.Month, TimeLog.Day, TimeLog.Hour, 0, 0);
+                IsWriteData = true;
             }
 
             foreach (var item in NewData)
@@ -209,6 +239,7 @@ namespace SensorDataProcess
                 }
                 Dict_HourlyData[item.Key].Add(item.Value);
             }
+            return IsWriteData;
         }
 
     }
@@ -216,7 +247,8 @@ namespace SensorDataProcess
     public class DataPassRateObject
     {
         public Dictionary<string, double> Dict_TotalCount = new Dictionary<string, double>();
-        public Dictionary<string, double> Dict_PassCount = new Dictionary<string, double>();
+        public Dictionary<string, double> Dict_OOC_Count = new Dictionary<string, double>();
+        public Dictionary<string, double> Dict_OOS_Count = new Dictionary<string, double>();
         public DateTime TimeLog;
         private cls_txtDataSaver TXT_DataSaver;
 
@@ -226,29 +258,34 @@ namespace SensorDataProcess
             this.TXT_DataSaver = DataSaver;
         }
 
-        public void AddNewCheckResult(Dictionary<string, bool> Dict_CheckResult, DateTime NewTimelog)
+        public void AddNewCheckResult(Dictionary<string, OutOfState> Dict_OutOfItemStates, DateTime NewTimelog)
         {
             if (NewTimelog.Minute != this.TimeLog.Minute)
             {
-                TXT_DataSaver.WritePassRateLog(this);
+                if (Dict_OOC_Count.Keys.Count != 0)
+                {
+                    TXT_DataSaver.WritePassRateLog(this);
+                }
 
                 Dict_TotalCount = new Dictionary<string, double>();
-                Dict_PassCount = new Dictionary<string, double>();
+                Dict_OOC_Count = new Dictionary<string, double>();
+                Dict_OOS_Count = new Dictionary<string, double>();
                 this.TimeLog = new DateTime(NewTimelog.Year, NewTimelog.Month, NewTimelog.Day, NewTimelog.Hour, NewTimelog.Minute, 0);
             }
 
-            foreach (var item in Dict_CheckResult)
+            foreach (var item in Dict_OutOfItemStates)
             {
                 if (!Dict_TotalCount.ContainsKey(item.Key))
                 {
                     Dict_TotalCount.Add(item.Key, 0);
-                    Dict_PassCount.Add(item.Key, 0);
+                    Dict_OOC_Count.Add(item.Key, 0);
+                    Dict_OOS_Count.Add(item.Key, 0);
                 }
                 Dict_TotalCount[item.Key] += 1;
-                if (item.Value)
-                {
-                    Dict_PassCount[item.Key] += 1;
-                }
+                if (item.Value.isOutofControl)
+                    Dict_OOC_Count[item.Key] += 1;
+                if (item.Value.isOutofSPEC)
+                    Dict_OOS_Count[item.Key] += 1;
             }
         }
     }

@@ -25,7 +25,7 @@ namespace DistributedSystem_Main.User_Control
         private string _EQName = "";
         private string _UnitName = "";
         private string _SensorType = "";
-        
+
         public string SensorName
         {
             set { this._SensorName = value; this.LAB_SensorName.Text = value; }
@@ -33,12 +33,12 @@ namespace DistributedSystem_Main.User_Control
 
         public string EQName
         {
-            set { this._EQName = value;this.labEqName.Text = value; }
+            set { this._EQName = value; this.labEqName.Text = value; }
         }
 
         public string UnitName
         {
-            set { this._UnitName = value;this.labUnitName.Text = value; }
+            set { this._UnitName = value; this.labUnitName.Text = value; }
         }
 
         public string DataUnit
@@ -63,9 +63,15 @@ namespace DistributedSystem_Main.User_Control
                     {
                         item.Value.Enabled = false;
                     }
-                    foreach (var item in Dict_SensorStripLines)
+                    foreach (var item in Dict_SensorOOC_StripLines)
                     {
-                        item.Value.StripWidth = 0;
+                        item.Value.Text = "";
+                        item.Value.BorderWidth = 0;
+                    }
+                    foreach (var item in Dict_SensorOOS_StripLines)
+                    {
+                        item.Value.Text = "";
+                        item.Value.BorderWidth = 0;
                     }
                 }
                 _SensorType = value;
@@ -78,61 +84,180 @@ namespace DistributedSystem_Main.User_Control
         }
 
         private Dictionary<string, Series> Dict_SensorSeries = new Dictionary<string, Series>();
-        private Dictionary<string, StripLine> Dict_SensorStripLines = new Dictionary<string, StripLine>();
+        private Dictionary<string, StripLine> Dict_SensorOOC_StripLines = new Dictionary<string, StripLine>();
+        private Dictionary<string, StripLine> Dict_SensorOOS_StripLines = new Dictionary<string, StripLine>();
 
-        public void ImportSensorDataSeries(Queue<DateTime> TimeLogSeries ,Dictionary<string,Queue<double>> Dict_DataSeries)
+        public void ImportSensorDataSeries(Queue<DateTime> TimeLogSeries, Dictionary<string, Queue<double>> Dict_DataSeries)
         {
             int IntForColor = 0;
             //還沒有數據進來    應該要改成Show狀態 
-            if (Dict_DataSeries.Count == 0)
-            {
-                foreach (var item in Dict_SensorSeries)
-                {
-                    item.Value.Enabled = false;
-                }
-            }
+            //if (Dict_DataSeries.Count == 0)
+            //{
+            //    foreach (var item in Dict_SensorSeries)
+            //    {
+            //        item.Value.Enabled = false;
+            //    }
+            //    foreach (var item in Dict_SensorOOC_StripLines)
+            //    {
+            //        item.Value.Text = "";
+            //        item.Value.BorderWidth = 0;
+            //    }
+            //    foreach (var item in Dict_SensorOOS_StripLines)
+            //    {
+            //        item.Value.Text = "";
+            //        item.Value.BorderWidth = 0;
+            //    }
+            //    return;
+            //}
             foreach (var item in Dict_DataSeries)
             {
                 IntForColor += 1;
                 if (!Dict_SensorSeries.ContainsKey(item.Key))
                 {
-                    Color NewSeriesColor = ColorFromHSV(360*IntForColor / Dict_DataSeries.Count, 1, 1);
+                    Color NewSeriesColor = ColorFromHSV(360 * IntForColor / Dict_DataSeries.Count, 1, 1);
                     Color StripLineColor = ColorFromHSV(360 * IntForColor / Dict_DataSeries.Count, 1, 0.5);
                     CreateNewSensorUIObjects(item.Key, NewSeriesColor, StripLineColor);
-                }
-                if (!Dict_SensorSeries[item.Key].Enabled )
-                {
-                    Dict_SensorSeries[item.Key].Enabled = true;
                 }
                 Dict_SensorSeries[item.Key].Points.DataBindXY(TimeLogSeries, item.Value);
             }
             LastUpdateTime = DateTime.Now;
         }
 
-        public void SetSensorThreshold(Dictionary<string,double> Dict_Threshold)
+        /// <summary>
+        /// 匯入Threshold，所有Series StripLine MenuStripItem 顯示狀態都回預設
+        /// </summary>
+        /// <param name="Dict_Threshold"></param>
+        public void SetSensorThreshold(Dictionary<string, double> Dict_Threshold)
         {
+            dataSeriesToolStripMenuItem.DropDownItems.Clear();
+            thresholdLineToolStripMenuItem.DropDownItems.Clear();
+            AddNewSeriesToolItem("All");
+            AddNewThresholdToolItem("All");
+
             int IntForColor = 0;
             foreach (var item in Dict_Threshold)
             {
+                string DataName = item.Key.Replace("_OOC", "");
+                DataName = DataName.Replace("_OOS", "");
                 IntForColor += 1;
-                if (!Dict_SensorStripLines.ContainsKey(item.Key))
+                if (!dataSeriesToolStripMenuItem.DropDownItems.ContainsKey($"Series_{DataName}"))
                 {
-                    Color NewSeriesColor = ColorFromHSV(360 * IntForColor / Dict_Threshold.Count, 1, 1);
-                    Color StripLineColor = ColorFromHSV(360 * IntForColor / Dict_Threshold.Count, 1, 0.5);
-                    CreateNewSensorUIObjects(item.Key,NewSeriesColor, StripLineColor);
+                    AddNewSeriesToolItem(DataName);
+                    AddNewThresholdToolItem(DataName);
                 }
-                Dict_SensorStripLines[item.Key].IntervalOffset = item.Value;
-                if (Dict_SensorStripLines[item.Key].StripWidth == 0)
+
+                if (!Dict_SensorSeries.ContainsKey(DataName))
                 {
-                    Dict_SensorStripLines[item.Key].StripWidth = default;
+                    Color NewSeriesColor = ColorFromHSV(360 * IntForColor / (Dict_Threshold.Count/2), 1, 1);
+                    Color StripLineColor = ColorFromHSV(360 * IntForColor / (Dict_Threshold.Count/2), 1, 0.5);
+                    CreateNewSensorUIObjects(DataName, NewSeriesColor, StripLineColor);
                 }
-                
+
+                ///Series 跟 StripLine 都重新Show出來
+                Dict_SensorSeries[DataName].Enabled = true;
+
+                Dict_SensorOOC_StripLines[DataName].IntervalOffset = Dict_Threshold[DataName + "_OOC"];
+                Dict_SensorOOS_StripLines[DataName].IntervalOffset = Dict_Threshold[DataName + "_OOS"];
+
+                Dict_SensorOOC_StripLines[DataName].BorderWidth = Dict_SensorOOS_StripLines[DataName].BorderWidth = 1;
+                Dict_SensorOOC_StripLines[DataName].Text = $"{DataName}_OOC";
+                Dict_SensorOOS_StripLines[DataName].Text = $"{DataName}_OOS";
+            }
+            foreach (var item in Dict_SensorSeries)
+            {
+                item.Value.Points.Clear();
             }
         }
 
-        
+        private void AddNewSeriesToolItem(string DataName)
+        {
+            var NewItem = dataSeriesToolStripMenuItem.DropDownItems.Add(DataName) as ToolStripMenuItem;
+            NewItem.Name = $"Series_{DataName}";
+            NewItem.Checked = NewItem.CheckOnClick = true;
+            NewItem.Click += ContextMenuStrip_ShowSeries_ClickEvent;
+        }
 
-        private void CreateNewSensorUIObjects(string DataName,Color SeriesColor,Color StripLineColor )
+        private void AddNewThresholdToolItem(string DataName)
+        {
+            var NewThreshold = thresholdLineToolStripMenuItem.DropDownItems.Add(DataName) as ToolStripMenuItem;
+            NewThreshold.Name = $"Threshold_{DataName}";
+            NewThreshold.Checked = NewThreshold.CheckOnClick = true;
+            NewThreshold.Click += ContextMenuStrip_ShowThreshold_ClickEvent;
+        }
+
+        private void ContextMenuStrip_ShowThreshold_ClickEvent(object sender, EventArgs e)
+        {
+            ToolStripMenuItem TargetItem = sender as ToolStripMenuItem;
+            string DataName = TargetItem.Name.Replace("Threshold_", "");
+
+            if (DataName == "All")
+            {
+                foreach (var item in thresholdLineToolStripMenuItem.DropDownItems.Cast<ToolStripMenuItem>())
+                {
+                    string EachDataName = item.Name.Replace("Threshold_", "");
+                    if (EachDataName == "All")
+                    {
+                        continue;
+                    }
+                    item.Checked = TargetItem.Checked;
+                    if (TargetItem.Checked)
+                    {
+                        Dict_SensorOOC_StripLines[EachDataName].BorderWidth = Dict_SensorOOS_StripLines[EachDataName].BorderWidth = 1;
+                        Dict_SensorOOC_StripLines[EachDataName].Text = $"{EachDataName}_OOC";
+                        Dict_SensorOOS_StripLines[EachDataName].Text = $"{EachDataName}_OOS";
+                    }
+                    else
+                    {
+                        Dict_SensorOOC_StripLines[EachDataName].BorderWidth = Dict_SensorOOS_StripLines[EachDataName].BorderWidth = 0;
+                        Dict_SensorOOC_StripLines[EachDataName].Text = "";
+                        Dict_SensorOOS_StripLines[EachDataName].Text = "";
+                    }
+                }
+            }
+            else
+            {
+                if (TargetItem.Checked)
+                {
+                    Dict_SensorOOC_StripLines[DataName].BorderWidth = Dict_SensorOOS_StripLines[DataName].BorderWidth = 1;
+                    Dict_SensorOOC_StripLines[DataName].Text = $"{DataName}_OOC";
+                    Dict_SensorOOS_StripLines[DataName].Text = $"{DataName}_OOS";
+                }
+                else
+                {
+                    Dict_SensorOOC_StripLines[DataName].BorderWidth = Dict_SensorOOS_StripLines[DataName].BorderWidth = 0;
+                    Dict_SensorOOC_StripLines[DataName].Text = "";
+                    Dict_SensorOOS_StripLines[DataName].Text = "";
+                }
+            }
+
+           
+        }
+
+        private void ContextMenuStrip_ShowSeries_ClickEvent(object sender, EventArgs e)
+        {
+            ToolStripMenuItem TargetItem = sender as ToolStripMenuItem;
+            string DataName = TargetItem.Name.Replace("Series_", "");
+            if (DataName == "All")
+            {
+                foreach (var item in dataSeriesToolStripMenuItem.DropDownItems.Cast<ToolStripMenuItem>())
+                {
+                    string EachDataName = item.Name.Replace("Series_", "");
+                    if (EachDataName == "All")
+                    {
+                        continue;
+                    }
+                    item.Checked = TargetItem.Checked;
+                    Dict_SensorSeries[EachDataName].Enabled = TargetItem.Checked;
+                }
+            }
+            else
+            {
+                Dict_SensorSeries[DataName].Enabled = TargetItem.Checked;
+            }
+           
+        }
+
+        private void CreateNewSensorUIObjects(string DataName, Color SeriesColor, Color StripLineColor)
         {
             Series NewDataSeries = new Series
             {
@@ -151,11 +276,23 @@ namespace DistributedSystem_Main.User_Control
             StripLine NewStripLine = new StripLine
             {
                 BorderColor = StripLineColor,
-                BorderDashStyle = ChartDashStyle.Dash
+                BorderDashStyle = ChartDashStyle.Dash,
+                Text = $"{DataName}_OOC",
+                ForeColor = Color.White
             };
-            Dict_SensorStripLines.Add(DataName, NewStripLine);
+            Dict_SensorOOC_StripLines.Add(DataName, NewStripLine);
+
+            StripLine NewOOSStripLine = new StripLine
+            {
+                BorderColor = StripLineColor,
+                BorderDashStyle = ChartDashStyle.Dash,
+                Text = $"{DataName}_OOS",
+                ForeColor = Color.Yellow
+            };
+            Dict_SensorOOS_StripLines.Add(DataName, NewOOSStripLine);
 
             ChartForShow.ChartAreas[0].AxisY.StripLines.Add(NewStripLine);
+            ChartForShow.ChartAreas[0].AxisY.StripLines.Add(NewOOSStripLine);
         }
 
         private void picSettingIcon_Click(object sender, EventArgs e)

@@ -4,7 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,15 +14,16 @@ using System.Windows.Forms;
 
 namespace DistributedSystem_Main
 {
-    public partial class Form1 : Form
+    public partial class FormMain : Form
     {
 
-        public Form1()
+        public FormMain()
         {
             InitializeComponent();
             Staobj.SystemParam.LoadSystemParam();
             Systems.cls_SignalsChartManager.InitialManager(TablePanel_SignalChart, PageSwitch_Signals);
-            Systems.cls_SignalsChartManager.SetChartRowColumnNumber(2, 2);
+            
+            Systems.cls_SignalsChartManager.SetChartRowColumnNumber(Staobj.SystemParam.ChartSetting.RowNumber, Staobj.SystemParam.ChartSetting.ColumnNumber);
             Systems.cls_MQTTModule.BuildServer(Staobj.SystemParam.Mqtt.MqttServerIP, Staobj.SystemParam.Mqtt.MqttServerPort);
             SensorDataProcess.cls_txtDataSaver.RootPath = Staobj.SystemParam.DataSaveRootPath;
             TabControl_Main.ItemSize = new Size(0,1);
@@ -29,13 +32,7 @@ namespace DistributedSystem_Main
                 item.Text = "";
             }
             EventRegist();
-            //SQL_controller SqlObject = new SQL_controller(Username:"postgres",Password:"changeme",Database:"postgres");
-            //SqlObject.Create_Database("distrubute");
-            //SqlObject.Database = "distrubute";
-            //SqlObject.Reset_Connection();
-            //SqlObject.Create_Schema("Test");
-            //SqlObject.Create_Table("Test","table_1",new Dictionary<string, string>());
-            //SqlObject.CheckTableExist("Test", "table_1");
+            Staobj.Forms.Form_Main = this;
         }
 
         #region System Initial
@@ -87,6 +84,34 @@ namespace DistributedSystem_Main
             Panel_RawData.BackColor = panLog.BackColor = Color.FromArgb(0, 64, 82);
         }
 
+        private void BTN_Query_Click(object sender, EventArgs e)
+        {
+            Process[] procs = Process.GetProcessesByName("DataQuery");
+            if ( procs.Length != 0)
+            {
+                MessageBox.Show("DataQuery已開啟");
+                return;
+            }
+
+            string dataQueryExeFilename = Path.Combine( Directory.GetCurrentDirectory() ,"DataQuery.exe");
+            if ( !File.Exists(dataQueryExeFilename))
+            {
+                MessageBox.Show("找不到DataQuery程式"); 
+                return;
+            }
+           
+
+            Task.Run(() =>
+            {
+                ProcessStartInfo startInfo = new ProcessStartInfo
+                {
+                    UseShellExecute = false,
+                    WorkingDirectory = Path.GetDirectoryName(dataQueryExeFilename),
+                    FileName = dataQueryExeFilename
+                };
+                Process.Start(startInfo);//呼叫Query程式(外部程式)
+            });
+        }
         private void picbOFF_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -100,8 +125,26 @@ namespace DistributedSystem_Main
         }
         #endregion
 
-        #region Raw Data Char
+        #region Raw Data Chart
 
+        private void TXT_RawDataChartFilter_KeyDown(object sender, KeyEventArgs e)
+        {
+      if (e.KeyCode == Keys.Enter)
+            {
+                Systems.cls_SignalsChartManager.FilterAndSortSensor(TXT_RawDataChartFilter.Text);
+                return;
+            }
+            if (e.KeyCode == Keys.Escape)
+            {
+                if (TXT_RawDataChartFilter.Text == "")
+                {
+                    return;
+                }
+                Systems.cls_SignalsChartManager.FilterAndSortSensor("");
+                TXT_RawDataChartFilter.Text = "";
+            }
+            
+        }
         private void AddNewSensorToUI(string SensorName)
         {
             if (InvokeRequired)
