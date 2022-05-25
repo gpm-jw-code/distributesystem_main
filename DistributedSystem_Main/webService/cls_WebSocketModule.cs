@@ -66,7 +66,7 @@ namespace DistributedSystem_Main.WebService
                     {
                         ReturnData.DataUnit = sensorDataProcess.SensorInfo.DataUnit;
                     }
-                    SensorDatas.Add(sensorID, ReturnData);  
+                    SensorDatas.Add(sensorID, ReturnData);
                 }
                 return SensorDatas;
             }
@@ -152,7 +152,7 @@ namespace DistributedSystem_Main.WebService
             {
                 foreach (cls_SensorDataProcess item in Staobj.Dict_SensorProcessObject.Values)
                 {
-                    foreach (OutOfState state in item.Dict_OutOfItemStatess.Values)
+                    foreach (OutOfState state in item.Dict_OutOfItemStates.Values)
                     {
                         state.RESET();
                     }
@@ -164,7 +164,7 @@ namespace DistributedSystem_Main.WebService
                 cls_SensorDataProcess sensor = Staobj.Dict_SensorProcessObject.Values.First(s => s.SensorInfo.EdgeName == eqgeName && s.SensorInfo.IP == eqid && s.SensorInfo.SensorType == field);
                 if (sensor == null) return;
 
-                if (sensor.Dict_OutOfItemStatess.TryGetValue(field, out OutOfState state))
+                if (sensor.Dict_OutOfItemStates.TryGetValue(field, out OutOfState state))
                 {
                     state.RESET();
                 }
