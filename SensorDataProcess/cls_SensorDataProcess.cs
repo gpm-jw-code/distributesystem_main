@@ -175,7 +175,7 @@ namespace SensorDataProcess
                 double DataAverage = item.Value.Average();
                 double DataDeviation = clsMathTool.standardDeviation(item.Value);
                 OutputData.Add($"{DataName}_OOC", DataAverage + 3 * DataDeviation);
-                OutputData.Add($"{DataName}_OOS", DataAverage + 2.5 * DataDeviation);
+                OutputData.Add($"{DataName}_OOS", DataAverage + 3.5* DataDeviation);
             }
             return OutputData;
         }
