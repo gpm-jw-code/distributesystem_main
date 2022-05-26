@@ -150,6 +150,11 @@ namespace DistributedSystem_Main.Views
             0,
             0,
             0});
+            this.NUM_Chart_RowNumber.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.NUM_Chart_RowNumber.Name = "NUM_Chart_RowNumber";
             this.NUM_Chart_RowNumber.Size = new System.Drawing.Size(127, 25);
             this.NUM_Chart_RowNumber.TabIndex = 3;
@@ -164,6 +169,11 @@ namespace DistributedSystem_Main.Views
             this.NUM_Chart_ColumnNumber.Location = new System.Drawing.Point(81, 66);
             this.NUM_Chart_ColumnNumber.Maximum = new decimal(new int[] {
             999999,
+            0,
+            0,
+            0});
+            this.NUM_Chart_ColumnNumber.Minimum = new decimal(new int[] {
+            1,
             0,
             0,
             0});
