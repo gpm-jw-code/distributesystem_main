@@ -1,4 +1,5 @@
-﻿using SensorDataProcess;
+﻿using ISOInspection;
+using SensorDataProcess;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -21,6 +22,7 @@ namespace DistributedSystem_Main.Systems
 
         public static WebService.cls_WebSocketModule WebsocketModule;
 
+
         public struct Forms
         {
             public static FormMain Form_Main;
@@ -29,6 +31,7 @@ namespace DistributedSystem_Main.Systems
         public struct SystemParam
         {
             public static string DataSaveRootPath = "";
+            public static bool ISOEnable = true;
             public struct Mqtt
             {
                 public static string MqttServerIP = "127.0.0.1";
@@ -114,10 +117,13 @@ namespace DistributedSystem_Main.Systems
                     continue;
 
                 var SensorInfo = SensorParam.LoadSensorInfoFromFile(item, EdgeName);
-                Dict_SensorProcessObject.Add(item.SensorName, new cls_SensorDataProcess(SensorInfo));
+                var NewSensorProcessObject = new cls_SensorDataProcess(SensorInfo);
+                Dict_SensorProcessObject.Add(item.SensorName, NewSensorProcessObject);
 
                 var SensorThreshold = SensorParam.LoadThreasholdFromFile(item.SensorName);
-                Dict_SensorProcessObject[item.SensorName].Dict_DataThreshold = SensorThreshold;
+                NewSensorProcessObject.Dict_DataThreshold = SensorThreshold;
+
+                NewSensorProcessObject.ISOCheckObject = SensorParam.LoadISOParameters(item.SensorName, SensorInfo.ISONumber);
 
                 Event_ReceiveNewSensorInfo?.Invoke(item.SensorName);
                 Event_ReceiveSensorInfo_Websocket?.Invoke(Newtonsoft.Json.JsonConvert.SerializeObject(SensorInfo));
@@ -206,6 +212,55 @@ namespace DistributedSystem_Main.Systems
                 using (StreamWriter SW = new StreamWriter(Path.Combine(SensorInfoDirectory, "Threshold.json")))
                 {
                     SW.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(Dict_Threshold, Newtonsoft.Json.Formatting.Indented));
+                }
+            }
+
+            public static ISObase LoadISOParameters(string SensorName,Enum_ISOInspectionNumber ISONumber)
+            {
+                ISObase ISOCheckObject = null;
+                string Filepath = Path.Combine(SensorDataRootPath(SensorName), "ISOParameters.json");
+                if (!File.Exists(Filepath))
+                {
+                    return null;
+                }
+                try
+                {
+                    using (StreamReader Sr = new StreamReader(Filepath))
+                    {
+                        string JsonString = Sr.ReadLine();
+                        switch (ISONumber)
+                        {
+                            case Enum_ISOInspectionNumber.None:
+                                break;
+                            case Enum_ISOInspectionNumber.ISO10816_1:
+                                ISOCheckObject = Newtonsoft.Json.JsonConvert.DeserializeObject<cls_ISO10816_1>(JsonString);
+                                break;
+                            case Enum_ISOInspectionNumber.ISO10816_3:
+                                ISOCheckObject = Newtonsoft.Json.JsonConvert.DeserializeObject<cls_ISO10816_3>(JsonString);
+                                break;
+                            case Enum_ISOInspectionNumber.ISO10816_8:
+                                ISOCheckObject = Newtonsoft.Json.JsonConvert.DeserializeObject<cls_ISO10816_8>(JsonString);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    return ISOCheckObject;
+                }
+                catch (Exception)
+                {
+                    return ISOCheckObject;
+                }
+            }
+            public static void SaveISOParameters(string SensorName,ISObase ISOData)
+            {
+                string Filepath = Path.Combine(SensorDataRootPath(SensorName), "ISOParameters.json");
+                using (FileStream FS = new FileStream(Filepath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.Read))
+                {
+                    using (StreamWriter SR = new StreamWriter(FS))
+                    {
+                        SR.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(ISOData));
+                    }
                 }
             }
         }

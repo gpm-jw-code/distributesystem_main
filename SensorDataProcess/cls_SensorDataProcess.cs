@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ISOInspection;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -34,6 +35,8 @@ namespace SensorDataProcess
         public SensorStatus Status = new SensorStatus();
         public Dictionary<string, double> Dict_DataThreshold = new Dictionary<string, double>();
         public Dictionary<string, OutOfState> Dict_OutOfItemStates = new Dictionary<string, OutOfState>();
+        public ISObase ISOCheckObject;
+        public string ISOCheckDataName;
 
         private Dictionary<string, Queue<double>> Dict_SensorDataSeries = new Dictionary<string, Queue<double>>();
         private cls_HourlyData HourlyData;
@@ -48,8 +51,17 @@ namespace SensorDataProcess
 
         public Action<string> Event_RefreshSensorInfo;
         public Action<string> Event_RefreshSensorThreshold;
+        public Action<string> Event_RefreshSensorISOSetting;
 
         private object RawDataDict_Lock = new object();
+
+        public List<string> List_DataNames
+        {
+            get
+            {
+                return Dict_SensorDataSeries.Keys.ToList();
+            }
+        }
 
         public cls_SensorDataProcess(string IP, int Port, string SensorName, string SensorType, string EQName = null, string UnitName = null)
         {
@@ -84,6 +96,7 @@ namespace SensorDataProcess
         }
 
 
+
         public void ImportNewSensorData(Dictionary<string, double> Dict_NewData, DateTime TimeLog)
         {
             SQLDataSaver?.InsertRawData(Dict_NewData, TimeLog);
@@ -94,6 +107,15 @@ namespace SensorDataProcess
                 SQLDataSaver?.InsertHourlyRawData(HourlyData.Dict_AverageData, TimeLog);
             }
             var CheckResult = CheckThreshold(Dict_NewData, TimeLog);
+            if (ISOCheckObject != null)
+            {
+                if (ISOCheckDataName!=null && Dict_NewData.ContainsKey(ISOCheckDataName))
+                {
+                    var ISOCheckResult = ISOCheckObject.CalculateResult(Dict_NewData[ISOCheckDataName]);
+                    TxtDataSaver.WriteISOResult(ISOCheckResult, SensorInfo.ISONumber, TimeLog);
+                }
+            }
+
             Queue_TimeLog.Enqueue(TimeLog);
             lock (RawDataDict_Lock)
             {
@@ -151,6 +173,11 @@ namespace SensorDataProcess
             }
         }
 
+        public void RefreshISOChart()
+        {
+            Event_RefreshSensorISOSetting?.Invoke(SensorInfo.SensorName);
+        }
+
         private Dictionary<string, bool> CheckThreshold(Dictionary<string, double> Dict_NewData, DateTime TimeLog)
         {
             Dictionary<string, bool> CheckResult = new Dictionary<string, bool>();
@@ -162,9 +189,9 @@ namespace SensorDataProcess
             return CheckResult;
         }
 
-        public Dictionary<string,double> CreateThresholdByTemData()
+        public Dictionary<string, double> CreateThresholdByTemData()
         {
-            while(Queue_TimeLog.Count<100)
+            while (Queue_TimeLog.Count < 100)
             {
                 Thread.Sleep(1000);
             }
@@ -307,6 +334,7 @@ namespace SensorDataProcess
                 return SensorName.Split('-').Last();
             }
         }
+        public Enum_ISOInspectionNumber ISONumber = Enum_ISOInspectionNumber.None;
     }
 
     public class SensorStatus

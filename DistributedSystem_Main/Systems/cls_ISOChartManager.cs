@@ -8,12 +8,11 @@ using System.Windows.Forms;
 
 namespace DistributedSystem_Main.Systems
 {
-    public class cls_SignalsChartManager
+    public class cls_ISOChartManager
     {
         public static TableLayoutPanel ParentControls = null;
-        public static List<User_Control.USC_SensorDataChart> List_AllSignalsChart = new List<User_Control.USC_SensorDataChart>();
+        public static List<User_Control.USC_ISODataChart> List_AllSignalsChart = new List<User_Control.USC_ISODataChart>();
         public static User_Control.PageSwitch SignalPageSwitch = null;
-
         public static List<string> List_NowShowSensorNames = new List<string>();
         public static List<string> List_SelectedSensorNames = new List<string>();
         public static int TotalChartNumber = 6;
@@ -47,7 +46,7 @@ namespace DistributedSystem_Main.Systems
             {
                 for (int i = 0; i < TotalChartNumber - OriginChartNumber; i++)
                 {
-                    List_AllSignalsChart.Add(new User_Control.USC_SensorDataChart() { Dock = System.Windows.Forms.DockStyle.Fill ,Visible = false});
+                    List_AllSignalsChart.Add(new User_Control.USC_ISODataChart() { Dock = System.Windows.Forms.DockStyle.Fill, Visible = false });
                 }
             }
             if (OriginChartNumber > TotalChartNumber)
@@ -68,7 +67,13 @@ namespace DistributedSystem_Main.Systems
             OriginSortType = NewSortType == SortType.None ? OriginSortType : NewSortType;
 
             var List_SensorInfo = Staobj.Dict_SensorProcessObject.Select(item => item.Value.SensorInfo);
-            var List_FilterSensorInfos = List_SensorInfo.Where(item =>item.SensorName.Contains(OriginFilterString)|| item.IP.Contains(OriginFilterString) || item.EQName.Contains(OriginFilterString) || item.UnitName.Contains(OriginFilterString)).ToList();
+
+            var List_FilterSensorInfos
+                = List_SensorInfo.Where(item => item.SensorName.ToUpper().Contains(OriginFilterString.ToUpper())
+                || item.IP.ToUpper().Contains(OriginFilterString.ToUpper())
+                || item.EQName.ToUpper().Contains(OriginFilterString.ToUpper())
+                || item.UnitName.ToUpper().Contains(OriginFilterString.ToUpper())).ToList();
+
             switch (NewSortType)
             {
                 case SortType.IP:
@@ -87,13 +92,13 @@ namespace DistributedSystem_Main.Systems
 
         public static void RefreshShowChart(int PageNumber)
         {
-            int StartNum = (PageNumber-1) * TotalChartNumber;
+            int StartNum = (PageNumber - 1) * TotalChartNumber;
             int EndNum = Math.Min((PageNumber) * TotalChartNumber, List_SelectedSensorNames.Count);
             List_NowShowSensorNames.Clear();
 
             for (int i = 0; i < List_AllSignalsChart.Count; i++)
             {
-                List_AllSignalsChart[i].Visible = i+StartNum < EndNum;
+                List_AllSignalsChart[i].Visible = i + StartNum < EndNum;
             }
 
             for (int i = StartNum; i < EndNum; i++)
@@ -101,8 +106,8 @@ namespace DistributedSystem_Main.Systems
                 string SensorName = List_SelectedSensorNames[i];
                 List_NowShowSensorNames.Add(SensorName);
                 UpdateSensorInfoToChart(SensorName);
-                UpdateThresholdToChart(SensorName, Staobj.Dict_SensorProcessObject[SensorName].Dict_DataThreshold);
-                Staobj.Dict_SensorProcessObject[SensorName].RefreshSignalChart();
+                var SensorISOObject = Staobj.Dict_SensorProcessObject[SensorName].ISOCheckObject;
+                UpdateSensorISOThreshold(SensorName, SensorISOObject.ThresholdA, SensorISOObject.ThresholdB, SensorISOObject.ThresholdC);
             }
         }
 
@@ -121,29 +126,31 @@ namespace DistributedSystem_Main.Systems
             TargetChart.EQName = SensorInfo.EQName;
             TargetChart.UnitName = SensorInfo.UnitName;
             TargetChart.SensorName = SensorInfo.SensorName;
-            TargetChart.DataUnit= SensorInfo.DataUnit;
-            TargetChart.SensorType = SensorInfo.SensorType;
         }
 
-        public static void UpdateThresholdToChart(string SensorName,Dictionary<string,double> DictThreshold)
+        public static void UpdateSensorData(string SensorName, Queue<DateTime> Queue_Time, Queue<double> Dict_DataQueue)
         {
             if (!List_NowShowSensorNames.Contains(SensorName))
                 return;
             int ChartIndex = List_NowShowSensorNames.IndexOf(SensorName);
-            List_AllSignalsChart[ChartIndex].SetSensorThreshold(DictThreshold);
-        }
-        public static void UpdateSensorData(string SensorName, Queue<DateTime> Queue_Time, Dictionary<string, Queue<double>> Dict_DataQueue)
-        {
-            if (!List_NowShowSensorNames.Contains(SensorName))
-                return;
-            int ChartIndex = List_NowShowSensorNames.IndexOf(SensorName);
-            if (List_AllSignalsChart[ChartIndex].Visible ==false)
+            if (List_AllSignalsChart[ChartIndex].Visible == false)
             {
                 List_AllSignalsChart[ChartIndex].Visible = true;
             }
-            List_AllSignalsChart[ChartIndex].ImportSensorDataSeries(Queue_Time, Dict_DataQueue);
+            List_AllSignalsChart[ChartIndex].ImportISODataSeries(Queue_Time, Dict_DataQueue);
         }
 
+        public static void UpdateSensorISOThreshold(string SensorName, double ThresholdA, double ThresholdB, double ThresholdC)
+        {
+            if (!List_NowShowSensorNames.Contains(SensorName))
+                return;
+            int ChartIndex = List_NowShowSensorNames.IndexOf(SensorName);
+            if (List_AllSignalsChart[ChartIndex].Visible == false)
+            {
+                List_AllSignalsChart[ChartIndex].Visible = true;
+            }
+            List_AllSignalsChart[ChartIndex].SetBackColorThreshold(ThresholdA, ThresholdB, ThresholdC);
+        }
 
 
         public enum SortType

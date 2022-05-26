@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ISOInspection;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace SensorDataProcess
             get
             {
                 var Edge_SensorNameArray = SensorInfo.SensorName.Split('-');
-                return Path.Combine(RootPath, "RawData",Edge_SensorNameArray[0],Edge_SensorNameArray[1]);
+                return Path.Combine(RootPath, "RawData", Edge_SensorNameArray[0], Edge_SensorNameArray[1]);
             }
         }
 
@@ -39,6 +40,13 @@ namespace SensorDataProcess
                 return Path.Combine(RootPath, "Log", Edge_SensorNameArray[0], Edge_SensorNameArray[1]);
             }
         }
+        private string ISOResultFileDirectory { 
+            get
+            {
+                var Edge_SensorNameArray = SensorInfo.SensorName.Split('-');
+                return Path.Combine(RootPath, "ISOResult", Edge_SensorNameArray[0], Edge_SensorNameArray[1]);
+            } 
+        }
 
         public cls_txtDataSaver(SensorInfo SensorInfo)
         {
@@ -54,9 +62,11 @@ namespace SensorDataProcess
                 Directory.CreateDirectory(LogPath);
             if (!Directory.Exists(HourlyRawDataPath))
                 Directory.CreateDirectory(HourlyRawDataPath);
+            if (!Directory.Exists(ISOResultFileDirectory))
+                Directory.CreateDirectory(ISOResultFileDirectory);
         }
 
-        public void WriteRawData(Dictionary<string, double> NewData,DateTime TimeLog)
+        public void WriteRawData(Dictionary<string, double> NewData, DateTime TimeLog)
         {
             string FileName = Path.Combine(RawDataPath, $"{TimeLog:yyyyMMdd_HH}.csv");
             bool IsNeedHeader = !File.Exists(FileName);
@@ -81,7 +91,7 @@ namespace SensorDataProcess
             }
         }
 
-        public void WriteHourlyRawData(Dictionary<string,double> NewData,DateTime TimeLog)
+        public void WriteHourlyRawData(Dictionary<string, double> NewData, DateTime TimeLog)
         {
             string FileName = Path.Combine(HourlyRawDataPath, $"{TimeLog:yyyyMMdd}.csv");
             bool IsNeedHeader = !File.Exists(FileName);
@@ -129,7 +139,33 @@ namespace SensorDataProcess
             {
                 CheckDirectoryPath();
             }
+        }
 
+        public void WriteISOResult(ResultLevel Result, Enum_ISOInspectionNumber ISONumber, DateTime TimeLog = default)
+        {
+            TimeLog = TimeLog == default ? DateTime.Now : TimeLog;
+            string FileName = Path.Combine(ISOResultFileDirectory, TimeLog.ToString("yyyyMMdd_HH") + ".csv");
+            bool IsNeedHeader = !File.Exists(FileName);
+            string DataString = $"{TimeLog:yyyy/MM/dd HH:mm:ss},{ISONumber},{Result}";
+            try
+            {
+                using (FileStream FS = new FileStream(FileName, FileMode.Append, FileAccess.Write, FileShare.Read))
+                {
+                    using (StreamWriter SW = new StreamWriter(FS))
+                    {
+                        if (IsNeedHeader)
+                        {
+                            SW.WriteLine(SensorInfoString);
+                            SW.WriteLine("Time,ISO Number,Result");
+                        }
+                        SW.WriteLine(DataString);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                CheckDirectoryPath();
+            }
         }
 
         private string SensorInfoString
@@ -155,7 +191,7 @@ namespace SensorDataProcess
             return Header;
         }
 
-        private string RawDataString(IEnumerable<double> DataValueList,DateTime TimeLog)
+        private string RawDataString(IEnumerable<double> DataValueList, DateTime TimeLog)
         {
             string DataString = $"{TimeLog:yyyy/MM/dd HH:mm:ss},";
             DataString += string.Join(",", DataValueList);

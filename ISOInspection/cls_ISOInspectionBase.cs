@@ -10,9 +10,13 @@ namespace ISOInspection
 {
     public class ISObase
     {
-        private double ThresholdA;
-        private double ThresholdB;
-        private double ThresholdC;
+        private double _ThresholdA;
+        private double _ThresholdB;
+        private double _ThresholdC;
+
+        public double ThresholdA { get { return _ThresholdA; } }
+        public double ThresholdB { get { return _ThresholdB; } }
+        public double ThresholdC { get { return _ThresholdC; } }
 
         private static string ISOFilePath = Path.Combine("Resources","ISOStandard.json");
 
@@ -20,15 +24,15 @@ namespace ISOInspection
 
         public ResultLevel CalculateResult(double VelocityRMS)
         {
-            if (VelocityRMS<ThresholdA)
+            if (VelocityRMS<_ThresholdA)
             {
                 return ResultLevel.A;
             }
-            if (VelocityRMS<ThresholdB)
+            if (VelocityRMS<_ThresholdB)
             {
                 return ResultLevel.B;
             }
-            if (VelocityRMS<ThresholdC)
+            if (VelocityRMS<_ThresholdC)
             {
                 return ResultLevel.C;
             }
@@ -41,9 +45,9 @@ namespace ISOInspection
             {
                 LoadAllThresholdDictionary(ISOFilePath);
             }
-            ThresholdA = Dict_AllISOThreshold[ISOName][GroupNumber][0];
-            ThresholdB = Dict_AllISOThreshold[ISOName][GroupNumber][1];
-            ThresholdC = Dict_AllISOThreshold[ISOName][GroupNumber][2];
+            _ThresholdA = Dict_AllISOThreshold[ISOName][GroupNumber][0];
+            _ThresholdB = Dict_AllISOThreshold[ISOName][GroupNumber][1];
+            _ThresholdC = Dict_AllISOThreshold[ISOName][GroupNumber][2];
         }
 
         public static void LoadAllThresholdDictionary(string FilePath)

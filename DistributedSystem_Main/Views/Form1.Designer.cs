@@ -30,7 +30,7 @@ namespace DistributedSystem_Main
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.TableLayout_WholeView = new System.Windows.Forms.TableLayoutPanel();
             this.TableLayout_SideBar = new System.Windows.Forms.TableLayoutPanel();
             this.PictureBox_Icon = new System.Windows.Forms.PictureBox();
@@ -38,6 +38,9 @@ namespace DistributedSystem_Main
             this.Panel_Query = new System.Windows.Forms.Panel();
             this.BTN_Query = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.Panel_ISO = new System.Windows.Forms.Panel();
+            this.BTN_ISO = new System.Windows.Forms.Button();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.panStatus = new System.Windows.Forms.Panel();
             this.btnStatus = new System.Windows.Forms.Button();
             this.pictureBox20 = new System.Windows.Forms.PictureBox();
@@ -67,16 +70,25 @@ namespace DistributedSystem_Main
             this.UnitName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SensorIP = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column_SensorType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column_ISOSetting = new System.Windows.Forms.DataGridViewButtonColumn();
             this.Panel_EditSensorInfo = new System.Windows.Forms.Panel();
             this.BTN_CancelEditSensorInfo = new System.Windows.Forms.Button();
             this.BTN_SaveSensorInfo = new System.Windows.Forms.Button();
             this.BTN_EditSensorInfo = new System.Windows.Forms.Button();
+            this.TabPage_ISO = new System.Windows.Forms.TabPage();
+            this.TablePanel_ISOChart = new System.Windows.Forms.TableLayoutPanel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.PageSwitch_ISOChart = new DistributedSystem_Main.User_Control.PageSwitch();
             this.TableLayout_WholeView.SuspendLayout();
             this.TableLayout_SideBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox_Icon)).BeginInit();
             this.panMenu.SuspendLayout();
             this.Panel_Query.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.Panel_ISO.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             this.panStatus.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox20)).BeginInit();
             this.panLog.SuspendLayout();
@@ -93,6 +105,8 @@ namespace DistributedSystem_Main
             this.TabPage_SensorInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGV_SensorInfo)).BeginInit();
             this.Panel_EditSensorInfo.SuspendLayout();
+            this.TabPage_ISO.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // TableLayout_WholeView
@@ -146,6 +160,7 @@ namespace DistributedSystem_Main
             this.panMenu.AutoSize = true;
             this.panMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(82)))));
             this.panMenu.Controls.Add(this.Panel_Query);
+            this.panMenu.Controls.Add(this.Panel_ISO);
             this.panMenu.Controls.Add(this.panStatus);
             this.panMenu.Controls.Add(this.panLog);
             this.panMenu.Controls.Add(this.Panel_RawData);
@@ -165,7 +180,7 @@ namespace DistributedSystem_Main
             this.Panel_Query.Controls.Add(this.pictureBox1);
             this.Panel_Query.Cursor = System.Windows.Forms.Cursors.Hand;
             this.Panel_Query.Dock = System.Windows.Forms.DockStyle.Top;
-            this.Panel_Query.Location = new System.Drawing.Point(0, 154);
+            this.Panel_Query.Location = new System.Drawing.Point(0, 195);
             this.Panel_Query.Margin = new System.Windows.Forms.Padding(4);
             this.Panel_Query.Name = "Panel_Query";
             this.Panel_Query.Size = new System.Drawing.Size(170, 41);
@@ -206,6 +221,53 @@ namespace DistributedSystem_Main
             this.pictureBox1.TabIndex = 25;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Tag = "TabPageModuleManager";
+            // 
+            // Panel_ISO
+            // 
+            this.Panel_ISO.Controls.Add(this.BTN_ISO);
+            this.Panel_ISO.Controls.Add(this.pictureBox3);
+            this.Panel_ISO.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Panel_ISO.Dock = System.Windows.Forms.DockStyle.Top;
+            this.Panel_ISO.Location = new System.Drawing.Point(0, 154);
+            this.Panel_ISO.Margin = new System.Windows.Forms.Padding(4);
+            this.Panel_ISO.Name = "Panel_ISO";
+            this.Panel_ISO.Size = new System.Drawing.Size(170, 41);
+            this.Panel_ISO.TabIndex = 8;
+            // 
+            // BTN_ISO
+            // 
+            this.BTN_ISO.BackColor = System.Drawing.Color.Transparent;
+            this.BTN_ISO.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.BTN_ISO.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(26)))), ((int)(((byte)(36)))));
+            this.BTN_ISO.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(82)))), ((int)(((byte)(111)))), ((int)(((byte)(135)))));
+            this.BTN_ISO.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(63)))), ((int)(((byte)(95)))), ((int)(((byte)(122)))));
+            this.BTN_ISO.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(43)))), ((int)(((byte)(54)))));
+            this.BTN_ISO.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BTN_ISO.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Bold);
+            this.BTN_ISO.ForeColor = System.Drawing.Color.White;
+            this.BTN_ISO.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.BTN_ISO.Location = new System.Drawing.Point(43, 0);
+            this.BTN_ISO.Margin = new System.Windows.Forms.Padding(4);
+            this.BTN_ISO.Name = "BTN_ISO";
+            this.BTN_ISO.Size = new System.Drawing.Size(127, 41);
+            this.BTN_ISO.TabIndex = 1;
+            this.BTN_ISO.Text = "ISO 10816";
+            this.BTN_ISO.UseVisualStyleBackColor = false;
+            this.BTN_ISO.Click += new System.EventHandler(this.BTN_ISO_Click);
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox3.Dock = System.Windows.Forms.DockStyle.Left;
+            this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
+            this.pictureBox3.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.pictureBox3.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(43, 41);
+            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox3.TabIndex = 25;
+            this.pictureBox3.TabStop = false;
+            this.pictureBox3.Tag = "TabPageModuleManager";
             // 
             // panStatus
             // 
@@ -430,6 +492,7 @@ namespace DistributedSystem_Main
             this.TabControl_Main.Controls.Add(this.TabPage_Signal);
             this.TabControl_Main.Controls.Add(this.TabPage_Log);
             this.TabControl_Main.Controls.Add(this.TabPage_SensorInfo);
+            this.TabControl_Main.Controls.Add(this.TabPage_ISO);
             this.TabControl_Main.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TabControl_Main.ItemSize = new System.Drawing.Size(50, 0);
             this.TabControl_Main.Location = new System.Drawing.Point(170, 0);
@@ -551,19 +614,21 @@ namespace DistributedSystem_Main
             this.EQName,
             this.UnitName,
             this.SensorIP,
-            this.Column_SensorType});
+            this.Column_SensorType,
+            this.Column_ISOSetting});
             this.DGV_SensorInfo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.DGV_SensorInfo.Location = new System.Drawing.Point(3, 46);
             this.DGV_SensorInfo.Name = "DGV_SensorInfo";
             this.DGV_SensorInfo.RowHeadersVisible = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
-            this.DGV_SensorInfo.RowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
+            this.DGV_SensorInfo.RowsDefaultCellStyle = dataGridViewCellStyle2;
             this.DGV_SensorInfo.RowTemplate.Height = 24;
             this.DGV_SensorInfo.ShowCellErrors = false;
             this.DGV_SensorInfo.Size = new System.Drawing.Size(1180, 640);
             this.DGV_SensorInfo.TabIndex = 1;
+            this.DGV_SensorInfo.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DGV_SensorInfo_CellMouseClick);
             // 
             // Column_Status
             // 
@@ -599,6 +664,12 @@ namespace DistributedSystem_Main
             this.Column_SensorType.HeaderText = "SensorType";
             this.Column_SensorType.Name = "Column_SensorType";
             this.Column_SensorType.ReadOnly = true;
+            // 
+            // Column_ISOSetting
+            // 
+            this.Column_ISOSetting.HeaderText = "ISO Setting";
+            this.Column_ISOSetting.Name = "Column_ISOSetting";
+            this.Column_ISOSetting.Text = "Setting";
             // 
             // Panel_EditSensorInfo
             // 
@@ -655,6 +726,81 @@ namespace DistributedSystem_Main
             this.BTN_EditSensorInfo.UseVisualStyleBackColor = false;
             this.BTN_EditSensorInfo.Click += new System.EventHandler(this.BTN_EditSensorInfo_Click);
             // 
+            // TabPage_ISO
+            // 
+            this.TabPage_ISO.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(43)))), ((int)(((byte)(54)))));
+            this.TabPage_ISO.Controls.Add(this.TablePanel_ISOChart);
+            this.TabPage_ISO.Controls.Add(this.panel1);
+            this.TabPage_ISO.Location = new System.Drawing.Point(-1, 22);
+            this.TabPage_ISO.Name = "TabPage_ISO";
+            this.TabPage_ISO.Size = new System.Drawing.Size(1186, 689);
+            this.TabPage_ISO.TabIndex = 5;
+            this.TabPage_ISO.Text = "ISO 10816";
+            // 
+            // TablePanel_ISOChart
+            // 
+            this.TablePanel_ISOChart.AutoScroll = true;
+            this.TablePanel_ISOChart.AutoSize = true;
+            this.TablePanel_ISOChart.ColumnCount = 2;
+            this.TablePanel_ISOChart.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.TablePanel_ISOChart.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.TablePanel_ISOChart.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.TablePanel_ISOChart.Location = new System.Drawing.Point(0, 43);
+            this.TablePanel_ISOChart.Margin = new System.Windows.Forms.Padding(4);
+            this.TablePanel_ISOChart.Name = "TablePanel_ISOChart";
+            this.TablePanel_ISOChart.RowCount = 3;
+            this.TablePanel_ISOChart.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.TablePanel_ISOChart.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.TablePanel_ISOChart.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.TablePanel_ISOChart.Size = new System.Drawing.Size(1186, 646);
+            this.TablePanel_ISOChart.TabIndex = 2;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.label1);
+            this.panel1.Controls.Add(this.textBox1);
+            this.panel1.Controls.Add(this.PageSwitch_ISOChart);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1186, 43);
+            this.panel1.TabIndex = 3;
+            // 
+            // label1
+            // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label1.Font = new System.Drawing.Font("Microsoft JhengHei UI", 14.25F, System.Drawing.FontStyle.Bold);
+            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(184)))), ((int)(((byte)(192)))));
+            this.label1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.label1.Location = new System.Drawing.Point(954, 1);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(67, 37);
+            this.label1.TabIndex = 18;
+            this.label1.Text = "篩選：";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox1.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.textBox1.Location = new System.Drawing.Point(1027, 7);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(150, 29);
+            this.textBox1.TabIndex = 1;
+            // 
+            // PageSwitch_ISOChart
+            // 
+            this.PageSwitch_ISOChart.AutoSize = true;
+            this.PageSwitch_ISOChart.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(92)))), ((int)(((byte)(131)))), ((int)(((byte)(169)))));
+            this.PageSwitch_ISOChart.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.PageSwitch_ISOChart.Location = new System.Drawing.Point(4, 8);
+            this.PageSwitch_ISOChart.Margin = new System.Windows.Forms.Padding(4);
+            this.PageSwitch_ISOChart.MinimumSize = new System.Drawing.Size(0, 27);
+            this.PageSwitch_ISOChart.Name = "PageSwitch_ISOChart";
+            this.PageSwitch_ISOChart.NowPageNumber = 1;
+            this.PageSwitch_ISOChart.Size = new System.Drawing.Size(92, 27);
+            this.PageSwitch_ISOChart.TabIndex = 0;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
@@ -674,6 +820,8 @@ namespace DistributedSystem_Main
             this.panMenu.ResumeLayout(false);
             this.Panel_Query.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.Panel_ISO.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             this.panStatus.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox20)).EndInit();
             this.panLog.ResumeLayout(false);
@@ -692,6 +840,10 @@ namespace DistributedSystem_Main
             this.TabPage_SensorInfo.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.DGV_SensorInfo)).EndInit();
             this.Panel_EditSensorInfo.ResumeLayout(false);
+            this.TabPage_ISO.ResumeLayout(false);
+            this.TabPage_ISO.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -724,11 +876,6 @@ namespace DistributedSystem_Main
         private System.Windows.Forms.Button BTN_CancelEditSensorInfo;
         private System.Windows.Forms.Button BTN_SaveSensorInfo;
         private System.Windows.Forms.Button BTN_EditSensorInfo;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column_Status;
-        private System.Windows.Forms.DataGridViewTextBoxColumn EQName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn UnitName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn SensorIP;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column_SensorType;
         private System.Windows.Forms.Panel Panel_Signals_Function;
         private User_Control.PageSwitch PageSwitch_Signals;
         private System.Windows.Forms.TableLayoutPanel TablePanel_SideBarFunctions;
@@ -738,6 +885,21 @@ namespace DistributedSystem_Main
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label Label_Signals_Filter;
         private System.Windows.Forms.TextBox TXT_RawDataChartFilter;
+        private System.Windows.Forms.Panel Panel_ISO;
+        private System.Windows.Forms.Button BTN_ISO;
+        private System.Windows.Forms.PictureBox pictureBox3;
+        private System.Windows.Forms.TabPage TabPage_ISO;
+        private System.Windows.Forms.TableLayoutPanel TablePanel_ISOChart;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox textBox1;
+        private User_Control.PageSwitch PageSwitch_ISOChart;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column_Status;
+        private System.Windows.Forms.DataGridViewTextBoxColumn EQName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn UnitName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SensorIP;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column_SensorType;
+        private System.Windows.Forms.DataGridViewButtonColumn Column_ISOSetting;
     }
 }
 

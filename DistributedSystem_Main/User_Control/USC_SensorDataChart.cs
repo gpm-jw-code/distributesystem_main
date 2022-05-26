@@ -90,32 +90,13 @@ namespace DistributedSystem_Main.User_Control
         public void ImportSensorDataSeries(Queue<DateTime> TimeLogSeries, Dictionary<string, Queue<double>> Dict_DataSeries)
         {
             int IntForColor = 0;
-            //還沒有數據進來    應該要改成Show狀態 
-            //if (Dict_DataSeries.Count == 0)
-            //{
-            //    foreach (var item in Dict_SensorSeries)
-            //    {
-            //        item.Value.Enabled = false;
-            //    }
-            //    foreach (var item in Dict_SensorOOC_StripLines)
-            //    {
-            //        item.Value.Text = "";
-            //        item.Value.BorderWidth = 0;
-            //    }
-            //    foreach (var item in Dict_SensorOOS_StripLines)
-            //    {
-            //        item.Value.Text = "";
-            //        item.Value.BorderWidth = 0;
-            //    }
-            //    return;
-            //}
             foreach (var item in Dict_DataSeries)
             {
                 IntForColor += 1;
                 if (!Dict_SensorSeries.ContainsKey(item.Key))
                 {
-                    Color NewSeriesColor = ColorFromHSV(360 * IntForColor / Dict_DataSeries.Count, 1, 1);
-                    Color StripLineColor = ColorFromHSV(360 * IntForColor / Dict_DataSeries.Count, 1, 0.5);
+                    Color NewSeriesColor = cls_Functions.ColorFromHSV(360 * IntForColor / Dict_DataSeries.Count, 1, 1);
+                    Color StripLineColor = cls_Functions.ColorFromHSV(360 * IntForColor / Dict_DataSeries.Count, 1, 0.5);
                     CreateNewSensorUIObjects(item.Key, NewSeriesColor, StripLineColor);
                 }
                 Dict_SensorSeries[item.Key].Points.DataBindXY(TimeLogSeries, item.Value);
@@ -148,8 +129,8 @@ namespace DistributedSystem_Main.User_Control
 
                 if (!Dict_SensorSeries.ContainsKey(DataName))
                 {
-                    Color NewSeriesColor = ColorFromHSV(360 * IntForColor / (Dict_Threshold.Count/2), 1, 1);
-                    Color StripLineColor = ColorFromHSV(360 * IntForColor / (Dict_Threshold.Count/2), 1, 0.5);
+                    Color NewSeriesColor = cls_Functions.ColorFromHSV(360 * IntForColor / (Dict_Threshold.Count/2), 1, 1);
+                    Color StripLineColor = cls_Functions.ColorFromHSV(360 * IntForColor / (Dict_Threshold.Count/2), 1, 0.5);
                     CreateNewSensorUIObjects(DataName, NewSeriesColor, StripLineColor);
                 }
 
@@ -300,36 +281,5 @@ namespace DistributedSystem_Main.User_Control
             Event_SettingButtonClicked?.Invoke(_SensorName);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="hue">0~360</param>
-        /// <param name="saturation">0~1</param>
-        /// <param name="value">0~1</param>
-        /// <returns></returns>
-        public static Color ColorFromHSV(double hue, double saturation, double value)
-        {
-            int hi = Convert.ToInt32(Math.Floor(hue / 60)) % 6;
-            double f = hue / 60 - Math.Floor(hue / 60);
-
-            value = value * 255;
-            int v = Convert.ToInt32(value);
-            int p = Convert.ToInt32(value * (1 - saturation));
-            int q = Convert.ToInt32(value * (1 - f * saturation));
-            int t = Convert.ToInt32(value * (1 - (1 - f) * saturation));
-
-            if (hi == 0)
-                return Color.FromArgb(255, v, t, p);
-            else if (hi == 1)
-                return Color.FromArgb(255, q, v, p);
-            else if (hi == 2)
-                return Color.FromArgb(255, p, v, t);
-            else if (hi == 3)
-                return Color.FromArgb(255, p, q, v);
-            else if (hi == 4)
-                return Color.FromArgb(255, t, p, v);
-            else
-                return Color.FromArgb(255, v, p, q);
-        }
     }
 }

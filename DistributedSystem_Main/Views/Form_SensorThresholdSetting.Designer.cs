@@ -40,6 +40,7 @@ namespace DistributedSystem_Main.Views
             this.label1 = new System.Windows.Forms.Label();
             this.LAB_SensorType = new System.Windows.Forms.Label();
             this.Panel_MqttSetting = new System.Windows.Forms.Panel();
+            this.BTN_AutoSetThreshold = new System.Windows.Forms.Button();
             this.Combo_DataName = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.NUM_OOS = new System.Windows.Forms.NumericUpDown();
@@ -47,7 +48,6 @@ namespace DistributedSystem_Main.Views
             this.NUM_OOC = new System.Windows.Forms.NumericUpDown();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.BTN_AutoSetThreshold = new System.Windows.Forms.Button();
             this.Panel_MqttSetting.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NUM_OOS)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUM_OOC)).BeginInit();
@@ -57,7 +57,7 @@ namespace DistributedSystem_Main.Views
             // 
             this.CheckBox_ApplyToAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.CheckBox_ApplyToAll.AutoSize = true;
-            this.CheckBox_ApplyToAll.Location = new System.Drawing.Point(115, 405);
+            this.CheckBox_ApplyToAll.Location = new System.Drawing.Point(115, 420);
             this.CheckBox_ApplyToAll.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBox_ApplyToAll.Name = "CheckBox_ApplyToAll";
             this.CheckBox_ApplyToAll.Size = new System.Drawing.Size(172, 21);
@@ -137,7 +137,7 @@ namespace DistributedSystem_Main.Views
             // BTN_SaveToFile
             // 
             this.BTN_SaveToFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.BTN_SaveToFile.Location = new System.Drawing.Point(90, 434);
+            this.BTN_SaveToFile.Location = new System.Drawing.Point(90, 449);
             this.BTN_SaveToFile.Margin = new System.Windows.Forms.Padding(4);
             this.BTN_SaveToFile.Name = "BTN_SaveToFile";
             this.BTN_SaveToFile.Size = new System.Drawing.Size(108, 57);
@@ -180,11 +180,21 @@ namespace DistributedSystem_Main.Views
             this.Panel_MqttSetting.Controls.Add(this.NUM_OOC);
             this.Panel_MqttSetting.Controls.Add(this.label5);
             this.Panel_MqttSetting.Controls.Add(this.label4);
-            this.Panel_MqttSetting.Location = new System.Drawing.Point(20, 216);
+            this.Panel_MqttSetting.Location = new System.Drawing.Point(13, 195);
             this.Panel_MqttSetting.Margin = new System.Windows.Forms.Padding(4);
             this.Panel_MqttSetting.Name = "Panel_MqttSetting";
-            this.Panel_MqttSetting.Size = new System.Drawing.Size(267, 172);
+            this.Panel_MqttSetting.Size = new System.Drawing.Size(285, 172);
             this.Panel_MqttSetting.TabIndex = 23;
+            // 
+            // BTN_AutoSetThreshold
+            // 
+            this.BTN_AutoSetThreshold.Location = new System.Drawing.Point(107, 132);
+            this.BTN_AutoSetThreshold.Name = "BTN_AutoSetThreshold";
+            this.BTN_AutoSetThreshold.Size = new System.Drawing.Size(115, 32);
+            this.BTN_AutoSetThreshold.TabIndex = 6;
+            this.BTN_AutoSetThreshold.Text = "自動設定";
+            this.BTN_AutoSetThreshold.UseVisualStyleBackColor = true;
+            this.BTN_AutoSetThreshold.Click += new System.EventHandler(this.BTN_AutoSetThreshold_Click);
             // 
             // Combo_DataName
             // 
@@ -280,22 +290,12 @@ namespace DistributedSystem_Main.Views
             this.label4.TabIndex = 1;
             this.label4.Text = "OOC : ";
             // 
-            // BTN_AutoSetThreshold
-            // 
-            this.BTN_AutoSetThreshold.Location = new System.Drawing.Point(107, 132);
-            this.BTN_AutoSetThreshold.Name = "BTN_AutoSetThreshold";
-            this.BTN_AutoSetThreshold.Size = new System.Drawing.Size(115, 32);
-            this.BTN_AutoSetThreshold.TabIndex = 6;
-            this.BTN_AutoSetThreshold.Text = "自動設定";
-            this.BTN_AutoSetThreshold.UseVisualStyleBackColor = true;
-            this.BTN_AutoSetThreshold.Click += new System.EventHandler(this.BTN_AutoSetThreshold_Click);
-            // 
             // Form_SensorThresholdSetting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.ClientSize = new System.Drawing.Size(311, 504);
+            this.ClientSize = new System.Drawing.Size(311, 519);
             this.Controls.Add(this.Panel_MqttSetting);
             this.Controls.Add(this.CheckBox_ApplyToAll);
             this.Controls.Add(this.LAB_SensorType);

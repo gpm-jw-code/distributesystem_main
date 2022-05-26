@@ -78,6 +78,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Systems\cls_ISOChartManager.cs" />
+    <Compile Include="User_Control\cls_Functions.cs" />
+    <Compile Include="User_Control\USC_ISODataChart.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="User_Control\USC_ISODataChart.Designer.cs">
+      <DependentUpon>USC_ISODataChart.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Form_ISOSetting.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Form_ISOSetting.designer.cs">
+      <DependentUpon>Form_ISOSetting.cs</DependentUpon>
+    </Compile>
     <Compile Include="webService\cls_WebSocketModule.cs" />
     <Compile Include="webService\cls_WebsocketSendDataItem.cs" />
     <Compile Include="Systems\cls_SignalsChartManager.cs" />
@@ -123,6 +137,9 @@
     <EmbeddedResource Include="User_Control\PageSwitch.resx">
       <DependentUpon>PageSwitch.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="User_Control\USC_ISODataChart.resx">
+      <DependentUpon>USC_ISODataChart.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -135,6 +152,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Views\Form_ISOSetting.resx">
+      <DependentUpon>Form_ISOSetting.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\Form_SensorThresholdSetting.resx">
       <DependentUpon>Form_SensorThresholdSetting.cs</DependentUpon>
     </EmbeddedResource>
@@ -165,6 +185,10 @@
     <ProjectReference Include="..\cls_PostgreSQL_Tool\cls_PostgreSQL_Tool.csproj">
       <Project>{c5e4e1f9-07c3-4a4d-82b4-d4869d329c96}</Project>
       <Name>cls_PostgreSQL_Tool</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ISOInspection\ISOInspection.csproj">
+      <Project>{32ebcfc5-6213-4ec4-af72-52449205e7a9}</Project>
+      <Name>ISOInspection</Name>
     </ProjectReference>
     <ProjectReference Include="..\SensorDataProcess\SensorDataProcess.csproj">
       <Project>{4cd2ee2a-4f87-40c6-bb99-e4a3ee87d9a9}</Project>

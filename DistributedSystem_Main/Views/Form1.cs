@@ -22,8 +22,11 @@ namespace DistributedSystem_Main
             InitializeComponent();
             Staobj.SystemParam.LoadSystemParam();
             Systems.cls_SignalsChartManager.InitialManager(TablePanel_SignalChart, PageSwitch_Signals);
-
             Systems.cls_SignalsChartManager.SetChartRowColumnNumber(Staobj.SystemParam.ChartSetting.RowNumber, Staobj.SystemParam.ChartSetting.ColumnNumber);
+
+            cls_ISOChartManager.InitialManager(TablePanel_ISOChart, PageSwitch_ISOChart);
+            cls_ISOChartManager.SetChartRowColumnNumber(Staobj.SystemParam.ChartSetting.RowNumber, Staobj.SystemParam.ChartSetting.ColumnNumber);
+
             Systems.cls_MQTTModule.BuildServer(Staobj.SystemParam.Mqtt.MqttServerIP, Staobj.SystemParam.Mqtt.MqttServerPort);
             SensorDataProcess.cls_txtDataSaver.RootPath = Staobj.SystemParam.DataSaveRootPath;
             TabControl_Main.ItemSize = new Size(0, 1);
@@ -56,7 +59,6 @@ namespace DistributedSystem_Main
 
         #endregion
 
-
         #region SideBar
         private void BTN_OpenSystemSetting_Click(object sender, EventArgs e)
         {
@@ -67,23 +69,28 @@ namespace DistributedSystem_Main
         {
             TabControl_Main.SelectedTab = TabPage_Signal;
             Panel_RawData.BackColor = Color.FromArgb(0, 43, 54);
-            panStatus.BackColor = panLog.BackColor = Color.FromArgb(0, 64, 82);
+            Panel_ISO.BackColor = panStatus.BackColor = panLog.BackColor = Color.FromArgb(0, 64, 82);
         }
 
         private void btnLog_Click(object sender, EventArgs e)
         {
             TabControl_Main.SelectedTab = TabPage_Log;
             panLog.BackColor = Color.FromArgb(0, 43, 54);
-            panStatus.BackColor = Panel_RawData.BackColor = Color.FromArgb(0, 64, 82);
+            Panel_ISO.BackColor = panStatus.BackColor = Panel_RawData.BackColor = Color.FromArgb(0, 64, 82);
         }
 
         private void btnStatus_Click(object sender, EventArgs e)
         {
             TabControl_Main.SelectedTab = TabPage_SensorInfo;
             panStatus.BackColor = Color.FromArgb(0, 43, 54);
-            Panel_RawData.BackColor = panLog.BackColor = Color.FromArgb(0, 64, 82);
+            Panel_ISO.BackColor = Panel_RawData.BackColor = panLog.BackColor = Color.FromArgb(0, 64, 82);
         }
-
+        private void BTN_ISO_Click(object sender, EventArgs e)
+        {
+            TabControl_Main.SelectedTab = TabPage_ISO;
+            Panel_ISO.BackColor = Color.FromArgb(0, 43, 54);
+            panStatus.BackColor = Panel_RawData.BackColor = panLog.BackColor = Color.FromArgb(0, 64, 82);
+        }
         private void BTN_Query_Click(object sender, EventArgs e)
         {
             Process[] procs = Process.GetProcessesByName("DataQuery");
@@ -163,6 +170,8 @@ namespace DistributedSystem_Main
             TargetSensorProcessObject.Event_UpdateChartSeries += UpdateSensorChart;
             TargetSensorProcessObject.Event_RefreshSensorInfo += UpdateSensorInfo;
             TargetSensorProcessObject.Event_RefreshSensorThreshold += UpdateSensorThreshold;
+
+            AddNewSensor_ISO(SensorName);
         }
 
         private void UpdateSensorThreshold(string SensorName)
@@ -222,6 +231,90 @@ namespace DistributedSystem_Main
             }
             SetDGVSensorInfoEditEnable(false);
         }
+        private void DGV_SensorInfo_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.ColumnIndex == 5)
+            {
+                int RowNumber = e.RowIndex;
+                string SensorName = DGV_SensorInfo.Rows[e.RowIndex].Cells[3].Value.ToString();
+
+                Views.Form_ISOSetting FormISO = new Views.Form_ISOSetting(Staobj.Dict_SensorProcessObject[SensorName].SensorInfo);
+                FormISO.ShowDialog();
+                return;
+            }
+        }
+        #endregion
+
+        #region ISO Chart
+
+        //private void TXT_RawDataChartFilter_KeyDown(object sender, KeyEventArgs e)
+        //{
+        //    if (e.KeyCode == Keys.Enter)
+        //    {
+        //        Systems.cls_SignalsChartManager.FilterAndSortSensor(TXT_RawDataChartFilter.Text);
+        //        return;
+        //    }
+        //    if (e.KeyCode == Keys.Escape)
+        //    {
+        //        if (TXT_RawDataChartFilter.Text == "")
+        //        {
+        //            return;
+        //        }
+        //        Systems.cls_SignalsChartManager.FilterAndSortSensor("");
+        //        TXT_RawDataChartFilter.Text = "";
+        //    }
+
+        //}
+        private void AddNewSensor_ISO(string SensorName)
+        {
+            if (!Staobj.SystemParam.ISOEnable)
+            {
+                return;
+            }
+            var TargetSensorProcessObject = Staobj.Dict_SensorProcessObject[SensorName];
+            var SensorInfo = TargetSensorProcessObject.SensorInfo;
+
+            cls_ISOChartManager.FilterAndSortSensor();
+
+            TargetSensorProcessObject.Event_UpdateChartSeries += UpdateSensorChart_ISO;
+            TargetSensorProcessObject.Event_RefreshSensorInfo += UpdateSensorInfo_ISO;
+            TargetSensorProcessObject.Event_RefreshSensorISOSetting += UpdateISONumber;
+        }
+
+        private void UpdateISONumber(string SensorName)
+        {
+            if (!Staobj.SystemParam.ISOEnable)
+            {
+                return;
+            }
+            var ISOObject = Staobj.Dict_SensorProcessObject[SensorName].ISOCheckObject;
+            Invoke((MethodInvoker)delegate { cls_ISOChartManager.UpdateSensorISOThreshold(SensorName,ISOObject.ThresholdA,ISOObject.ThresholdB,ISOObject.ThresholdC ); });
+        }
+
+        private void UpdateSensorInfo_ISO(string SensorName)
+        {
+            if (!Staobj.SystemParam.ISOEnable)
+            {
+                return;
+            }
+            Invoke((MethodInvoker)delegate { cls_ISOChartManager.UpdateSensorInfoToChart(SensorName); });
+        }
+
+        private void UpdateSensorChart_ISO(string SensorName, Queue<DateTime> Queue_Time, Dictionary<string, Queue<double>> Dict_DataQueue)
+        {
+            if (!Staobj.SystemParam.ISOEnable)
+            {
+                return;
+            }
+            if (Staobj.Dict_SensorProcessObject[SensorName].ISOCheckDataName == null)
+            {
+                return;
+            }
+            var ISODataQueue = Dict_DataQueue[Staobj.Dict_SensorProcessObject[SensorName].ISOCheckDataName];
+            Invoke((MethodInvoker)delegate { cls_ISOChartManager.UpdateSensorData(SensorName, Queue_Time, ISODataQueue); });
+        }
+
+
         #endregion
 
     }

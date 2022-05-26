@@ -51,6 +51,10 @@
       <Project>{C5E4E1F9-07C3-4A4D-82B4-D4869D329C96}</Project>
       <Name>cls_PostgreSQL_Tool</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ISOInspection\ISOInspection.csproj">
+      <Project>{32ebcfc5-6213-4ec4-af72-52449205e7a9}</Project>
+      <Name>ISOInspection</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
