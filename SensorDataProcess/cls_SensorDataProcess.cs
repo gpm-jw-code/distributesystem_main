@@ -162,9 +162,9 @@ namespace SensorDataProcess
             return CheckResult;
         }
 
-        public Dictionary<string,double> CreateThresholdByTemData()
+        public Dictionary<string, double> CreateThresholdByTemData()
         {
-            while(Queue_TimeLog.Count<100)
+            while (Queue_TimeLog.Count < 100)
             {
                 Thread.Sleep(1000);
             }
@@ -173,8 +173,9 @@ namespace SensorDataProcess
             {
                 string DataName = item.Key;
                 double DataAverage = item.Value.Average();
-                OutputData.Add($"{DataName}_OOC", DataAverage * 1.3);
-                OutputData.Add($"{DataName}_OOS", DataAverage * 1.5);
+                double DataDeviation = clsMathTool.standardDeviation(item.Value);
+                OutputData.Add($"{DataName}_OOC", DataAverage + 3 * DataDeviation);
+                OutputData.Add($"{DataName}_OOS", DataAverage + 2.5 * DataDeviation);
             }
             return OutputData;
         }
@@ -204,6 +205,28 @@ namespace SensorDataProcess
 
         }
     }
+
+    public class clsMathTool
+    {
+        /// <summary>
+        /// 計算序列數據的標準差 
+        /// </summary>
+        /// <param name="sequence"></param>
+        /// <returns></returns>
+        public static double standardDeviation(IEnumerable<double> sequence)
+        {
+            double result = 0;
+
+            if (sequence.Any())
+            {
+                double average = sequence.Average();
+                double sum = sequence.Sum(d => Math.Pow(d - average, 2));
+                result = Math.Sqrt((sum) / sequence.Count());
+            }
+            return result;
+        }
+    }
+
     public class cls_HourlyData
     {
         private Dictionary<string, List<double>> Dict_HourlyData = new Dictionary<string, List<double>>();
