@@ -22,11 +22,11 @@ namespace DistributedSystem_Main
             InitializeComponent();
             Staobj.SystemParam.LoadSystemParam();
             Systems.cls_SignalsChartManager.InitialManager(TablePanel_SignalChart, PageSwitch_Signals);
-            
+
             Systems.cls_SignalsChartManager.SetChartRowColumnNumber(Staobj.SystemParam.ChartSetting.RowNumber, Staobj.SystemParam.ChartSetting.ColumnNumber);
             Systems.cls_MQTTModule.BuildServer(Staobj.SystemParam.Mqtt.MqttServerIP, Staobj.SystemParam.Mqtt.MqttServerPort);
             SensorDataProcess.cls_txtDataSaver.RootPath = Staobj.SystemParam.DataSaveRootPath;
-            TabControl_Main.ItemSize = new Size(0,1);
+            TabControl_Main.ItemSize = new Size(0, 1);
             foreach (TabPage item in TabControl_Main.TabPages)
             {
                 item.Text = "";
@@ -87,19 +87,19 @@ namespace DistributedSystem_Main
         private void BTN_Query_Click(object sender, EventArgs e)
         {
             Process[] procs = Process.GetProcessesByName("DataQuery");
-            if ( procs.Length != 0)
+            if (procs.Length != 0)
             {
                 MessageBox.Show("DataQuery已開啟");
                 return;
             }
 
-            string dataQueryExeFilename = Path.Combine( Directory.GetCurrentDirectory() ,"DataQuery.exe");
-            if ( !File.Exists(dataQueryExeFilename))
+            string dataQueryExeFilename = Path.Combine(Directory.GetCurrentDirectory(), "DataQuery.exe");
+            if (!File.Exists(dataQueryExeFilename))
             {
-                MessageBox.Show("找不到DataQuery程式"); 
+                MessageBox.Show("找不到DataQuery程式");
                 return;
             }
-           
+
 
             Task.Run(() =>
             {
@@ -129,7 +129,7 @@ namespace DistributedSystem_Main
 
         private void TXT_RawDataChartFilter_KeyDown(object sender, KeyEventArgs e)
         {
-      if (e.KeyCode == Keys.Enter)
+            if (e.KeyCode == Keys.Enter)
             {
                 Systems.cls_SignalsChartManager.FilterAndSortSensor(TXT_RawDataChartFilter.Text);
                 return;
@@ -143,7 +143,7 @@ namespace DistributedSystem_Main
                 Systems.cls_SignalsChartManager.FilterAndSortSensor("");
                 TXT_RawDataChartFilter.Text = "";
             }
-            
+
         }
         private void AddNewSensorToUI(string SensorName)
         {
@@ -167,7 +167,7 @@ namespace DistributedSystem_Main
 
         private void UpdateSensorThreshold(string SensorName)
         {
-            Invoke((MethodInvoker)delegate { cls_SignalsChartManager.UpdateThresholdToChart(SensorName,Staobj.Dict_SensorProcessObject[SensorName].Dict_DataThreshold); });
+            Invoke((MethodInvoker)delegate { cls_SignalsChartManager.UpdateThresholdToChart(SensorName, Staobj.Dict_SensorProcessObject[SensorName].Dict_DataThreshold); });
         }
 
         private void UpdateSensorInfo(string SensorName)
@@ -197,7 +197,7 @@ namespace DistributedSystem_Main
             TargetRow.Cells[0].Style.BackColor = Staobj.Dict_SensorProcessObject[SensorName].Status.ConnecStatus ? Color.Lime : Color.Red;
         }
         private void BTN_EditSensorInfo_Click(object sender, EventArgs e)
-        {   
+        {
             SetDGVSensorInfoEditEnable(true);
         }
 

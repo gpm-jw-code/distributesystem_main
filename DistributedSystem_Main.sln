@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPIService", "WebAPIServ
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cls_PostgreSQL_Tool", "cls_PostgreSQL_Tool\cls_PostgreSQL_Tool.csproj", "{C5E4E1F9-07C3-4A4D-82B4-D4869D329C96}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ISOInspection", "ISOInspection\ISOInspection.csproj", "{32EBCFC5-6213-4EC4-AF72-52449205E7A9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{C5E4E1F9-07C3-4A4D-82B4-D4869D329C96}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C5E4E1F9-07C3-4A4D-82B4-D4869D329C96}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C5E4E1F9-07C3-4A4D-82B4-D4869D329C96}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32EBCFC5-6213-4EC4-AF72-52449205E7A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32EBCFC5-6213-4EC4-AF72-52449205E7A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32EBCFC5-6213-4EC4-AF72-52449205E7A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32EBCFC5-6213-4EC4-AF72-52449205E7A9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
