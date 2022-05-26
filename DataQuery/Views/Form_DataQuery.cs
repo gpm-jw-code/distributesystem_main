@@ -237,6 +237,9 @@ namespace DataQuery
         private void BTN_ResizeMultiForm_Click(object sender, EventArgs e)
         {
             int FormCount = staobj.QueryParam.Dict_SensorName_Chart.Count;
+            if (FormCount == 0) //沒有From開啟的時候 return跳出不處理, 
+                return;
+
             int ColumnCount = (int)Math.Ceiling(Math.Sqrt(FormCount));
             int RowCount = ColumnCount * (ColumnCount - 1) >= FormCount ? (ColumnCount-1) : ColumnCount ;
 
