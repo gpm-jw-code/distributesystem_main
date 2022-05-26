@@ -54,10 +54,32 @@ namespace DistributedSystem_Main.WebService
         private object QueryRawData(string strStartTime, string strEndTime, string EdgeName, string SenosorID)
         {
             string SensorName = $"{ EdgeName }-{ SenosorID}";
-            SensorDataProcess.cls_PostgreSQLHandler SqlHandler = new SensorDataProcess.cls_PostgreSQLHandler(EdgeName, SenosorID);
-            var ReturnData = SqlHandler.GetIntervalRawData(DateTime.Parse(strStartTime), DateTime.Parse(strEndTime), "timelog");
-            ReturnData.DataUnit = Staobj.Dict_SensorProcessObject[SensorName].SensorInfo.DataUnit;
-            return ReturnData;
+            Dictionary<string, object> SensorDatas = new Dictionary<string, object>();
+            if (SenosorID == "all_all")
+            {
+                foreach (cls_SensorDataProcess item in Staobj.Dict_SensorProcessObject.Values)
+                {
+                    var sensorID = item.SensorInfo.SensorNameWithOutEdgeName;
+                    SensorDataProcess.cls_PostgreSQLHandler SqlHandler = new SensorDataProcess.cls_PostgreSQLHandler(EdgeName, sensorID);
+                    var ReturnData = SqlHandler.GetIntervalRawData(DateTime.Parse(strStartTime), DateTime.Parse(strEndTime), "timelog");
+                    if (Staobj.Dict_SensorProcessObject.TryGetValue(item.SensorInfo.SensorName, out cls_SensorDataProcess sensorDataProcess))
+                    {
+                        ReturnData.DataUnit = sensorDataProcess.SensorInfo.DataUnit;
+                    }
+                    SensorDatas.Add(sensorID, ReturnData);
+                }
+                return SensorDatas;
+            }
+            else
+            {
+                SensorDataProcess.cls_PostgreSQLHandler SqlHandler = new SensorDataProcess.cls_PostgreSQLHandler(EdgeName, SenosorID);
+                var ReturnData = SqlHandler.GetIntervalRawData(DateTime.Parse(strStartTime), DateTime.Parse(strEndTime), "timelog");
+                if (Staobj.Dict_SensorProcessObject.TryGetValue(SensorName, out cls_SensorDataProcess sensorDataProcess))
+                {
+                    ReturnData.DataUnit = sensorDataProcess.SensorInfo.DataUnit;
+                }
+                return ReturnData;
+            }
         }
     }
 
@@ -126,13 +148,26 @@ namespace DistributedSystem_Main.WebService
         }
         private void ResetAlarm(string eqgeName, string eqid, string field)
         {
-
-            cls_SensorDataProcess sensor = Staobj.Dict_SensorProcessObject.Values.First(s => s.SensorInfo.EdgeName == eqgeName && s.SensorInfo.IP == eqid && s.SensorInfo.SensorType == field);
-            if (sensor == null) return;
-
-            if (sensor.Dict_OutOfItemStates.TryGetValue(field, out OutOfState state))
+            if (eqid == "all" && field == "all")
             {
-                state.RESET();
+                foreach (cls_SensorDataProcess item in Staobj.Dict_SensorProcessObject.Values)
+                {
+                    foreach (OutOfState state in item.Dict_OutOfItemStates.Values)
+                    {
+                        state.RESET();
+                    }
+                }
+            }
+            else
+            {
+
+                cls_SensorDataProcess sensor = Staobj.Dict_SensorProcessObject.Values.First(s => s.SensorInfo.EdgeName == eqgeName && s.SensorInfo.IP == eqid && s.SensorInfo.SensorType == field);
+                if (sensor == null) return;
+
+                if (sensor.Dict_OutOfItemStates.TryGetValue(field, out OutOfState state))
+                {
+                    state.RESET();
+                }
             }
 
         }
