@@ -234,7 +234,29 @@ namespace DataQuery
                     break;
             }
         }
+        private void BTN_ResizeMultiForm_Click(object sender, EventArgs e)
+        {
+            int FormCount = staobj.QueryParam.Dict_SensorName_Chart.Count;
+            int ColumnCount = (int)Math.Ceiling(Math.Sqrt(FormCount));
+            int RowCount = ColumnCount * (ColumnCount - 1) >= FormCount ? (ColumnCount-1) : ColumnCount ;
+
+            int FormWidth = SplitContainer_Sensor_Chart.Panel2.Width / ColumnCount;
+            int FormHeight= SplitContainer_Sensor_Chart.Panel2.Height / RowCount;
+            int ItemNum = 0;
+
+            foreach (var item in staobj.QueryParam.Dict_SensorName_Chart)
+            {
+                int RowNumber = ItemNum / ColumnCount;
+                int ColumnNumber = ItemNum % ColumnCount;
+                Point StartPosition = new Point(ColumnNumber * FormWidth, RowNumber * FormHeight);
+                item.Value.Location = StartPosition;
+                item.Value.Size = new Size(FormWidth, FormHeight);
+
+                ItemNum += 1;
+            }
+        }
         #endregion
+
 
     }
 }

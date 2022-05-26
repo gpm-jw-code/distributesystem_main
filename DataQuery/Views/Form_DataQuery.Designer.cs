@@ -47,6 +47,7 @@ namespace DataQuery
             this.LAB_QueryAMonth = new System.Windows.Forms.Label();
             this.LAB_QueryAWeek = new System.Windows.Forms.Label();
             this.LAB_QueryADay = new System.Windows.Forms.Label();
+            this.BTN_ResizeMultiForm = new System.Windows.Forms.Button();
             this.Panel_Data.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SplitContainer_Sensor_Chart)).BeginInit();
             this.SplitContainer_Sensor_Chart.Panel1.SuspendLayout();
@@ -94,6 +95,7 @@ namespace DataQuery
             // 
             // Panel_Functions
             // 
+            this.Panel_Functions.Controls.Add(this.BTN_ResizeMultiForm);
             this.Panel_Functions.Controls.Add(this.LAB_ShowMulti);
             this.Panel_Functions.Controls.Add(this.LAB_ShowSingle);
             this.Panel_Functions.Controls.Add(this.Panel_CustomQueryTime);
@@ -114,7 +116,7 @@ namespace DataQuery
             this.LAB_ShowMulti.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.LAB_ShowMulti.AutoSize = true;
             this.LAB_ShowMulti.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.LAB_ShowMulti.Location = new System.Drawing.Point(1149, 32);
+            this.LAB_ShowMulti.Location = new System.Drawing.Point(1119, 32);
             this.LAB_ShowMulti.Name = "LAB_ShowMulti";
             this.LAB_ShowMulti.Size = new System.Drawing.Size(57, 20);
             this.LAB_ShowMulti.TabIndex = 5;
@@ -127,7 +129,7 @@ namespace DataQuery
             this.LAB_ShowSingle.AutoSize = true;
             this.LAB_ShowSingle.Cursor = System.Windows.Forms.Cursors.Hand;
             this.LAB_ShowSingle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(131)))), ((int)(((byte)(222)))), ((int)(((byte)(220)))));
-            this.LAB_ShowSingle.Location = new System.Drawing.Point(1067, 32);
+            this.LAB_ShowSingle.Location = new System.Drawing.Point(1056, 32);
             this.LAB_ShowSingle.Name = "LAB_ShowSingle";
             this.LAB_ShowSingle.Size = new System.Drawing.Size(57, 20);
             this.LAB_ShowSingle.TabIndex = 5;
@@ -276,6 +278,18 @@ namespace DataQuery
             this.LAB_QueryADay.Text = "1天";
             this.LAB_QueryADay.Click += new System.EventHandler(this.LAB_QueryTime_Click);
             // 
+            // BTN_ResizeMultiForm
+            // 
+            this.BTN_ResizeMultiForm.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.BTN_ResizeMultiForm.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BTN_ResizeMultiForm.Location = new System.Drawing.Point(1182, 28);
+            this.BTN_ResizeMultiForm.Name = "BTN_ResizeMultiForm";
+            this.BTN_ResizeMultiForm.Size = new System.Drawing.Size(53, 28);
+            this.BTN_ResizeMultiForm.TabIndex = 6;
+            this.BTN_ResizeMultiForm.Text = "排序";
+            this.BTN_ResizeMultiForm.UseVisualStyleBackColor = true;
+            this.BTN_ResizeMultiForm.Click += new System.EventHandler(this.BTN_ResizeMultiForm_Click);
+            // 
             // Form_DataQuery
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
@@ -322,6 +336,7 @@ namespace DataQuery
         private System.Windows.Forms.Label LAB_QueryAMonth;
         private System.Windows.Forms.Label LAB_QueryAWeek;
         private System.Windows.Forms.Label LAB_QueryADay;
+        private System.Windows.Forms.Button BTN_ResizeMultiForm;
     }
 }
 

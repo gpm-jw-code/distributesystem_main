@@ -26,7 +26,16 @@ namespace DataQuery.Views
             ImportSensorInfo(NewSensorInfo);
             ChartForShow.Series.Clear();
             this.FormClosed += CloseMultiModeQueryChart;
-            this.SensorInfo = NewSensorInfo; 
+            this.SensorInfo = NewSensorInfo;
+            TimeLogAnnotation = new RectangleAnnotation()
+            {
+                BackColor = Color.Black,
+                LineColor = Color.Aqua,
+                LineWidth = 2,
+                ForeColor = Color.White,
+                Visible = true
+            };
+            ChartForShow.Annotations.Add(TimeLogAnnotation);
         }
 
         private void CloseMultiModeQueryChart(object sender, FormClosedEventArgs e)
@@ -42,6 +51,15 @@ namespace DataQuery.Views
             InitializeComponent();
             ChartForShow.Series.Clear();
             this.FormClosing += CancelClosingEvent;
+            TimeLogAnnotation = new RectangleAnnotation()
+            {
+                BackColor = Color.Black,
+                LineColor = Color.Aqua,
+                LineWidth = 2,
+                ForeColor = Color.White,
+                Visible = true
+            };
+            ChartForShow.Annotations.Add(TimeLogAnnotation);
         }
 
         private void CancelClosingEvent(object sender, FormClosingEventArgs e)
@@ -51,20 +69,24 @@ namespace DataQuery.Views
         }
 
         Dictionary<string, Series> Dict_SensorSeries = new Dictionary<string, Series>();
+        Dictionary<string, RectangleAnnotation> Dict_SensorAnnotation = new Dictionary<string, RectangleAnnotation>();
+        RectangleAnnotation TimeLogAnnotation ;
 
         public void ImportSensorInfo(SensorDataProcess.SensorInfo SensorInfo)
         {
             this.Text = $"{SensorInfo.EdgeName}-{SensorInfo.EQName}-{SensorInfo.UnitName}-{SensorInfo.SensorNameWithOutEdgeName}";
-            LAB_SensorName.Text= $"{SensorInfo.EdgeName}-{SensorInfo.EQName}-{SensorInfo.UnitName}-{SensorInfo.SensorNameWithOutEdgeName}";
+            LAB_SensorName.Text = $"{SensorInfo.EdgeName}-{SensorInfo.EQName}-{SensorInfo.UnitName}-{SensorInfo.SensorNameWithOutEdgeName}";
         }
 
         public void ImportSensorDataSeries(List<DateTime> TimeLogSeries, Dictionary<string, List<double>> Dict_DataSeries)
         {
             int IntForColor = 0;
-                foreach (var item in Dict_SensorSeries)
-                {
-                    item.Value.Enabled = false;
-                }
+            TimeLogAnnotation.Visible = false;
+            foreach (var item in Dict_SensorSeries)
+            {
+                item.Value.Enabled = false;
+                Dict_SensorAnnotation[item.Key].Visible = false;
+            }
             foreach (var item in Dict_DataSeries)
             {
                 IntForColor += 1;
@@ -93,7 +115,11 @@ namespace DataQuery.Views
                 XValueType = ChartValueType.DateTime,
                 YValueType = ChartValueType.Double
             };
+            RectangleAnnotation NewSeriesAnnotation = new RectangleAnnotation() { BackColor = Color.Black, LineColor = Color.White, LineWidth = 2, ForeColor = SeriesColor, Visible = true };
+            ChartForShow.Annotations.Add(NewSeriesAnnotation);
+
             Dict_SensorSeries.Add(DataName, NewDataSeries);
+            Dict_SensorAnnotation.Add(DataName, NewSeriesAnnotation);
 
             ChartForShow.Series.Add(NewDataSeries);
         }
@@ -133,6 +159,29 @@ namespace DataQuery.Views
         private void Form_DataCharts_MouseDown(object sender, MouseEventArgs e)
         {
             Event_FormClicked?.Invoke(SensorInfo.SensorName);
+        }
+
+        private void ChartForShow_MouseClick(object sender, MouseEventArgs e)
+        {
+            var Position_X = ChartForShow.ChartAreas[0].AxisX.PixelPositionToValue(e.X);
+            DateTime ClickedTime = DateTime.FromOADate(Position_X);
+            TimeLogAnnotation.Text = ClickedTime.ToString("yyyy/MM/dd HH:mm:ss");
+
+            var EnableSeries = ChartForShow.Series.Where(item => item.Enabled == true).ToList();
+            var List_SeriesName = Dict_SensorSeries.Where(item => item.Value.Enabled == true).Select(item => item.Key).ToList();
+
+            var DistanceArray = EnableSeries[0].Points.Select(point => Math.Abs(point.XValue - Position_X)).ToList();
+            int Min_Index = DistanceArray.IndexOf(DistanceArray.Min());
+
+            TimeLogAnnotation.AnchorDataPoint = Dict_SensorSeries[List_SeriesName[0]].Points[Min_Index];
+            TimeLogAnnotation.AnchorY = 0;
+            TimeLogAnnotation.Visible = true;
+            foreach (var item in List_SeriesName)
+            {
+                Dict_SensorAnnotation[item].Visible = true;
+                Dict_SensorAnnotation[item].Text = Dict_SensorSeries[item].Points[Min_Index].YValues[0].ToString("F5");
+                Dict_SensorAnnotation[item].AnchorDataPoint = Dict_SensorSeries[item].Points[Min_Index];
+            }
         }
     }
 }
