@@ -36,7 +36,6 @@ namespace DistributedSystem_Main.Views
             this.LAB_Condition1 = new System.Windows.Forms.Label();
             this.COMBO_Condition2 = new System.Windows.Forms.ComboBox();
             this.LAB_Condition2 = new System.Windows.Forms.Label();
-            this.CheckBox_SetThresholdToFilterSensor = new System.Windows.Forms.CheckBox();
             this.CheckBox_SaveThresholdToAllSensor = new System.Windows.Forms.CheckBox();
             this.LAB_SensorType = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -46,12 +45,14 @@ namespace DistributedSystem_Main.Views
             this.LAB_EQName = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
+            this.Combo_DataName = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // COMBO_ISONumber
             // 
             this.COMBO_ISONumber.FormattingEnabled = true;
-            this.COMBO_ISONumber.Location = new System.Drawing.Point(170, 234);
+            this.COMBO_ISONumber.Location = new System.Drawing.Point(194, 214);
             this.COMBO_ISONumber.Margin = new System.Windows.Forms.Padding(4);
             this.COMBO_ISONumber.Name = "COMBO_ISONumber";
             this.COMBO_ISONumber.Size = new System.Drawing.Size(141, 25);
@@ -63,7 +64,7 @@ namespace DistributedSystem_Main.Views
             this.LAB_DataType.AutoSize = true;
             this.LAB_DataType.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Bold);
             this.LAB_DataType.ForeColor = System.Drawing.Color.Black;
-            this.LAB_DataType.Location = new System.Drawing.Point(39, 236);
+            this.LAB_DataType.Location = new System.Drawing.Point(39, 214);
             this.LAB_DataType.Name = "LAB_DataType";
             this.LAB_DataType.Size = new System.Drawing.Size(94, 21);
             this.LAB_DataType.TabIndex = 2;
@@ -85,7 +86,7 @@ namespace DistributedSystem_Main.Views
             // COMBO_Condition1
             // 
             this.COMBO_Condition1.FormattingEnabled = true;
-            this.COMBO_Condition1.Location = new System.Drawing.Point(170, 278);
+            this.COMBO_Condition1.Location = new System.Drawing.Point(194, 258);
             this.COMBO_Condition1.Margin = new System.Windows.Forms.Padding(4);
             this.COMBO_Condition1.Name = "COMBO_Condition1";
             this.COMBO_Condition1.Size = new System.Drawing.Size(141, 25);
@@ -96,7 +97,7 @@ namespace DistributedSystem_Main.Views
             this.LAB_Condition1.AutoSize = true;
             this.LAB_Condition1.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Bold);
             this.LAB_Condition1.ForeColor = System.Drawing.Color.Black;
-            this.LAB_Condition1.Location = new System.Drawing.Point(39, 280);
+            this.LAB_Condition1.Location = new System.Drawing.Point(39, 258);
             this.LAB_Condition1.Name = "LAB_Condition1";
             this.LAB_Condition1.Size = new System.Drawing.Size(107, 21);
             this.LAB_Condition1.TabIndex = 2;
@@ -105,7 +106,7 @@ namespace DistributedSystem_Main.Views
             // COMBO_Condition2
             // 
             this.COMBO_Condition2.FormattingEnabled = true;
-            this.COMBO_Condition2.Location = new System.Drawing.Point(170, 322);
+            this.COMBO_Condition2.Location = new System.Drawing.Point(194, 302);
             this.COMBO_Condition2.Margin = new System.Windows.Forms.Padding(4);
             this.COMBO_Condition2.Name = "COMBO_Condition2";
             this.COMBO_Condition2.Size = new System.Drawing.Size(141, 25);
@@ -116,23 +117,11 @@ namespace DistributedSystem_Main.Views
             this.LAB_Condition2.AutoSize = true;
             this.LAB_Condition2.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Bold);
             this.LAB_Condition2.ForeColor = System.Drawing.Color.Black;
-            this.LAB_Condition2.Location = new System.Drawing.Point(39, 324);
+            this.LAB_Condition2.Location = new System.Drawing.Point(39, 302);
             this.LAB_Condition2.Name = "LAB_Condition2";
             this.LAB_Condition2.Size = new System.Drawing.Size(107, 21);
             this.LAB_Condition2.TabIndex = 2;
             this.LAB_Condition2.Text = "Condition 2 :";
-            // 
-            // CheckBox_SetThresholdToFilterSensor
-            // 
-            this.CheckBox_SetThresholdToFilterSensor.AutoSize = true;
-            this.CheckBox_SetThresholdToFilterSensor.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.CheckBox_SetThresholdToFilterSensor.ForeColor = System.Drawing.Color.Black;
-            this.CheckBox_SetThresholdToFilterSensor.Location = new System.Drawing.Point(160, 367);
-            this.CheckBox_SetThresholdToFilterSensor.Name = "CheckBox_SetThresholdToFilterSensor";
-            this.CheckBox_SetThresholdToFilterSensor.Size = new System.Drawing.Size(160, 21);
-            this.CheckBox_SetThresholdToFilterSensor.TabIndex = 25;
-            this.CheckBox_SetThresholdToFilterSensor.Text = "套用至篩選出的Sensor";
-            this.CheckBox_SetThresholdToFilterSensor.UseVisualStyleBackColor = true;
             // 
             // CheckBox_SaveThresholdToAllSensor
             // 
@@ -238,6 +227,26 @@ namespace DistributedSystem_Main.Views
             this.label6.Text = "EQ : ";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // Combo_DataName
+            // 
+            this.Combo_DataName.FormattingEnabled = true;
+            this.Combo_DataName.Location = new System.Drawing.Point(194, 345);
+            this.Combo_DataName.Margin = new System.Windows.Forms.Padding(4);
+            this.Combo_DataName.Name = "Combo_DataName";
+            this.Combo_DataName.Size = new System.Drawing.Size(141, 25);
+            this.Combo_DataName.TabIndex = 0;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Bold);
+            this.label2.ForeColor = System.Drawing.Color.Black;
+            this.label2.Location = new System.Drawing.Point(39, 345);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(104, 21);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Data Name :";
+            // 
             // Form_ISOSetting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
@@ -252,12 +261,13 @@ namespace DistributedSystem_Main.Views
             this.Controls.Add(this.LAB_EQName);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.CheckBox_SetThresholdToFilterSensor);
             this.Controls.Add(this.CheckBox_SaveThresholdToAllSensor);
             this.Controls.Add(this.BTN_SaveISOParameters);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.LAB_Condition2);
             this.Controls.Add(this.LAB_Condition1);
             this.Controls.Add(this.LAB_DataType);
+            this.Controls.Add(this.Combo_DataName);
             this.Controls.Add(this.COMBO_Condition2);
             this.Controls.Add(this.COMBO_Condition1);
             this.Controls.Add(this.COMBO_ISONumber);
@@ -282,7 +292,6 @@ namespace DistributedSystem_Main.Views
         private System.Windows.Forms.Label LAB_Condition1;
         private System.Windows.Forms.ComboBox COMBO_Condition2;
         private System.Windows.Forms.Label LAB_Condition2;
-        private System.Windows.Forms.CheckBox CheckBox_SetThresholdToFilterSensor;
         private System.Windows.Forms.CheckBox CheckBox_SaveThresholdToAllSensor;
         private System.Windows.Forms.Label LAB_SensorType;
         private System.Windows.Forms.Label label1;
@@ -292,5 +301,7 @@ namespace DistributedSystem_Main.Views
         private System.Windows.Forms.Label LAB_EQName;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.ComboBox Combo_DataName;
+        private System.Windows.Forms.Label label2;
     }
 }

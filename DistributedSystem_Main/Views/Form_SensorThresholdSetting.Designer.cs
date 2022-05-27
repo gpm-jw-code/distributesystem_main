@@ -57,7 +57,7 @@ namespace DistributedSystem_Main.Views
             // 
             this.CheckBox_ApplyToAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.CheckBox_ApplyToAll.AutoSize = true;
-            this.CheckBox_ApplyToAll.Location = new System.Drawing.Point(115, 420);
+            this.CheckBox_ApplyToAll.Location = new System.Drawing.Point(115, 389);
             this.CheckBox_ApplyToAll.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBox_ApplyToAll.Name = "CheckBox_ApplyToAll";
             this.CheckBox_ApplyToAll.Size = new System.Drawing.Size(172, 21);
@@ -137,7 +137,7 @@ namespace DistributedSystem_Main.Views
             // BTN_SaveToFile
             // 
             this.BTN_SaveToFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.BTN_SaveToFile.Location = new System.Drawing.Point(90, 449);
+            this.BTN_SaveToFile.Location = new System.Drawing.Point(90, 418);
             this.BTN_SaveToFile.Margin = new System.Windows.Forms.Padding(4);
             this.BTN_SaveToFile.Name = "BTN_SaveToFile";
             this.BTN_SaveToFile.Size = new System.Drawing.Size(108, 57);
@@ -295,7 +295,7 @@ namespace DistributedSystem_Main.Views
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.ClientSize = new System.Drawing.Size(311, 519);
+            this.ClientSize = new System.Drawing.Size(311, 488);
             this.Controls.Add(this.Panel_MqttSetting);
             this.Controls.Add(this.CheckBox_ApplyToAll);
             this.Controls.Add(this.LAB_SensorType);

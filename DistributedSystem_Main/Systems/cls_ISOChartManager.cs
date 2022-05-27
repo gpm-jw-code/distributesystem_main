@@ -24,6 +24,7 @@ namespace DistributedSystem_Main.Systems
         {
             ParentControls = ParentControl;
             SignalPageSwitch = PageSwitch;
+            SignalPageSwitch.Event_PageChange += RefreshShowChart;
         }
 
         public static void SetChartRowColumnNumber(int RowNumber, int ColumnNumber)
@@ -66,7 +67,7 @@ namespace DistributedSystem_Main.Systems
             OriginFilterString = NewFilterString ?? OriginFilterString;
             OriginSortType = NewSortType == SortType.None ? OriginSortType : NewSortType;
 
-            var List_SensorInfo = Staobj.Dict_SensorProcessObject.Select(item => item.Value.SensorInfo);
+            var List_SensorInfo = Staobj.Dict_SensorProcessObject.Where(item=>item.Value.ISOCheckObject!=null).Select(item => item.Value.SensorInfo);
 
             var List_FilterSensorInfos
                 = List_SensorInfo.Where(item => item.SensorName.ToUpper().Contains(OriginFilterString.ToUpper())

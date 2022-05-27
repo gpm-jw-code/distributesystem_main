@@ -36,7 +36,6 @@ namespace SensorDataProcess
         public Dictionary<string, double> Dict_DataThreshold = new Dictionary<string, double>();
         public Dictionary<string, OutOfState> Dict_OutOfItemStates = new Dictionary<string, OutOfState>();
         public ISObase ISOCheckObject;
-        public string ISOCheckDataName;
 
         private Dictionary<string, Queue<double>> Dict_SensorDataSeries = new Dictionary<string, Queue<double>>();
         private cls_HourlyData HourlyData;
@@ -109,9 +108,9 @@ namespace SensorDataProcess
             var CheckResult = CheckThreshold(Dict_NewData, TimeLog);
             if (ISOCheckObject != null)
             {
-                if (ISOCheckDataName!=null && Dict_NewData.ContainsKey(ISOCheckDataName))
+                if (SensorInfo.ISOCheckDataName!=null && Dict_NewData.ContainsKey(SensorInfo.ISOCheckDataName))
                 {
-                    var ISOCheckResult = ISOCheckObject.CalculateResult(Dict_NewData[ISOCheckDataName]);
+                    var ISOCheckResult = ISOCheckObject.CalculateResult(Dict_NewData[SensorInfo.ISOCheckDataName]);
                     TxtDataSaver.WriteISOResult(ISOCheckResult, SensorInfo.ISONumber, TimeLog);
                 }
             }
@@ -358,6 +357,7 @@ namespace SensorDataProcess
             }
         }
         public Enum_ISOInspectionNumber ISONumber = Enum_ISOInspectionNumber.None;
+        public string ISOCheckDataName;
     }
 
     public class SensorStatus

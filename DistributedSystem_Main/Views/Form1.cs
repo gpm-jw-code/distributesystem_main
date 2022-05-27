@@ -237,9 +237,20 @@ namespace DistributedSystem_Main
             {
                 int RowNumber = e.RowIndex;
                 string SensorName = DGV_SensorInfo.Rows[e.RowIndex].Cells[3].Value.ToString();
+                var SensorProcessObject = Staobj.Dict_SensorProcessObject[SensorName];
 
-                Views.Form_ISOSetting FormISO = new Views.Form_ISOSetting(Staobj.Dict_SensorProcessObject[SensorName].SensorInfo);
-                FormISO.ShowDialog();
+                Views.Form_ISOSetting FormISO = new Views.Form_ISOSetting(SensorProcessObject);
+                if (FormISO.ShowDialog() == DialogResult.OK)
+                {
+                    foreach (var item in Staobj.Dict_SensorProcessObject)
+                    {
+                        if (item.Value.SensorInfo.ISOCheckDataName == null)
+                            continue;
+                        if (item.Value.Event_RefreshSensorISOSetting != null)
+                            continue;
+                        AddNewSensor_ISO(item.Key);
+                    }
+                } 
                 return;
             }
         }
@@ -274,6 +285,11 @@ namespace DistributedSystem_Main
             var TargetSensorProcessObject = Staobj.Dict_SensorProcessObject[SensorName];
             var SensorInfo = TargetSensorProcessObject.SensorInfo;
 
+            if (TargetSensorProcessObject.ISOCheckObject == null)
+            {
+                return;
+            }
+
             cls_ISOChartManager.FilterAndSortSensor();
 
             TargetSensorProcessObject.Event_UpdateChartSeries += UpdateSensorChart_ISO;
@@ -306,11 +322,15 @@ namespace DistributedSystem_Main
             {
                 return;
             }
-            if (Staobj.Dict_SensorProcessObject[SensorName].ISOCheckDataName == null)
+            if (Staobj.Dict_SensorProcessObject[SensorName].SensorInfo.ISOCheckDataName == null)
             {
                 return;
             }
-            var ISODataQueue = Dict_DataQueue[Staobj.Dict_SensorProcessObject[SensorName].ISOCheckDataName];
+            if (!Dict_DataQueue.ContainsKey(Staobj.Dict_SensorProcessObject[SensorName].SensorInfo.ISOCheckDataName))
+            {
+                return;
+            }
+            var ISODataQueue = Dict_DataQueue[Staobj.Dict_SensorProcessObject[SensorName].SensorInfo.ISOCheckDataName];
             Invoke((MethodInvoker)delegate { cls_ISOChartManager.UpdateSensorData(SensorName, Queue_Time, ISODataQueue); });
         }
 

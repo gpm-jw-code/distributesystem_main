@@ -15,22 +15,29 @@ namespace DistributedSystem_Main.Views
     public partial class Form_ISOSetting : Form
     {
         private string SensorName = null;
+        SensorDataProcess.cls_SensorDataProcess SensorProcessObject;
 
-        private string SensorType = null;
-
-        public Form_ISOSetting(SensorDataProcess.SensorInfo SensorInfo)
+        public Form_ISOSetting(SensorDataProcess.cls_SensorDataProcess SensorProcessObject)
         {
             InitializeComponent();
             COMBO_ISONumber.Items.Add(Enum_ISOInspectionNumber.ISO10816_1);
             COMBO_ISONumber.Items.Add(Enum_ISOInspectionNumber.ISO10816_3);
             COMBO_ISONumber.Items.Add(Enum_ISOInspectionNumber.ISO10816_8);
 
+            this.SensorProcessObject = SensorProcessObject;
+            var SensorInfo = SensorProcessObject.SensorInfo;
+
             this.LAB_SensorIP.Text = SensorInfo.SensorName;
             this.LAB_EQName.Text = SensorInfo.EQName;
             this.LAB_UnitName.Text = SensorInfo.UnitName;
             this.LAB_SensorType.Text = SensorInfo.SensorType;
             this.SensorName = SensorInfo.SensorName;
-            this.SensorType = SensorInfo.SensorType;
+            Combo_DataName.Items.Clear();
+            Combo_DataName.Items.AddRange(SensorProcessObject.List_DataNames.ToArray());
+            if (SensorProcessObject.List_DataNames.Count == 1)
+            {
+                Combo_DataName.Text = SensorProcessObject.List_DataNames[0];
+            }
         }
 
         private void COMBO_ISONumber_SelectedIndexChanged(object sender, EventArgs e)
@@ -80,12 +87,6 @@ namespace DistributedSystem_Main.Views
             {
                 List_SensorName = Staobj.Dict_SensorProcessObject.Keys.ToList();
             }
-            else if (CheckBox_SetThresholdToFilterSensor.Checked)
-            {
-                //List_SensorName = (from item in Systems.Staobj.Dict_SensorProcessObject
-                //                   where Staobj.ISOPageParameters.List_FilterSensorName.Contains(item.Key)
-                //                         select item.Key).ToList();
-            }
             else
             {
                 List_SensorName.Add(SensorName);
@@ -114,7 +115,7 @@ namespace DistributedSystem_Main.Views
                 }
                 if (Staobj.Dict_SensorProcessObject[EachSensorName].List_DataNames.Count == 1)
                 {
-                    Staobj.Dict_SensorProcessObject[EachSensorName].ISOCheckDataName = Staobj.Dict_SensorProcessObject[EachSensorName].List_DataNames[0];
+                    Staobj.Dict_SensorProcessObject[EachSensorName].SensorInfo.ISOCheckDataName = Staobj.Dict_SensorProcessObject[EachSensorName].List_DataNames[0];
                 }
                 Staobj.Dict_SensorProcessObject[EachSensorName].SensorInfo.ISONumber = (Enum_ISOInspectionNumber)COMBO_ISONumber.SelectedItem;
                 Staobj.Dict_SensorProcessObject[EachSensorName].RefreshISOChart();
@@ -122,6 +123,7 @@ namespace DistributedSystem_Main.Views
             }
             if (MessageBox.Show("已儲存並套用設定，是否要關閉視窗","Exit",MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
+                this.DialogResult = DialogResult.OK;
                 this.Close();
             }
         }
