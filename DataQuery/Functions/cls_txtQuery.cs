@@ -35,6 +35,11 @@ namespace DataQuery.Functions
             {
                 List<string> IntervalFileNames = GetIntervalFileNames(HourlyRawDataDirectoryPath(SensorInfo), StartTime, EndTime, new List<string>() { "yyyyMMdd" });
                 OutputData= QueryRawData(StartTime, EndTime, IntervalFileNames);
+                if (OutputData.List_TimeLog.Count() <1000)
+                {
+                    IntervalFileNames = GetIntervalFileNames(RawDataDirectoryPath(SensorInfo), StartTime, EndTime, new List<string>() { "yyyyMMdd_HH" });
+                    OutputData = QueryRawData(StartTime, EndTime, IntervalFileNames);
+                }
             }
             else //讀原始RawData
             {

@@ -115,7 +115,7 @@ namespace DataQuery.Views
                 XValueType = ChartValueType.DateTime,
                 YValueType = ChartValueType.Double
             };
-            RectangleAnnotation NewSeriesAnnotation = new RectangleAnnotation() { BackColor = Color.Black, LineColor = Color.White, LineWidth = 2, ForeColor = SeriesColor, Visible = true };
+            RectangleAnnotation NewSeriesAnnotation = new RectangleAnnotation() { BackColor = Color.Black, LineColor = SeriesColor, LineWidth = 2, ForeColor = Color.White, Visible = true };
             ChartForShow.Annotations.Add(NewSeriesAnnotation);
 
             Dict_SensorSeries.Add(DataName, NewDataSeries);
@@ -179,7 +179,7 @@ namespace DataQuery.Views
             foreach (var item in List_SeriesName)
             {
                 Dict_SensorAnnotation[item].Visible = true;
-                Dict_SensorAnnotation[item].Text = Dict_SensorSeries[item].Points[Min_Index].YValues[0].ToString("F5");
+                Dict_SensorAnnotation[item].Text = Convert.ToDouble( Dict_SensorSeries[item].Points[Min_Index].YValues[0].ToString("F5")).ToString();
                 Dict_SensorAnnotation[item].AnchorDataPoint = Dict_SensorSeries[item].Points[Min_Index];
             }
         }
