@@ -196,10 +196,6 @@
       <Project>{4cd2ee2a-4f87-40c6-bb99-e4a3ee87d9a9}</Project>
       <Name>SensorDataProcess</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WebAPIService\WebAPIService.csproj">
-      <Project>{bd8226fa-fe18-4ffe-ad95-d704b2df078a}</Project>
-      <Name>WebAPIService</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

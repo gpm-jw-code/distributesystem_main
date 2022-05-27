@@ -15,6 +15,16 @@ namespace DistributedSystem_Main.WebService
         public DateTime LastUpdateTime;
     }
 
+    public class cls_QuerySensorTypeListOfEdge
+    {
+        public string edgeName { get; set; }
+        public List<SensorType> sensorTypeList { get; set; } = new List<SensorType>();
+    }
+    public class SensorType
+    {
+        public string field { get; set; }
+        public string label { get; set; }
+    }
     public class cls_RawData
     {
         public string SensorName;
