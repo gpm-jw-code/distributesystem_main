@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -99,6 +100,10 @@ namespace DistributedSystem_Main.User_Control
         {
             Button ClickedButton = sender as Button;
             int ClickedPage = Convert.ToInt32(ClickedButton.Tag);
+            if (ClickedPage == NowPageNumber)
+            {
+                return;
+            }
             NowPageNumber = ClickedPage;
             SetList_PageButtonsVisible(ClickedPage);
             Event_PageChange?.Invoke(NowPageNumber);

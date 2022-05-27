@@ -109,6 +109,7 @@ namespace DistributedSystem_Main.Systems
                 UpdateSensorInfoToChart(SensorName);
                 var SensorISOObject = Staobj.Dict_SensorProcessObject[SensorName].ISOCheckObject;
                 UpdateSensorISOThreshold(SensorName, SensorISOObject.ThresholdA, SensorISOObject.ThresholdB, SensorISOObject.ThresholdC);
+                Staobj.Dict_SensorProcessObject[SensorName].RefreshSignalChart();
             }
         }
 
@@ -127,6 +128,7 @@ namespace DistributedSystem_Main.Systems
             TargetChart.EQName = SensorInfo.EQName;
             TargetChart.UnitName = SensorInfo.UnitName;
             TargetChart.SensorName = SensorInfo.SensorName;
+            TargetChart.DataName = SensorInfo.ISOCheckDataName;
         }
 
         public static void UpdateSensorData(string SensorName, Queue<DateTime> Queue_Time, Queue<double> Dict_DataQueue)

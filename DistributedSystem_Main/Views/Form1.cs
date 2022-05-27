@@ -34,6 +34,7 @@ namespace DistributedSystem_Main
             {
                 item.Text = "";
             }
+            SetISOFunctionUIEnable(Staobj.SystemParam.ISOEnable);
             EventRegist();
             Staobj.Forms.Form_Main = this;
         }
@@ -63,8 +64,27 @@ namespace DistributedSystem_Main
         private void BTN_OpenSystemSetting_Click(object sender, EventArgs e)
         {
             Views.Form_SystemSetting SettingForm = new Views.Form_SystemSetting();
-            SettingForm.ShowDialog();
+            if (SettingForm.ShowDialog() == DialogResult.OK)
+            {
+                SetISOFunctionUIEnable(Staobj.SystemParam.ISOEnable);
+            } 
         }
+
+        private void SetISOFunctionUIEnable(bool Enable)
+        {
+            Panel_ISO.Visible = Enable;
+            SensorDataProcess.cls_SensorDataProcess.ISOFunctionEnable = Enable;
+            DGV_SensorInfo.Columns["Column_ISOSetting"].Visible = Enable;
+            BTN_RawData_Click(null, null);
+            
+            foreach (var item in Staobj.Dict_SensorProcessObject)
+            {
+                if (item.Value.SensorInfo.ISOCheckDataName == null)
+                    continue;
+                AddNewSensor_ISO(item.Key);
+            }
+        }
+
         private void BTN_RawData_Click(object sender, EventArgs e)
         {
             TabControl_Main.SelectedTab = TabPage_Signal;
@@ -161,7 +181,7 @@ namespace DistributedSystem_Main
             }
             var TargetSensorProcessObject = Staobj.Dict_SensorProcessObject[SensorName];
             var SensorInfo = TargetSensorProcessObject.SensorInfo;
-            DGV_SensorInfo.Rows.Add("", SensorInfo.EQName, SensorInfo.UnitName, SensorInfo.SensorName, SensorInfo.SensorType);
+            DGV_SensorInfo.Rows.Add("", SensorInfo.EQName, SensorInfo.UnitName, SensorInfo.SensorName, SensorInfo.SensorType,"Setting");
             DataGridViewRow TargetRow = DGV_SensorInfo.Rows.Cast<DataGridViewRow>().Where(r => r.Cells[3].Value.ToString() == SensorInfo.SensorName).First();
             TargetRow.Cells[0].Style.BackColor = Color.Lime;
 
@@ -246,8 +266,6 @@ namespace DistributedSystem_Main
                     {
                         if (item.Value.SensorInfo.ISOCheckDataName == null)
                             continue;
-                        if (item.Value.Event_RefreshSensorISOSetting != null)
-                            continue;
                         AddNewSensor_ISO(item.Key);
                     }
                 } 
@@ -292,6 +310,8 @@ namespace DistributedSystem_Main
 
             cls_ISOChartManager.FilterAndSortSensor();
 
+            if (TargetSensorProcessObject.Event_RefreshSensorISOSetting != null)
+                return;
             TargetSensorProcessObject.Event_UpdateChartSeries += UpdateSensorChart_ISO;
             TargetSensorProcessObject.Event_RefreshSensorInfo += UpdateSensorInfo_ISO;
             TargetSensorProcessObject.Event_RefreshSensorISOSetting += UpdateISONumber;

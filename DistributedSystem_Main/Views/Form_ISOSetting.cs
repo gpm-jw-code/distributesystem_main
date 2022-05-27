@@ -117,6 +117,10 @@ namespace DistributedSystem_Main.Views
                 {
                     Staobj.Dict_SensorProcessObject[EachSensorName].SensorInfo.ISOCheckDataName = Staobj.Dict_SensorProcessObject[EachSensorName].List_DataNames[0];
                 }
+                else
+                {
+                    Staobj.Dict_SensorProcessObject[EachSensorName].SensorInfo.ISOCheckDataName = Combo_DataName.Text;
+                }
                 Staobj.Dict_SensorProcessObject[EachSensorName].SensorInfo.ISONumber = (Enum_ISOInspectionNumber)COMBO_ISONumber.SelectedItem;
                 Staobj.Dict_SensorProcessObject[EachSensorName].RefreshISOChart();
                 Staobj.SensorParam.SaveSensorInfoToFile(Staobj.Dict_SensorProcessObject[EachSensorName].SensorInfo);

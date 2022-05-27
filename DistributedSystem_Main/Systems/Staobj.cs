@@ -32,6 +32,14 @@ namespace DistributedSystem_Main.Systems
         {
             public static string DataSaveRootPath = "";
             public static bool ISOEnable = true;
+
+            public static string SystemIniFilePath
+            {
+                get
+                {
+                    return System.IO.Path.Combine("Parameters", "SystemParameters.ini");
+                }
+            }
             public struct Mqtt
             {
                 public static string MqttServerIP = "127.0.0.1";
@@ -63,7 +71,7 @@ namespace DistributedSystem_Main.Systems
 
             public static void LoadSystemParam()
             {
-                Ini.IniFile SystemIniFile = new Ini.IniFile(System.IO.Path.Combine("Parameters", "SystemParameters.ini"));
+                Ini.IniFile SystemIniFile = new Ini.IniFile(SystemIniFilePath);
 
                 string SectionName = "MqttSetting";
                 Mqtt.MqttServerIP = SystemIniFile.IniReadAndWriteValue(SectionName, "ServerIP", Mqtt.MqttServerIP);
@@ -87,24 +95,36 @@ namespace DistributedSystem_Main.Systems
                 SectionName = "ChartSetting";
                 ChartSetting.RowNumber = SystemIniFile.IniReadAndWriteValue(SectionName, "RowNumber", 2);
                 ChartSetting.ColumnNumber = SystemIniFile.IniReadAndWriteValue(SectionName, "ColumnNumber", 2);
+
+                SectionName = "Functions";
+                ISOEnable = Convert.ToBoolean(SystemIniFile.IniReadAndWriteValue(SectionName, "ISO", false.ToString()));
             }
 
             public static async void SaveMqttParam()
             {
                 string SectionName = "MqttSetting";
-                Ini.IniFile SystemIniFile = new Ini.IniFile(System.IO.Path.Combine("Parameters", "SystemParameters.ini"));
+                Ini.IniFile SystemIniFile = new Ini.IniFile(SystemIniFilePath);
                 await SystemIniFile.IniWriteValue(SectionName, "ServerIP", Mqtt.MqttServerIP);
                 await SystemIniFile.IniWriteValue(SectionName, "ServerPort", Mqtt.MqttServerPort.ToString());
             }
 
             public static async void SaveChartSetting()
             {
-                Ini.IniFile SystemIniFile = new Ini.IniFile(System.IO.Path.Combine("Parameters", "SystemParameters.ini"));
+                Ini.IniFile SystemIniFile = new Ini.IniFile(SystemIniFilePath);
 
                 string SectionName = "ChartSetting";
                 await SystemIniFile.IniWriteValue(SectionName, "RowNumber", ChartSetting.RowNumber.ToString());
                 await SystemIniFile.IniWriteValue(SectionName, "ColumnNumber", ChartSetting.ColumnNumber.ToString());
             }
+
+            public static async void SaveFuncionSetting()
+            {
+                Ini.IniFile SystemIniFile = new Ini.IniFile(SystemIniFilePath);
+
+                string SectionName = "Functions";
+                await SystemIniFile.IniWriteValue(SectionName, "ISO", ISOEnable.ToString());
+            }
+
         }
 
 

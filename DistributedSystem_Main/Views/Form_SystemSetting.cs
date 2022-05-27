@@ -19,12 +19,19 @@ namespace DistributedSystem_Main.Views
             ReloadGeneralSetting();
         }
 
+        bool IsFunctionsEnableChange =false;
+        private void Form_SystemSetting_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            this.DialogResult = IsFunctionsEnableChange ? DialogResult.OK : DialogResult.Cancel;
+        }
+
         #region General
 
         private void ReloadGeneralSetting()
         {
             NUM_Chart_RowNumber.Value = (decimal)Systems.Staobj.SystemParam.ChartSetting.RowNumber;
             NUM_Chart_ColumnNumber.Value = (decimal)Systems.Staobj.SystemParam.ChartSetting.ColumnNumber;
+            ToggleSwitch_ISO.IsOn = Systems.Staobj.SystemParam.ISOEnable;
         }
         private void BTN_SaveChartSetting_Click(object sender, EventArgs e)
         {
@@ -38,6 +45,21 @@ namespace DistributedSystem_Main.Views
             NUM_Chart_RowNumber.Value = (decimal)Systems.Staobj.SystemParam.ChartSetting.RowNumber;
             NUM_Chart_ColumnNumber.Value = (decimal)Systems.Staobj.SystemParam.ChartSetting.ColumnNumber;
         }
+        private void BTN_SaveFunctionEnable_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("是否儲存Functions設定", "Functions Setting", MessageBoxButtons.YesNo) == DialogResult.No)
+            {
+                return;
+            }
+            Systems.Staobj.SystemParam.ISOEnable = ToggleSwitch_ISO.IsOn;
+            Systems.Staobj.SystemParam.SaveFuncionSetting();
+            IsFunctionsEnableChange = true;
+        }
+        private void BTN_CancelFuncionsSetting_Click(object sender, EventArgs e)
+        {
+            ToggleSwitch_ISO.IsOn = Systems.Staobj.SystemParam.ISOEnable;
+        }
+
         #endregion
 
 
@@ -94,6 +116,8 @@ namespace DistributedSystem_Main.Views
                 this.Invoke((MethodInvoker)delegate { ReloadMqttInfo(); });
                 return;
             }
+            TXT_MqttServerIP.Text = Systems.Staobj.SystemParam.Mqtt.MqttServerIP;
+            NUM_MqttPort.Value= Systems.Staobj.SystemParam.Mqtt.MqttServerPort ;
             ListBox_ClientList.Items.Clear(); 
             List_MqttClients = Systems.cls_MQTTModule.GetClientList();
             foreach (var item in List_MqttClients)
@@ -104,6 +128,5 @@ namespace DistributedSystem_Main.Views
 
 
         #endregion
-
     }
 }

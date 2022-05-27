@@ -30,7 +30,7 @@ namespace DistributedSystem_Main
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.TableLayout_WholeView = new System.Windows.Forms.TableLayoutPanel();
             this.TableLayout_SideBar = new System.Windows.Forms.TableLayoutPanel();
             this.PictureBox_Icon = new System.Windows.Forms.PictureBox();
@@ -65,12 +65,6 @@ namespace DistributedSystem_Main
             this.TabPage_Log = new System.Windows.Forms.TabPage();
             this.TabPage_SensorInfo = new System.Windows.Forms.TabPage();
             this.DGV_SensorInfo = new System.Windows.Forms.DataGridView();
-            this.Column_Status = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.EQName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.UnitName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SensorIP = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column_SensorType = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column_ISOSetting = new System.Windows.Forms.DataGridViewButtonColumn();
             this.Panel_EditSensorInfo = new System.Windows.Forms.Panel();
             this.BTN_CancelEditSensorInfo = new System.Windows.Forms.Button();
             this.BTN_SaveSensorInfo = new System.Windows.Forms.Button();
@@ -81,6 +75,12 @@ namespace DistributedSystem_Main
             this.label1 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.PageSwitch_ISOChart = new DistributedSystem_Main.User_Control.PageSwitch();
+            this.Column_Status = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.EQName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.UnitName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SensorName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column_SensorType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column_ISOSetting = new System.Windows.Forms.DataGridViewButtonColumn();
             this.TableLayout_WholeView.SuspendLayout();
             this.TableLayout_SideBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox_Icon)).BeginInit();
@@ -613,63 +613,22 @@ namespace DistributedSystem_Main
             this.Column_Status,
             this.EQName,
             this.UnitName,
-            this.SensorIP,
+            this.SensorName,
             this.Column_SensorType,
             this.Column_ISOSetting});
             this.DGV_SensorInfo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.DGV_SensorInfo.Location = new System.Drawing.Point(3, 46);
             this.DGV_SensorInfo.Name = "DGV_SensorInfo";
             this.DGV_SensorInfo.RowHeadersVisible = false;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
-            this.DGV_SensorInfo.RowsDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
+            this.DGV_SensorInfo.RowsDefaultCellStyle = dataGridViewCellStyle1;
             this.DGV_SensorInfo.RowTemplate.Height = 24;
             this.DGV_SensorInfo.ShowCellErrors = false;
             this.DGV_SensorInfo.Size = new System.Drawing.Size(1180, 640);
             this.DGV_SensorInfo.TabIndex = 1;
             this.DGV_SensorInfo.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DGV_SensorInfo_CellMouseClick);
-            // 
-            // Column_Status
-            // 
-            this.Column_Status.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.Column_Status.HeaderText = "Status";
-            this.Column_Status.Name = "Column_Status";
-            this.Column_Status.ReadOnly = true;
-            this.Column_Status.Width = 71;
-            // 
-            // EQName
-            // 
-            this.EQName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.EQName.HeaderText = "EQ Name";
-            this.EQName.Name = "EQName";
-            this.EQName.ReadOnly = true;
-            // 
-            // UnitName
-            // 
-            this.UnitName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.UnitName.HeaderText = "Unit Name";
-            this.UnitName.Name = "UnitName";
-            this.UnitName.ReadOnly = true;
-            // 
-            // SensorIP
-            // 
-            this.SensorIP.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.SensorIP.HeaderText = "Sensor IP";
-            this.SensorIP.Name = "SensorIP";
-            this.SensorIP.ReadOnly = true;
-            // 
-            // Column_SensorType
-            // 
-            this.Column_SensorType.HeaderText = "SensorType";
-            this.Column_SensorType.Name = "Column_SensorType";
-            this.Column_SensorType.ReadOnly = true;
-            // 
-            // Column_ISOSetting
-            // 
-            this.Column_ISOSetting.HeaderText = "ISO Setting";
-            this.Column_ISOSetting.Name = "Column_ISOSetting";
-            this.Column_ISOSetting.Text = "Setting";
             // 
             // Panel_EditSensorInfo
             // 
@@ -801,6 +760,48 @@ namespace DistributedSystem_Main
             this.PageSwitch_ISOChart.Size = new System.Drawing.Size(92, 27);
             this.PageSwitch_ISOChart.TabIndex = 0;
             // 
+            // Column_Status
+            // 
+            this.Column_Status.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.Column_Status.HeaderText = "Status";
+            this.Column_Status.Name = "Column_Status";
+            this.Column_Status.ReadOnly = true;
+            this.Column_Status.Width = 71;
+            // 
+            // EQName
+            // 
+            this.EQName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.EQName.HeaderText = "EQ Name";
+            this.EQName.Name = "EQName";
+            this.EQName.ReadOnly = true;
+            // 
+            // UnitName
+            // 
+            this.UnitName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.UnitName.HeaderText = "Unit Name";
+            this.UnitName.Name = "UnitName";
+            this.UnitName.ReadOnly = true;
+            // 
+            // SensorName
+            // 
+            this.SensorName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.SensorName.HeaderText = "Sensor Name";
+            this.SensorName.Name = "SensorName";
+            this.SensorName.ReadOnly = true;
+            // 
+            // Column_SensorType
+            // 
+            this.Column_SensorType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Column_SensorType.HeaderText = "Sensor Type";
+            this.Column_SensorType.Name = "Column_SensorType";
+            this.Column_SensorType.ReadOnly = true;
+            // 
+            // Column_ISOSetting
+            // 
+            this.Column_ISOSetting.HeaderText = "ISO Setting";
+            this.Column_ISOSetting.Name = "Column_ISOSetting";
+            this.Column_ISOSetting.Text = "Setting";
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
@@ -897,7 +898,7 @@ namespace DistributedSystem_Main
         private System.Windows.Forms.DataGridViewTextBoxColumn Column_Status;
         private System.Windows.Forms.DataGridViewTextBoxColumn EQName;
         private System.Windows.Forms.DataGridViewTextBoxColumn UnitName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn SensorIP;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SensorName;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column_SensorType;
         private System.Windows.Forms.DataGridViewButtonColumn Column_ISOSetting;
     }

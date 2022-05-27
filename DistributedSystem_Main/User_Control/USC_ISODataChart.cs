@@ -39,6 +39,11 @@ namespace DistributedSystem_Main.User_Control
             set { this._UnitName = value; this.labUnitName.Text = value; }
         }
 
+        public string DataName
+        {
+            set { ChartForShow.Series[0].LegendText = value; }
+        }
+
 
         List<Color> List_Color = new List<Color> { Color.Green, Color.Yellow, Color.Orange, Color.Red };
         List<StripLine> List_StripLine = new List<StripLine>();

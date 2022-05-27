@@ -31,6 +31,8 @@ namespace SensorDataProcess
 
     public class cls_SensorDataProcess
     {
+        public static bool ISOFunctionEnable = false;
+
         public SensorInfo SensorInfo = new SensorInfo();
         public SensorStatus Status = new SensorStatus();
         public Dictionary<string, double> Dict_DataThreshold = new Dictionary<string, double>();
@@ -106,18 +108,18 @@ namespace SensorDataProcess
                 SQLDataSaver?.InsertHourlyRawData(HourlyData.Dict_AverageData, TimeLog);
             }
             var CheckResult = CheckThreshold(Dict_NewData, TimeLog);
-            if (ISOCheckObject != null)
+            if (ISOFunctionEnable && ISOCheckObject != null)
             {
-                if (SensorInfo.ISOCheckDataName!=null && Dict_NewData.ContainsKey(SensorInfo.ISOCheckDataName))
+                if (SensorInfo.ISOCheckDataName != null && Dict_NewData.ContainsKey(SensorInfo.ISOCheckDataName))
                 {
                     var ISOCheckResult = ISOCheckObject.CalculateResult(Dict_NewData[SensorInfo.ISOCheckDataName]);
                     TxtDataSaver.WriteISOResult(ISOCheckResult, SensorInfo.ISONumber, TimeLog);
                 }
             }
 
-            Queue_TimeLog.Enqueue(TimeLog);
             lock (RawDataDict_Lock)
             {
+                Queue_TimeLog.Enqueue(TimeLog);
                 foreach (var item in Dict_NewData)
                 {
                     string DataName = item.Key;
@@ -192,6 +194,10 @@ namespace SensorDataProcess
         {
             while (Queue_TimeLog.Count < 100)
             {
+                if (!Status.ConnecStatus)
+                {
+                    break;
+                }
                 Thread.Sleep(1000);
             }
             Dictionary<string, double> OutputData = new Dictionary<string, double>();
@@ -201,7 +207,7 @@ namespace SensorDataProcess
                 double DataAverage = item.Value.Average();
                 double DataDeviation = clsMathTool.standardDeviation(item.Value);
                 OutputData.Add($"{DataName}_OOC", DataAverage + 3 * DataDeviation);
-                OutputData.Add($"{DataName}_OOS", DataAverage + 3.5* DataDeviation);
+                OutputData.Add($"{DataName}_OOS", DataAverage + 3.5 * DataDeviation);
             }
             return OutputData;
         }

@@ -80,6 +80,8 @@
   <ItemGroup>
     <Compile Include="Systems\cls_ISOChartManager.cs" />
     <Compile Include="User_Control\cls_Functions.cs" />
+    <Compile Include="User_Control\MyRectangle.cs" />
+    <Compile Include="User_Control\MyToggleSwitch.cs" />
     <Compile Include="User_Control\USC_ISODataChart.cs">
       <SubType>UserControl</SubType>
     </Compile>

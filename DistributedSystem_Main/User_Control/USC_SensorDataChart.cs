@@ -90,6 +90,14 @@ namespace DistributedSystem_Main.User_Control
         public void ImportSensorDataSeries(Queue<DateTime> TimeLogSeries, Dictionary<string, Queue<double>> Dict_DataSeries)
         {
             int IntForColor = 0;
+            if (TimeLogSeries.Count == 0)
+            {
+                foreach (var item in Dict_SensorSeries)
+                {
+                    item.Value.Points.Clear();
+                }
+                return;
+            }
             foreach (var item in Dict_DataSeries)
             {
                 IntForColor += 1;
@@ -143,10 +151,6 @@ namespace DistributedSystem_Main.User_Control
                 Dict_SensorOOC_StripLines[DataName].BorderWidth = Dict_SensorOOS_StripLines[DataName].BorderWidth = 1;
                 Dict_SensorOOC_StripLines[DataName].Text = $"{DataName}_OOC";
                 Dict_SensorOOS_StripLines[DataName].Text = $"{DataName}_OOS";
-            }
-            foreach (var item in Dict_SensorSeries)
-            {
-                item.Value.Points.Clear();
             }
         }
 
