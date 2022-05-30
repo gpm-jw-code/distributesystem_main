@@ -85,11 +85,13 @@ namespace DataQuery
             Task.Run(() =>
             {
                 var IntervalRawData = cls_txtQuery.QueryIntervalRawData(StartTime, EndTime, TargetSensorInfo);
+                var Dict_Threshold = staobj.SensorParam.LoadThreasholdFromFile( TargetSensorInfo.SensorName);
                 IntervalRawData.Downsampling(2000);
                 Invoke((MethodInvoker)delegate
                 {
                     staobj.Form_MainQueryChart.ImportSensorInfo(TargetSensorInfo);
                     staobj.Form_MainQueryChart.ImportSensorDataSeries(IntervalRawData.List_DownSampleTimeLog, IntervalRawData.Dict_DownSampleData);
+                    staobj.Form_MainQueryChart.ImportThreshold(Dict_Threshold);
                     staobj.Form_MainQueryChart.MdiParent = this;
                     staobj.Form_MainQueryChart.Parent = SplitContainer_Sensor_Chart.Panel2;
                     staobj.Form_MainQueryChart.WindowState = FormWindowState.Maximized;
@@ -124,10 +126,12 @@ namespace DataQuery
                     {
                         var TargetChart = item.Value;
                         var IntervalRawData = cls_txtQuery.QueryIntervalRawData(StartTime, EndTime, item.Value.SensorInfo);
+                        var Dict_Threshold = staobj.SensorParam.LoadThreasholdFromFile(item.Value.SensorInfo.SensorName);
                         IntervalRawData.Downsampling(1000);
                         Invoke((MethodInvoker)delegate
                         {
                             TargetChart.ImportSensorDataSeries(IntervalRawData.List_DownSampleTimeLog, IntervalRawData.Dict_DownSampleData);
+                            TargetChart.ImportThreshold(Dict_Threshold);
                             TargetChart.Show();
                         });
                     });
@@ -140,10 +144,12 @@ namespace DataQuery
             {
                 var TargetChart = staobj.QueryParam.Dict_SensorName_Chart[TargetSensorInfo.SensorName];
                 var IntervalRawData = cls_txtQuery.QueryIntervalRawData(StartTime, EndTime,TargetSensorInfo );
+                var Dict_Threshold = staobj.SensorParam.LoadThreasholdFromFile(TargetSensorInfo.SensorName);
                 IntervalRawData.Downsampling(1000);
                 Invoke((MethodInvoker)delegate
                 {
                     TargetChart.ImportSensorDataSeries(IntervalRawData.List_DownSampleTimeLog, IntervalRawData.Dict_DownSampleData);
+                    TargetChart.ImportThreshold(Dict_Threshold);
                     TargetChart.BringToFront();
                     TargetChart.Event_FormClicked += MultiSensorFormBringToFront;
                     TargetChart.Show();

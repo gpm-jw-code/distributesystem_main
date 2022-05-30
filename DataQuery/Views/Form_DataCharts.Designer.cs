@@ -79,7 +79,7 @@ namespace DataQuery.Views
             this.ChartForShow.BorderSkin.PageColor = System.Drawing.Color.Transparent;
             chartArea1.AxisX.IsInterlaced = true;
             chartArea1.AxisX.LabelStyle.ForeColor = System.Drawing.Color.White;
-            chartArea1.AxisX.LabelStyle.Format = "HH:mm:ss";
+            chartArea1.AxisX.LabelStyle.Format = "yyyy/MM/dd HH:mm:ss";
             chartArea1.AxisX.LineColor = System.Drawing.Color.DimGray;
             chartArea1.AxisX.MajorGrid.LineColor = System.Drawing.Color.DimGray;
             chartArea1.AxisX.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dot;

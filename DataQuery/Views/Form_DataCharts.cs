@@ -103,6 +103,45 @@ namespace DataQuery.Views
                 Dict_SensorSeries[item.Key].Points.DataBindXY(TimeLogSeries, item.Value);
             }
         }
+
+        public void ImportThreshold(Dictionary<string,double> Dict_Threshold)
+        {
+            ChartForShow.ChartAreas[0].AxisY.StripLines.Clear();
+            foreach (var item in Dict_Threshold)
+            {
+                if (item.Key.ToUpper().Contains("_OOS"))
+                {
+                    StripLine NewStripLine = new StripLine
+                    {
+                        BorderColor = Color.Red,
+                        BorderDashStyle = ChartDashStyle.Dash,
+                        BorderWidth = 2,
+                        Text = item.Key,
+                        ForeColor = Color.White,
+                        IntervalOffset = item.Value
+                    };
+
+                    ChartForShow.ChartAreas[0].AxisY.StripLines.Add(NewStripLine);
+                    continue;
+                }
+                if (item.Key.ToUpper().Contains("_OOC"))
+                {
+                    StripLine NewStripLine = new StripLine
+                    {
+                        BorderColor = Color.Yellow,
+                        BorderDashStyle = ChartDashStyle.Dash,
+                        BorderWidth = 2,
+                        Text = item.Key,
+                        ForeColor = Color.White,
+                        IntervalOffset = item.Value
+                    };
+
+                    ChartForShow.ChartAreas[0].AxisY.StripLines.Add(NewStripLine);
+                    continue;
+                }
+
+            }
+        }
         private void CreateNewSensorUIObjects(string DataName, Color SeriesColor, Color StripLineColor)
         {
             Series NewDataSeries = new Series

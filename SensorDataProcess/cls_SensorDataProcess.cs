@@ -139,9 +139,9 @@ namespace SensorDataProcess
                         item.Value.Dequeue();
                     }
                 }
-
-                Event_UpdateChartSeries?.Invoke(SensorInfo.SensorName, Queue_TimeLog, Dict_SensorDataSeries);
             }
+
+            Event_UpdateChartSeries?.Invoke(SensorInfo.SensorName, Queue_TimeLog, Dict_SensorDataSeries);
         }
 
 
@@ -166,10 +166,15 @@ namespace SensorDataProcess
             Event_RefreshSensorThreshold?.Invoke(SensorInfo.SensorName);
         }
 
+
+        Thread lastThread = null;
+
         public void RefreshSignalChart()
         {
+            lastThread = Thread.CurrentThread;
             lock (RawDataDict_Lock)
             {
+                lastThread = Thread.CurrentThread;
                 Event_UpdateChartSeries?.Invoke(SensorInfo.SensorName, Queue_TimeLog, Dict_SensorDataSeries);
             }
         }
