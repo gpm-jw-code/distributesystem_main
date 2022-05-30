@@ -1,4 +1,5 @@
-﻿using SensorDataProcess;
+﻿using ISOInspection;
+using SensorDataProcess;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -74,6 +75,44 @@ namespace DataQuery.Functions
                     OutputData = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, double>>(SR.ReadToEnd());
                 }
                 return OutputData;
+            }
+
+            public static ISObase LoadISOParameters(string SensorName, Enum_ISOInspectionNumber ISONumber)
+            {
+                ISObase ISOCheckObject = null;
+                string Filepath = Path.Combine(SensorDataRootPath(SensorName), "ISOParameters.json");
+                if (!File.Exists(Filepath))
+                {
+                    return null;
+                }
+                try
+                {
+                    using (StreamReader Sr = new StreamReader(Filepath))
+                    {
+                        string JsonString = Sr.ReadLine();
+                        switch (ISONumber)
+                        {
+                            case Enum_ISOInspectionNumber.None:
+                                break;
+                            case Enum_ISOInspectionNumber.ISO10816_1:
+                                ISOCheckObject = Newtonsoft.Json.JsonConvert.DeserializeObject<cls_ISO10816_1>(JsonString);
+                                break;
+                            case Enum_ISOInspectionNumber.ISO10816_3:
+                                ISOCheckObject = Newtonsoft.Json.JsonConvert.DeserializeObject<cls_ISO10816_3>(JsonString);
+                                break;
+                            case Enum_ISOInspectionNumber.ISO10816_8:
+                                ISOCheckObject = Newtonsoft.Json.JsonConvert.DeserializeObject<cls_ISO10816_8>(JsonString);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    return ISOCheckObject;
+                }
+                catch (Exception)
+                {
+                    return ISOCheckObject;
+                }
             }
         }
 

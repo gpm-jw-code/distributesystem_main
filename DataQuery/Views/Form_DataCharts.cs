@@ -70,43 +70,38 @@ namespace DataQuery.Views
 
         Dictionary<string, Series> Dict_SensorSeries = new Dictionary<string, Series>();
         Dictionary<string, RectangleAnnotation> Dict_SensorAnnotation = new Dictionary<string, RectangleAnnotation>();
-        RectangleAnnotation TimeLogAnnotation ;
+        RectangleAnnotation TimeLogAnnotation;
 
         public void ImportSensorInfo(SensorDataProcess.SensorInfo SensorInfo)
         {
+            this.SensorInfo = SensorInfo;
             this.Text = $"{SensorInfo.EdgeName}-{SensorInfo.EQName}-{SensorInfo.UnitName}-{SensorInfo.SensorNameWithOutEdgeName}";
             LAB_SensorName.Text = $"{SensorInfo.EdgeName}-{SensorInfo.EQName}-{SensorInfo.UnitName}-{SensorInfo.SensorNameWithOutEdgeName}";
+            Panel_DataType.Visible = !string.IsNullOrEmpty(SensorInfo.ISOCheckDataName);
         }
 
         public void ImportSensorDataSeries(List<DateTime> TimeLogSeries, Dictionary<string, List<double>> Dict_DataSeries)
         {
             int IntForColor = 0;
             TimeLogAnnotation.Visible = false;
-            foreach (var item in Dict_SensorSeries)
-            {
-                item.Value.Enabled = false;
-                Dict_SensorAnnotation[item.Key].Visible = false;
-            }
+            this.Dict_SensorSeries.Clear();
+            Dict_SensorAnnotation.Clear();
+            ChartForShow.Series.Clear();
+            ChartForShow.Annotations.Clear();
             foreach (var item in Dict_DataSeries)
             {
                 IntForColor += 1;
-                if (!Dict_SensorSeries.ContainsKey(item.Key))
-                {
-                    Color NewSeriesColor = ColorFromHSV(360 * IntForColor / Dict_DataSeries.Count, 1, 1);
-                    Color StripLineColor = ColorFromHSV(360 * IntForColor / Dict_DataSeries.Count, 1, 0.5);
-                    CreateNewSensorUIObjects(item.Key, NewSeriesColor, StripLineColor);
-                }
-                if (!Dict_SensorSeries[item.Key].Enabled)
-                {
-                    Dict_SensorSeries[item.Key].Enabled = true;
-                }
+                Color NewSeriesColor = ColorFromHSV(360 * IntForColor / Dict_DataSeries.Count, 1, 1);
+                Color StripLineColor = ColorFromHSV(360 * IntForColor / Dict_DataSeries.Count, 1, 0.5);
+                CreateNewSensorUIObjects(item.Key, NewSeriesColor, StripLineColor);
                 Dict_SensorSeries[item.Key].Points.DataBindXY(TimeLogSeries, item.Value);
             }
         }
-
-        public void ImportThreshold(Dictionary<string,double> Dict_Threshold)
+        List<StripLine> List_ThresholdStripLine = new List<StripLine>();
+        public void ImportThreshold(Dictionary<string, double> Dict_Threshold)
         {
             ChartForShow.ChartAreas[0].AxisY.StripLines.Clear();
+            List_ThresholdStripLine.Clear();
             foreach (var item in Dict_Threshold)
             {
                 if (item.Key.ToUpper().Contains("_OOS"))
@@ -122,6 +117,7 @@ namespace DataQuery.Views
                     };
 
                     ChartForShow.ChartAreas[0].AxisY.StripLines.Add(NewStripLine);
+                    List_ThresholdStripLine.Add(NewStripLine);
                     continue;
                 }
                 if (item.Key.ToUpper().Contains("_OOC"))
@@ -137,6 +133,7 @@ namespace DataQuery.Views
                     };
 
                     ChartForShow.ChartAreas[0].AxisY.StripLines.Add(NewStripLine);
+                    List_ThresholdStripLine.Add(NewStripLine);
                     continue;
                 }
 
@@ -218,9 +215,86 @@ namespace DataQuery.Views
             foreach (var item in List_SeriesName)
             {
                 Dict_SensorAnnotation[item].Visible = true;
-                Dict_SensorAnnotation[item].Text = Convert.ToDouble( Dict_SensorSeries[item].Points[Min_Index].YValues[0].ToString("F5")).ToString();
+                Dict_SensorAnnotation[item].Text = Convert.ToDouble(Dict_SensorSeries[item].Points[Min_Index].YValues[0].ToString("F5")).ToString();
                 Dict_SensorAnnotation[item].AnchorDataPoint = Dict_SensorSeries[item].Points[Min_Index];
             }
         }
+
+        private void LAB_ShowRawData_Click(object sender, EventArgs e)
+        {
+            ChartForShow.ChartAreas[0].AxisY.StripLines.Clear();
+            foreach (var item in List_ThresholdStripLine)
+            {
+                ChartForShow.ChartAreas[0].AxisY.StripLines.Add(item);
+            }
+            foreach (var item in Dict_SensorSeries)
+            {
+                item.Value.Enabled = true;
+            }
+        }
+
+        #region ISO UI Object
+
+        private void LAB_ShowISO_Click(object sender, EventArgs e)
+        {
+            var ISOThreshold = Functions.staobj.SensorParam.LoadISOParameters(SensorInfo.SensorName, SensorInfo.ISONumber);
+            if (ISOThreshold == null)
+            {
+                return;
+            }
+
+            foreach (var item in Dict_SensorSeries)
+            {
+                item.Value.Enabled = SensorInfo.ISOCheckDataName == item.Key;
+                Dict_SensorAnnotation[item.Key].Visible = SensorInfo.ISOCheckDataName == item.Key;
+            }
+            ChartForShow.ChartAreas[0].AxisY.StripLines.Clear();
+            if (List_ISOStripLine.Count == 0)
+            {
+                InitialBackColorStripLine();
+            }
+            else
+            {
+                foreach (var item in List_ISOStripLine)
+                {
+                    ChartForShow.ChartAreas[0].AxisY.StripLines.Add(item);
+                }
+            }
+            SetBackColorThreshold(ISOThreshold.ThresholdA, ISOThreshold.ThresholdB, ISOThreshold.ThresholdC);
+
+        }
+        List<Color> List_Color = new List<Color> { Color.Green, Color.Yellow, Color.Orange, Color.Red };
+        private List<StripLine> List_ISOStripLine = new List<StripLine>();
+
+        private void InitialBackColorStripLine()
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                StripLine NewStripLine = new StripLine()
+                {
+                    BackColor = Color.FromArgb(50, List_Color[i]),
+                    BorderWidth = 0,
+                    Interval = 0
+                };
+                ChartForShow.ChartAreas[0].AxisY.StripLines.Add(NewStripLine);
+                List_ISOStripLine.Add(NewStripLine);
+            }
+        }
+
+        public void SetBackColorThreshold(double ThresholdA, double ThresholdB, double ThresholdC)
+        {
+            List_ISOStripLine[0].StripWidth = ThresholdA;
+            List_ISOStripLine[0].IntervalOffset = 0;
+
+            List_ISOStripLine[1].StripWidth = ThresholdB - ThresholdA;
+            List_ISOStripLine[1].IntervalOffset = ThresholdA;
+
+            List_ISOStripLine[2].StripWidth = ThresholdC - ThresholdB;
+            List_ISOStripLine[2].IntervalOffset = ThresholdB;
+
+            List_ISOStripLine[3].StripWidth = 100;
+            List_ISOStripLine[3].IntervalOffset = ThresholdC;
+        }
+        #endregion
     }
 }

@@ -98,6 +98,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ISOInspection\ISOInspection.csproj">
+      <Project>{32EBCFC5-6213-4EC4-AF72-52449205E7A9}</Project>
+      <Name>ISOInspection</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SensorDataProcess\SensorDataProcess.csproj">
       <Project>{4cd2ee2a-4f87-40c6-bb99-e4a3ee87d9a9}</Project>
       <Name>SensorDataProcess</Name>
