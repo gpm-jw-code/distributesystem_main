@@ -29,22 +29,27 @@ namespace DataQuery.Views
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.TablePanel_Main = new System.Windows.Forms.TableLayoutPanel();
             this.Panel_Chart = new System.Windows.Forms.Panel();
             this.ChartForShow = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.Panel_Funcions = new System.Windows.Forms.Panel();
+            this.Panel_DataType = new System.Windows.Forms.Panel();
             this.LAB_ShowISO = new System.Windows.Forms.Label();
             this.LAB_ShowRawData = new System.Windows.Forms.Label();
             this.LAB_SensorName = new System.Windows.Forms.Label();
-            this.Panel_DataType = new System.Windows.Forms.Panel();
+            this.ContextMenu_Chart = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.rawDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.thresholdToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TablePanel_Main.SuspendLayout();
             this.Panel_Chart.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ChartForShow)).BeginInit();
             this.Panel_Funcions.SuspendLayout();
             this.Panel_DataType.SuspendLayout();
+            this.ContextMenu_Chart.SuspendLayout();
             this.SuspendLayout();
             // 
             // TablePanel_Main
@@ -81,39 +86,40 @@ namespace DataQuery.Views
             this.ChartForShow.BorderSkin.BorderColor = System.Drawing.Color.Transparent;
             this.ChartForShow.BorderSkin.BorderWidth = 0;
             this.ChartForShow.BorderSkin.PageColor = System.Drawing.Color.Transparent;
-            chartArea2.AxisX.LabelStyle.ForeColor = System.Drawing.Color.White;
-            chartArea2.AxisX.LabelStyle.Format = "yyyy/MM/dd HH:mm:ss";
-            chartArea2.AxisX.LineColor = System.Drawing.Color.DimGray;
-            chartArea2.AxisX.MajorGrid.LineColor = System.Drawing.Color.DimGray;
-            chartArea2.AxisX.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dot;
-            chartArea2.AxisX.TitleForeColor = System.Drawing.Color.White;
-            chartArea2.AxisY.LabelStyle.ForeColor = System.Drawing.Color.White;
-            chartArea2.AxisY.LineColor = System.Drawing.Color.DimGray;
-            chartArea2.AxisY.MajorGrid.LineColor = System.Drawing.Color.DimGray;
-            chartArea2.AxisY.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dot;
-            chartArea2.BackColor = System.Drawing.Color.Transparent;
-            chartArea2.BorderColor = System.Drawing.Color.Transparent;
-            chartArea2.Name = "ChartArea1";
-            chartArea2.ShadowColor = System.Drawing.Color.Transparent;
-            this.ChartForShow.ChartAreas.Add(chartArea2);
+            chartArea1.AxisX.LabelStyle.ForeColor = System.Drawing.Color.White;
+            chartArea1.AxisX.LabelStyle.Format = "yyyy/MM/dd HH:mm:ss";
+            chartArea1.AxisX.LineColor = System.Drawing.Color.DimGray;
+            chartArea1.AxisX.MajorGrid.LineColor = System.Drawing.Color.DimGray;
+            chartArea1.AxisX.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dot;
+            chartArea1.AxisX.TitleForeColor = System.Drawing.Color.White;
+            chartArea1.AxisY.LabelStyle.ForeColor = System.Drawing.Color.White;
+            chartArea1.AxisY.LineColor = System.Drawing.Color.DimGray;
+            chartArea1.AxisY.MajorGrid.LineColor = System.Drawing.Color.DimGray;
+            chartArea1.AxisY.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dot;
+            chartArea1.BackColor = System.Drawing.Color.Transparent;
+            chartArea1.BorderColor = System.Drawing.Color.Transparent;
+            chartArea1.Name = "ChartArea1";
+            chartArea1.ShadowColor = System.Drawing.Color.Transparent;
+            this.ChartForShow.ChartAreas.Add(chartArea1);
+            this.ChartForShow.ContextMenuStrip = this.ContextMenu_Chart;
             this.ChartForShow.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend2.BackColor = System.Drawing.Color.Transparent;
-            legend2.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Top;
-            legend2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            legend2.ForeColor = System.Drawing.Color.Silver;
-            legend2.IsTextAutoFit = false;
-            legend2.Name = "Legend1";
-            this.ChartForShow.Legends.Add(legend2);
+            legend1.BackColor = System.Drawing.Color.Transparent;
+            legend1.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Top;
+            legend1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            legend1.ForeColor = System.Drawing.Color.Silver;
+            legend1.IsTextAutoFit = false;
+            legend1.Name = "Legend1";
+            this.ChartForShow.Legends.Add(legend1);
             this.ChartForShow.Location = new System.Drawing.Point(0, 0);
             this.ChartForShow.Name = "ChartForShow";
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series2.Color = System.Drawing.Color.Red;
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            series2.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
-            series2.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
-            this.ChartForShow.Series.Add(series2);
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series1.Color = System.Drawing.Color.Red;
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            series1.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
+            series1.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
+            this.ChartForShow.Series.Add(series1);
             this.ChartForShow.Size = new System.Drawing.Size(535, 410);
             this.ChartForShow.TabIndex = 8;
             this.ChartForShow.Text = "chart1";
@@ -131,6 +137,16 @@ namespace DataQuery.Views
             this.Panel_Funcions.Size = new System.Drawing.Size(535, 44);
             this.Panel_Funcions.TabIndex = 10;
             this.Panel_Funcions.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Form_DataCharts_MouseDown);
+            // 
+            // Panel_DataType
+            // 
+            this.Panel_DataType.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.Panel_DataType.Controls.Add(this.LAB_ShowISO);
+            this.Panel_DataType.Controls.Add(this.LAB_ShowRawData);
+            this.Panel_DataType.Location = new System.Drawing.Point(370, 9);
+            this.Panel_DataType.Name = "Panel_DataType";
+            this.Panel_DataType.Size = new System.Drawing.Size(164, 34);
+            this.Panel_DataType.TabIndex = 8;
             // 
             // LAB_ShowISO
             // 
@@ -168,15 +184,25 @@ namespace DataQuery.Views
             this.LAB_SensorName.TabIndex = 0;
             this.LAB_SensorName.Text = "Edge-EQName-UnitName-IP";
             // 
-            // Panel_DataType
+            // ContextMenu_Chart
             // 
-            this.Panel_DataType.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Panel_DataType.Controls.Add(this.LAB_ShowISO);
-            this.Panel_DataType.Controls.Add(this.LAB_ShowRawData);
-            this.Panel_DataType.Location = new System.Drawing.Point(370, 9);
-            this.Panel_DataType.Name = "Panel_DataType";
-            this.Panel_DataType.Size = new System.Drawing.Size(164, 34);
-            this.Panel_DataType.TabIndex = 8;
+            this.ContextMenu_Chart.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.rawDataToolStripMenuItem,
+            this.thresholdToolStripMenuItem});
+            this.ContextMenu_Chart.Name = "ContextMenu_Chart";
+            this.ContextMenu_Chart.Size = new System.Drawing.Size(131, 48);
+            // 
+            // rawDataToolStripMenuItem
+            // 
+            this.rawDataToolStripMenuItem.Name = "rawDataToolStripMenuItem";
+            this.rawDataToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
+            this.rawDataToolStripMenuItem.Text = "Raw Data";
+            // 
+            // thresholdToolStripMenuItem
+            // 
+            this.thresholdToolStripMenuItem.Name = "thresholdToolStripMenuItem";
+            this.thresholdToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
+            this.thresholdToolStripMenuItem.Text = "Threshold";
             // 
             // Form_DataCharts
             // 
@@ -195,6 +221,7 @@ namespace DataQuery.Views
             this.Panel_Funcions.PerformLayout();
             this.Panel_DataType.ResumeLayout(false);
             this.Panel_DataType.PerformLayout();
+            this.ContextMenu_Chart.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -209,5 +236,8 @@ namespace DataQuery.Views
         private System.Windows.Forms.Label LAB_ShowISO;
         private System.Windows.Forms.Label LAB_ShowRawData;
         private System.Windows.Forms.Panel Panel_DataType;
+        private System.Windows.Forms.ContextMenuStrip ContextMenu_Chart;
+        private System.Windows.Forms.ToolStripMenuItem rawDataToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem thresholdToolStripMenuItem;
     }
 }

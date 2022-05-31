@@ -88,22 +88,28 @@ namespace DataQuery.Views
             Dict_SensorAnnotation.Clear();
             ChartForShow.Series.Clear();
             ChartForShow.Annotations.Clear();
+            rawDataToolStripMenuItem.DropDownItems.Clear();
+            thresholdToolStripMenuItem.DropDownItems.Clear();
+            AddNewSeriesToolItem("All");
+            AddNewThresholdToolItem("All");
             foreach (var item in Dict_DataSeries)
             {
                 IntForColor += 1;
                 Color NewSeriesColor = ColorFromHSV(360 * IntForColor / Dict_DataSeries.Count, 1, 1);
                 Color StripLineColor = ColorFromHSV(360 * IntForColor / Dict_DataSeries.Count, 1, 0.5);
-                CreateNewSensorUIObjects(item.Key, NewSeriesColor, StripLineColor);
+                CreateNewSensorUIObjects(item.Key, NewSeriesColor);
                 Dict_SensorSeries[item.Key].Points.DataBindXY(TimeLogSeries, item.Value);
             }
         }
-        List<StripLine> List_ThresholdStripLine = new List<StripLine>();
+        Dictionary<string,StripLine> Dict_ThresholdStripLine = new Dictionary<string, StripLine>();
         public void ImportThreshold(Dictionary<string, double> Dict_Threshold)
         {
             ChartForShow.ChartAreas[0].AxisY.StripLines.Clear();
-            List_ThresholdStripLine.Clear();
+            Dict_ThresholdStripLine.Clear();
             foreach (var item in Dict_Threshold)
             {
+                string DataName = item.Key.Replace("_OOC", "").Replace("_OOS", "");
+                AddNewThresholdToolItem(DataName);
                 if (item.Key.ToUpper().Contains("_OOS"))
                 {
                     StripLine NewStripLine = new StripLine
@@ -117,7 +123,7 @@ namespace DataQuery.Views
                     };
 
                     ChartForShow.ChartAreas[0].AxisY.StripLines.Add(NewStripLine);
-                    List_ThresholdStripLine.Add(NewStripLine);
+                    Dict_ThresholdStripLine.Add(item.Key,NewStripLine);
                     continue;
                 }
                 if (item.Key.ToUpper().Contains("_OOC"))
@@ -133,13 +139,12 @@ namespace DataQuery.Views
                     };
 
                     ChartForShow.ChartAreas[0].AxisY.StripLines.Add(NewStripLine);
-                    List_ThresholdStripLine.Add(NewStripLine);
+                    Dict_ThresholdStripLine.Add(item.Key, NewStripLine);
                     continue;
                 }
-
             }
         }
-        private void CreateNewSensorUIObjects(string DataName, Color SeriesColor, Color StripLineColor)
+        private void CreateNewSensorUIObjects(string DataName, Color SeriesColor)
         {
             Series NewDataSeries = new Series
             {
@@ -158,10 +163,78 @@ namespace DataQuery.Views
             Dict_SensorAnnotation.Add(DataName, NewSeriesAnnotation);
 
             ChartForShow.Series.Add(NewDataSeries);
+            AddNewSeriesToolItem(DataName);
+        }
+
+        private void AddNewSeriesToolItem(string DataName)
+        {
+            var NewItem = rawDataToolStripMenuItem.DropDownItems.Add(DataName) as ToolStripMenuItem;
+            NewItem.Name = $"Series_{DataName}";
+            NewItem.Checked = NewItem.CheckOnClick = true;
+            NewItem.Click += ContextMenuStrip_ShowSeries_ClickEvent;
+        }
+
+        private void ContextMenuStrip_ShowSeries_ClickEvent(object sender, EventArgs e)
+        {
+            ToolStripMenuItem TargetItem = sender as ToolStripMenuItem;
+            string DataName = TargetItem.Name.Replace("Series_", "");
+            if (DataName == "All")
+            {
+                foreach (var item in Dict_SensorSeries)
+                {
+                    item.Value.Enabled = TargetItem.Checked;
+                }
+            }
+            else
+            {
+                Dict_SensorSeries[DataName].Enabled = TargetItem.Checked;
+            }
+        }
+
+        private void AddNewThresholdToolItem(string DataName)
+        {
+            if (thresholdToolStripMenuItem.DropDownItems.ContainsKey($"Threshold_{DataName}"))
+            {
+                return;
+            }
+            var NewThreshold = thresholdToolStripMenuItem.DropDownItems.Add(DataName) as ToolStripMenuItem;
+            NewThreshold.Name = $"Threshold_{DataName}";
+            NewThreshold.Checked = NewThreshold.CheckOnClick = true;
+            NewThreshold.Click += ContextMenuStrip_ShowThreshold_ClickEvent;
+        }
+
+        private void ContextMenuStrip_ShowThreshold_ClickEvent(object sender, EventArgs e)
+        {
+            ToolStripMenuItem Targetitem = sender as ToolStripMenuItem;
+            string DataName = Targetitem.Name.Replace("Threshold_", "");
+            if (DataName == "All")
+            {
+                foreach (var item in Dict_ThresholdStripLine)
+                {
+                    item.Value.Text = Targetitem.Checked?item.Key:"";
+                    item.Value.BorderWidth = Targetitem.Checked ? 2 : 0;
+                }
+            }
+            else
+            {
+                if (Targetitem.Checked)
+                {
+                    Dict_ThresholdStripLine[$"{DataName}_OOS"].Text = $"{DataName}_OOS";
+                    Dict_ThresholdStripLine[$"{DataName}_OOC"].Text = $"{DataName}_OOC";
+                    Dict_ThresholdStripLine[$"{DataName}_OOS"].BorderWidth = Dict_ThresholdStripLine[$"{DataName}_OOC"].BorderWidth = 2;
+                }
+                else
+                {
+                    Dict_ThresholdStripLine[$"{DataName}_OOS"].Text = "";
+                    Dict_ThresholdStripLine[$"{DataName}_OOC"].Text = "";
+                    Dict_ThresholdStripLine[$"{DataName}_OOS"].BorderWidth = Dict_ThresholdStripLine[$"{DataName}_OOC"].BorderWidth = 0;
+                }
+                
+            }
         }
 
         /// <summary>
-        /// 
+        /// HSV
         /// </summary>
         /// <param name="hue">0~360</param>
         /// <param name="saturation">0~1</param>
@@ -199,6 +272,10 @@ namespace DataQuery.Views
 
         private void ChartForShow_MouseClick(object sender, MouseEventArgs e)
         {
+            if (e.Button != MouseButtons.Left)
+            {
+                return;
+            }
             var Position_X = ChartForShow.ChartAreas[0].AxisX.PixelPositionToValue(e.X);
             DateTime ClickedTime = DateTime.FromOADate(Position_X);
             TimeLogAnnotation.Text = ClickedTime.ToString("yyyy/MM/dd HH:mm:ss");
@@ -223,9 +300,9 @@ namespace DataQuery.Views
         private void LAB_ShowRawData_Click(object sender, EventArgs e)
         {
             ChartForShow.ChartAreas[0].AxisY.StripLines.Clear();
-            foreach (var item in List_ThresholdStripLine)
+            foreach (var item in Dict_ThresholdStripLine)
             {
-                ChartForShow.ChartAreas[0].AxisY.StripLines.Add(item);
+                ChartForShow.ChartAreas[0].AxisY.StripLines.Add(item.Value);
             }
             foreach (var item in Dict_SensorSeries)
             {
@@ -246,7 +323,7 @@ namespace DataQuery.Views
             foreach (var item in Dict_SensorSeries)
             {
                 item.Value.Enabled = SensorInfo.ISOCheckDataName == item.Key;
-                Dict_SensorAnnotation[item.Key].Visible = SensorInfo.ISOCheckDataName == item.Key;
+                Dict_SensorAnnotation[item.Key].Visible =SensorInfo.ISOCheckDataName == item.Key;
             }
             ChartForShow.ChartAreas[0].AxisY.StripLines.Clear();
             if (List_ISOStripLine.Count == 0)
