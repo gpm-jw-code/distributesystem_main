@@ -57,8 +57,8 @@ namespace DistributedSystem_Main.User_Control
             }
             set
             {
-                if (value != _SensorType)
-                {
+                //if (value != _SensorType)
+                //{
                     foreach (var item in Dict_SensorSeries)
                     {
                         item.Value.Enabled = false;
@@ -73,7 +73,7 @@ namespace DistributedSystem_Main.User_Control
                         item.Value.Text = "";
                         item.Value.BorderWidth = 0;
                     }
-                }
+                //}
                 _SensorType = value;
             }
         }
