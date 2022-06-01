@@ -36,20 +36,20 @@ namespace DataQuery.Views
             this.TablePanel_Main = new System.Windows.Forms.TableLayoutPanel();
             this.Panel_Chart = new System.Windows.Forms.Panel();
             this.ChartForShow = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.ContextMenu_Chart = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.rawDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.thresholdToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Panel_Funcions = new System.Windows.Forms.Panel();
             this.Panel_DataType = new System.Windows.Forms.Panel();
             this.LAB_ShowISO = new System.Windows.Forms.Label();
             this.LAB_ShowRawData = new System.Windows.Forms.Label();
             this.LAB_SensorName = new System.Windows.Forms.Label();
-            this.ContextMenu_Chart = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.rawDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.thresholdToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TablePanel_Main.SuspendLayout();
             this.Panel_Chart.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ChartForShow)).BeginInit();
+            this.ContextMenu_Chart.SuspendLayout();
             this.Panel_Funcions.SuspendLayout();
             this.Panel_DataType.SuspendLayout();
-            this.ContextMenu_Chart.SuspendLayout();
             this.SuspendLayout();
             // 
             // TablePanel_Main
@@ -86,6 +86,7 @@ namespace DataQuery.Views
             this.ChartForShow.BorderSkin.BorderColor = System.Drawing.Color.Transparent;
             this.ChartForShow.BorderSkin.BorderWidth = 0;
             this.ChartForShow.BorderSkin.PageColor = System.Drawing.Color.Transparent;
+            chartArea1.AxisX.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Minutes;
             chartArea1.AxisX.LabelStyle.ForeColor = System.Drawing.Color.White;
             chartArea1.AxisX.LabelStyle.Format = "yyyy/MM/dd HH:mm:ss";
             chartArea1.AxisX.LineColor = System.Drawing.Color.DimGray;
@@ -125,6 +126,26 @@ namespace DataQuery.Views
             this.ChartForShow.Text = "chart1";
             this.ChartForShow.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ChartForShow_MouseClick);
             this.ChartForShow.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Form_DataCharts_MouseDown);
+            // 
+            // ContextMenu_Chart
+            // 
+            this.ContextMenu_Chart.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.rawDataToolStripMenuItem,
+            this.thresholdToolStripMenuItem});
+            this.ContextMenu_Chart.Name = "ContextMenu_Chart";
+            this.ContextMenu_Chart.Size = new System.Drawing.Size(131, 48);
+            // 
+            // rawDataToolStripMenuItem
+            // 
+            this.rawDataToolStripMenuItem.Name = "rawDataToolStripMenuItem";
+            this.rawDataToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
+            this.rawDataToolStripMenuItem.Text = "Raw Data";
+            // 
+            // thresholdToolStripMenuItem
+            // 
+            this.thresholdToolStripMenuItem.Name = "thresholdToolStripMenuItem";
+            this.thresholdToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
+            this.thresholdToolStripMenuItem.Text = "Threshold";
             // 
             // Panel_Funcions
             // 
@@ -184,26 +205,6 @@ namespace DataQuery.Views
             this.LAB_SensorName.TabIndex = 0;
             this.LAB_SensorName.Text = "Edge-EQName-UnitName-IP";
             // 
-            // ContextMenu_Chart
-            // 
-            this.ContextMenu_Chart.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.rawDataToolStripMenuItem,
-            this.thresholdToolStripMenuItem});
-            this.ContextMenu_Chart.Name = "ContextMenu_Chart";
-            this.ContextMenu_Chart.Size = new System.Drawing.Size(131, 48);
-            // 
-            // rawDataToolStripMenuItem
-            // 
-            this.rawDataToolStripMenuItem.Name = "rawDataToolStripMenuItem";
-            this.rawDataToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
-            this.rawDataToolStripMenuItem.Text = "Raw Data";
-            // 
-            // thresholdToolStripMenuItem
-            // 
-            this.thresholdToolStripMenuItem.Name = "thresholdToolStripMenuItem";
-            this.thresholdToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
-            this.thresholdToolStripMenuItem.Text = "Threshold";
-            // 
             // Form_DataCharts
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -217,11 +218,11 @@ namespace DataQuery.Views
             this.TablePanel_Main.ResumeLayout(false);
             this.Panel_Chart.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.ChartForShow)).EndInit();
+            this.ContextMenu_Chart.ResumeLayout(false);
             this.Panel_Funcions.ResumeLayout(false);
             this.Panel_Funcions.PerformLayout();
             this.Panel_DataType.ResumeLayout(false);
             this.Panel_DataType.PerformLayout();
-            this.ContextMenu_Chart.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

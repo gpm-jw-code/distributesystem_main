@@ -16,6 +16,18 @@ namespace DataQuery.Views
         public SensorDataProcess.SensorInfo SensorInfo;
         public Action<string> Event_FormClicked;
 
+
+        List<Color> List_ISOColor = new List<Color> { Color.Green, Color.Yellow, Color.Orange, Color.Red };
+        private List<StripLine> List_ISOStripLine = new List<StripLine>();
+        Dictionary<string, Series> Dict_SensorSeries = new Dictionary<string, Series>();
+        Dictionary<string, RectangleAnnotation> Dict_SensorAnnotation = new Dictionary<string, RectangleAnnotation>();
+        RectangleAnnotation TimeLogAnnotation;
+        Dictionary<string, StripLine> Dict_ThresholdStripLine = new Dictionary<string, StripLine>();
+
+        Dictionary<string, double> Dict_ThresholdData = new Dictionary<string, double>();
+        Dictionary<string, List<StripLine>> Dict_OOC_StripLine = new Dictionary<string, List<StripLine>>();
+        Dictionary<string, List<StripLine>> Dict_OOS_StripLine = new Dictionary<string, List<StripLine>>();
+
         /// <summary>
         /// Multi Mode專用
         /// </summary>
@@ -68,9 +80,6 @@ namespace DataQuery.Views
             this.Hide();
         }
 
-        Dictionary<string, Series> Dict_SensorSeries = new Dictionary<string, Series>();
-        Dictionary<string, RectangleAnnotation> Dict_SensorAnnotation = new Dictionary<string, RectangleAnnotation>();
-        RectangleAnnotation TimeLogAnnotation;
 
         public void ImportSensorInfo(SensorDataProcess.SensorInfo SensorInfo)
         {
@@ -89,22 +98,158 @@ namespace DataQuery.Views
             ChartForShow.Series.Clear();
             ChartForShow.Annotations.Clear();
             rawDataToolStripMenuItem.DropDownItems.Clear();
-            thresholdToolStripMenuItem.DropDownItems.Clear();
+            ChartForShow.ChartAreas[0].AxisX.StripLines.Clear();
+            Dict_OOS_StripLine.Clear();
+            Dict_OOC_StripLine.Clear();
             AddNewSeriesToolItem("All");
             AddNewThresholdToolItem("All");
+
             foreach (var item in Dict_DataSeries)
             {
                 IntForColor += 1;
+                string DataName = item.Key;
                 Color NewSeriesColor = ColorFromHSV(360 * IntForColor / Dict_DataSeries.Count, 1, 1);
                 Color StripLineColor = ColorFromHSV(360 * IntForColor / Dict_DataSeries.Count, 1, 0.5);
-                CreateNewSensorUIObjects(item.Key, NewSeriesColor);
-                Dict_SensorSeries[item.Key].Points.DataBindXY(TimeLogSeries, item.Value);
+                CreateNewSensorUIObjects(DataName, NewSeriesColor);
+                Dict_SensorSeries[DataName].Points.DataBindXY(TimeLogSeries, item.Value);
+
+                if (Dict_ThresholdData.Count == 0)
+                {
+                    continue;
+                }
+                Check_OOC_OOS_Result(TimeLogSeries, item.Value, DataName);
             }
         }
-        Dictionary<string,StripLine> Dict_ThresholdStripLine = new Dictionary<string, StripLine>();
+
+        private void Check_OOC_OOS_Result(List<DateTime> TimeLogSeries, List<double> List_Data, string DataName)
+        {
+            Dict_OOS_StripLine.Add(DataName, new List<StripLine>());
+            Dict_OOC_StripLine.Add(DataName, new List<StripLine>());
+            int DataLength = TimeLogSeries.Count;
+            bool IsDuringCreateNewStripLine = false ;
+            bool IsNewStripLineOOS = false;
+            bool IsNewStripLineOOC = false;
+            DateTime stripLineStartTime = default;
+            for (int i = 0; i < DataLength; i++)
+            {
+                if (List_Data[i] > Dict_ThresholdData[$"{DataName}_OOS"])
+                {
+                    if (IsDuringCreateNewStripLine)
+                    {//正在建立新的OOC中
+                        if (IsNewStripLineOOC)
+                        {
+                            //如果建立中的不是OOS  就用建立中的參數New一個OOC 出來並且加進圖表
+                           var TimeInterval=  TimeLogSeries[i].ToOADate() - stripLineStartTime.ToOADate();
+                            var newStripLine = CreateStripLine(Color.Yellow, stripLineStartTime.ToOADate(), TimeInterval);
+                            Dict_OOS_StripLine[DataName].Add(newStripLine);
+                            ChartForShow.ChartAreas[0].AxisX.StripLines.Add(newStripLine);
+                            IsNewStripLineOOC = false;
+                            stripLineStartTime = TimeLogSeries[i];
+                        }
+                    }
+                    else
+                    {
+                        stripLineStartTime = TimeLogSeries[i];
+                    }
+                    IsDuringCreateNewStripLine = true;
+                    IsNewStripLineOOS = true;
+                }
+                else if (List_Data[i] > Dict_ThresholdData[$"{DataName}_OOC"])
+                {
+                    if (IsDuringCreateNewStripLine)
+                    {//正在建立新的OOS中
+                        if (IsNewStripLineOOS)
+                        {
+                            //如果建立中的是OOS  就用建立中的參數New一個OOS 出來並且加進圖表
+                            var TimeInterval = TimeLogSeries[i].ToOADate() - stripLineStartTime.ToOADate();
+                            var newStripLine = CreateStripLine(Color.Yellow, stripLineStartTime.ToOADate(), TimeInterval);
+                            Dict_OOS_StripLine[DataName].Add(newStripLine);
+                            ChartForShow.ChartAreas[0].AxisX.StripLines.Add(newStripLine);
+                            IsNewStripLineOOS = false;
+                            stripLineStartTime = TimeLogSeries[i];
+                        }
+                    }
+                    else
+                    {
+                        stripLineStartTime = TimeLogSeries[i];
+                    }
+                    IsDuringCreateNewStripLine = true;
+                    IsNewStripLineOOC = true;
+                }
+                else
+                {
+                    if (IsDuringCreateNewStripLine)
+                    {//正在建立新的OOS中
+                        if (IsNewStripLineOOS)
+                        {
+                            //如果建立中的是OOS  就用建立中的參數New一個OOS 出來並且加進圖表
+                            var TimeInterval = TimeLogSeries[i].ToOADate() - stripLineStartTime.ToOADate();
+                            var newStripLine = CreateStripLine(Color.Red, stripLineStartTime.ToOADate(), TimeInterval);
+                            Dict_OOS_StripLine[DataName].Add(newStripLine);
+                            ChartForShow.ChartAreas[0].AxisX.StripLines.Add(newStripLine);
+                            IsNewStripLineOOS = false;
+                        }
+                        if (IsNewStripLineOOC)
+                        {
+                            //如果建立中的不是OOS  就用建立中的參數New一個OOC 出來並且加進圖表
+                            var TimeInterval = TimeLogSeries[i].ToOADate() - stripLineStartTime.ToOADate();
+                            var newStripLine = CreateStripLine(Color.Yellow, stripLineStartTime.ToOADate(), TimeInterval);
+                            Dict_OOS_StripLine[DataName].Add(newStripLine);
+                            ChartForShow.ChartAreas[0].AxisX.StripLines.Add(newStripLine);
+                            IsNewStripLineOOC = false;
+                        }
+                    }
+                    else
+                    {
+                        stripLineStartTime = TimeLogSeries[i];
+                    }
+                    IsDuringCreateNewStripLine = false;
+                    IsNewStripLineOOC = false;
+                    IsNewStripLineOOS = false;
+                }
+            }
+
+            if (IsDuringCreateNewStripLine)
+            {
+                //正在建立新的OOC中
+                if (IsNewStripLineOOC)
+                {
+                    //如果建立中的不是OOS  就用建立中的參數New一個OOC 出來並且加進圖表
+                    var TimeInterval = TimeLogSeries.Last().ToOADate() - stripLineStartTime.ToOADate();
+                    var newStripLine = CreateStripLine(Color.Yellow, stripLineStartTime.ToOADate(), TimeInterval);
+                    Dict_OOS_StripLine[DataName].Add(newStripLine);
+                    ChartForShow.ChartAreas[0].AxisX.StripLines.Add(newStripLine);
+                }
+                //正在建立新的OOS中
+                if (IsNewStripLineOOS)
+                {
+                    //如果建立中的是OOS  就用建立中的參數New一個OOS 出來並且加進圖表
+                    var TimeInterval = TimeLogSeries.Last().ToOADate() - stripLineStartTime.ToOADate();
+                    var newStripLine = CreateStripLine(Color.Red, stripLineStartTime.ToOADate(), TimeInterval);
+                    Dict_OOS_StripLine[DataName].Add(newStripLine);
+                    ChartForShow.ChartAreas[0].AxisX.StripLines.Add(newStripLine);
+                }
+            }
+        }
+
+
+        private StripLine CreateStripLine(Color BorderColor,double Offset,double Interval)
+        {
+            StripLine NewStripLine = new StripLine
+            {
+                BorderWidth = 0,
+                BackColor = Color.FromArgb(20, BorderColor),
+                IntervalOffset = Offset,
+                StripWidth = Interval
+            };
+            return NewStripLine;
+        }
+
         public void ImportThreshold(Dictionary<string, double> Dict_Threshold)
         {
+            thresholdToolStripMenuItem.DropDownItems.Clear();
             ChartForShow.ChartAreas[0].AxisY.StripLines.Clear();
+            Dict_ThresholdData = Dict_Threshold;
             Dict_ThresholdStripLine.Clear();
             foreach (var item in Dict_Threshold)
             {
@@ -180,6 +325,10 @@ namespace DataQuery.Views
             string DataName = TargetItem.Name.Replace("Series_", "");
             if (DataName == "All")
             {
+                foreach (ToolStripMenuItem item in rawDataToolStripMenuItem.DropDownItems)
+                {
+                    item.Checked = TargetItem.Checked;
+                }
                 foreach (var item in Dict_SensorSeries)
                 {
                     item.Value.Enabled = TargetItem.Checked;
@@ -209,10 +358,29 @@ namespace DataQuery.Views
             string DataName = Targetitem.Name.Replace("Threshold_", "");
             if (DataName == "All")
             {
+                foreach (ToolStripMenuItem item in thresholdToolStripMenuItem.DropDownItems)
+                {
+                    item.Checked = Targetitem.Checked;
+                }
                 foreach (var item in Dict_ThresholdStripLine)
                 {
                     item.Value.Text = Targetitem.Checked?item.Key:"";
                     item.Value.BorderWidth = Targetitem.Checked ? 2 : 0;
+                }
+                foreach (var DataAlarmStripLine in Dict_OOC_StripLine)
+                {
+                    foreach (var item in DataAlarmStripLine.Value)
+                    {
+                        item.BackColor = Targetitem.Checked ? Color.FromArgb(30, Color.Yellow) : Color.Transparent;
+                    }
+                }
+                foreach (var DataAlarmStripLine in Dict_OOS_StripLine)
+                {
+                    foreach (var item in DataAlarmStripLine.Value)
+                    {
+                        item.BackColor = Targetitem.Checked ? Color.FromArgb(30, Color.Red) : Color.Transparent;
+                    }
+                   
                 }
             }
             else
@@ -222,12 +390,28 @@ namespace DataQuery.Views
                     Dict_ThresholdStripLine[$"{DataName}_OOS"].Text = $"{DataName}_OOS";
                     Dict_ThresholdStripLine[$"{DataName}_OOC"].Text = $"{DataName}_OOC";
                     Dict_ThresholdStripLine[$"{DataName}_OOS"].BorderWidth = Dict_ThresholdStripLine[$"{DataName}_OOC"].BorderWidth = 2;
+                    foreach (var item in Dict_OOC_StripLine[DataName])
+                    {
+                        item.BackColor = Color.FromArgb(30, Color.Yellow);
+                    }
+                    foreach (var item in Dict_OOS_StripLine[DataName])
+                    {
+                        item.BackColor = Color.FromArgb(30, Color.Red);
+                    }
                 }
                 else
                 {
                     Dict_ThresholdStripLine[$"{DataName}_OOS"].Text = "";
                     Dict_ThresholdStripLine[$"{DataName}_OOC"].Text = "";
                     Dict_ThresholdStripLine[$"{DataName}_OOS"].BorderWidth = Dict_ThresholdStripLine[$"{DataName}_OOC"].BorderWidth = 0;
+                    foreach (var item in Dict_OOC_StripLine[DataName])
+                    {
+                        item.BackColor = Color.Transparent;
+                    }
+                    foreach (var item in Dict_OOS_StripLine[DataName])
+                    {
+                        item.BackColor = Color.Transparent;
+                    }
                 }
                 
             }
@@ -340,16 +524,13 @@ namespace DataQuery.Views
             SetBackColorThreshold(ISOThreshold.ThresholdA, ISOThreshold.ThresholdB, ISOThreshold.ThresholdC);
 
         }
-        List<Color> List_Color = new List<Color> { Color.Green, Color.Yellow, Color.Orange, Color.Red };
-        private List<StripLine> List_ISOStripLine = new List<StripLine>();
-
         private void InitialBackColorStripLine()
         {
             for (int i = 0; i < 4; i++)
             {
                 StripLine NewStripLine = new StripLine()
                 {
-                    BackColor = Color.FromArgb(50, List_Color[i]),
+                    BackColor = Color.FromArgb(50, List_ISOColor[i]),
                     BorderWidth = 0,
                     Interval = 0
                 };

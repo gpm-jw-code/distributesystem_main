@@ -90,8 +90,8 @@ namespace DataQuery
                 Invoke((MethodInvoker)delegate
                 {
                     staobj.Form_MainQueryChart.ImportSensorInfo(TargetSensorInfo);
-                    staobj.Form_MainQueryChart.ImportSensorDataSeries(IntervalRawData.List_DownSampleTimeLog, IntervalRawData.Dict_DownSampleData);
                     staobj.Form_MainQueryChart.ImportThreshold(Dict_Threshold);
+                    staobj.Form_MainQueryChart.ImportSensorDataSeries(IntervalRawData.List_DownSampleTimeLog, IntervalRawData.Dict_DownSampleData);
                     staobj.Form_MainQueryChart.MdiParent = this;
                     staobj.Form_MainQueryChart.Parent = SplitContainer_Sensor_Chart.Panel2;
                     staobj.Form_MainQueryChart.WindowState = FormWindowState.Maximized;
@@ -130,8 +130,8 @@ namespace DataQuery
                         IntervalRawData.Downsampling(1000);
                         Invoke((MethodInvoker)delegate
                         {
-                            TargetChart.ImportSensorDataSeries(IntervalRawData.List_DownSampleTimeLog, IntervalRawData.Dict_DownSampleData);
                             TargetChart.ImportThreshold(Dict_Threshold);
+                            TargetChart.ImportSensorDataSeries(IntervalRawData.List_DownSampleTimeLog, IntervalRawData.Dict_DownSampleData);
                             TargetChart.Show();
                         });
                     });
@@ -148,8 +148,8 @@ namespace DataQuery
                 IntervalRawData.Downsampling(1000);
                 Invoke((MethodInvoker)delegate
                 {
-                    TargetChart.ImportSensorDataSeries(IntervalRawData.List_DownSampleTimeLog, IntervalRawData.Dict_DownSampleData);
                     TargetChart.ImportThreshold(Dict_Threshold);
+                    TargetChart.ImportSensorDataSeries(IntervalRawData.List_DownSampleTimeLog, IntervalRawData.Dict_DownSampleData);
                     TargetChart.BringToFront();
                     TargetChart.Event_FormClicked += MultiSensorFormBringToFront;
                     TargetChart.Show();

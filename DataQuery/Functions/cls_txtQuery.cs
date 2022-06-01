@@ -80,7 +80,13 @@ namespace DataQuery.Functions
                                 }
                                 continue;
                             }
-                            OutputData.ImportNewDataString(DataString);
+                            string[] DataArray = DataString.Split(',');
+                            var TimeLog =DateTime.ParseExact(DataArray[0], "yyyy/MM/dd HH:mm:ss", CultureInfo.CurrentCulture);
+                            if (TimeLog<StartTime)
+                                continue;
+                            if (TimeLog>EndTime)
+                                break;
+                            OutputData.ImportNewDataString(DataArray);
                         }
                     }
                 }
@@ -187,9 +193,8 @@ namespace DataQuery.Functions
             }
         }
 
-        public void ImportNewDataString(string DataString)
+        public void ImportNewDataString(string[] DataArray)
         {
-            string[] DataArray = DataString.Split(',');
             List_TimeLog.Add(DateTime.ParseExact(DataArray[0], "yyyy/MM/dd HH:mm:ss", CultureInfo.CurrentCulture));
             for (int i = 1; i < DataArray.Length; i++)
             {
