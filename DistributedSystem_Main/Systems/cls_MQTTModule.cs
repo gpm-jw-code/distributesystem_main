@@ -116,8 +116,15 @@ namespace DistributedSystem_Main.Systems
                 {
                     var sensorPcrObj = Staobj.Dict_SensorProcessObject[SensorName];
                     var sensorType = sensorPcrObj.SensorInfo.SensorType;
-                   
-                    sensorPcrObj.ImportNewSensorData(NewData.Dict_RawData, NewData.TimeLog);
+
+                    if (NewData.IsArrayData)
+                    {
+                        sensorPcrObj.ImportListSensorData(NewData.Dict_ListRawData, NewData.List_TimeLog);
+                    }
+                    else
+                    {
+                        sensorPcrObj.ImportNewSensorData(NewData.Dict_RawData, NewData.TimeLog);
+                    }
                     
                     WebService.cls_RawData RawData = new WebService.cls_RawData(OriginSensorName, EdgeName, NewData.TimeLog, NewData.Dict_RawData, sensorPcrObj.Dict_DataThreshold, sensorPcrObj.Dict_OutOfItemStates);
                     Event_ReceiveSensorRawData_Websocket?.Invoke(Newtonsoft.Json.JsonConvert.SerializeObject(RawData));

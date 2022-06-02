@@ -96,9 +96,21 @@ namespace SensorDataProcess
             }
         }
 
+        public void ImportListSensorData(Dictionary<string,List<double>> Dict_ListNewData,List<DateTime> List_TimeLog)
+        {
+            for (int i = 0; i < List_TimeLog.Count; i++)
+            {
+                var NewDataDictionary = new Dictionary<string, double>();
+                foreach (var item in Dict_ListNewData)
+                {
+                    NewDataDictionary.Add(item.Key, item.Value[i]);
+                }
+                ImportNewSensorData(NewDataDictionary, List_TimeLog[i],true);
+            }
+            Event_UpdateChartSeries?.Invoke(SensorInfo.SensorName, Queue_TimeLog, Dict_SensorDataSeries);
+        }
 
-
-        public void ImportNewSensorData(Dictionary<string, double> Dict_NewData, DateTime TimeLog)
+        public void ImportNewSensorData(Dictionary<string, double> Dict_NewData, DateTime TimeLog,bool IsListData = false)
         {
             SQLDataSaver?.InsertRawData(Dict_NewData, TimeLog);
             TxtDataSaver.WriteRawData(Dict_NewData, TimeLog);
@@ -141,6 +153,10 @@ namespace SensorDataProcess
                 }
             }
 
+            if (IsListData)
+            {
+                return;
+            }
             Event_UpdateChartSeries?.Invoke(SensorInfo.SensorName, Queue_TimeLog, Dict_SensorDataSeries);
         }
 
