@@ -108,25 +108,30 @@ namespace DistributedSystem_Main.Systems
                 string OriginSensorName = TopicName.Split('/').Last();
                 string SensorName = $"{EdgeName}-{OriginSensorName}";
                 Systems.cls_SensorData_Mqtt NewData = Newtonsoft.Json.JsonConvert.DeserializeObject<cls_SensorData_Mqtt>(Data);
-                if (NewData.Dict_RawData.Count == 0)
-                {
-                    return;
-                }
+
+                WebService.cls_RawData RawData = null;
                 if (Staobj.Dict_SensorProcessObject.ContainsKey(SensorName))
                 {
+
                     var sensorPcrObj = Staobj.Dict_SensorProcessObject[SensorName];
                     var sensorType = sensorPcrObj.SensorInfo.SensorType;
 
                     if (NewData.IsArrayData)
                     {
+
                         sensorPcrObj.ImportContinuousSensorData(NewData.Dict_ListRawData, NewData.List_TimeLog);
+                        RawData = new WebService.cls_RawData(OriginSensorName, EdgeName, NewData.TimeLog, NewData.Dict_ListRawData, sensorPcrObj.Dict_DataThreshold, sensorPcrObj.Dict_OutOfItemStates);
                     }
                     else
                     {
+                        if (NewData.Dict_RawData.Count == 0)
+                        {
+                            return;
+                        }
                         sensorPcrObj.ImportNewSensorData(NewData.Dict_RawData, NewData.TimeLog);
+                        RawData = new WebService.cls_RawData(OriginSensorName, EdgeName, NewData.TimeLog, NewData.Dict_RawData, sensorPcrObj.Dict_DataThreshold, sensorPcrObj.Dict_OutOfItemStates);
                     }
-                    
-                    WebService.cls_RawData RawData = new WebService.cls_RawData(OriginSensorName, EdgeName, NewData.TimeLog, NewData.Dict_RawData, sensorPcrObj.Dict_DataThreshold, sensorPcrObj.Dict_OutOfItemStates);
+
                     Event_ReceiveSensorRawData_Websocket?.Invoke(Newtonsoft.Json.JsonConvert.SerializeObject(RawData));
                 }
             }
