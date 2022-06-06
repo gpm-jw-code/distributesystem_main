@@ -96,8 +96,9 @@ namespace SensorDataProcess
             }
         }
 
-        public void ImportListSensorData(Dictionary<string,List<double>> Dict_ListNewData,List<DateTime> List_TimeLog)
+        public void ImportContinuousSensorData(Dictionary<string,List<double>> Dict_ListNewData,List<DateTime> List_TimeLog)
         {
+            WriteContinuousData(Dict_ListNewData, List_TimeLog);
             for (int i = 0; i < List_TimeLog.Count; i++)
             {
                 var NewDataDictionary = new Dictionary<string, double>();
@@ -110,15 +111,32 @@ namespace SensorDataProcess
             Event_UpdateChartSeries?.Invoke(SensorInfo.SensorName, Queue_TimeLog, Dict_SensorDataSeries);
         }
 
-        public void ImportNewSensorData(Dictionary<string, double> Dict_NewData, DateTime TimeLog,bool IsListData = false)
+        private void WriteContinuousData(Dictionary<string, List<double>> Dict_ListNewData, List<DateTime> List_TimeLog)
+        {
+            TxtDataSaver.WriteContinuousRawData(Dict_ListNewData, List_TimeLog);
+            SQLDataSaver?.InsertContinuousRawData(Dict_ListNewData, List_TimeLog);
+        }
+
+        private void WirteSingleData(Dictionary<string, double> Dict_NewData, DateTime TimeLog)
         {
             SQLDataSaver?.InsertRawData(Dict_NewData, TimeLog);
             TxtDataSaver.WriteRawData(Dict_NewData, TimeLog);
+           
+        }
+
+        public void ImportNewSensorData(Dictionary<string, double> Dict_NewData, DateTime TimeLog,bool IsListData = false)
+        {
+            if (!IsListData)
+            {
+                WirteSingleData(Dict_NewData, TimeLog);
+            }
+
             bool IsWriteHourlyData = HourlyData.ImportNewData(Dict_NewData, TimeLog);
             if (IsWriteHourlyData)
             {
                 SQLDataSaver?.InsertHourlyRawData(HourlyData.Dict_AverageData, TimeLog);
             }
+
             var CheckResult = CheckThreshold(Dict_NewData, TimeLog);
             if (ISOFunctionEnable && ISOCheckObject != null)
             {

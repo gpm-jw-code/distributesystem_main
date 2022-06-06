@@ -43,7 +43,49 @@ namespace SensorDataProcess
             {
                 Enable = false;
             }
-            
+        }
+
+        public void InsertContinuousRawData(Dictionary<string,List<double>> Dict_ListRawData,List<DateTime> List_TimeLog)
+        {
+            if (!Enable)
+            {
+                return;
+            }
+            List<string> List_ColumnName = new List<string>();
+            List<List<object>> List_List_RawData = new List<List<object>>();
+
+            int DataNumber = List_TimeLog.Count;
+
+            foreach (var item in Dict_ListRawData)
+            {
+                string ItemForSqlColumnName = item.Key.Replace('.', '_').Replace(' ', '_');
+                List_ColumnName.Add(ItemForSqlColumnName);
+            }
+            List_ColumnName.Add("TimeLog");
+
+            for (int i = 0; i < DataNumber; i++)
+            {
+                List<object> NewDataList = new List<object>();
+                foreach (var item in Dict_ListRawData)
+                {
+                    NewDataList.Add(item.Value[i]);
+                }
+                NewDataList.Add($"{List_TimeLog[i]:yyyy-MM-dd HH:mm:ss.fff}");
+                List_List_RawData.Add(NewDataList);
+            }
+
+            try
+            {
+                SQL_ProcessItem.insert_mulitrow(SchemaName, "rawdata", List_ColumnName, List_List_RawData);
+            }
+            catch (Exception)
+            {
+                if (!SQL_ProcessItem.CheckTableExist(SchemaName, "rawdata"))
+                {
+                    CreateRawDataTable(Dict_ListRawData.Keys.ToList(), "rawdata");
+                }
+                SQL_ProcessItem.insert_mulitrow(SchemaName, "rawdata", List_ColumnName, List_List_RawData);
+            }
         }
 
         public void InsertRawData(Dictionary<string, double> Dict_RawData, DateTime TimeLog)
@@ -61,15 +103,22 @@ namespace SensorDataProcess
                 List_ColumnName.Add(ItemForSqlColumnName);
                 list_Value.Add(item.Value);
             }
-            if (!SQL_ProcessItem.CheckTableExist(SchemaName, "rawdata"))
-            {
-                CreateRawDataTable(Dict_RawData.Keys.ToList(), "rawdata");
-            }
 
             List_ColumnName.Add("TimeLog");
             list_Value.Add($"{TimeLog:yyyy-MM-dd HH:mm:ss.fff}");
-
-            SQL_ProcessItem.insert_row(SchemaName, "rawdata", List_ColumnName, list_Value);
+           
+            try
+            {
+                SQL_ProcessItem.insert_row(SchemaName, "rawdata", List_ColumnName, list_Value);
+            }
+            catch (Exception)
+            {
+                if (!SQL_ProcessItem.CheckTableExist(SchemaName, "rawdata"))
+                {
+                    CreateRawDataTable(Dict_RawData.Keys.ToList(), "rawdata");
+                }
+                SQL_ProcessItem.insert_row(SchemaName, "rawdata", List_ColumnName, list_Value);
+            }
         }
 
         public void InsertHourlyRawData(Dictionary<string,double> Dict_HourlyAverageData,DateTime TimeLog)
@@ -89,15 +138,22 @@ namespace SensorDataProcess
                 List_ColumnName.Add(ItemForSqlColumnName);
                 list_Value.Add(item.Value);
             }
-            if (!SQL_ProcessItem.CheckTableExist(SchemaName, "hourly_rawdata"))
-            {
-                CreateRawDataTable(Dict_HourlyAverageData.Keys.ToList(), "hourly_rawdata");
-            }
 
             List_ColumnName.Add("timelog");
             list_Value.Add($"{TimeLog:yyyy-MM-dd HH:mm:ss.fff}");
 
-            SQL_ProcessItem.insert_row(SchemaName, "hourly_rawdata", List_ColumnName, list_Value);
+            try
+            {
+                SQL_ProcessItem.insert_row(SchemaName, "hourly_rawdata", List_ColumnName, list_Value);
+            }
+            catch (Exception)
+            {
+                if (!SQL_ProcessItem.CheckTableExist(SchemaName, "hourly_rawdata"))
+                {
+                    CreateRawDataTable(Dict_HourlyAverageData.Keys.ToList(), "hourly_rawdata");
+                }
+                SQL_ProcessItem.insert_row(SchemaName, "hourly_rawdata", List_ColumnName, list_Value);
+            }
         }
 
         private void CreateRawDataTable(List<string> List_DataName,string TableName)

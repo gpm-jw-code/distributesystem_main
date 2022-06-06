@@ -119,7 +119,7 @@ namespace DistributedSystem_Main.Systems
 
                     if (NewData.IsArrayData)
                     {
-                        sensorPcrObj.ImportListSensorData(NewData.Dict_ListRawData, NewData.List_TimeLog);
+                        sensorPcrObj.ImportContinuousSensorData(NewData.Dict_ListRawData, NewData.List_TimeLog);
                     }
                     else
                     {

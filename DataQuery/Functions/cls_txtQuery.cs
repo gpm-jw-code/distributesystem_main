@@ -81,6 +81,10 @@ namespace DataQuery.Functions
                                 continue;
                             }
                             string[] DataArray = DataString.Split(',');
+                            if (DataArray.Length<=1)
+                            {
+                                continue;
+                            }
                             var TimeLog =DateTime.ParseExact(DataArray[0], "yyyy/MM/dd HH:mm:ss", CultureInfo.CurrentCulture);
                             if (TimeLog<StartTime)
                                 continue;

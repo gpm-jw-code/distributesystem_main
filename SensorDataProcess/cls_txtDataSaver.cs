@@ -40,12 +40,13 @@ namespace SensorDataProcess
                 return Path.Combine(RootPath, "Log", Edge_SensorNameArray[0], Edge_SensorNameArray[1]);
             }
         }
-        private string ISOResultFileDirectory { 
+        private string ISOResultFileDirectory
+        {
             get
             {
                 var Edge_SensorNameArray = SensorInfo.SensorName.Split('-');
                 return Path.Combine(RootPath, "ISOResult", Edge_SensorNameArray[0], Edge_SensorNameArray[1]);
-            } 
+            }
         }
 
         public cls_txtDataSaver(SensorInfo SensorInfo)
@@ -64,6 +65,47 @@ namespace SensorDataProcess
                 Directory.CreateDirectory(HourlyRawDataPath);
             if (!Directory.Exists(ISOResultFileDirectory))
                 Directory.CreateDirectory(ISOResultFileDirectory);
+        }
+
+        public void WriteContinuousRawData(Dictionary<string, List<double>> NewListData, List<DateTime> ListTimeLog)
+        {
+            string FileName = Path.Combine(RawDataPath, $"{ListTimeLog[0]:yyyyMMdd_HH}.csv");
+            bool IsNeedHeader = !File.Exists(FileName);
+            string TempWriteData = "";
+            int DataNumber = ListTimeLog.Count;
+            for (int i = 0; i < DataNumber; i++)
+            {
+                TempWriteData += $"{ListTimeLog[i]:yyyy/MM/dd HH:mm:ss}";
+                foreach (var item in NewListData)
+                {
+                    TempWriteData += $",{item.Value[i]}";
+                }
+                if (i == DataNumber - 1)
+                {
+                    break;
+                }
+                TempWriteData += Environment.NewLine;
+            }
+
+            try
+            {
+                using (FileStream FS = new FileStream(FileName, FileMode.Append, FileAccess.Write, FileShare.Read))
+                {
+                    using (StreamWriter SW = new StreamWriter(FS))
+                    {
+                        if (IsNeedHeader)
+                        {
+                            SW.WriteLine(SensorInfoString);
+                            SW.WriteLine(RawDataHeader(NewListData.Keys));
+                        }
+                        SW.WriteLine(TempWriteData);
+                    }
+                }
+            }
+            catch (IOException exp)
+            {
+                CheckDirectoryPath();
+            }
         }
 
         public void WriteRawData(Dictionary<string, double> NewData, DateTime TimeLog)
