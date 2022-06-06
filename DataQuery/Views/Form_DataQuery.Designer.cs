@@ -33,6 +33,7 @@ namespace DataQuery
             this.SplitContainer_Sensor_Chart = new System.Windows.Forms.SplitContainer();
             this.TreeView_SensorList = new System.Windows.Forms.TreeView();
             this.Panel_Functions = new System.Windows.Forms.Panel();
+            this.BTN_ResizeMultiForm = new System.Windows.Forms.Button();
             this.LAB_ShowMulti = new System.Windows.Forms.Label();
             this.LAB_ShowSingle = new System.Windows.Forms.Label();
             this.Panel_CustomQueryTime = new System.Windows.Forms.Panel();
@@ -47,7 +48,6 @@ namespace DataQuery
             this.LAB_QueryAMonth = new System.Windows.Forms.Label();
             this.LAB_QueryAWeek = new System.Windows.Forms.Label();
             this.LAB_QueryADay = new System.Windows.Forms.Label();
-            this.BTN_ResizeMultiForm = new System.Windows.Forms.Button();
             this.Panel_Data.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SplitContainer_Sensor_Chart)).BeginInit();
             this.SplitContainer_Sensor_Chart.Panel1.SuspendLayout();
@@ -110,6 +110,18 @@ namespace DataQuery
             this.Panel_Functions.Name = "Panel_Functions";
             this.Panel_Functions.Size = new System.Drawing.Size(1242, 78);
             this.Panel_Functions.TabIndex = 5;
+            // 
+            // BTN_ResizeMultiForm
+            // 
+            this.BTN_ResizeMultiForm.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.BTN_ResizeMultiForm.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BTN_ResizeMultiForm.Location = new System.Drawing.Point(1182, 28);
+            this.BTN_ResizeMultiForm.Name = "BTN_ResizeMultiForm";
+            this.BTN_ResizeMultiForm.Size = new System.Drawing.Size(53, 28);
+            this.BTN_ResizeMultiForm.TabIndex = 6;
+            this.BTN_ResizeMultiForm.Text = "排序";
+            this.BTN_ResizeMultiForm.UseVisualStyleBackColor = true;
+            this.BTN_ResizeMultiForm.Click += new System.EventHandler(this.BTN_ResizeMultiForm_Click);
             // 
             // LAB_ShowMulti
             // 
@@ -278,18 +290,6 @@ namespace DataQuery
             this.LAB_QueryADay.Text = "1天";
             this.LAB_QueryADay.Click += new System.EventHandler(this.LAB_QueryTime_Click);
             // 
-            // BTN_ResizeMultiForm
-            // 
-            this.BTN_ResizeMultiForm.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.BTN_ResizeMultiForm.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BTN_ResizeMultiForm.Location = new System.Drawing.Point(1182, 28);
-            this.BTN_ResizeMultiForm.Name = "BTN_ResizeMultiForm";
-            this.BTN_ResizeMultiForm.Size = new System.Drawing.Size(53, 28);
-            this.BTN_ResizeMultiForm.TabIndex = 6;
-            this.BTN_ResizeMultiForm.Text = "排序";
-            this.BTN_ResizeMultiForm.UseVisualStyleBackColor = true;
-            this.BTN_ResizeMultiForm.Click += new System.EventHandler(this.BTN_ResizeMultiForm_Click);
-            // 
             // Form_DataQuery
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
@@ -304,6 +304,7 @@ namespace DataQuery
             this.Margin = new System.Windows.Forms.Padding(5);
             this.Name = "Form_DataQuery";
             this.Text = "Data Query";
+            this.SizeChanged += new System.EventHandler(this.Form_DataQuery_SizeChanged);
             this.Panel_Data.ResumeLayout(false);
             this.SplitContainer_Sensor_Chart.Panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.SplitContainer_Sensor_Chart)).EndInit();

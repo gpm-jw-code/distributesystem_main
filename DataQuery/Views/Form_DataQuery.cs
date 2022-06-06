@@ -264,8 +264,17 @@ namespace DataQuery
                 ItemNum += 1;
             }
         }
+
         #endregion
 
-
+        private void Form_DataQuery_SizeChanged(object sender, EventArgs e)
+        {
+            if (staobj.QueryParam.NowShowChartMode == staobj.QueryParam.ShowDataChartMode.Single)
+            {
+                staobj.Form_MainQueryChart.MdiParent = this;
+                staobj.Form_MainQueryChart.Parent = SplitContainer_Sensor_Chart.Panel2;
+                staobj.Form_MainQueryChart.WindowState = FormWindowState.Maximized;
+            }
+        }
     }
 }

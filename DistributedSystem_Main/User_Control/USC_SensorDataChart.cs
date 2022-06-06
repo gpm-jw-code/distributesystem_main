@@ -57,23 +57,20 @@ namespace DistributedSystem_Main.User_Control
             }
             set
             {
-                //if (value != _SensorType)
-                //{
-                    foreach (var item in Dict_SensorSeries)
-                    {
-                        item.Value.Enabled = false;
-                    }
-                    foreach (var item in Dict_SensorOOC_StripLines)
-                    {
-                        item.Value.Text = "";
-                        item.Value.BorderWidth = 0;
-                    }
-                    foreach (var item in Dict_SensorOOS_StripLines)
-                    {
-                        item.Value.Text = "";
-                        item.Value.BorderWidth = 0;
-                    }
-                //}
+                foreach (var item in Dict_SensorSeries)
+                {
+                    item.Value.Enabled = false;
+                }
+                foreach (var item in Dict_SensorOOC_StripLines)
+                {
+                    item.Value.Text = "";
+                    item.Value.BorderWidth = 0;
+                }
+                foreach (var item in Dict_SensorOOS_StripLines)
+                {
+                    item.Value.Text = "";
+                    item.Value.BorderWidth = 0;
+                }
                 _SensorType = value;
             }
         }
@@ -137,8 +134,8 @@ namespace DistributedSystem_Main.User_Control
 
                 if (!Dict_SensorSeries.ContainsKey(DataName))
                 {
-                    Color NewSeriesColor = cls_Functions.ColorFromHSV(360 * IntForColor / (Dict_Threshold.Count/2), 1, 1);
-                    Color StripLineColor = cls_Functions.ColorFromHSV(360 * IntForColor / (Dict_Threshold.Count/2), 1, 0.5);
+                    Color NewSeriesColor = cls_Functions.ColorFromHSV(360 * IntForColor / (Dict_Threshold.Count / 2), 1, 1);
+                    Color StripLineColor = cls_Functions.ColorFromHSV(360 * IntForColor / (Dict_Threshold.Count / 2), 1, 0.5);
                     CreateNewSensorUIObjects(DataName, NewSeriesColor, StripLineColor);
                 }
 
@@ -215,7 +212,7 @@ namespace DistributedSystem_Main.User_Control
                 }
             }
 
-           
+
         }
 
         private void ContextMenuStrip_ShowSeries_ClickEvent(object sender, EventArgs e)
@@ -239,7 +236,7 @@ namespace DistributedSystem_Main.User_Control
             {
                 Dict_SensorSeries[DataName].Enabled = TargetItem.Checked;
             }
-           
+
         }
 
         private void CreateNewSensorUIObjects(string DataName, Color SeriesColor, Color StripLineColor)
