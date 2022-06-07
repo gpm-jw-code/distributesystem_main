@@ -31,8 +31,12 @@ namespace DistributedSystem_Main.WebService
         public string EdgeName;
         public DateTime TimeLog;
         public Dictionary<string, double> Dict_RawData = new Dictionary<string, double>();
+
+        public Dictionary<string, List<double>> Dict_ListRawData = new Dictionary<string, List<double>>();
+
         public Dictionary<string, RawDataState> Dict_RawData_WithState = new Dictionary<string, RawDataState>();
         public Dictionary<string, double> Dict_DataThreshold { get; }
+
         public cls_RawData(string SensorName, string EdgeName, DateTime TimeLog, Dictionary<string, double> Dict_RawData)
         {
             this.SensorName = SensorName;
@@ -66,6 +70,26 @@ namespace DistributedSystem_Main.WebService
                 });
             }
         }
+
+
+        public cls_RawData(string SensorName, string EdgeName, DateTime TimeLog, Dictionary<string, List<double>> Dict_ListRawData, Dictionary<string, double> dict_DataThreshold, Dictionary<string, OutOfState> outOfState)
+        {
+            this.SensorName = SensorName;
+            this.EdgeName = EdgeName;
+            this.TimeLog = TimeLog;
+            this.Dict_ListRawData = Dict_ListRawData;
+            Dict_DataThreshold = dict_DataThreshold;
+            foreach (var item in Dict_RawData)
+            {
+                Dict_RawData_WithState.Add(item.Key, new RawDataState
+                {
+                    value = item.Value,
+                    isOutofControl = outOfState[item.Key].isOutofControl,
+                    isOutofSpec = outOfState[item.Key].isOutofSPEC,
+                });
+            }
+        }
+
 
     }
 

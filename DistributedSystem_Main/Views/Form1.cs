@@ -67,7 +67,7 @@ namespace DistributedSystem_Main
             if (SettingForm.ShowDialog() == DialogResult.OK)
             {
                 SetISOFunctionUIEnable(Staobj.SystemParam.ISOEnable);
-            } 
+            }
         }
 
         private void SetISOFunctionUIEnable(bool Enable)
@@ -76,7 +76,7 @@ namespace DistributedSystem_Main
             SensorDataProcess.cls_SensorDataProcess.ISOFunctionEnable = Enable;
             DGV_SensorInfo.Columns["Column_ISOSetting"].Visible = Enable;
             BTN_RawData_Click(null, null);
-            
+
             foreach (var item in Staobj.Dict_SensorProcessObject)
             {
                 if (item.Value.SensorInfo.ISOCheckDataName == null)
@@ -139,15 +139,22 @@ namespace DistributedSystem_Main
                 Process.Start(startInfo);//呼叫Query程式(外部程式)
             });
         }
+
         private void picbOFF_Click(object sender, EventArgs e)
         {
             this.Close();
         }
+
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (MessageBox.Show("即將關閉系統", "Exit", MessageBoxButtons.YesNo) != DialogResult.Yes)
+            if (e.CloseReason == CloseReason.ApplicationExitCall) //進行重啟的時候的時候
+                Application.Exit();
+            else
             {
-                e.Cancel = true;
+                if (MessageBox.Show("即將關閉系統", "Exit", MessageBoxButtons.YesNo) != DialogResult.Yes)
+                {
+                    e.Cancel = true;
+                }
             }
         }
         #endregion
@@ -172,6 +179,7 @@ namespace DistributedSystem_Main
             }
 
         }
+
         private void AddNewSensorToUI(string SensorName)
         {
             if (InvokeRequired)
@@ -181,7 +189,7 @@ namespace DistributedSystem_Main
             }
             var TargetSensorProcessObject = Staobj.Dict_SensorProcessObject[SensorName];
             var SensorInfo = TargetSensorProcessObject.SensorInfo;
-            DGV_SensorInfo.Rows.Add("", SensorInfo.EQName, SensorInfo.UnitName, SensorInfo.SensorName, SensorInfo.SensorType,"Setting");
+            DGV_SensorInfo.Rows.Add("", SensorInfo.EQName, SensorInfo.UnitName, SensorInfo.SensorName, SensorInfo.SensorType, "Setting");
             DataGridViewRow TargetRow = DGV_SensorInfo.Rows.Cast<DataGridViewRow>().Where(r => r.Cells[3].Value.ToString() == SensorInfo.SensorName).First();
             TargetRow.Cells[0].Style.BackColor = Color.Lime;
 
@@ -208,7 +216,6 @@ namespace DistributedSystem_Main
         {
             Invoke((MethodInvoker)delegate { cls_SignalsChartManager.UpdateSensorData(SensorName, Queue_Time, Dict_DataQueue); });
         }
-
 
         #endregion
 
@@ -268,7 +275,7 @@ namespace DistributedSystem_Main
                             continue;
                         AddNewSensor_ISO(item.Key);
                     }
-                } 
+                }
                 return;
             }
         }
@@ -324,7 +331,7 @@ namespace DistributedSystem_Main
                 return;
             }
             var ISOObject = Staobj.Dict_SensorProcessObject[SensorName].ISOCheckObject;
-            Invoke((MethodInvoker)delegate { cls_ISOChartManager.UpdateSensorISOThreshold(SensorName,ISOObject.ThresholdA,ISOObject.ThresholdB,ISOObject.ThresholdC ); });
+            Invoke((MethodInvoker)delegate { cls_ISOChartManager.UpdateSensorISOThreshold(SensorName, ISOObject.ThresholdA, ISOObject.ThresholdB, ISOObject.ThresholdC); });
         }
 
         private void UpdateSensorInfo_ISO(string SensorName)
@@ -357,5 +364,13 @@ namespace DistributedSystem_Main
 
         #endregion
 
+        private void picbRestart_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("即將重啟系統", "RESTART", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                Application.Restart();
+            }
+
+        }
     }
 }
