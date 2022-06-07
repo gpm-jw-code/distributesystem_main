@@ -68,7 +68,13 @@ namespace DistributedSystem_Main.Systems
             OriginSortType = NewSortType == SortType.None ? OriginSortType : NewSortType;
 
             var List_SensorInfo = Staobj.Dict_SensorProcessObject.Select(item => item.Value.SensorInfo);
-            var List_FilterSensorInfos = List_SensorInfo.Where(item =>item.SensorName.Contains(OriginFilterString)|| item.IP.Contains(OriginFilterString) || item.EQName.Contains(OriginFilterString) || item.UnitName.Contains(OriginFilterString)).ToList();
+            var List_FilterSensorInfos = List_SensorInfo.Where(
+                                            item =>
+                                            item.SensorName.ToUpper().Contains(OriginFilterString.ToUpper()) ||
+                                            item.IP.ToUpper().Contains(OriginFilterString.ToUpper()) ||
+                                            item.EQName.ToUpper().Contains(OriginFilterString.ToUpper()) ||
+                                            item.UnitName.ToUpper().Contains(OriginFilterString.ToUpper())).ToList();
+
             switch (NewSortType)
             {
                 case SortType.IP:

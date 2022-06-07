@@ -413,14 +413,14 @@ namespace SensorDataProcess
 
     public class SensorInfo
     {
-        public string IP;
-        public int Port;
-        public string SensorType;
-        public string SensorName;
+        public string IP = "";
+        public int Port = 0;
+        public string SensorType = "";
+        public string SensorName = "";
         public string EQName = "undefined";
         public string UnitName = "undefined";
         public string DataUnit = "";
-        public string EdgeName;
+        public string EdgeName = "";
         public string SensorNameWithOutEdgeName
         {
             get
@@ -429,7 +429,7 @@ namespace SensorDataProcess
             }
         }
         public Enum_ISOInspectionNumber ISONumber = Enum_ISOInspectionNumber.None;
-        public string ISOCheckDataName;
+        public string ISOCheckDataName = "";
     }
 
     public class SensorStatus
