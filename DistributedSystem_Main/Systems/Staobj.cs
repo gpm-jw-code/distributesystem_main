@@ -26,6 +26,7 @@ namespace DistributedSystem_Main.Systems
         public struct Forms
         {
             public static FormMain Form_Main;
+            public static Views.Form_Alarm Form_AlarmEvent = new Views.Form_Alarm();
         }
 
         public struct SystemParam

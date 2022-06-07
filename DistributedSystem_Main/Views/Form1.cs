@@ -198,8 +198,16 @@ namespace DistributedSystem_Main
             TargetSensorProcessObject.Event_UpdateChartSeries += UpdateSensorChart;
             TargetSensorProcessObject.Event_RefreshSensorInfo += UpdateSensorInfo;
             TargetSensorProcessObject.Event_RefreshSensorThreshold += UpdateSensorThreshold;
+            TargetSensorProcessObject.Event_UpdateSensorCheckStates += UpdateSensorCheckStates;
 
             AddNewSensor_ISO(SensorName);
+        }
+
+        private void UpdateSensorCheckStates(string SensorName)
+        {
+            var SensorInfo = Staobj.Dict_SensorProcessObject[SensorName].SensorInfo;
+            var CheckStatus = Staobj.Dict_SensorProcessObject[SensorName].Dict_OutOfItemStates;
+            Invoke((MethodInvoker)delegate { Staobj.Forms.Form_AlarmEvent.InsertNewEventLog(SensorInfo, CheckStatus); });
         }
 
         private void UpdateSensorThreshold(string SensorName)

@@ -118,7 +118,6 @@ namespace DistributedSystem_Main.Systems
 
                     if (NewData.IsArrayData)
                     {
-
                         sensorPcrObj.ImportContinuousSensorData(NewData.Dict_ListRawData, NewData.List_TimeLog);
                         RawData = new WebService.cls_RawData(OriginSensorName, EdgeName, NewData.TimeLog, NewData.Dict_ListRawData, sensorPcrObj.Dict_DataThreshold, sensorPcrObj.Dict_OutOfItemStates);
                     }

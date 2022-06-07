@@ -90,6 +90,12 @@
     <Compile Include="User_Control\USC_ISODataChart.Designer.cs">
       <DependentUpon>USC_ISODataChart.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\Form_Alarm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Form_Alarm.Designer.cs">
+      <DependentUpon>Form_Alarm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\Form_ISOSetting.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -156,6 +162,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Views\Form_Alarm.resx">
+      <DependentUpon>Form_Alarm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\Form_ISOSetting.resx">
       <DependentUpon>Form_ISOSetting.cs</DependentUpon>
     </EmbeddedResource>
