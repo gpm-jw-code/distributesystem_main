@@ -1,4 +1,5 @@
 ﻿using ISOInspection;
+using Newtonsoft.Json;
 using SensorDataProcess;
 using System;
 using System.Collections.Generic;
@@ -191,7 +192,12 @@ namespace DistributedSystem_Main.Systems
                     {
                         using (StreamReader SR = new StreamReader(FS))
                         {
-                            OutputData = Newtonsoft.Json.JsonConvert.DeserializeObject<SensorInfo>(SR.ReadToEnd());
+                            var settings = new JsonSerializerSettings
+                            {
+                                NullValueHandling = NullValueHandling.Ignore,
+                                MissingMemberHandling = MissingMemberHandling.Ignore
+                            };
+                            OutputData = Newtonsoft.Json.JsonConvert.DeserializeObject<SensorInfo>(SR.ReadToEnd(), settings);
                         }
                     }
                 }
