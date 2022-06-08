@@ -452,6 +452,8 @@ namespace DistributedSystem_Main
             this.picbRestart.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picbRestart.TabIndex = 1;
             this.picbRestart.TabStop = false;
+            this.picbRestart.Click += new System.EventHandler(this.picbRestart_Click);
+
             // 
             // TablePanel_SideBarFunctions
             // 
