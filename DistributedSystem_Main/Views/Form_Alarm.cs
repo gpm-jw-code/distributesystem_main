@@ -44,7 +44,7 @@ namespace DistributedSystem_Main.Views
             if (List_OOC_Items.Count > 0)
             {
                 Event = "OOC";
-                Description = $"OOC: {string.Join(", ", List_OOS_Items)}";
+                Description = $"OOC: {string.Join(", ", List_OOC_Items)}";
             }
             if (List_OOS_Items.Count > 0)
             {
@@ -99,6 +99,11 @@ namespace DistributedSystem_Main.Views
 
         private void Form_Alarm_FormClosing(object sender, FormClosingEventArgs e)
         {
+            if (e.CloseReason == CloseReason.ApplicationExitCall) //進行重啟的時候的時候
+            {
+                Application.Exit();
+                return;
+            }   
             e.Cancel = true;
             this.Hide();
         }

@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace DistributedSystem_Main.Systems
@@ -36,7 +37,8 @@ namespace DistributedSystem_Main.Systems
             }
             catch (Exception)
             {
-
+                Thread.Sleep(3000);
+                BuildServer(IP, Port);
             }
         }
 
