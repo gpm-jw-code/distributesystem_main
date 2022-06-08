@@ -20,6 +20,7 @@ namespace DistributedSystem_Main
         public FormMain()
         {
             InitializeComponent();
+            Staobj.Forms.Form_Main = this;
             Staobj.SystemParam.LoadSystemParam();
             Systems.cls_SignalsChartManager.InitialManager(TablePanel_SignalChart, PageSwitch_Signals);
             Systems.cls_SignalsChartManager.SetChartRowColumnNumber(Staobj.SystemParam.ChartSetting.RowNumber, Staobj.SystemParam.ChartSetting.ColumnNumber);
@@ -36,7 +37,6 @@ namespace DistributedSystem_Main
             }
             SetISOFunctionUIEnable(Staobj.SystemParam.ISOEnable);
             EventRegist();
-            Staobj.Forms.Form_Main = this;
         }
 
         #region System Initial
@@ -61,6 +61,13 @@ namespace DistributedSystem_Main
         #endregion
 
         #region SideBar
+
+        private void BTN_AlarmEvent_Click(object sender, EventArgs e)
+        {
+            Staobj.Forms.Form_AlarmEvent.Show();
+            Staobj.Forms.Form_AlarmEvent.BringToFront();
+        }
+
         private void BTN_OpenSystemSetting_Click(object sender, EventArgs e)
         {
             Views.Form_SystemSetting SettingForm = new Views.Form_SystemSetting();
@@ -163,6 +170,18 @@ namespace DistributedSystem_Main
                     e.Cancel = true;
                 }
             }
+        }
+        #endregion
+
+        #region Buttom Infomation
+        public void SetMqttConnectState(bool BuildState)
+        {
+            if (InvokeRequired)
+            {
+                Invoke((MethodInvoker)delegate { SetMqttConnectState(BuildState); });
+                return;
+            }
+            LAB_MQTTServerState.BackColor = BuildState ? Color.Lime : Color.Red;
         }
         #endregion
 

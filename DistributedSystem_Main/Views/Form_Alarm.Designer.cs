@@ -31,7 +31,7 @@ namespace DistributedSystem_Main.Views
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.Panel_Function = new System.Windows.Forms.Panel();
             this.DGV_AlarmEvents = new System.Windows.Forms.DataGridView();
             this.BTN_ResetAll = new System.Windows.Forms.Button();
             this.Column_EQName = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -40,19 +40,19 @@ namespace DistributedSystem_Main.Views
             this.Column_Event = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column_Decription = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column_reset = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.panel1.SuspendLayout();
+            this.Panel_Function.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGV_AlarmEvents)).BeginInit();
             this.SuspendLayout();
             // 
-            // panel1
+            // Panel_Function
             // 
-            this.panel1.Controls.Add(this.BTN_ResetAll);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(870, 71);
-            this.panel1.TabIndex = 0;
+            this.Panel_Function.Controls.Add(this.BTN_ResetAll);
+            this.Panel_Function.Dock = System.Windows.Forms.DockStyle.Top;
+            this.Panel_Function.Location = new System.Drawing.Point(0, 0);
+            this.Panel_Function.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Panel_Function.Name = "Panel_Function";
+            this.Panel_Function.Size = new System.Drawing.Size(870, 71);
+            this.Panel_Function.TabIndex = 0;
             // 
             // DGV_AlarmEvents
             // 
@@ -143,13 +143,13 @@ namespace DistributedSystem_Main.Views
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(870, 484);
             this.Controls.Add(this.DGV_AlarmEvents);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.Panel_Function);
             this.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "Form_Alarm";
             this.Text = "Event";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form_Alarm_FormClosing);
-            this.panel1.ResumeLayout(false);
+            this.Panel_Function.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.DGV_AlarmEvents)).EndInit();
             this.ResumeLayout(false);
 
@@ -157,7 +157,7 @@ namespace DistributedSystem_Main.Views
 
         #endregion
 
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel Panel_Function;
         private System.Windows.Forms.DataGridView DGV_AlarmEvents;
         private System.Windows.Forms.Button BTN_ResetAll;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column_EQName;

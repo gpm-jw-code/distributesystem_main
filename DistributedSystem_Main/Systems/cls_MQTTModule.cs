@@ -34,6 +34,7 @@ namespace DistributedSystem_Main.Systems
 
                 DataMqttServer.ClientConnectedHandler = new MqttServerClientConnectedHandlerDelegate(new Action<MqttServerClientConnectedEventArgs>(ClientConnectEvent));
                 DataMqttServer.ApplicationMessageReceivedHandler = new MqttApplicationMessageReceivedHandlerDelegate(new Action<MqttApplicationMessageReceivedEventArgs>(ReceiveNewMqttMessageAction));
+                Staobj.Forms.Form_Main.SetMqttConnectState(true);
             }
             catch (Exception)
             {
