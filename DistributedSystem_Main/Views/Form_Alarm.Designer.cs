@@ -29,20 +29,24 @@ namespace DistributedSystem_Main.Views
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel1 = new System.Windows.Forms.Panel();
             this.DGV_AlarmEvents = new System.Windows.Forms.DataGridView();
+            this.BTN_ResetAll = new System.Windows.Forms.Button();
             this.Column_EQName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column_Unit = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column_SensorName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column_Event = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column_Decription = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column_reset = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGV_AlarmEvents)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.BTN_ResetAll);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
@@ -54,31 +58,43 @@ namespace DistributedSystem_Main.Views
             // 
             this.DGV_AlarmEvents.AllowUserToAddRows = false;
             this.DGV_AlarmEvents.BackgroundColor = System.Drawing.SystemColors.ActiveCaptionText;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.DGV_AlarmEvents.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DGV_AlarmEvents.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.DGV_AlarmEvents.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DGV_AlarmEvents.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column_EQName,
             this.Column_Unit,
             this.Column_SensorName,
             this.Column_Event,
-            this.Column_Decription});
+            this.Column_Decription,
+            this.Column_reset});
             this.DGV_AlarmEvents.Dock = System.Windows.Forms.DockStyle.Fill;
             this.DGV_AlarmEvents.Location = new System.Drawing.Point(0, 71);
             this.DGV_AlarmEvents.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.DGV_AlarmEvents.Name = "DGV_AlarmEvents";
             this.DGV_AlarmEvents.RowHeadersVisible = false;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.DGV_AlarmEvents.RowsDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.DGV_AlarmEvents.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.DGV_AlarmEvents.RowTemplate.Height = 24;
             this.DGV_AlarmEvents.Size = new System.Drawing.Size(870, 413);
             this.DGV_AlarmEvents.TabIndex = 1;
+            this.DGV_AlarmEvents.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGV_AlarmEvents_CellContentClick);
+            // 
+            // BTN_ResetAll
+            // 
+            this.BTN_ResetAll.Location = new System.Drawing.Point(731, 12);
+            this.BTN_ResetAll.Name = "BTN_ResetAll";
+            this.BTN_ResetAll.Size = new System.Drawing.Size(127, 39);
+            this.BTN_ResetAll.TabIndex = 0;
+            this.BTN_ResetAll.Text = "Reset All";
+            this.BTN_ResetAll.UseVisualStyleBackColor = true;
+            this.BTN_ResetAll.Click += new System.EventHandler(this.BTN_ResetAll_Click);
             // 
             // Column_EQName
             // 
@@ -115,6 +131,12 @@ namespace DistributedSystem_Main.Views
             this.Column_Decription.Name = "Column_Decription";
             this.Column_Decription.ReadOnly = true;
             // 
+            // Column_reset
+            // 
+            this.Column_reset.HeaderText = "Reset";
+            this.Column_reset.Name = "Column_reset";
+            this.Column_reset.ReadOnly = true;
+            // 
             // Form_Alarm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
@@ -126,6 +148,8 @@ namespace DistributedSystem_Main.Views
             this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "Form_Alarm";
             this.Text = "Event";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form_Alarm_FormClosing);
+            this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.DGV_AlarmEvents)).EndInit();
             this.ResumeLayout(false);
 
@@ -135,10 +159,12 @@ namespace DistributedSystem_Main.Views
 
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.DataGridView DGV_AlarmEvents;
+        private System.Windows.Forms.Button BTN_ResetAll;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column_EQName;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column_Unit;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column_SensorName;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column_Event;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column_Decription;
+        private System.Windows.Forms.DataGridViewButtonColumn Column_reset;
     }
 }

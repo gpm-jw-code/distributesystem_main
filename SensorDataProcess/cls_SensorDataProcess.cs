@@ -255,7 +255,8 @@ namespace SensorDataProcess
                 Dict_OOCResult.Add(DataName, Value > ooc_threshold);
                 Dict_OOSResult.Add(DataName, Value > oos_threshold);
 
-                IsUpdateStatus= UpdateCheckOutStatus(DataName, Dict_OOCResult[DataName],Dict_OOSResult[DataName]);
+                var SingleDataIsUpdateStatus= UpdateCheckOutStatus(DataName, Dict_OOCResult[DataName],Dict_OOSResult[DataName]);
+                IsUpdateStatus = SingleDataIsUpdateStatus || IsUpdateStatus;
             }
             PassRateObjejct.AddNewCheckResult(Dict_OOCResult,Dict_OOSResult, TimeLog);
             return IsUpdateStatus;

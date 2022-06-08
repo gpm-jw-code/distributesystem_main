@@ -22,7 +22,7 @@ namespace DistributedSystem_Main.Views
         {
             string EQName = NewSensorInfo.EQName;
             string UnitName = NewSensorInfo.UnitName;
-            string SensorName = NewSensorInfo.SensorNameWithOutEdgeName;
+            string SensorName = NewSensorInfo.SensorName;
             string Event = "";
             string Description = "";
             List<string> List_OOC_Items = new List<string>();
@@ -58,8 +58,49 @@ namespace DistributedSystem_Main.Views
                 TargetRow[0].Cells[4].Value = Description;
                 return;
             }
-            DGV_AlarmEvents.Rows.Add(EQName, UnitName, SensorName, Event,Description);
+            DGV_AlarmEvents.Rows.Add(EQName, UnitName, SensorName, Event,Description,"Reset");
             this.Show();
+        }
+
+        private void BTN_ResetAll_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("是否要將所有Sensor異常事件Reset","Reset All",MessageBoxButtons.YesNo) != DialogResult.Yes)
+            {
+                return;
+            }
+            foreach (DataGridViewRow item in DGV_AlarmEvents.Rows)
+            {
+                string SensorName = item.Cells[2].Value.ToString();
+                foreach (var statesItem in Systems.Staobj.Dict_SensorProcessObject[SensorName].Dict_OutOfItemStates)
+                {
+                    statesItem.Value.RESET();
+                }
+            }
+            DGV_AlarmEvents.Rows.Clear();
+        }
+
+        private void DGV_AlarmEvents_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex!=5)
+            {
+                return;
+            }
+            string SensorName = DGV_AlarmEvents.Rows[e.RowIndex].Cells[2].Value.ToString();
+            if (MessageBox.Show($"是否要將{SensorName} Reset","Reset",MessageBoxButtons.YesNo)!= DialogResult.Yes)
+            {
+                return;
+            }
+            DGV_AlarmEvents.Rows.RemoveAt(e.RowIndex);
+            foreach (var item in Systems.Staobj.Dict_SensorProcessObject[SensorName].Dict_OutOfItemStates)
+            {
+                item.Value.RESET();
+            }
+        }
+
+        private void Form_Alarm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            e.Cancel = true;
+            this.Hide();
         }
     }
 }
