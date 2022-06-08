@@ -144,6 +144,13 @@ namespace DistributedSystem_Main
         {
             this.Close();
         }
+        private void picbRestart_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("即將重啟系統", "RESTART", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                Application.Restart();
+            }
+        }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -372,13 +379,5 @@ namespace DistributedSystem_Main
 
         #endregion
 
-        private void picbRestart_Click(object sender, EventArgs e)
-        {
-            if (MessageBox.Show("即將重啟系統", "RESTART", MessageBoxButtons.YesNo) == DialogResult.Yes)
-            {
-                Application.Restart();
-            }
-
-        }
     }
 }
