@@ -96,13 +96,13 @@ namespace DistributedSystem_Main
         {
             TabControl_Main.SelectedTab = TabPage_Signal;
             Panel_RawData.BackColor = Color.FromArgb(0, 43, 54);
-            Panel_ISO.BackColor = panStatus.BackColor = panLog.BackColor = Color.FromArgb(0, 64, 82);
+            Panel_ISO.BackColor = panStatus.BackColor = Panel_HomePage.BackColor = Color.FromArgb(0, 64, 82);
         }
 
-        private void btnLog_Click(object sender, EventArgs e)
+        private void BTN_HomePage_Click(object sender, EventArgs e)
         {
-            TabControl_Main.SelectedTab = TabPage_Log;
-            panLog.BackColor = Color.FromArgb(0, 43, 54);
+            TabControl_Main.SelectedTab = TabPage_HomePage;
+            Panel_HomePage.BackColor = Color.FromArgb(0, 43, 54);
             Panel_ISO.BackColor = panStatus.BackColor = Panel_RawData.BackColor = Color.FromArgb(0, 64, 82);
         }
 
@@ -110,13 +110,13 @@ namespace DistributedSystem_Main
         {
             TabControl_Main.SelectedTab = TabPage_SensorInfo;
             panStatus.BackColor = Color.FromArgb(0, 43, 54);
-            Panel_ISO.BackColor = Panel_RawData.BackColor = panLog.BackColor = Color.FromArgb(0, 64, 82);
+            Panel_ISO.BackColor = Panel_RawData.BackColor = Panel_HomePage.BackColor = Color.FromArgb(0, 64, 82);
         }
         private void BTN_ISO_Click(object sender, EventArgs e)
         {
             TabControl_Main.SelectedTab = TabPage_ISO;
             Panel_ISO.BackColor = Color.FromArgb(0, 43, 54);
-            panStatus.BackColor = Panel_RawData.BackColor = panLog.BackColor = Color.FromArgb(0, 64, 82);
+            panStatus.BackColor = Panel_RawData.BackColor = Panel_HomePage.BackColor = Color.FromArgb(0, 64, 82);
         }
         private void BTN_Query_Click(object sender, EventArgs e)
         {

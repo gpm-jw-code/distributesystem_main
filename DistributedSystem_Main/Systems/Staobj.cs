@@ -13,7 +13,6 @@ namespace DistributedSystem_Main.Systems
     public class Staobj
     {
         public static Dictionary<string, cls_SensorDataProcess> Dict_SensorProcessObject = new Dictionary<string, cls_SensorDataProcess>();
-        public static Dictionary<string, User_Control.USC_SensorDataChart> Dict_SensorDataCharts = new Dictionary<string, User_Control.USC_SensorDataChart>();
 
         public static Action<string> Event_ReceiveNewSensorInfo;
         public static Action<string> Event_UpdateSensorStatus;

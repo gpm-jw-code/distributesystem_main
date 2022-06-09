@@ -78,6 +78,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Systems\cls_HomePageManager.cs" />
     <Compile Include="Systems\cls_ISOChartManager.cs" />
     <Compile Include="User_Control\cls_Functions.cs" />
     <Compile Include="User_Control\MyRectangle.cs" />
