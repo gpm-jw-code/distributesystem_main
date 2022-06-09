@@ -398,5 +398,12 @@ namespace DistributedSystem_Main
 
         #endregion
 
+        #region HomePage
+        private void BTN_HomeGroupSetting_Click(object sender, EventArgs e)
+        {
+            Views.Form_HomeGroupSetting Form_GroupSetting = new Views.Form_HomeGroupSetting();
+            Form_GroupSetting.ShowDialog();
+        }
+        #endregion
     }
 }

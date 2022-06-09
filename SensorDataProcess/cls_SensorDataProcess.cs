@@ -50,7 +50,7 @@ namespace SensorDataProcess
         public delegate void UpdateSeriesDataEventHandler(string SensorName, Queue<DateTime> Queue_Time, Dictionary<string, Queue<double>> Dict_DataQueue);
         public event UpdateSeriesDataEventHandler Event_UpdateChartSeries;
 
-        public delegate void UpdateSensorLastDataPoint(string SensorName, Dictionary<string, double>);
+        public delegate void UpdateSensorLastDataPoint(string SensorName, Dictionary<string, double> Dict_LastData);
         public event UpdateSensorLastDataPoint Event_UpdateMainTable;
 
 

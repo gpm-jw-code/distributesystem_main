@@ -97,6 +97,18 @@
     <Compile Include="Views\Form_Alarm.Designer.cs">
       <DependentUpon>Form_Alarm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\Form_GroupEditSensorList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Form_GroupEditSensorList.Designer.cs">
+      <DependentUpon>Form_GroupEditSensorList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Form_HomeGroupSetting.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Form_HomeGroupSetting.Designer.cs">
+      <DependentUpon>Form_HomeGroupSetting.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\Form_ISOSetting.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -150,6 +162,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="User_Control\USC_ISODataChart.resx">
       <DependentUpon>USC_ISODataChart.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Form_GroupEditSensorList.resx">
+      <DependentUpon>Form_GroupEditSensorList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Form_HomeGroupSetting.resx">
+      <DependentUpon>Form_HomeGroupSetting.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Form_Main.resx">
       <DependentUpon>Form_Main.cs</DependentUpon>

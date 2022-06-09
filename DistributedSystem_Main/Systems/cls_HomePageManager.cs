@@ -10,9 +10,10 @@ namespace DistributedSystem_Main.Systems
     public class cls_HomePageManager
     {
         public static string NowShowGroupName;
-        private static Dictionary<string, cls_GroupObject> Dict_GroupObject ;
+        private static Dictionary<string, cls_GroupObject> Dict_GroupObject = new Dictionary<string, cls_GroupObject>() ;
 
         public static DataGridView DGV_DataTable;
+        public static List<string> GroupNames { get { return Dict_GroupObject.Keys.ToList(); } }
 
         public static void AddNewGroup(string NewGroupName)
         {
@@ -67,6 +68,18 @@ namespace DistributedSystem_Main.Systems
             }
         }
 
+        public static List<string> GetGroupSensorNames(string GroupName)
+        {
+            return Dict_GroupObject[GroupName].List_SensorName;
+        }
+        public static List<string> GetGroupColumnNames(string GroupName)
+        {
+            return Dict_GroupObject[GroupName].List_ColumnName;
+        }
+        public static Dictionary<string,List<string>> GetRowsInfo(string GroupName)
+        {
+            return Dict_GroupObject[GroupName].Dict_RowListSensor;
+        }
 
         public class cls_GroupObject
         {
@@ -127,5 +140,6 @@ namespace DistributedSystem_Main.Systems
                 }
             }
         }
+
     }
 }
