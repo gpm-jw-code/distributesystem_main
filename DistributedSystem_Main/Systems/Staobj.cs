@@ -41,6 +41,7 @@ namespace DistributedSystem_Main.Systems
                     return System.IO.Path.Combine("Parameters", "SystemParameters.ini");
                 }
             }
+
             public struct Mqtt
             {
                 public static string MqttServerIP = "127.0.0.1";

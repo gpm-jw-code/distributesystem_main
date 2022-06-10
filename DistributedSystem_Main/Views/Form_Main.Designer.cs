@@ -30,7 +30,7 @@ namespace DistributedSystem_Main
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.TableLayout_WholeView = new System.Windows.Forms.TableLayoutPanel();
             this.TableLayout_SideBar = new System.Windows.Forms.TableLayoutPanel();
             this.PictureBox_Icon = new System.Windows.Forms.PictureBox();
@@ -86,11 +86,11 @@ namespace DistributedSystem_Main
             this.TabPage_HomePage = new System.Windows.Forms.TabPage();
             this.DGV_HomePaeTable = new System.Windows.Forms.DataGridView();
             this.Panel_HomePageFunctions = new System.Windows.Forms.Panel();
+            this.GroupSwitch_HomePage = new DistributedSystem_Main.User_Control.USC_GroupSwitch();
             this.BTN_HomeGroupSetting = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.LAB_MQTTServerState = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.GroupSwitch_HomePage = new DistributedSystem_Main.User_Control.USC_GroupSwitch();
             this.TableLayout_WholeView.SuspendLayout();
             this.TableLayout_SideBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox_Icon)).BeginInit();
@@ -663,10 +663,10 @@ namespace DistributedSystem_Main
             this.DGV_SensorInfo.Location = new System.Drawing.Point(3, 46);
             this.DGV_SensorInfo.Name = "DGV_SensorInfo";
             this.DGV_SensorInfo.RowHeadersVisible = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
-            this.DGV_SensorInfo.RowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.White;
+            this.DGV_SensorInfo.RowsDefaultCellStyle = dataGridViewCellStyle3;
             this.DGV_SensorInfo.RowTemplate.Height = 24;
             this.DGV_SensorInfo.ShowCellErrors = false;
             this.DGV_SensorInfo.Size = new System.Drawing.Size(1174, 606);
@@ -859,6 +859,8 @@ namespace DistributedSystem_Main
             // 
             // DGV_HomePaeTable
             // 
+            this.DGV_HomePaeTable.AllowUserToAddRows = false;
+            this.DGV_HomePaeTable.AllowUserToDeleteRows = false;
             this.DGV_HomePaeTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DGV_HomePaeTable.Dock = System.Windows.Forms.DockStyle.Fill;
             this.DGV_HomePaeTable.Location = new System.Drawing.Point(3, 93);
@@ -869,6 +871,7 @@ namespace DistributedSystem_Main
             // 
             // Panel_HomePageFunctions
             // 
+            this.Panel_HomePageFunctions.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(213)))), ((int)(((byte)(240)))));
             this.Panel_HomePageFunctions.Controls.Add(this.GroupSwitch_HomePage);
             this.Panel_HomePageFunctions.Controls.Add(this.BTN_HomeGroupSetting);
             this.Panel_HomePageFunctions.Dock = System.Windows.Forms.DockStyle.Top;
@@ -876,6 +879,17 @@ namespace DistributedSystem_Main
             this.Panel_HomePageFunctions.Name = "Panel_HomePageFunctions";
             this.Panel_HomePageFunctions.Size = new System.Drawing.Size(1174, 90);
             this.Panel_HomePageFunctions.TabIndex = 1;
+            // 
+            // GroupSwitch_HomePage
+            // 
+            this.GroupSwitch_HomePage.AutoScroll = true;
+            this.GroupSwitch_HomePage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(43)))), ((int)(((byte)(54)))));
+            this.GroupSwitch_HomePage.Dock = System.Windows.Forms.DockStyle.Left;
+            this.GroupSwitch_HomePage.Font = new System.Drawing.Font("新細明體", 9.75F);
+            this.GroupSwitch_HomePage.Location = new System.Drawing.Point(0, 0);
+            this.GroupSwitch_HomePage.Name = "GroupSwitch_HomePage";
+            this.GroupSwitch_HomePage.Size = new System.Drawing.Size(1021, 90);
+            this.GroupSwitch_HomePage.TabIndex = 1;
             // 
             // BTN_HomeGroupSetting
             // 
@@ -915,16 +929,6 @@ namespace DistributedSystem_Main
             this.label2.Size = new System.Drawing.Size(93, 17);
             this.label2.TabIndex = 0;
             this.label2.Text = "MQTT Server :";
-            // 
-            // usC_GroupSwitch1
-            // 
-            this.GroupSwitch_HomePage.AutoScroll = true;
-            this.GroupSwitch_HomePage.Dock = System.Windows.Forms.DockStyle.Left;
-            this.GroupSwitch_HomePage.Font = new System.Drawing.Font("新細明體", 9.75F);
-            this.GroupSwitch_HomePage.Location = new System.Drawing.Point(0, 0);
-            this.GroupSwitch_HomePage.Name = "usC_GroupSwitch1";
-            this.GroupSwitch_HomePage.Size = new System.Drawing.Size(1021, 90);
-            this.GroupSwitch_HomePage.TabIndex = 1;
             // 
             // FormMain
             // 

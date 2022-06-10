@@ -104,6 +104,7 @@ namespace DistributedSystem_Main.Views
             this.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.Margin = new System.Windows.Forms.Padding(5);
             this.Name = "Form_EditGroupRow";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Form_AddRow";
             this.ResumeLayout(false);
             this.PerformLayout();

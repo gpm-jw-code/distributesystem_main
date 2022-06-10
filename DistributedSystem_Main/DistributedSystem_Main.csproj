@@ -97,10 +97,10 @@
     <Compile Include="User_Control\USC_ISODataChart.Designer.cs">
       <DependentUpon>USC_ISODataChart.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\Form_EditGroupRow.cs">
+    <Compile Include="Views\GroupEdit\Form_EditGroupRow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\Form_EditGroupRow.Designer.cs">
+    <Compile Include="Views\GroupEdit\Form_EditGroupRow.Designer.cs">
       <DependentUpon>Form_EditGroupRow.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Form_Alarm.cs">
@@ -109,16 +109,16 @@
     <Compile Include="Views\Form_Alarm.Designer.cs">
       <DependentUpon>Form_Alarm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\Form_GroupEditSensorList.cs">
+    <Compile Include="Views\GroupEdit\Form_GroupEditSensorList.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\Form_GroupEditSensorList.Designer.cs">
+    <Compile Include="Views\GroupEdit\Form_GroupEditSensorList.Designer.cs">
       <DependentUpon>Form_GroupEditSensorList.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\Form_HomeGroupSetting.cs">
+    <Compile Include="Views\GroupEdit\Form_HomeGroupSetting.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\Form_HomeGroupSetting.Designer.cs">
+    <Compile Include="Views\GroupEdit\Form_HomeGroupSetting.Designer.cs">
       <DependentUpon>Form_HomeGroupSetting.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Form_ISOSetting.cs">
@@ -178,13 +178,13 @@
     <EmbeddedResource Include="User_Control\USC_ISODataChart.resx">
       <DependentUpon>USC_ISODataChart.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\Form_EditGroupRow.resx">
+    <EmbeddedResource Include="Views\GroupEdit\Form_EditGroupRow.resx">
       <DependentUpon>Form_EditGroupRow.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\Form_GroupEditSensorList.resx">
+    <EmbeddedResource Include="Views\GroupEdit\Form_GroupEditSensorList.resx">
       <DependentUpon>Form_GroupEditSensorList.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\Form_HomeGroupSetting.resx">
+    <EmbeddedResource Include="Views\GroupEdit\Form_HomeGroupSetting.resx">
       <DependentUpon>Form_HomeGroupSetting.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Form_Main.resx">

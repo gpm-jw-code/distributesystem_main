@@ -76,7 +76,7 @@ namespace DistributedSystem_Main.User_Control
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(43)))), ((int)(((byte)(54)))));
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(213)))), ((int)(((byte)(240)))));
             this.Controls.Add(this.FlowPanel_Buttons);
             this.Font = new System.Drawing.Font("新細明體", 9.75F);
             this.Name = "USC_GroupSwitch";

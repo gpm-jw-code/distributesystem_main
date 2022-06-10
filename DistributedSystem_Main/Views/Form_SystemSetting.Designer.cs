@@ -31,6 +31,12 @@ namespace DistributedSystem_Main.Views
         {
             this.TabControl_Main = new System.Windows.Forms.TabControl();
             this.TabPage_UISetting = new System.Windows.Forms.TabPage();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.ToggleSwitch_ISO = new USC_ModulePart.MyToggleSwitch();
+            this.BTN_CancelFuncionsSetting = new System.Windows.Forms.Button();
+            this.BTN_SaveFunctionEnable = new System.Windows.Forms.Button();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.BTN_CancelChartSetting = new System.Windows.Forms.Button();
             this.BTN_SaveChartSetting = new System.Windows.Forms.Button();
@@ -59,14 +65,9 @@ namespace DistributedSystem_Main.Views
             this.label4 = new System.Windows.Forms.Label();
             this.TXT_MqttServerIP = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.BTN_CancelFuncionsSetting = new System.Windows.Forms.Button();
-            this.BTN_SaveFunctionEnable = new System.Windows.Forms.Button();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.ToggleSwitch_ISO = new USC_ModulePart.MyToggleSwitch();
             this.TabControl_Main.SuspendLayout();
             this.TabPage_UISetting.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NUM_Chart_RowNumber)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUM_Chart_ColumnNumber)).BeginInit();
@@ -76,7 +77,6 @@ namespace DistributedSystem_Main.Views
             this.Panel_ClientInfo.SuspendLayout();
             this.Panel_MqttSetting.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NUM_MqttPort)).BeginInit();
-            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // TabControl_Main
@@ -101,6 +101,78 @@ namespace DistributedSystem_Main.Views
             this.TabPage_UISetting.Size = new System.Drawing.Size(628, 507);
             this.TabPage_UISetting.TabIndex = 1;
             this.TabPage_UISetting.Text = "General";
+            // 
+            // panel2
+            // 
+            this.panel2.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.panel2.Controls.Add(this.ToggleSwitch_ISO);
+            this.panel2.Controls.Add(this.BTN_CancelFuncionsSetting);
+            this.panel2.Controls.Add(this.BTN_SaveFunctionEnable);
+            this.panel2.Controls.Add(this.label11);
+            this.panel2.Controls.Add(this.label13);
+            this.panel2.Location = new System.Drawing.Point(8, 159);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(220, 123);
+            this.panel2.TabIndex = 6;
+            // 
+            // ToggleSwitch_ISO
+            // 
+            this.ToggleSwitch_ISO.BorderColor = System.Drawing.Color.LightGray;
+            this.ToggleSwitch_ISO.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ToggleSwitch_ISO.ForeColor = System.Drawing.Color.White;
+            this.ToggleSwitch_ISO.IsOn = false;
+            this.ToggleSwitch_ISO.Location = new System.Drawing.Point(122, 30);
+            this.ToggleSwitch_ISO.Name = "ToggleSwitch_ISO";
+            this.ToggleSwitch_ISO.OffColor = System.Drawing.Color.DarkGray;
+            this.ToggleSwitch_ISO.OffText = "OFF";
+            this.ToggleSwitch_ISO.OnColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.ToggleSwitch_ISO.OnText = "ON";
+            this.ToggleSwitch_ISO.Size = new System.Drawing.Size(58, 31);
+            this.ToggleSwitch_ISO.TabIndex = 7;
+            this.ToggleSwitch_ISO.Text = "myToggleSwitch1";
+            this.ToggleSwitch_ISO.TextEnabled = true;
+            // 
+            // BTN_CancelFuncionsSetting
+            // 
+            this.BTN_CancelFuncionsSetting.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.BTN_CancelFuncionsSetting.Location = new System.Drawing.Point(152, 76);
+            this.BTN_CancelFuncionsSetting.Name = "BTN_CancelFuncionsSetting";
+            this.BTN_CancelFuncionsSetting.Size = new System.Drawing.Size(56, 32);
+            this.BTN_CancelFuncionsSetting.TabIndex = 5;
+            this.BTN_CancelFuncionsSetting.Text = "Cancel";
+            this.BTN_CancelFuncionsSetting.UseVisualStyleBackColor = true;
+            this.BTN_CancelFuncionsSetting.Click += new System.EventHandler(this.BTN_CancelFuncionsSetting_Click);
+            // 
+            // BTN_SaveFunctionEnable
+            // 
+            this.BTN_SaveFunctionEnable.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.BTN_SaveFunctionEnable.Location = new System.Drawing.Point(81, 76);
+            this.BTN_SaveFunctionEnable.Name = "BTN_SaveFunctionEnable";
+            this.BTN_SaveFunctionEnable.Size = new System.Drawing.Size(56, 32);
+            this.BTN_SaveFunctionEnable.TabIndex = 5;
+            this.BTN_SaveFunctionEnable.Text = "Save";
+            this.BTN_SaveFunctionEnable.UseVisualStyleBackColor = true;
+            this.BTN_SaveFunctionEnable.Click += new System.EventHandler(this.BTN_SaveFunctionEnable_Click);
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.label11.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.label11.Location = new System.Drawing.Point(2, 0);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(82, 20);
+            this.label11.TabIndex = 4;
+            this.label11.Text = "Functions";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(26, 37);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(86, 17);
+            this.label13.TabIndex = 1;
+            this.label13.Text = "ISO 10816：";
             // 
             // panel1
             // 
@@ -455,78 +527,6 @@ namespace DistributedSystem_Main.Views
             this.label3.TabIndex = 1;
             this.label3.Text = "Server IP : ";
             // 
-            // panel2
-            // 
-            this.panel2.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            this.panel2.Controls.Add(this.ToggleSwitch_ISO);
-            this.panel2.Controls.Add(this.BTN_CancelFuncionsSetting);
-            this.panel2.Controls.Add(this.BTN_SaveFunctionEnable);
-            this.panel2.Controls.Add(this.label11);
-            this.panel2.Controls.Add(this.label13);
-            this.panel2.Location = new System.Drawing.Point(8, 159);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(220, 123);
-            this.panel2.TabIndex = 6;
-            // 
-            // BTN_CancelFuncionsSetting
-            // 
-            this.BTN_CancelFuncionsSetting.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.BTN_CancelFuncionsSetting.Location = new System.Drawing.Point(152, 76);
-            this.BTN_CancelFuncionsSetting.Name = "BTN_CancelFuncionsSetting";
-            this.BTN_CancelFuncionsSetting.Size = new System.Drawing.Size(56, 32);
-            this.BTN_CancelFuncionsSetting.TabIndex = 5;
-            this.BTN_CancelFuncionsSetting.Text = "Cancel";
-            this.BTN_CancelFuncionsSetting.UseVisualStyleBackColor = true;
-            this.BTN_CancelFuncionsSetting.Click += new System.EventHandler(this.BTN_CancelFuncionsSetting_Click);
-            // 
-            // BTN_SaveFunctionEnable
-            // 
-            this.BTN_SaveFunctionEnable.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.BTN_SaveFunctionEnable.Location = new System.Drawing.Point(81, 76);
-            this.BTN_SaveFunctionEnable.Name = "BTN_SaveFunctionEnable";
-            this.BTN_SaveFunctionEnable.Size = new System.Drawing.Size(56, 32);
-            this.BTN_SaveFunctionEnable.TabIndex = 5;
-            this.BTN_SaveFunctionEnable.Text = "Save";
-            this.BTN_SaveFunctionEnable.UseVisualStyleBackColor = true;
-            this.BTN_SaveFunctionEnable.Click += new System.EventHandler(this.BTN_SaveFunctionEnable_Click);
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.label11.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
-            this.label11.Location = new System.Drawing.Point(2, 0);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(82, 20);
-            this.label11.TabIndex = 4;
-            this.label11.Text = "Functions";
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(26, 37);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(86, 17);
-            this.label13.TabIndex = 1;
-            this.label13.Text = "ISO 10816：";
-            // 
-            // ToggleSwitch_ISO
-            // 
-            this.ToggleSwitch_ISO.BorderColor = System.Drawing.Color.LightGray;
-            this.ToggleSwitch_ISO.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ToggleSwitch_ISO.ForeColor = System.Drawing.Color.White;
-            this.ToggleSwitch_ISO.IsOn = false;
-            this.ToggleSwitch_ISO.Location = new System.Drawing.Point(122, 30);
-            this.ToggleSwitch_ISO.Name = "ToggleSwitch_ISO";
-            this.ToggleSwitch_ISO.OffColor = System.Drawing.Color.DarkGray;
-            this.ToggleSwitch_ISO.OffText = "OFF";
-            this.ToggleSwitch_ISO.OnColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.ToggleSwitch_ISO.OnText = "ON";
-            this.ToggleSwitch_ISO.Size = new System.Drawing.Size(58, 31);
-            this.ToggleSwitch_ISO.TabIndex = 7;
-            this.ToggleSwitch_ISO.Text = "myToggleSwitch1";
-            this.ToggleSwitch_ISO.TextEnabled = true;
-            // 
             // Form_SystemSetting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
@@ -538,10 +538,13 @@ namespace DistributedSystem_Main.Views
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form_SystemSetting";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Forn_SystemSetting";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form_SystemSetting_FormClosing);
             this.TabControl_Main.ResumeLayout(false);
             this.TabPage_UISetting.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NUM_Chart_RowNumber)).EndInit();
@@ -554,8 +557,6 @@ namespace DistributedSystem_Main.Views
             this.Panel_MqttSetting.ResumeLayout(false);
             this.Panel_MqttSetting.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NUM_MqttPort)).EndInit();
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
             this.ResumeLayout(false);
 
         }

@@ -276,6 +276,7 @@ namespace DistributedSystem_Main.Views
             this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form_ISOSetting";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "ISO Setting";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form_ISOSetting_KeyDown);
             this.ResumeLayout(false);

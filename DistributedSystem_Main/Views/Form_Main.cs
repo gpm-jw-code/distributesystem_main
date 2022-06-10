@@ -412,15 +412,6 @@ namespace DistributedSystem_Main
         {
             Views.Form_HomeGroupSetting Form_GroupSetting = new Views.Form_HomeGroupSetting();
             Form_GroupSetting.ShowDialog();
-            var List_SwitchGroupNames = GroupSwitch_HomePage.Dict_GroupButtons.Keys;
-            foreach (var item in Systems.cls_HomePageManager.GroupNames)
-            {
-                if (!List_SwitchGroupNames.Contains(item))
-                {
-                    GroupSwitch_HomePage.AddGroupButton(item);
-                }
-            }
-            Systems.cls_HomePageManager.ResetNowGroupName();
         }
         #endregion
     }

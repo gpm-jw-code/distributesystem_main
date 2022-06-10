@@ -115,12 +115,32 @@ namespace DistributedSystem_Main.Views
         }
 
         private void BTN_EditRowSensor_Click(object sender, EventArgs e)
-        {
+        { 
             string GroupName = Combo_GroupName.Text;
             string RowName = Combo_Rows.Text;
             Form_EditGroupRow Form_RowEdit = new Form_EditGroupRow(GroupName,RowName);
             Form_RowEdit.ShowDialog();
             LoadRowsInfo(GroupName);
+        }
+
+        private void BTN_SaveGroupParameters_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("是否要儲存當前設定","Save Group Parmaeters",MessageBoxButtons.YesNo) != DialogResult.Yes)
+            {
+                return;
+            }
+            Systems.cls_HomePageManager.SaveGroupParameters();
+            this.Close();
+        }
+
+        private void BTN_Cancel_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("是否要取消當前設定", "Cancel Group Parmaeters", MessageBoxButtons.YesNo) != DialogResult.Yes)
+            {
+                return;
+            }
+            Systems.cls_HomePageManager.LoadGroupParameters();
+            this.Close();
         }
     }
 }

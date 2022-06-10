@@ -71,6 +71,11 @@ namespace DistributedSystem_Main.Views
             }
 
             List<string> CheckSensor = List_AllSensorComboBox.Where(item => item.Checked).Select(item => item.Text).ToList();
+            if (CheckSensor.Count == 0)
+            {
+                MessageBox.Show("未選取任何Sensor");
+                return;
+            }
             if (MessageBox.Show($"是否要加入選取的{CheckSensor.Count}個Sensor", "Add Sensor", MessageBoxButtons.YesNo) != DialogResult.Yes)
             {
                 return;

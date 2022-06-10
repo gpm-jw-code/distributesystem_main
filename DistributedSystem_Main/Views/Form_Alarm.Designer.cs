@@ -29,11 +29,10 @@ namespace DistributedSystem_Main.Views
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.Panel_Function = new System.Windows.Forms.Panel();
-            this.DGV_AlarmEvents = new System.Windows.Forms.DataGridView();
             this.BTN_ResetAll = new System.Windows.Forms.Button();
+            this.DGV_AlarmEvents = new System.Windows.Forms.DataGridView();
             this.Column_EQName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column_Unit = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column_SensorName = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -49,42 +48,10 @@ namespace DistributedSystem_Main.Views
             this.Panel_Function.Controls.Add(this.BTN_ResetAll);
             this.Panel_Function.Dock = System.Windows.Forms.DockStyle.Top;
             this.Panel_Function.Location = new System.Drawing.Point(0, 0);
-            this.Panel_Function.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Panel_Function.Margin = new System.Windows.Forms.Padding(4);
             this.Panel_Function.Name = "Panel_Function";
             this.Panel_Function.Size = new System.Drawing.Size(870, 71);
             this.Panel_Function.TabIndex = 0;
-            // 
-            // DGV_AlarmEvents
-            // 
-            this.DGV_AlarmEvents.AllowUserToAddRows = false;
-            this.DGV_AlarmEvents.BackgroundColor = System.Drawing.SystemColors.ActiveCaptionText;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.DGV_AlarmEvents.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
-            this.DGV_AlarmEvents.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DGV_AlarmEvents.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Column_EQName,
-            this.Column_Unit,
-            this.Column_SensorName,
-            this.Column_Event,
-            this.Column_Decription,
-            this.Column_reset});
-            this.DGV_AlarmEvents.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.DGV_AlarmEvents.Location = new System.Drawing.Point(0, 71);
-            this.DGV_AlarmEvents.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.DGV_AlarmEvents.Name = "DGV_AlarmEvents";
-            this.DGV_AlarmEvents.RowHeadersVisible = false;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.DGV_AlarmEvents.RowsDefaultCellStyle = dataGridViewCellStyle4;
-            this.DGV_AlarmEvents.RowTemplate.Height = 24;
-            this.DGV_AlarmEvents.Size = new System.Drawing.Size(870, 413);
-            this.DGV_AlarmEvents.TabIndex = 1;
-            this.DGV_AlarmEvents.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGV_AlarmEvents_CellContentClick);
             // 
             // BTN_ResetAll
             // 
@@ -95,6 +62,30 @@ namespace DistributedSystem_Main.Views
             this.BTN_ResetAll.Text = "Reset All";
             this.BTN_ResetAll.UseVisualStyleBackColor = true;
             this.BTN_ResetAll.Click += new System.EventHandler(this.BTN_ResetAll_Click);
+            // 
+            // DGV_AlarmEvents
+            // 
+            this.DGV_AlarmEvents.AllowUserToAddRows = false;
+            this.DGV_AlarmEvents.BackgroundColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.DGV_AlarmEvents.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DGV_AlarmEvents.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Column_EQName,
+            this.Column_Unit,
+            this.Column_SensorName,
+            this.Column_Event,
+            this.Column_Decription,
+            this.Column_reset});
+            this.DGV_AlarmEvents.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.DGV_AlarmEvents.Location = new System.Drawing.Point(0, 71);
+            this.DGV_AlarmEvents.Margin = new System.Windows.Forms.Padding(4);
+            this.DGV_AlarmEvents.Name = "DGV_AlarmEvents";
+            this.DGV_AlarmEvents.RowHeadersVisible = false;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.DGV_AlarmEvents.RowsDefaultCellStyle = dataGridViewCellStyle1;
+            this.DGV_AlarmEvents.RowTemplate.Height = 24;
+            this.DGV_AlarmEvents.Size = new System.Drawing.Size(870, 413);
+            this.DGV_AlarmEvents.TabIndex = 1;
+            this.DGV_AlarmEvents.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGV_AlarmEvents_CellContentClick);
             // 
             // Column_EQName
             // 
@@ -145,8 +136,9 @@ namespace DistributedSystem_Main.Views
             this.Controls.Add(this.DGV_AlarmEvents);
             this.Controls.Add(this.Panel_Function);
             this.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form_Alarm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Event";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form_Alarm_FormClosing);
             this.Panel_Function.ResumeLayout(false);

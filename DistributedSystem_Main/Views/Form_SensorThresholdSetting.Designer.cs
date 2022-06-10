@@ -312,6 +312,7 @@ namespace DistributedSystem_Main.Views
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Form_SensorThresholdSetting";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Threshold Setting";
             this.Panel_MqttSetting.ResumeLayout(false);
             this.Panel_MqttSetting.PerformLayout();

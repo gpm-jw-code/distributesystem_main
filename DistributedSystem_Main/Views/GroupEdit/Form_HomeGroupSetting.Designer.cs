@@ -50,11 +50,14 @@ namespace DistributedSystem_Main.Views
             this.Panel_RowSensor = new System.Windows.Forms.Panel();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.Panel_Functions = new System.Windows.Forms.Panel();
+            this.BTN_Cancel = new System.Windows.Forms.Button();
+            this.BTN_SaveGroupParameters = new System.Windows.Forms.Button();
             this.TabControlEX_Main.SuspendLayout();
             this.TabPage_Custom.SuspendLayout();
             this.TabControl_CustomSetting.SuspendLayout();
             this.TabPage_EditSensorList.SuspendLayout();
             this.tabPage3.SuspendLayout();
+            this.Panel_Functions.SuspendLayout();
             this.SuspendLayout();
             // 
             // Combo_GroupName
@@ -103,7 +106,7 @@ namespace DistributedSystem_Main.Views
             this.TabControlEX_Main.Controls.Add(this.TabPage_Custom);
             this.TabControlEX_Main.Controls.Add(this.tabPage2);
             this.TabControlEX_Main.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TabControlEX_Main.Location = new System.Drawing.Point(0, 55);
+            this.TabControlEX_Main.Location = new System.Drawing.Point(0, 0);
             this.TabControlEX_Main.Name = "TabControlEX_Main";
             this.TabControlEX_Main.SelectedIndex = 0;
             this.TabControlEX_Main.Size = new System.Drawing.Size(453, 515);
@@ -280,11 +283,33 @@ namespace DistributedSystem_Main.Views
             // 
             // Panel_Functions
             // 
-            this.Panel_Functions.Dock = System.Windows.Forms.DockStyle.Top;
-            this.Panel_Functions.Location = new System.Drawing.Point(0, 0);
+            this.Panel_Functions.Controls.Add(this.BTN_Cancel);
+            this.Panel_Functions.Controls.Add(this.BTN_SaveGroupParameters);
+            this.Panel_Functions.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.Panel_Functions.Location = new System.Drawing.Point(0, 515);
             this.Panel_Functions.Name = "Panel_Functions";
             this.Panel_Functions.Size = new System.Drawing.Size(453, 55);
             this.Panel_Functions.TabIndex = 5;
+            // 
+            // BTN_Cancel
+            // 
+            this.BTN_Cancel.Location = new System.Drawing.Point(243, 6);
+            this.BTN_Cancel.Name = "BTN_Cancel";
+            this.BTN_Cancel.Size = new System.Drawing.Size(143, 45);
+            this.BTN_Cancel.TabIndex = 0;
+            this.BTN_Cancel.Text = "Cancel";
+            this.BTN_Cancel.UseVisualStyleBackColor = true;
+            this.BTN_Cancel.Click += new System.EventHandler(this.BTN_Cancel_Click);
+            // 
+            // BTN_SaveGroupParameters
+            // 
+            this.BTN_SaveGroupParameters.Location = new System.Drawing.Point(54, 5);
+            this.BTN_SaveGroupParameters.Name = "BTN_SaveGroupParameters";
+            this.BTN_SaveGroupParameters.Size = new System.Drawing.Size(143, 45);
+            this.BTN_SaveGroupParameters.TabIndex = 0;
+            this.BTN_SaveGroupParameters.Text = "Save";
+            this.BTN_SaveGroupParameters.UseVisualStyleBackColor = true;
+            this.BTN_SaveGroupParameters.Click += new System.EventHandler(this.BTN_SaveGroupParameters_Click);
             // 
             // Form_HomeGroupSetting
             // 
@@ -292,11 +317,13 @@ namespace DistributedSystem_Main.Views
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.ClientSize = new System.Drawing.Size(453, 570);
+            this.ControlBox = false;
             this.Controls.Add(this.TabControlEX_Main);
             this.Controls.Add(this.Panel_Functions);
             this.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.Margin = new System.Windows.Forms.Padding(5);
             this.Name = "Form_HomeGroupSetting";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Form_HomeGroupSetting";
             this.TabControlEX_Main.ResumeLayout(false);
             this.TabPage_Custom.ResumeLayout(false);
@@ -306,6 +333,7 @@ namespace DistributedSystem_Main.Views
             this.TabPage_EditSensorList.PerformLayout();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
+            this.Panel_Functions.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -333,5 +361,7 @@ namespace DistributedSystem_Main.Views
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Panel Panel_RowSensor;
         private System.Windows.Forms.Button BTN_EditRowSensor;
+        private System.Windows.Forms.Button BTN_SaveGroupParameters;
+        private System.Windows.Forms.Button BTN_Cancel;
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,20 +11,27 @@ namespace DistributedSystem_Main.Systems
     public class cls_HomePageManager
     {
         public static string NowShowGroupName;
-        private static Dictionary<string, cls_GroupObject> Dict_GroupObject = new Dictionary<string, cls_GroupObject>() ;
+        private static Dictionary<string, cls_GroupObject> Dict_GroupObject = new Dictionary<string, cls_GroupObject>();
+
         public static DataGridView DGV_DataTable;
-
         private static User_Control.USC_GroupSwitch GroupSwitch;
-
         public static List<string> GroupNames { get { return Dict_GroupObject.Keys.ToList(); } }
 
+        public static string GroupParameterPath
+        {
+            get
+            {
+                return System.IO.Path.Combine("Parameters", "GroupParameters.json");
+            }
+        }
 
-        public static void InitialManager(DataGridView MainDataGridView,User_Control.USC_GroupSwitch MainGroupSwitch)
+
+        public static void InitialManager(DataGridView MainDataGridView, User_Control.USC_GroupSwitch MainGroupSwitch)
         {
             DGV_DataTable = MainDataGridView;
             GroupSwitch = MainGroupSwitch;
-            GroupSwitch.InitializeGroupButtons();
             GroupSwitch.Event_ChangeGroupName += ChangeGroup;
+            LoadGroupParameters();
         }
 
         public static void AddNewGroup(string NewGroupName)
@@ -35,12 +43,12 @@ namespace DistributedSystem_Main.Systems
             Dict_GroupObject.Add(NewGroupName, new cls_GroupObject(NewGroupName));
         }
 
-        public static void AddSensorToGroup(string GroupName,List<string> List_SensorNames)
+        public static void AddSensorToGroup(string GroupName, List<string> List_SensorNames)
         {
             Dict_GroupObject[GroupName].AddNewSensorToGroup(List_SensorNames);
         }
 
-        public static void SetSensorToRow(string GroupName,string RowName,List<string> List_SensorName)
+        public static void SetSensorToRow(string GroupName, string RowName, List<string> List_SensorName)
         {
             Dict_GroupObject[GroupName].ResetRowSensor(RowName);
             foreach (var item in List_SensorName)
@@ -49,7 +57,7 @@ namespace DistributedSystem_Main.Systems
             }
         }
 
-        public static void UpdateSensorData(string SensorName,Dictionary<string,double> Dict_DataValue)
+        public static void UpdateSensorData(string SensorName, Dictionary<string, double> Dict_DataValue)
         {
             if (string.IsNullOrEmpty(NowShowGroupName))
             {
@@ -60,7 +68,11 @@ namespace DistributedSystem_Main.Systems
                 return;
             }
             string RowName = Dict_GroupObject[NowShowGroupName].FindRowNameWithSensorName(SensorName);
-            var TargetRow = DGV_DataTable.Rows.Cast<DataGridViewRow>().Where(r => r.Cells["RowName"].Value.ToString() == RowName).First();
+            var TargetRow = DGV_DataTable.Rows.Cast<DataGridViewRow>().Where(r => r.Cells["RowName"].Value.ToString() == RowName).FirstOrDefault();
+            if (TargetRow == default)
+            {
+                return;
+            }
 
             foreach (var item in Dict_DataValue)
             {
@@ -76,20 +88,34 @@ namespace DistributedSystem_Main.Systems
             DGV_DataTable.Columns.Add("RowName", "Name");
             foreach (var item in Dict_GroupObject[NowShowGroupName].List_ColumnName)
             {
-                DGV_DataTable.Columns.Add($"Column_{item}",item);
+                DGV_DataTable.Columns.Add($"Column_{item}", item);
             }
+            foreach (DataGridViewColumn item in DGV_DataTable.Columns)
+            {
+                item.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                item.ReadOnly = true;
+            }
+
             foreach (var item in Dict_GroupObject[NowShowGroupName].Dict_RowListSensor)
             {
                 DGV_DataTable.Rows.Add(item.Key);
             }
             foreach (var item in Dict_GroupObject[NowShowGroupName].List_SensorName)
             {
+                if (!Staobj.Dict_SensorProcessObject.ContainsKey(item))
+                {
+                    continue;
+                }
                 Staobj.Dict_SensorProcessObject[item].RefreshMainTable();
             }
         }
 
         internal static void ResetNowGroupName()
         {
+            if (GroupNames.Count == 0)
+            {
+                return;
+            }
             GroupSwitch.ChangeSelectGroup(GroupNames[0]);
             ChangeGroup(GroupNames[0]);
         }
@@ -137,9 +163,47 @@ namespace DistributedSystem_Main.Systems
         {
             return Dict_GroupObject[GroupName].List_ColumnName;
         }
-        public static Dictionary<string,List<string>> GetRowsInfo(string GroupName)
+        public static Dictionary<string, List<string>> GetRowsInfo(string GroupName)
         {
             return Dict_GroupObject[GroupName].Dict_RowListSensor;
+        }
+
+        public static void SaveGroupParameters()
+        {
+            using (FileStream FS = new FileStream(GroupParameterPath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.Read))
+            {
+                using (StreamWriter SW = new StreamWriter(FS))
+                {
+                    SW.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(Dict_GroupObject, Newtonsoft.Json.Formatting.Indented));
+                }
+            }
+            GroupSwitch.InitializeGroupButtons(); 
+            foreach (var item in Dict_GroupObject.Keys)
+            {
+                GroupSwitch.AddGroupButton(item);
+            }
+            ResetNowGroupName();
+        }
+
+        public static void LoadGroupParameters()
+        {
+            GroupSwitch.InitializeGroupButtons();
+            using (FileStream FS = new FileStream(GroupParameterPath, FileMode.OpenOrCreate, FileAccess.Read, FileShare.Write))
+            {
+                using (StreamReader SR = new StreamReader(FS))
+                {
+                    Dict_GroupObject = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, Systems.cls_HomePageManager.cls_GroupObject>>(SR.ReadToEnd());
+                }
+            }
+            if (Dict_GroupObject == null)
+            {
+                Dict_GroupObject = new Dictionary<string, cls_GroupObject>();
+            }
+            foreach (var item in Dict_GroupObject.Keys)
+            {
+                GroupSwitch.AddGroupButton(item);
+            }
+            ResetNowGroupName();
         }
 
         public class cls_GroupObject
@@ -184,7 +248,7 @@ namespace DistributedSystem_Main.Systems
                 Dict_RowListSensor[RowName].Clear();
             }
 
-            public void SetSensorToRow(string RowName,string SensorName)
+            public void SetSensorToRow(string RowName, string SensorName)
             {
                 if (!Dict_RowListSensor.ContainsKey(RowName))
                 {
