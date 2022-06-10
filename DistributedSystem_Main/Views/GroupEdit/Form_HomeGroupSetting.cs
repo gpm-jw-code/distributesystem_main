@@ -79,6 +79,10 @@ namespace DistributedSystem_Main.Views
         {
             var RowInfo = Systems.cls_HomePageManager.GetRowsInfo(GroupName);
             Combo_Rows.Items.Clear();
+
+            if (RowInfo.Count == 0)
+                return;
+
             foreach (var item in RowInfo)
             {
                 Combo_Rows.Items.Add(item.Key);
@@ -90,8 +94,16 @@ namespace DistributedSystem_Main.Views
             string GroupName = Combo_GroupName.Text;
 
             Form_EditGroupRow Form_RowEdit = new Form_EditGroupRow(GroupName);
+            if (Systems.cls_HomePageManager.GetNoneSetRowSensor(GroupName).Count == 0)
+            {
+                MessageBox.Show("Group中的所有Sensor皆完成設定");
+                return;
+            }
             Form_RowEdit.ShowDialog();
             LoadRowsInfo(GroupName);
+
+            Combo_Rows.SelectedIndex = Combo_Rows.Items.Count-1;
+            Combo_Rows_SelectedIndexChanged(null, null);
         }
 
         private void Combo_Rows_SelectedIndexChanged(object sender, EventArgs e)
@@ -99,6 +111,10 @@ namespace DistributedSystem_Main.Views
             string RowName = Combo_Rows.Text;
             Panel_RowSensor.Controls.Clear();
             var Dict_RowInfo = Systems.cls_HomePageManager.GetRowsInfo(Combo_GroupName.Text);
+            if (!Dict_RowInfo.ContainsKey(RowName))
+            {
+                return;
+            }
             foreach (var item in Dict_RowInfo[RowName])
             {
                 Label NewSensorLabel = new Label()
@@ -107,10 +123,6 @@ namespace DistributedSystem_Main.Views
                     Dock = DockStyle.Top
                 };
                 Panel_RowSensor.Controls.Add(NewSensorLabel);
-            }
-            if (!Dict_RowInfo.ContainsKey(RowName))
-            {
-                return;
             }
         }
 
@@ -121,6 +133,10 @@ namespace DistributedSystem_Main.Views
             Form_EditGroupRow Form_RowEdit = new Form_EditGroupRow(GroupName,RowName);
             Form_RowEdit.ShowDialog();
             LoadRowsInfo(GroupName);
+
+
+            Combo_Rows.Text = RowName;
+            Combo_Rows_SelectedIndexChanged(null, null);
         }
 
         private void BTN_SaveGroupParameters_Click(object sender, EventArgs e)

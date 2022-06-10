@@ -16,6 +16,8 @@ namespace DistributedSystem_Main.Views
         string GroupName;
         bool IsEditGroup = false;
         bool IsNewGroup = false;
+
+        List<string> List_NoneUsedSensor = new List<string>();
         public Form_GroupEditSensorList(string GroupName)
         {
             InitializeComponent();
@@ -35,7 +37,7 @@ namespace DistributedSystem_Main.Views
         private void LoadSensorNames(string GroupName = "")
         {
             var GroupSensorNames = Systems.cls_HomePageManager.GetGroupSensorNames(GroupName);
-            var List_NoneUsedSensor = Systems.cls_HomePageManager.GetNoneSetGroupSensor();
+            List_NoneUsedSensor = Systems.cls_HomePageManager.GetNoneSetGroupSensor();
             foreach (var item in Systems.Staobj.Dict_SensorProcessObject.Keys)
             {
                 CheckBox NewComboBox = new CheckBox() {
@@ -51,12 +53,12 @@ namespace DistributedSystem_Main.Views
 
         public void SetGroupName(string GroupName = "")
         {
+            TXT_GroupName.Enabled = GroupName == "";
             if (GroupName == "")
             {
-                return;
+                GroupName = $"Group{Systems.cls_HomePageManager.GroupNames.Count}";
             }
             TXT_GroupName.Text = GroupName;
-            TXT_GroupName.Enabled = false;
             this.GroupName = GroupName; 
         }
 
@@ -93,6 +95,34 @@ namespace DistributedSystem_Main.Views
         private void BTN_Cancel_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void TXT_Filter_TextChanged(object sender, EventArgs e)
+        {
+            string FilterString = TXT_Filter.Text;
+            bool IsOnlyShowNoneSet = CheckBox_ShowNoneSet.Checked;
+            foreach (var item in List_SensorNameComboBox)
+            {
+                item.Visible = item.Text.ToUpper().Contains(FilterString.ToUpper());
+                if (IsOnlyShowNoneSet)
+                {
+                    item.Visible = item.Visible && List_NoneUsedSensor.Contains(item.Text);
+                }
+            }
+        }
+
+        private void CheckBox_ShowNoneSet_CheckedChanged(object sender, EventArgs e)
+        {
+            string FilterString = TXT_Filter.Text;
+            bool IsOnlyShowNoneSet = CheckBox_ShowNoneSet.Checked;
+            foreach (var item in List_SensorNameComboBox)
+            {
+                item.Visible = item.Text.ToUpper().Contains(FilterString.ToUpper());
+                if (IsOnlyShowNoneSet)
+                {
+                    item.Visible = item.Visible && List_NoneUsedSensor.Contains(item.Text);
+                }
+            }
         }
     }
 }

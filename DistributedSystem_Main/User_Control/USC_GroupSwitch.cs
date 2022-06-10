@@ -36,8 +36,10 @@ namespace DistributedSystem_Main.User_Control
                 BackColor = Color.White,
                 FlatStyle = FlatStyle.Flat,
                 Margin = new Padding(10, 10, 10, 20),
-                Size = new Size(144,55),
+                Size = new Size(144, 60),
+                Cursor = Cursors.Hand
             };
+            NewGroupButton.FlatAppearance.BorderSize = 0;
             NewGroupButton.SetCornerRound(15);
             NewGroupButton.MouseClick += GroupButton_MouseClick;
             Dict_GroupButtons.Add(GroupName, NewGroupButton);

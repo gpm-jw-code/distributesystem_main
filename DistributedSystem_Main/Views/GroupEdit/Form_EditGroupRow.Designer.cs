@@ -35,18 +35,21 @@ namespace DistributedSystem_Main.Views
             this.Panel_AllSensorName = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.TXT_Filter = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // TXT_RowName
             // 
             this.TXT_RowName.Location = new System.Drawing.Point(137, 33);
             this.TXT_RowName.Name = "TXT_RowName";
-            this.TXT_RowName.Size = new System.Drawing.Size(185, 29);
+            this.TXT_RowName.Size = new System.Drawing.Size(219, 29);
             this.TXT_RowName.TabIndex = 8;
             // 
             // BTN_Cancel
             // 
-            this.BTN_Cancel.Location = new System.Drawing.Point(224, 341);
+            this.BTN_Cancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.BTN_Cancel.Location = new System.Drawing.Point(224, 413);
             this.BTN_Cancel.Name = "BTN_Cancel";
             this.BTN_Cancel.Size = new System.Drawing.Size(98, 42);
             this.BTN_Cancel.TabIndex = 6;
@@ -55,7 +58,8 @@ namespace DistributedSystem_Main.Views
             // 
             // BTN_Save
             // 
-            this.BTN_Save.Location = new System.Drawing.Point(47, 341);
+            this.BTN_Save.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.BTN_Save.Location = new System.Drawing.Point(47, 413);
             this.BTN_Save.Name = "BTN_Save";
             this.BTN_Save.Size = new System.Drawing.Size(98, 42);
             this.BTN_Save.TabIndex = 7;
@@ -65,11 +69,13 @@ namespace DistributedSystem_Main.Views
             // 
             // Panel_AllSensorName
             // 
+            this.Panel_AllSensorName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.Panel_AllSensorName.AutoScroll = true;
             this.Panel_AllSensorName.BackColor = System.Drawing.Color.White;
-            this.Panel_AllSensorName.Location = new System.Drawing.Point(56, 113);
+            this.Panel_AllSensorName.Location = new System.Drawing.Point(56, 142);
             this.Panel_AllSensorName.Name = "Panel_AllSensorName";
-            this.Panel_AllSensorName.Size = new System.Drawing.Size(275, 210);
+            this.Panel_AllSensorName.Size = new System.Drawing.Size(275, 265);
             this.Panel_AllSensorName.TabIndex = 5;
             // 
             // label1
@@ -84,21 +90,40 @@ namespace DistributedSystem_Main.Views
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(25, 90);
+            this.label2.Location = new System.Drawing.Point(43, 110);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(93, 20);
             this.label2.TabIndex = 4;
             this.label2.Text = "Sensor List:";
             // 
+            // TXT_Filter
+            // 
+            this.TXT_Filter.Location = new System.Drawing.Point(248, 107);
+            this.TXT_Filter.Name = "TXT_Filter";
+            this.TXT_Filter.Size = new System.Drawing.Size(98, 29);
+            this.TXT_Filter.TabIndex = 8;
+            this.TXT_Filter.TextChanged += new System.EventHandler(this.TXT_Filter_TextChanged);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(196, 110);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(46, 20);
+            this.label3.TabIndex = 4;
+            this.label3.Text = "Filter";
+            // 
             // Form_EditGroupRow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(383, 394);
+            this.ClientSize = new System.Drawing.Size(383, 467);
+            this.Controls.Add(this.TXT_Filter);
             this.Controls.Add(this.TXT_RowName);
             this.Controls.Add(this.BTN_Cancel);
             this.Controls.Add(this.BTN_Save);
             this.Controls.Add(this.Panel_AllSensorName);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
@@ -119,5 +144,7 @@ namespace DistributedSystem_Main.Views
         private System.Windows.Forms.Panel Panel_AllSensorName;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox TXT_Filter;
+        private System.Windows.Forms.Label label3;
     }
 }

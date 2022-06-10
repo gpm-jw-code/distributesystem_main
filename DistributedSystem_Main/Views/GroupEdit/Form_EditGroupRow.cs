@@ -29,7 +29,6 @@ namespace DistributedSystem_Main.Views
         {
             var RowInfos = Systems.cls_HomePageManager.GetRowsInfo(NowGroupName);
             var NoneSetSensor = Systems.cls_HomePageManager.GetNoneSetRowSensor(NowGroupName);
-            var AllSensors = Systems.cls_HomePageManager.GetGroupSensorNames(NowGroupName);
 
             List<string> List_RowSensors = new List<string>();
             if (RowInfos.ContainsKey(RowName))
@@ -37,13 +36,12 @@ namespace DistributedSystem_Main.Views
                 List_RowSensors = RowInfos[RowName];
             }
 
-            foreach (var item in AllSensors)
+            foreach (var item in NoneSetSensor)
             {
                 CheckBox NewSensorCheckBox = new CheckBox()
                 {
                     Text = item,
                     Checked = List_RowSensors.Contains(item),
-                    ForeColor = NoneSetSensor.Contains(item) ? Color.Green : Color.Red,
                     Dock = DockStyle.Top
                 };
                 Panel_AllSensorName.Controls.Add(NewSensorCheckBox);
@@ -53,6 +51,10 @@ namespace DistributedSystem_Main.Views
 
         private void SetRowInfo(string RowName)
         {
+            if (RowName == "")
+            {
+                RowName = $"Row{Systems.cls_HomePageManager.GetRowsInfo(NowGroupName).Count}";
+            }
             TXT_RowName.Text = RowName;
             TXT_RowName.Enabled = RowName == "";
         }
@@ -83,6 +85,15 @@ namespace DistributedSystem_Main.Views
             Systems.cls_HomePageManager.SetSensorToRow(NowGroupName, NewRowName, CheckSensor);
             MessageBox.Show($"已加入選取的{CheckSensor.Count}個Sensor");
             this.Close();
+        }
+
+        private void TXT_Filter_TextChanged(object sender, EventArgs e)
+        {
+            string FilterString = TXT_Filter.Text;
+            foreach (var item in List_AllSensorComboBox)
+            {
+                item.Visible = item.Text.ToUpper().Contains(FilterString.ToUpper());
+            }
         }
     }
 }
