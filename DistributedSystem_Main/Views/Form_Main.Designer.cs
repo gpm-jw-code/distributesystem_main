@@ -30,7 +30,7 @@ namespace DistributedSystem_Main
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.TableLayout_WholeView = new System.Windows.Forms.TableLayoutPanel();
             this.TableLayout_SideBar = new System.Windows.Forms.TableLayoutPanel();
             this.PictureBox_Icon = new System.Windows.Forms.PictureBox();
@@ -44,15 +44,15 @@ namespace DistributedSystem_Main
             this.panStatus = new System.Windows.Forms.Panel();
             this.btnStatus = new System.Windows.Forms.Button();
             this.pictureBox20 = new System.Windows.Forms.PictureBox();
-            this.panLog = new System.Windows.Forms.Panel();
-            this.btnLog = new System.Windows.Forms.Button();
-            this.pictureBox19 = new System.Windows.Forms.PictureBox();
             this.Panel_RawData = new System.Windows.Forms.Panel();
             this.BTN_RawData = new System.Windows.Forms.Button();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.picbOFF = new System.Windows.Forms.PictureBox();
             this.picbRestart = new System.Windows.Forms.PictureBox();
+            this.Panel_HomePage = new System.Windows.Forms.Panel();
+            this.BTN_MainTable = new System.Windows.Forms.Button();
+            this.pictureBox19 = new System.Windows.Forms.PictureBox();
             this.TablePanel_SideBarFunctions = new System.Windows.Forms.TableLayoutPanel();
             this.BTN_AlarmEvent = new System.Windows.Forms.Button();
             this.BTN_OpenSystemSetting = new System.Windows.Forms.Button();
@@ -83,9 +83,14 @@ namespace DistributedSystem_Main
             this.label1 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.PageSwitch_ISOChart = new DistributedSystem_Main.User_Control.PageSwitch();
+            this.TabPage_HomePage = new System.Windows.Forms.TabPage();
+            this.DGV_HomePaeTable = new System.Windows.Forms.DataGridView();
+            this.Panel_HomePageFunctions = new System.Windows.Forms.Panel();
+            this.BTN_HomeGroupSetting = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.LAB_MQTTServerState = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.GroupSwitch_HomePage = new DistributedSystem_Main.User_Control.USC_GroupSwitch();
             this.TableLayout_WholeView.SuspendLayout();
             this.TableLayout_SideBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox_Icon)).BeginInit();
@@ -96,13 +101,13 @@ namespace DistributedSystem_Main
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             this.panStatus.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox20)).BeginInit();
-            this.panLog.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox19)).BeginInit();
             this.Panel_RawData.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picbOFF)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picbRestart)).BeginInit();
+            this.Panel_HomePage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox19)).BeginInit();
             this.TablePanel_SideBarFunctions.SuspendLayout();
             this.Panel_MainArea.SuspendLayout();
             this.TabControl_Main.SuspendLayout();
@@ -113,6 +118,9 @@ namespace DistributedSystem_Main
             this.Panel_EditSensorInfo.SuspendLayout();
             this.TabPage_ISO.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.TabPage_HomePage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.DGV_HomePaeTable)).BeginInit();
+            this.Panel_HomePageFunctions.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -169,9 +177,9 @@ namespace DistributedSystem_Main
             this.panMenu.Controls.Add(this.Panel_Query);
             this.panMenu.Controls.Add(this.Panel_ISO);
             this.panMenu.Controls.Add(this.panStatus);
-            this.panMenu.Controls.Add(this.panLog);
             this.panMenu.Controls.Add(this.Panel_RawData);
             this.panMenu.Controls.Add(this.tableLayoutPanel2);
+            this.panMenu.Controls.Add(this.Panel_HomePage);
             this.panMenu.Controls.Add(this.TablePanel_SideBarFunctions);
             this.panMenu.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panMenu.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
@@ -323,59 +331,13 @@ namespace DistributedSystem_Main
             this.pictureBox20.TabStop = false;
             this.pictureBox20.Tag = "TabPageModuleManager";
             // 
-            // panLog
-            // 
-            this.panLog.Controls.Add(this.btnLog);
-            this.panLog.Controls.Add(this.pictureBox19);
-            this.panLog.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.panLog.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panLog.Location = new System.Drawing.Point(0, 72);
-            this.panLog.Margin = new System.Windows.Forms.Padding(4);
-            this.panLog.Name = "panLog";
-            this.panLog.Size = new System.Drawing.Size(170, 41);
-            this.panLog.TabIndex = 4;
-            // 
-            // btnLog
-            // 
-            this.btnLog.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnLog.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(26)))), ((int)(((byte)(36)))));
-            this.btnLog.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(82)))), ((int)(((byte)(111)))), ((int)(((byte)(135)))));
-            this.btnLog.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(63)))), ((int)(((byte)(95)))), ((int)(((byte)(122)))));
-            this.btnLog.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(43)))), ((int)(((byte)(54)))));
-            this.btnLog.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnLog.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Bold);
-            this.btnLog.ForeColor = System.Drawing.Color.White;
-            this.btnLog.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnLog.Location = new System.Drawing.Point(43, 0);
-            this.btnLog.Margin = new System.Windows.Forms.Padding(4);
-            this.btnLog.Name = "btnLog";
-            this.btnLog.Size = new System.Drawing.Size(127, 41);
-            this.btnLog.TabIndex = 1;
-            this.btnLog.Text = "Log";
-            this.btnLog.UseVisualStyleBackColor = true;
-            this.btnLog.Click += new System.EventHandler(this.btnLog_Click);
-            // 
-            // pictureBox19
-            // 
-            this.pictureBox19.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox19.Dock = System.Windows.Forms.DockStyle.Left;
-            this.pictureBox19.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox19.Image")));
-            this.pictureBox19.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.pictureBox19.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox19.Name = "pictureBox19";
-            this.pictureBox19.Size = new System.Drawing.Size(43, 41);
-            this.pictureBox19.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox19.TabIndex = 18;
-            this.pictureBox19.TabStop = false;
-            this.pictureBox19.Tag = "TabPageLOG";
-            // 
             // Panel_RawData
             // 
             this.Panel_RawData.Controls.Add(this.BTN_RawData);
             this.Panel_RawData.Controls.Add(this.pictureBox2);
             this.Panel_RawData.Cursor = System.Windows.Forms.Cursors.Hand;
             this.Panel_RawData.Dock = System.Windows.Forms.DockStyle.Top;
-            this.Panel_RawData.Location = new System.Drawing.Point(0, 31);
+            this.Panel_RawData.Location = new System.Drawing.Point(0, 72);
             this.Panel_RawData.Margin = new System.Windows.Forms.Padding(4);
             this.Panel_RawData.Name = "Panel_RawData";
             this.Panel_RawData.Size = new System.Drawing.Size(170, 41);
@@ -461,6 +423,52 @@ namespace DistributedSystem_Main
             this.picbRestart.TabStop = false;
             this.picbRestart.Click += new System.EventHandler(this.picbRestart_Click);
             // 
+            // Panel_HomePage
+            // 
+            this.Panel_HomePage.Controls.Add(this.BTN_MainTable);
+            this.Panel_HomePage.Controls.Add(this.pictureBox19);
+            this.Panel_HomePage.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Panel_HomePage.Dock = System.Windows.Forms.DockStyle.Top;
+            this.Panel_HomePage.Location = new System.Drawing.Point(0, 31);
+            this.Panel_HomePage.Margin = new System.Windows.Forms.Padding(4);
+            this.Panel_HomePage.Name = "Panel_HomePage";
+            this.Panel_HomePage.Size = new System.Drawing.Size(170, 41);
+            this.Panel_HomePage.TabIndex = 4;
+            // 
+            // BTN_MainTable
+            // 
+            this.BTN_MainTable.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.BTN_MainTable.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(26)))), ((int)(((byte)(36)))));
+            this.BTN_MainTable.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(82)))), ((int)(((byte)(111)))), ((int)(((byte)(135)))));
+            this.BTN_MainTable.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(63)))), ((int)(((byte)(95)))), ((int)(((byte)(122)))));
+            this.BTN_MainTable.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(43)))), ((int)(((byte)(54)))));
+            this.BTN_MainTable.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BTN_MainTable.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Bold);
+            this.BTN_MainTable.ForeColor = System.Drawing.Color.White;
+            this.BTN_MainTable.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.BTN_MainTable.Location = new System.Drawing.Point(43, 0);
+            this.BTN_MainTable.Margin = new System.Windows.Forms.Padding(4);
+            this.BTN_MainTable.Name = "BTN_MainTable";
+            this.BTN_MainTable.Size = new System.Drawing.Size(127, 41);
+            this.BTN_MainTable.TabIndex = 1;
+            this.BTN_MainTable.Text = "Home Page";
+            this.BTN_MainTable.UseVisualStyleBackColor = true;
+            this.BTN_MainTable.Click += new System.EventHandler(this.BTN_HomePage_Click);
+            // 
+            // pictureBox19
+            // 
+            this.pictureBox19.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox19.Dock = System.Windows.Forms.DockStyle.Left;
+            this.pictureBox19.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox19.Image")));
+            this.pictureBox19.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.pictureBox19.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox19.Name = "pictureBox19";
+            this.pictureBox19.Size = new System.Drawing.Size(43, 41);
+            this.pictureBox19.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox19.TabIndex = 18;
+            this.pictureBox19.TabStop = false;
+            this.pictureBox19.Tag = "TabPageLOG";
+            // 
             // TablePanel_SideBarFunctions
             // 
             this.TablePanel_SideBarFunctions.ColumnCount = 5;
@@ -527,6 +535,7 @@ namespace DistributedSystem_Main
             this.TabControl_Main.Controls.Add(this.TabPage_Log);
             this.TabControl_Main.Controls.Add(this.TabPage_SensorInfo);
             this.TabControl_Main.Controls.Add(this.TabPage_ISO);
+            this.TabControl_Main.Controls.Add(this.TabPage_HomePage);
             this.TabControl_Main.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TabControl_Main.ItemSize = new System.Drawing.Size(50, 0);
             this.TabControl_Main.Location = new System.Drawing.Point(0, 0);
@@ -654,10 +663,10 @@ namespace DistributedSystem_Main
             this.DGV_SensorInfo.Location = new System.Drawing.Point(3, 46);
             this.DGV_SensorInfo.Name = "DGV_SensorInfo";
             this.DGV_SensorInfo.RowHeadersVisible = false;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
-            this.DGV_SensorInfo.RowsDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
+            this.DGV_SensorInfo.RowsDefaultCellStyle = dataGridViewCellStyle1;
             this.DGV_SensorInfo.RowTemplate.Height = 24;
             this.DGV_SensorInfo.ShowCellErrors = false;
             this.DGV_SensorInfo.Size = new System.Drawing.Size(1174, 606);
@@ -836,6 +845,48 @@ namespace DistributedSystem_Main
             this.PageSwitch_ISOChart.Size = new System.Drawing.Size(92, 27);
             this.PageSwitch_ISOChart.TabIndex = 0;
             // 
+            // TabPage_HomePage
+            // 
+            this.TabPage_HomePage.Controls.Add(this.DGV_HomePaeTable);
+            this.TabPage_HomePage.Controls.Add(this.Panel_HomePageFunctions);
+            this.TabPage_HomePage.Location = new System.Drawing.Point(-1, 22);
+            this.TabPage_HomePage.Name = "TabPage_HomePage";
+            this.TabPage_HomePage.Padding = new System.Windows.Forms.Padding(3);
+            this.TabPage_HomePage.Size = new System.Drawing.Size(1180, 655);
+            this.TabPage_HomePage.TabIndex = 6;
+            this.TabPage_HomePage.Text = "Home Page";
+            this.TabPage_HomePage.UseVisualStyleBackColor = true;
+            // 
+            // DGV_HomePaeTable
+            // 
+            this.DGV_HomePaeTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DGV_HomePaeTable.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.DGV_HomePaeTable.Location = new System.Drawing.Point(3, 93);
+            this.DGV_HomePaeTable.Name = "DGV_HomePaeTable";
+            this.DGV_HomePaeTable.RowTemplate.Height = 24;
+            this.DGV_HomePaeTable.Size = new System.Drawing.Size(1174, 559);
+            this.DGV_HomePaeTable.TabIndex = 0;
+            // 
+            // Panel_HomePageFunctions
+            // 
+            this.Panel_HomePageFunctions.Controls.Add(this.GroupSwitch_HomePage);
+            this.Panel_HomePageFunctions.Controls.Add(this.BTN_HomeGroupSetting);
+            this.Panel_HomePageFunctions.Dock = System.Windows.Forms.DockStyle.Top;
+            this.Panel_HomePageFunctions.Location = new System.Drawing.Point(3, 3);
+            this.Panel_HomePageFunctions.Name = "Panel_HomePageFunctions";
+            this.Panel_HomePageFunctions.Size = new System.Drawing.Size(1174, 90);
+            this.Panel_HomePageFunctions.TabIndex = 1;
+            // 
+            // BTN_HomeGroupSetting
+            // 
+            this.BTN_HomeGroupSetting.Location = new System.Drawing.Point(1068, 21);
+            this.BTN_HomeGroupSetting.Name = "BTN_HomeGroupSetting";
+            this.BTN_HomeGroupSetting.Size = new System.Drawing.Size(75, 38);
+            this.BTN_HomeGroupSetting.TabIndex = 0;
+            this.BTN_HomeGroupSetting.Text = "Setting";
+            this.BTN_HomeGroupSetting.UseVisualStyleBackColor = true;
+            this.BTN_HomeGroupSetting.Click += new System.EventHandler(this.BTN_HomeGroupSetting_Click);
+            // 
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(43)))), ((int)(((byte)(54)))));
@@ -865,6 +916,16 @@ namespace DistributedSystem_Main
             this.label2.TabIndex = 0;
             this.label2.Text = "MQTT Server :";
             // 
+            // usC_GroupSwitch1
+            // 
+            this.GroupSwitch_HomePage.AutoScroll = true;
+            this.GroupSwitch_HomePage.Dock = System.Windows.Forms.DockStyle.Left;
+            this.GroupSwitch_HomePage.Font = new System.Drawing.Font("新細明體", 9.75F);
+            this.GroupSwitch_HomePage.Location = new System.Drawing.Point(0, 0);
+            this.GroupSwitch_HomePage.Name = "usC_GroupSwitch1";
+            this.GroupSwitch_HomePage.Size = new System.Drawing.Size(1021, 90);
+            this.GroupSwitch_HomePage.TabIndex = 1;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
@@ -888,13 +949,13 @@ namespace DistributedSystem_Main
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             this.panStatus.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox20)).EndInit();
-            this.panLog.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox19)).EndInit();
             this.Panel_RawData.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.tableLayoutPanel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picbOFF)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picbRestart)).EndInit();
+            this.Panel_HomePage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox19)).EndInit();
             this.TablePanel_SideBarFunctions.ResumeLayout(false);
             this.Panel_MainArea.ResumeLayout(false);
             this.TabControl_Main.ResumeLayout(false);
@@ -909,6 +970,9 @@ namespace DistributedSystem_Main
             this.TabPage_ISO.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.TabPage_HomePage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.DGV_HomePaeTable)).EndInit();
+            this.Panel_HomePageFunctions.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.ResumeLayout(false);
@@ -924,8 +988,8 @@ namespace DistributedSystem_Main
         private System.Windows.Forms.Panel panStatus;
         private System.Windows.Forms.Button btnStatus;
         private System.Windows.Forms.PictureBox pictureBox20;
-        private System.Windows.Forms.Panel panLog;
-        private System.Windows.Forms.Button btnLog;
+        private System.Windows.Forms.Panel Panel_HomePage;
+        private System.Windows.Forms.Button BTN_MainTable;
         private System.Windows.Forms.PictureBox pictureBox19;
         private System.Windows.Forms.Panel Panel_RawData;
         private System.Windows.Forms.Button BTN_RawData;
@@ -972,6 +1036,11 @@ namespace DistributedSystem_Main
         private System.Windows.Forms.Label LAB_MQTTServerState;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button BTN_AlarmEvent;
+        private System.Windows.Forms.TabPage TabPage_HomePage;
+        private System.Windows.Forms.DataGridView DGV_HomePaeTable;
+        private System.Windows.Forms.Panel Panel_HomePageFunctions;
+        private System.Windows.Forms.Button BTN_HomeGroupSetting;
+        private User_Control.USC_GroupSwitch GroupSwitch_HomePage;
     }
 }
 

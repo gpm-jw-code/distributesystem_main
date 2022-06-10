@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace DistributedSystem_Main.User_Control
 {
@@ -41,4 +43,33 @@ namespace DistributedSystem_Main.User_Control
                 return Color.FromArgb(255, v, p, q);
         }
     }
+
+
+    public static class Extension
+    {
+        [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
+        private static extern IntPtr CreateRoundRectRgn
+           (
+               int nLeftRect,     // x-coordinate of upper-left corner
+               int nTopRect,      // y-coordinate of upper-left corner
+               int nRightRect,    // x-coordinate of lower-right corner
+               int nBottomRect,   // y-coordinate of lower-right corner
+               int nWidthEllipse, // width of ellipse
+               int nHeightEllipse // height of ellipse
+           );
+
+        public static void SetCornerRound(this Control control, int radius)
+        {
+            try
+            {
+                control.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, control.Width, control.Height, radius, radius));
+                control.Tag = radius;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+    }
+
 }

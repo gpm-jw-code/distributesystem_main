@@ -78,11 +78,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Systems\cls_HomePageManager.cs" />
     <Compile Include="Systems\cls_ISOChartManager.cs" />
     <Compile Include="User_Control\cls_Functions.cs" />
     <Compile Include="User_Control\MyRectangle.cs" />
     <Compile Include="User_Control\MyToggleSwitch.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="User_Control\USC_GroupSwitch.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="User_Control\USC_GroupSwitch.Designer.cs">
+      <DependentUpon>USC_GroupSwitch.cs</DependentUpon>
     </Compile>
     <Compile Include="User_Control\USC_ISODataChart.cs">
       <SubType>UserControl</SubType>
@@ -90,11 +97,29 @@
     <Compile Include="User_Control\USC_ISODataChart.Designer.cs">
       <DependentUpon>USC_ISODataChart.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\Form_EditGroupRow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Form_EditGroupRow.Designer.cs">
+      <DependentUpon>Form_EditGroupRow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\Form_Alarm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Views\Form_Alarm.Designer.cs">
       <DependentUpon>Form_Alarm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Form_GroupEditSensorList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Form_GroupEditSensorList.Designer.cs">
+      <DependentUpon>Form_GroupEditSensorList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Form_HomeGroupSetting.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Form_HomeGroupSetting.Designer.cs">
+      <DependentUpon>Form_HomeGroupSetting.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Form_ISOSetting.cs">
       <SubType>Form</SubType>
@@ -147,8 +172,20 @@
     <EmbeddedResource Include="User_Control\PageSwitch.resx">
       <DependentUpon>PageSwitch.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="User_Control\USC_GroupSwitch.resx">
+      <DependentUpon>USC_GroupSwitch.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="User_Control\USC_ISODataChart.resx">
       <DependentUpon>USC_ISODataChart.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Form_EditGroupRow.resx">
+      <DependentUpon>Form_EditGroupRow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Form_GroupEditSensorList.resx">
+      <DependentUpon>Form_GroupEditSensorList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Form_HomeGroupSetting.resx">
+      <DependentUpon>Form_HomeGroupSetting.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Form_Main.resx">
       <DependentUpon>Form_Main.cs</DependentUpon>

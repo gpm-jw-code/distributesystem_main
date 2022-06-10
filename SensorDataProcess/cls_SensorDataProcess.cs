@@ -50,10 +50,15 @@ namespace SensorDataProcess
         public delegate void UpdateSeriesDataEventHandler(string SensorName, Queue<DateTime> Queue_Time, Dictionary<string, Queue<double>> Dict_DataQueue);
         public event UpdateSeriesDataEventHandler Event_UpdateChartSeries;
 
+        public delegate void UpdateSensorLastDataPoint(string SensorName, Dictionary<string, double> Dict_LastData);
+        public event UpdateSensorLastDataPoint Event_UpdateMainTable;
+
+
         public Action<string> Event_RefreshSensorInfo;
         public Action<string> Event_RefreshSensorThreshold;
         public Action<string> Event_RefreshSensorISOSetting;
         public Action<string> Event_UpdateSensorCheckStates;
+        
 
         private object RawDataDict_Lock = new object();
 
@@ -108,7 +113,11 @@ namespace SensorDataProcess
                 var NewDataDictionary = Dict_ListNewData.ToDictionary(item => item.Key, item => item.Value[i]);
                 ImportNewSensorData(NewDataDictionary, List_TimeLog[i], true);
             }
+            var Dict_LastData = Dict_ListNewData.Select(item => new KeyValuePair<string, double>(item.Key, item.Value.Last())).ToDictionary(item => item.Key, item => item.Value);
+
             Event_UpdateChartSeries?.Invoke(SensorInfo.SensorName, Queue_TimeLog, Dict_SensorDataSeries);
+            Event_UpdateMainTable?.Invoke(SensorInfo.SensorName, Dict_LastData);
+
             if (IsUpdateCheckStatus_ContinuousData)
                 Event_UpdateSensorCheckStates?.Invoke(SensorInfo.SensorName);
         }
@@ -185,7 +194,7 @@ namespace SensorDataProcess
             if (IsUpdateCheckStatus)
                 Event_UpdateSensorCheckStates?.Invoke(SensorInfo.SensorName);
             Event_UpdateChartSeries?.Invoke(SensorInfo.SensorName, Queue_TimeLog, Dict_SensorDataSeries);
-            
+            Event_UpdateMainTable?.Invoke(SensorInfo.SensorName, Dict_NewData);
         }
 
 
@@ -210,7 +219,7 @@ namespace SensorDataProcess
             Event_RefreshSensorThreshold?.Invoke(SensorInfo.SensorName);
         }
 
-
+        
         Thread lastThread = null;
 
         public void RefreshSignalChart()
@@ -226,6 +235,19 @@ namespace SensorDataProcess
         public void RefreshISOChart()
         {
             Event_RefreshSensorISOSetting?.Invoke(SensorInfo.SensorName);
+        }
+
+        public void RefreshMainTable()
+        {
+            Dictionary<string, double> Dict_NewTableData = null;
+            lock (RawDataDict_Lock)
+            {
+                Dict_NewTableData = Dict_SensorDataSeries
+                .Select(item => new KeyValuePair<string, double>(item.Key, item.Value.Last()))
+                .ToDictionary(item => item.Key, item => item.Value);
+            }
+
+            Event_UpdateMainTable?.Invoke(SensorInfo.SensorName, Dict_NewTableData);
         }
 
         private bool CheckThreshold(Dictionary<string, double> Dict_NewData, DateTime TimeLog)

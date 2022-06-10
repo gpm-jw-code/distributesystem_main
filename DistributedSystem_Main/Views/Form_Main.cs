@@ -28,6 +28,8 @@ namespace DistributedSystem_Main
             cls_ISOChartManager.InitialManager(TablePanel_ISOChart, PageSwitch_ISOChart);
             cls_ISOChartManager.SetChartRowColumnNumber(Staobj.SystemParam.ChartSetting.RowNumber, Staobj.SystemParam.ChartSetting.ColumnNumber);
 
+            cls_HomePageManager.InitialManager(DGV_HomePaeTable, GroupSwitch_HomePage);
+
             Systems.cls_MQTTModule.BuildServer(Staobj.SystemParam.Mqtt.MqttServerIP, Staobj.SystemParam.Mqtt.MqttServerPort);
             SensorDataProcess.cls_txtDataSaver.RootPath = Staobj.SystemParam.DataSaveRootPath;
             TabControl_Main.ItemSize = new Size(0, 1);
@@ -96,13 +98,13 @@ namespace DistributedSystem_Main
         {
             TabControl_Main.SelectedTab = TabPage_Signal;
             Panel_RawData.BackColor = Color.FromArgb(0, 43, 54);
-            Panel_ISO.BackColor = panStatus.BackColor = panLog.BackColor = Color.FromArgb(0, 64, 82);
+            Panel_ISO.BackColor = panStatus.BackColor = Panel_HomePage.BackColor = Color.FromArgb(0, 64, 82);
         }
 
-        private void btnLog_Click(object sender, EventArgs e)
+        private void BTN_HomePage_Click(object sender, EventArgs e)
         {
-            TabControl_Main.SelectedTab = TabPage_Log;
-            panLog.BackColor = Color.FromArgb(0, 43, 54);
+            TabControl_Main.SelectedTab = TabPage_HomePage;
+            Panel_HomePage.BackColor = Color.FromArgb(0, 43, 54);
             Panel_ISO.BackColor = panStatus.BackColor = Panel_RawData.BackColor = Color.FromArgb(0, 64, 82);
         }
 
@@ -110,13 +112,13 @@ namespace DistributedSystem_Main
         {
             TabControl_Main.SelectedTab = TabPage_SensorInfo;
             panStatus.BackColor = Color.FromArgb(0, 43, 54);
-            Panel_ISO.BackColor = Panel_RawData.BackColor = panLog.BackColor = Color.FromArgb(0, 64, 82);
+            Panel_ISO.BackColor = Panel_RawData.BackColor = Panel_HomePage.BackColor = Color.FromArgb(0, 64, 82);
         }
         private void BTN_ISO_Click(object sender, EventArgs e)
         {
             TabControl_Main.SelectedTab = TabPage_ISO;
             Panel_ISO.BackColor = Color.FromArgb(0, 43, 54);
-            panStatus.BackColor = Panel_RawData.BackColor = panLog.BackColor = Color.FromArgb(0, 64, 82);
+            panStatus.BackColor = Panel_RawData.BackColor = Panel_HomePage.BackColor = Color.FromArgb(0, 64, 82);
         }
         private void BTN_Query_Click(object sender, EventArgs e)
         {
@@ -221,12 +223,19 @@ namespace DistributedSystem_Main
 
             cls_SignalsChartManager.FilterAndSortSensor();
 
+            TargetSensorProcessObject.Event_UpdateMainTable += UpdateMainTable;
             TargetSensorProcessObject.Event_UpdateChartSeries += UpdateSensorChart;
             TargetSensorProcessObject.Event_RefreshSensorInfo += UpdateSensorInfo;
             TargetSensorProcessObject.Event_RefreshSensorThreshold += UpdateSensorThreshold;
             TargetSensorProcessObject.Event_UpdateSensorCheckStates += UpdateSensorCheckStates;
 
             AddNewSensor_ISO(SensorName);
+        }
+
+        private void UpdateMainTable(string SensorName, Dictionary<string, double> Dict_LastData)
+        {
+            Invoke((MethodInvoker)delegate { Systems.cls_HomePageManager.UpdateSensorData(SensorName, Dict_LastData); });
+            
         }
 
         private void UpdateSensorCheckStates(string SensorName)
@@ -398,5 +407,21 @@ namespace DistributedSystem_Main
 
         #endregion
 
+        #region HomePage
+        private void BTN_HomeGroupSetting_Click(object sender, EventArgs e)
+        {
+            Views.Form_HomeGroupSetting Form_GroupSetting = new Views.Form_HomeGroupSetting();
+            Form_GroupSetting.ShowDialog();
+            var List_SwitchGroupNames = GroupSwitch_HomePage.Dict_GroupButtons.Keys;
+            foreach (var item in Systems.cls_HomePageManager.GroupNames)
+            {
+                if (!List_SwitchGroupNames.Contains(item))
+                {
+                    GroupSwitch_HomePage.AddGroupButton(item);
+                }
+            }
+            Systems.cls_HomePageManager.ResetNowGroupName();
+        }
+        #endregion
     }
 }
