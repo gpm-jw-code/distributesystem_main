@@ -12,7 +12,6 @@ namespace DistributedSystem_Main.Views
 {
     public partial class Form_HomeGroupSetting : Form
     {
-        Dictionary<string,CheckBox> Dict_RowSensorCheckBox = new Dictionary<string, CheckBox>();
 
         public Form_HomeGroupSetting()
         {
@@ -40,15 +39,11 @@ namespace DistributedSystem_Main.Views
 
         private void BTN_AddNewGroup_Click(object sender, EventArgs e)
         {
-            string NewGroupName = Combo_GroupName.Text;
-            if (Systems.cls_HomePageManager.GroupNames.Contains(NewGroupName))
-            {
-                MessageBox.Show("已存在相同名稱");
-                return;
-            }
-            Systems.cls_HomePageManager.AddNewGroup(NewGroupName);
-            Combo_GroupName.Items.Add(NewGroupName);
-            MessageBox.Show("Add Success");
+            Form_GroupEditSensorList EditSensorForm = new Form_GroupEditSensorList();
+            EditSensorForm.ShowDialog();
+            LoadGroupInfo();
+            Combo_GroupName.SelectedIndex = Combo_GroupName.Items.Count - 1;
+            Combo_GroupName_SelectedIndexChanged(null, null);
         }
 
         private void Combo_GroupName_SelectedIndexChanged(object sender, EventArgs e)
@@ -56,6 +51,7 @@ namespace DistributedSystem_Main.Views
             var List_SensorNames = Systems.cls_HomePageManager.GetGroupSensorNames(Combo_GroupName.Text);
             Panel_CustomSensorList.Controls.Clear();
             Panel_ColumnNames.Controls.Clear();
+            Panel_RowSensor.Controls.Clear();
             foreach (var item in List_SensorNames)
             {
                 Label NewSensorLabel = new Label()
@@ -64,14 +60,6 @@ namespace DistributedSystem_Main.Views
                     Dock = DockStyle.Top
                 };
                 Panel_CustomSensorList.Controls.Add(NewSensorLabel);
-
-                CheckBox NewSensorCheckBox = new CheckBox()
-                {
-                    Text = item,
-                    Dock = DockStyle.Top
-                };
-                Panel_RowSensor.Controls.Add(NewSensorCheckBox);
-                Dict_RowSensorCheckBox.Add(item,NewSensorCheckBox);
             }
             var List_ColumnNames = Systems.cls_HomePageManager.GetGroupColumnNames(Combo_GroupName.Text);
             foreach (var item in List_ColumnNames)
@@ -84,7 +72,12 @@ namespace DistributedSystem_Main.Views
                 Panel_ColumnNames.Controls.Add(NewColumnLabel);
             }
 
-            var RowInfo = Systems.cls_HomePageManager.GetRowsInfo(Combo_GroupName.Text);
+            LoadRowsInfo(Combo_GroupName.Text);
+        }
+
+        private void LoadRowsInfo(string GroupName)
+        {
+            var RowInfo = Systems.cls_HomePageManager.GetRowsInfo(GroupName);
             Combo_Rows.Items.Clear();
             foreach (var item in RowInfo)
             {
@@ -94,46 +87,40 @@ namespace DistributedSystem_Main.Views
 
         private void BTN_AddNewRow_Click(object sender, EventArgs e)
         {
-            string NewRowName = Combo_Rows.Text;
             string GroupName = Combo_GroupName.Text;
-            var Dict_RowInfo = Systems.cls_HomePageManager.GetRowsInfo(Combo_GroupName.Text);
 
-            if (Dict_RowInfo.ContainsKey(NewRowName))
-            {
-                MessageBox.Show("已存在相同名稱");
-                return;
-            }
-            if (Combo_Rows.Items.Contains(NewRowName))
-            {
-                MessageBox.Show("已存在相同名稱");
-                return;
-            }
-            Combo_Rows.Items.Add(NewRowName);
-            MessageBox.Show("Add Success");
-        }
-
-        private void BTN_SaveRowSensor_Click(object sender, EventArgs e)
-        {
-            string GroupName = Combo_GroupName.Text;
-            string RowName = Combo_Rows.Text;
-
-            List<string> CheckSensor = Dict_RowSensorCheckBox.Where(item => item.Value.Checked).Select(item => item.Key).ToList();
-            Systems.cls_HomePageManager.SetSensorToRow(GroupName,RowName,CheckSensor);
+            Form_EditGroupRow Form_RowEdit = new Form_EditGroupRow(GroupName);
+            Form_RowEdit.ShowDialog();
+            LoadRowsInfo(GroupName);
         }
 
         private void Combo_Rows_SelectedIndexChanged(object sender, EventArgs e)
         {
             string RowName = Combo_Rows.Text;
-
-            foreach (var item in Dict_RowSensorCheckBox)
-            {
-                item.Value.Checked = false;
-            }
+            Panel_RowSensor.Controls.Clear();
             var Dict_RowInfo = Systems.cls_HomePageManager.GetRowsInfo(Combo_GroupName.Text);
             foreach (var item in Dict_RowInfo[RowName])
             {
-                Dict_RowSensorCheckBox[item].Checked = true;
+                Label NewSensorLabel = new Label()
+                {
+                    Text = item,
+                    Dock = DockStyle.Top
+                };
+                Panel_RowSensor.Controls.Add(NewSensorLabel);
             }
+            if (!Dict_RowInfo.ContainsKey(RowName))
+            {
+                return;
+            }
+        }
+
+        private void BTN_EditRowSensor_Click(object sender, EventArgs e)
+        {
+            string GroupName = Combo_GroupName.Text;
+            string RowName = Combo_Rows.Text;
+            Form_EditGroupRow Form_RowEdit = new Form_EditGroupRow(GroupName,RowName);
+            Form_RowEdit.ShowDialog();
+            LoadRowsInfo(GroupName);
         }
     }
 }

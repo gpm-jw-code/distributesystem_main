@@ -28,6 +28,8 @@ namespace DistributedSystem_Main
             cls_ISOChartManager.InitialManager(TablePanel_ISOChart, PageSwitch_ISOChart);
             cls_ISOChartManager.SetChartRowColumnNumber(Staobj.SystemParam.ChartSetting.RowNumber, Staobj.SystemParam.ChartSetting.ColumnNumber);
 
+            cls_HomePageManager.InitialManager(DGV_HomePaeTable, GroupSwitch_HomePage);
+
             Systems.cls_MQTTModule.BuildServer(Staobj.SystemParam.Mqtt.MqttServerIP, Staobj.SystemParam.Mqtt.MqttServerPort);
             SensorDataProcess.cls_txtDataSaver.RootPath = Staobj.SystemParam.DataSaveRootPath;
             TabControl_Main.ItemSize = new Size(0, 1);
@@ -221,12 +223,19 @@ namespace DistributedSystem_Main
 
             cls_SignalsChartManager.FilterAndSortSensor();
 
+            TargetSensorProcessObject.Event_UpdateMainTable += UpdateMainTable;
             TargetSensorProcessObject.Event_UpdateChartSeries += UpdateSensorChart;
             TargetSensorProcessObject.Event_RefreshSensorInfo += UpdateSensorInfo;
             TargetSensorProcessObject.Event_RefreshSensorThreshold += UpdateSensorThreshold;
             TargetSensorProcessObject.Event_UpdateSensorCheckStates += UpdateSensorCheckStates;
 
             AddNewSensor_ISO(SensorName);
+        }
+
+        private void UpdateMainTable(string SensorName, Dictionary<string, double> Dict_LastData)
+        {
+            Invoke((MethodInvoker)delegate { Systems.cls_HomePageManager.UpdateSensorData(SensorName, Dict_LastData); });
+            
         }
 
         private void UpdateSensorCheckStates(string SensorName)
@@ -403,6 +412,15 @@ namespace DistributedSystem_Main
         {
             Views.Form_HomeGroupSetting Form_GroupSetting = new Views.Form_HomeGroupSetting();
             Form_GroupSetting.ShowDialog();
+            var List_SwitchGroupNames = GroupSwitch_HomePage.Dict_GroupButtons.Keys;
+            foreach (var item in Systems.cls_HomePageManager.GroupNames)
+            {
+                if (!List_SwitchGroupNames.Contains(item))
+                {
+                    GroupSwitch_HomePage.AddGroupButton(item);
+                }
+            }
+            Systems.cls_HomePageManager.ResetNowGroupName();
         }
         #endregion
     }

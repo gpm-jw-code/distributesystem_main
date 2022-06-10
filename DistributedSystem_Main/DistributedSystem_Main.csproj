@@ -85,11 +85,23 @@
     <Compile Include="User_Control\MyToggleSwitch.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="User_Control\USC_GroupSwitch.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="User_Control\USC_GroupSwitch.Designer.cs">
+      <DependentUpon>USC_GroupSwitch.cs</DependentUpon>
+    </Compile>
     <Compile Include="User_Control\USC_ISODataChart.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="User_Control\USC_ISODataChart.Designer.cs">
       <DependentUpon>USC_ISODataChart.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Form_EditGroupRow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Form_EditGroupRow.Designer.cs">
+      <DependentUpon>Form_EditGroupRow.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Form_Alarm.cs">
       <SubType>Form</SubType>
@@ -160,8 +172,14 @@
     <EmbeddedResource Include="User_Control\PageSwitch.resx">
       <DependentUpon>PageSwitch.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="User_Control\USC_GroupSwitch.resx">
+      <DependentUpon>USC_GroupSwitch.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="User_Control\USC_ISODataChart.resx">
       <DependentUpon>USC_ISODataChart.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Form_EditGroupRow.resx">
+      <DependentUpon>Form_EditGroupRow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Form_GroupEditSensorList.resx">
       <DependentUpon>Form_GroupEditSensorList.cs</DependentUpon>

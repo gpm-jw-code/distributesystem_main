@@ -42,15 +42,14 @@ namespace DistributedSystem_Main.Views
             this.BTN_EditSensorList = new System.Windows.Forms.Button();
             this.Panel_ColumnNames = new System.Windows.Forms.Panel();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.BTN_EditRowSensor = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.BTN_AddNewRow = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.Combo_Rows = new System.Windows.Forms.ComboBox();
+            this.Panel_RowSensor = new System.Windows.Forms.Panel();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.Panel_Functions = new System.Windows.Forms.Panel();
-            this.BTN_AddNewRow = new System.Windows.Forms.Button();
-            this.Combo_Rows = new System.Windows.Forms.ComboBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.Panel_RowSensor = new System.Windows.Forms.Panel();
-            this.label5 = new System.Windows.Forms.Label();
-            this.BTN_SaveRowSensor = new System.Windows.Forms.Button();
-            this.BTN_CancelRowSensor = new System.Windows.Forms.Button();
             this.TabControlEX_Main.SuspendLayout();
             this.TabPage_Custom.SuspendLayout();
             this.TabControl_CustomSetting.SuspendLayout();
@@ -60,6 +59,7 @@ namespace DistributedSystem_Main.Views
             // 
             // Combo_GroupName
             // 
+            this.Combo_GroupName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.Combo_GroupName.FormattingEnabled = true;
             this.Combo_GroupName.Location = new System.Drawing.Point(133, 20);
             this.Combo_GroupName.Margin = new System.Windows.Forms.Padding(5);
@@ -195,19 +195,78 @@ namespace DistributedSystem_Main.Views
             // tabPage3
             // 
             this.tabPage3.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.tabPage3.Controls.Add(this.BTN_CancelRowSensor);
-            this.tabPage3.Controls.Add(this.BTN_SaveRowSensor);
+            this.tabPage3.Controls.Add(this.BTN_EditRowSensor);
             this.tabPage3.Controls.Add(this.label5);
-            this.tabPage3.Controls.Add(this.Panel_RowSensor);
             this.tabPage3.Controls.Add(this.BTN_AddNewRow);
             this.tabPage3.Controls.Add(this.label4);
             this.tabPage3.Controls.Add(this.Combo_Rows);
+            this.tabPage3.Controls.Add(this.Panel_RowSensor);
             this.tabPage3.Location = new System.Drawing.Point(4, 26);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage3.Size = new System.Drawing.Size(446, 388);
             this.tabPage3.TabIndex = 1;
             this.tabPage3.Text = "Row Names";
+            // 
+            // BTN_EditRowSensor
+            // 
+            this.BTN_EditRowSensor.Location = new System.Drawing.Point(317, 77);
+            this.BTN_EditRowSensor.Name = "BTN_EditRowSensor";
+            this.BTN_EditRowSensor.Size = new System.Drawing.Size(46, 25);
+            this.BTN_EditRowSensor.TabIndex = 7;
+            this.BTN_EditRowSensor.Text = "Edit";
+            this.BTN_EditRowSensor.UseVisualStyleBackColor = true;
+            this.BTN_EditRowSensor.Click += new System.EventHandler(this.BTN_EditRowSensor_Click);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(42, 81);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(79, 18);
+            this.label5.TabIndex = 2;
+            this.label5.Text = "Sensor List";
+            // 
+            // BTN_AddNewRow
+            // 
+            this.BTN_AddNewRow.Location = new System.Drawing.Point(274, 24);
+            this.BTN_AddNewRow.Name = "BTN_AddNewRow";
+            this.BTN_AddNewRow.Size = new System.Drawing.Size(89, 28);
+            this.BTN_AddNewRow.TabIndex = 2;
+            this.BTN_AddNewRow.Text = "Add";
+            this.BTN_AddNewRow.UseVisualStyleBackColor = true;
+            this.BTN_AddNewRow.Click += new System.EventHandler(this.BTN_AddNewRow_Click);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(28, 27);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(81, 18);
+            this.label4.TabIndex = 1;
+            this.label4.Text = "Row Name";
+            // 
+            // Combo_Rows
+            // 
+            this.Combo_Rows.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.Combo_Rows.FormattingEnabled = true;
+            this.Combo_Rows.Location = new System.Drawing.Point(117, 24);
+            this.Combo_Rows.Margin = new System.Windows.Forms.Padding(5);
+            this.Combo_Rows.Name = "Combo_Rows";
+            this.Combo_Rows.Size = new System.Drawing.Size(149, 25);
+            this.Combo_Rows.TabIndex = 0;
+            this.Combo_Rows.SelectedIndexChanged += new System.EventHandler(this.Combo_Rows_SelectedIndexChanged);
+            // 
+            // Panel_RowSensor
+            // 
+            this.Panel_RowSensor.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.Panel_RowSensor.AutoScroll = true;
+            this.Panel_RowSensor.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.Panel_RowSensor.Location = new System.Drawing.Point(43, 102);
+            this.Panel_RowSensor.Name = "Panel_RowSensor";
+            this.Panel_RowSensor.Size = new System.Drawing.Size(320, 277);
+            this.Panel_RowSensor.TabIndex = 4;
             // 
             // tabPage2
             // 
@@ -226,74 +285,6 @@ namespace DistributedSystem_Main.Views
             this.Panel_Functions.Name = "Panel_Functions";
             this.Panel_Functions.Size = new System.Drawing.Size(453, 55);
             this.Panel_Functions.TabIndex = 5;
-            // 
-            // BTN_AddNewRow
-            // 
-            this.BTN_AddNewRow.Location = new System.Drawing.Point(274, 24);
-            this.BTN_AddNewRow.Name = "BTN_AddNewRow";
-            this.BTN_AddNewRow.Size = new System.Drawing.Size(89, 28);
-            this.BTN_AddNewRow.TabIndex = 2;
-            this.BTN_AddNewRow.Text = "Add";
-            this.BTN_AddNewRow.UseVisualStyleBackColor = true;
-            this.BTN_AddNewRow.Click += new System.EventHandler(this.BTN_AddNewRow_Click);
-            // 
-            // Combo_Rows
-            // 
-            this.Combo_Rows.FormattingEnabled = true;
-            this.Combo_Rows.Location = new System.Drawing.Point(117, 24);
-            this.Combo_Rows.Margin = new System.Windows.Forms.Padding(5);
-            this.Combo_Rows.Name = "Combo_Rows";
-            this.Combo_Rows.Size = new System.Drawing.Size(149, 25);
-            this.Combo_Rows.TabIndex = 0;
-            this.Combo_Rows.SelectedIndexChanged += new System.EventHandler(this.Combo_Rows_SelectedIndexChanged);
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(28, 27);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(81, 18);
-            this.label4.TabIndex = 1;
-            this.label4.Text = "Row Name";
-            // 
-            // Panel_RowSensor
-            // 
-            this.Panel_RowSensor.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.Panel_RowSensor.AutoScroll = true;
-            this.Panel_RowSensor.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            this.Panel_RowSensor.Location = new System.Drawing.Point(43, 102);
-            this.Panel_RowSensor.Name = "Panel_RowSensor";
-            this.Panel_RowSensor.Size = new System.Drawing.Size(332, 232);
-            this.Panel_RowSensor.TabIndex = 4;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(42, 81);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(79, 18);
-            this.label5.TabIndex = 2;
-            this.label5.Text = "Sensor List";
-            // 
-            // BTN_SaveRowSensor
-            // 
-            this.BTN_SaveRowSensor.Location = new System.Drawing.Point(92, 340);
-            this.BTN_SaveRowSensor.Name = "BTN_SaveRowSensor";
-            this.BTN_SaveRowSensor.Size = new System.Drawing.Size(75, 39);
-            this.BTN_SaveRowSensor.TabIndex = 5;
-            this.BTN_SaveRowSensor.Text = "Save";
-            this.BTN_SaveRowSensor.UseVisualStyleBackColor = true;
-            this.BTN_SaveRowSensor.Click += new System.EventHandler(this.BTN_SaveRowSensor_Click);
-            // 
-            // BTN_CancelRowSensor
-            // 
-            this.BTN_CancelRowSensor.Location = new System.Drawing.Point(245, 340);
-            this.BTN_CancelRowSensor.Name = "BTN_CancelRowSensor";
-            this.BTN_CancelRowSensor.Size = new System.Drawing.Size(75, 39);
-            this.BTN_CancelRowSensor.TabIndex = 5;
-            this.BTN_CancelRowSensor.Text = "Cancel";
-            this.BTN_CancelRowSensor.UseVisualStyleBackColor = true;
             // 
             // Form_HomeGroupSetting
             // 
@@ -329,19 +320,18 @@ namespace DistributedSystem_Main.Views
         private System.Windows.Forms.TabPage TabPage_Custom;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.Panel Panel_Functions;
-        private System.Windows.Forms.TabControl TabControl_CustomSetting;
-        private System.Windows.Forms.TabPage TabPage_EditSensorList;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button BTN_EditSensorList;
         private System.Windows.Forms.Panel Panel_ColumnNames;
-        private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.Button BTN_AddNewRow;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox Combo_Rows;
-        private System.Windows.Forms.Button BTN_CancelRowSensor;
-        private System.Windows.Forms.Button BTN_SaveRowSensor;
+        private System.Windows.Forms.TabControl TabControl_CustomSetting;
+        private System.Windows.Forms.TabPage TabPage_EditSensorList;
+        private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Panel Panel_RowSensor;
+        private System.Windows.Forms.Button BTN_EditRowSensor;
     }
 }
