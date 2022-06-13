@@ -103,10 +103,6 @@ namespace DistributedSystem_Main.Views
                 };
                 NewTopicLabel.FlatAppearance.BorderColor = Color.White;
                 Panel_MqttClientTopics.Controls.Add(NewTopicLabel);
-                //if (item.Contains(mqttClientStatus.ClientId))
-                //{
-                    
-                //}
             }
         }
 

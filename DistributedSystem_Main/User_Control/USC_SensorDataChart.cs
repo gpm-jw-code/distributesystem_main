@@ -125,7 +125,6 @@ namespace DistributedSystem_Main.User_Control
             {
                 string DataName = item.Key.Replace("_OOC", "");
                 DataName = DataName.Replace("_OOS", "");
-                IntForColor += 1;
                 if (!dataSeriesToolStripMenuItem.DropDownItems.ContainsKey($"Series_{DataName}"))
                 {
                     AddNewSeriesToolItem(DataName);
@@ -134,6 +133,7 @@ namespace DistributedSystem_Main.User_Control
 
                 if (!Dict_SensorSeries.ContainsKey(DataName))
                 {
+                    IntForColor += 1;
                     Color NewSeriesColor = cls_Functions.ColorFromHSV(360 * IntForColor / (Dict_Threshold.Count / 2), 1, 1);
                     Color StripLineColor = cls_Functions.ColorFromHSV(360 * IntForColor / (Dict_Threshold.Count / 2), 1, 0.5);
                     CreateNewSensorUIObjects(DataName, NewSeriesColor, StripLineColor);
