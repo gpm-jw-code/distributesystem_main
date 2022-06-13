@@ -62,16 +62,17 @@ namespace DistributedSystem_Main.Views
                 Panel_CustomSensorList.Controls.Add(NewSensorLabel);
             }
             var List_ColumnNames = Systems.cls_HomePageManager.GetGroupColumnNames(Combo_GroupName.Text);
+            var List_ShowNames = Systems.cls_HomePageManager.GetGroupShowColumnNames(Combo_GroupName.Text); 
             foreach (var item in List_ColumnNames)
             {
                 Label NewColumnLabel = new Label()
                 {
                     Text = item,
-                    Dock = DockStyle.Top
+                    Dock = DockStyle.Top,
+                    ForeColor = List_ShowNames.Contains(item)?Color.Green:default
                 };
                 Panel_ColumnNames.Controls.Add(NewColumnLabel);
             }
-
             LoadRowsInfo(Combo_GroupName.Text);
         }
 
@@ -87,6 +88,7 @@ namespace DistributedSystem_Main.Views
             {
                 Combo_Rows.Items.Add(item.Key);
             }
+            Combo_Rows.SelectedIndex = 0;
         }
 
         private void BTN_AddNewRow_Click(object sender, EventArgs e)
@@ -96,7 +98,7 @@ namespace DistributedSystem_Main.Views
             Form_EditGroupRow Form_RowEdit = new Form_EditGroupRow(GroupName);
             if (Systems.cls_HomePageManager.GetNoneSetRowSensor(GroupName).Count == 0)
             {
-                MessageBox.Show("Group中的所有Sensor皆完成設定");
+                MessageBox.Show("Group中的所有Sensor皆已設定");
                 return;
             }
             Form_RowEdit.ShowDialog();
@@ -157,6 +159,39 @@ namespace DistributedSystem_Main.Views
             }
             Systems.cls_HomePageManager.LoadGroupParameters();
             this.Close();
+        }
+
+        private void BTN_DeleteGroup_Click(object sender, EventArgs e)
+        {
+            string GroupName = Combo_GroupName.Text;
+            if (string.IsNullOrEmpty(GroupName))
+            {
+                return;
+            }
+
+            if (MessageBox.Show($"是否要刪除Group:{GroupName}", "Delete Group", MessageBoxButtons.YesNo) != DialogResult.Yes)
+            {
+                return;
+            }
+            Systems.cls_HomePageManager.DeleteGroup(GroupName);
+            Combo_GroupName.Items.RemoveAt(Combo_GroupName.SelectedIndex);
+            if (Combo_GroupName.Items.Count == 0)
+            {
+                return;
+            }
+            Combo_GroupName.SelectedIndex = 0;
+        }
+
+        private void BTN_EditColumnNames_Click(object sender, EventArgs e)
+        {
+            string GroupName = Combo_GroupName.Text;
+            if (string.IsNullOrEmpty(GroupName))
+            {
+                return;
+            }
+            Form_EditGroupColumns ColumnEditForm = new Form_EditGroupColumns(GroupName);
+            ColumnEditForm.ShowDialog();
+            Combo_GroupName_SelectedIndexChanged(null, null);
         }
     }
 }

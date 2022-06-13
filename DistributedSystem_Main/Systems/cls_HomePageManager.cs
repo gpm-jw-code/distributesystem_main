@@ -43,6 +43,17 @@ namespace DistributedSystem_Main.Systems
             Dict_GroupObject.Add(NewGroupName, new cls_GroupObject(NewGroupName));
         }
 
+        public static void DeleteGroup(string GroupName)
+        {
+            if (!Dict_GroupObject.ContainsKey(GroupName))
+            {
+                return;
+            }
+
+                NowShowGroupName = "";
+            Dict_GroupObject.Remove(GroupName);
+        }
+
         public static void AddSensorToGroup(string GroupName, List<string> List_SensorNames)
         {
             Dict_GroupObject[GroupName].AddNewSensorToGroup(List_SensorNames);
@@ -74,9 +85,14 @@ namespace DistributedSystem_Main.Systems
                 return;
             }
 
+            var ColumnNames = DGV_DataTable.Columns.Cast<DataGridViewColumn>().Select(item => item.Name);
+
             foreach (var item in Dict_DataValue)
             {
-                TargetRow.Cells[$"Column_{item.Key}"].Value = item.Value;
+                if (ColumnNames.Contains($"Column_{item.Key}"))
+                {
+                    TargetRow.Cells[$"Column_{item.Key}"].Value = item.Value;
+                }
             }
         }
 
@@ -86,7 +102,11 @@ namespace DistributedSystem_Main.Systems
 
             DGV_DataTable.Columns.Clear();
             DGV_DataTable.Columns.Add("RowName", "Name");
-            foreach (var item in Dict_GroupObject[NowShowGroupName].List_ColumnName)
+            if (Dict_GroupObject[NowShowGroupName].List_ShowColumnName == null)
+            {
+                Dict_GroupObject[NowShowGroupName].List_ShowColumnName = Dict_GroupObject[NowShowGroupName].List_AllColumnName;
+            }
+            foreach (var item in Dict_GroupObject[NowShowGroupName].List_ShowColumnName)
             {
                 DGV_DataTable.Columns.Add($"Column_{item}", item);
             }
@@ -161,8 +181,17 @@ namespace DistributedSystem_Main.Systems
         }
         public static List<string> GetGroupColumnNames(string GroupName)
         {
-            return Dict_GroupObject[GroupName].List_ColumnName;
+            return Dict_GroupObject[GroupName].List_AllColumnName;
         }
+        public static List<string> GetGroupShowColumnNames(string GroupName)
+        {
+            return Dict_GroupObject[GroupName].List_ShowColumnName;
+        }
+        internal static void SetGroupShowColumnNames(string GroupName, List<string> list_ShowColumnNames)
+        {
+            Dict_GroupObject[GroupName].List_ShowColumnName = list_ShowColumnNames;
+        }
+
         public static Dictionary<string, List<string>> GetRowsInfo(string GroupName)
         {
             return Dict_GroupObject[GroupName].Dict_RowListSensor;
@@ -210,14 +239,17 @@ namespace DistributedSystem_Main.Systems
         {
             public string GroupName;
             public List<string> List_SensorName { get; private set; }
-            public List<string> List_ColumnName { get; private set; }
+            public List<string> List_AllColumnName { get; private set; }
+
+            public List<string> List_ShowColumnName { get; set; }
             public Dictionary<string, List<string>> Dict_RowListSensor { get; private set; }
 
             public cls_GroupObject(string GroupName)
             {
                 this.GroupName = GroupName;
                 List_SensorName = new List<string>();
-                List_ColumnName = new List<string>();
+                List_AllColumnName = new List<string>();
+                List_ShowColumnName = new List<string>();
                 Dict_RowListSensor = new Dictionary<string, List<string>>();
             }
 
@@ -231,11 +263,11 @@ namespace DistributedSystem_Main.Systems
                     }
                     foreach (var DataNames in Staobj.Dict_SensorProcessObject[item].List_DataNames)
                     {
-                        if (List_ColumnName.Contains(DataNames))
+                        if (List_AllColumnName.Contains(DataNames))
                         {
                             continue;
                         }
-                        List_ColumnName.Add(DataNames);
+                        List_AllColumnName.Add(DataNames);
                     }
                 }
             }

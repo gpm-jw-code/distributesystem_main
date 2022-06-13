@@ -97,6 +97,12 @@
     <Compile Include="User_Control\USC_ISODataChart.Designer.cs">
       <DependentUpon>USC_ISODataChart.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\GroupEdit\Form_EditGroupColumns.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\GroupEdit\Form_EditGroupColumns.Designer.cs">
+      <DependentUpon>Form_EditGroupColumns.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\GroupEdit\Form_EditGroupRow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -177,6 +183,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="User_Control\USC_ISODataChart.resx">
       <DependentUpon>USC_ISODataChart.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\GroupEdit\Form_EditGroupColumns.resx">
+      <DependentUpon>Form_EditGroupColumns.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\GroupEdit\Form_EditGroupRow.resx">
       <DependentUpon>Form_EditGroupRow.cs</DependentUpon>

@@ -41,7 +41,18 @@ namespace DistributedSystem_Main.Views
                 CheckBox NewSensorCheckBox = new CheckBox()
                 {
                     Text = item,
-                    Checked = List_RowSensors.Contains(item),
+                    Checked = false,
+                    Dock = DockStyle.Top
+                };
+                Panel_AllSensorName.Controls.Add(NewSensorCheckBox);
+                List_AllSensorComboBox.Add(NewSensorCheckBox);
+            }
+            foreach (var item in List_RowSensors)
+            {
+                CheckBox NewSensorCheckBox = new CheckBox()
+                {
+                    Text = item,
+                    Checked = true,
                     Dock = DockStyle.Top
                 };
                 Panel_AllSensorName.Controls.Add(NewSensorCheckBox);
@@ -51,12 +62,12 @@ namespace DistributedSystem_Main.Views
 
         private void SetRowInfo(string RowName)
         {
+            TXT_RowName.Enabled = RowName == "";
             if (RowName == "")
             {
                 RowName = $"Row{Systems.cls_HomePageManager.GetRowsInfo(NowGroupName).Count}";
             }
             TXT_RowName.Text = RowName;
-            TXT_RowName.Enabled = RowName == "";
         }
 
         private void BTN_Save_Click(object sender, EventArgs e)
@@ -94,6 +105,11 @@ namespace DistributedSystem_Main.Views
             {
                 item.Visible = item.Text.ToUpper().Contains(FilterString.ToUpper());
             }
+        }
+
+        private void BTN_Cancel_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

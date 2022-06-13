@@ -55,6 +55,7 @@ namespace DistributedSystem_Main.Views
             this.BTN_Cancel.TabIndex = 6;
             this.BTN_Cancel.Text = "Cancel";
             this.BTN_Cancel.UseVisualStyleBackColor = true;
+            this.BTN_Cancel.Click += new System.EventHandler(this.BTN_Cancel_Click);
             // 
             // BTN_Save
             // 
