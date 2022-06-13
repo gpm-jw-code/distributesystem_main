@@ -227,7 +227,7 @@ namespace DistributedSystem_Main
             TargetSensorProcessObject.Event_UpdateChartSeries += UpdateSensorChart;
             TargetSensorProcessObject.Event_RefreshSensorInfo += UpdateSensorInfo;
             TargetSensorProcessObject.Event_RefreshSensorThreshold += UpdateSensorThreshold;
-            TargetSensorProcessObject.Event_UpdateSensorCheckStates += UpdateSensorCheckStates;
+            TargetSensorProcessObject.Event_UpdateSensorCheckStates += UpdateSensorCheckStates; 
 
             AddNewSensor_ISO(SensorName);
         }

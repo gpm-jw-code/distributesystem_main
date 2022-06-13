@@ -17,7 +17,7 @@ namespace DistributedSystem_Main.Systems
     {
 
         private static IMqttServer DataMqttServer = null;
-        public static List<string> List_TopicNames = new List<string>();
+        public static Dictionary<string, List<string>> Dict_ClientTopic = new Dictionary<string, List<string>>();
 
         public static Action<string> Event_ReceiveSensorRawData_Websocket;
 
@@ -91,9 +91,14 @@ namespace DistributedSystem_Main.Systems
             string TopicName = ReceivedMessage.ApplicationMessage.Topic;
             string Data = Encoding.UTF8.GetString(ReceivedMessage.ApplicationMessage.Payload);
             string EdgeName = TopicName.Split('/')[1];
-            if (!List_TopicNames.Contains(TopicName))
+            string ClientID = ReceivedMessage.ClientId;
+            if (!Dict_ClientTopic.ContainsKey(ClientID))
             {
-                List_TopicNames.Add(TopicName);
+                Dict_ClientTopic.Add(ClientID, new List<string>());
+            }
+            if (!Dict_ClientTopic[ClientID].Contains(TopicName))
+            {
+                Dict_ClientTopic[ClientID].Add(TopicName);
             }
 
             if (TopicName.ToUpper().Contains("SensorList".ToUpper()))

@@ -88,24 +88,25 @@ namespace DistributedSystem_Main.Views
             LAB_MqttClientID.Text = mqttClientStatus.ClientId;
             LAB_MqttClientConnectTime.Text = mqttClientStatus.ConnectedTimestamp.ToString("yyyy/MM/dd HH:mm:ss");
             Panel_MqttClientTopics.Controls.Clear();
-            foreach (var item in Systems.cls_MQTTModule.List_TopicNames)
+            foreach (var item in Systems.cls_MQTTModule.Dict_ClientTopic[mqttClientStatus.ClientId])
             {
-                if (item.Contains(mqttClientStatus.ClientId))
+                Button NewTopicLabel = new Button()
                 {
-                    Button NewTopicLabel = new Button ()
-                    {
-                        Text = item,
-                        Dock = DockStyle.Top,
-                        AutoSize = true,
-                        Font = new System.Drawing.Font("微軟正黑體", 12),
-                        BackColor = Color.FromArgb(64, 86, 141),
-                        ForeColor = Color.White,
-                        FlatStyle = FlatStyle.Flat,
-                        TextAlign = ContentAlignment.MiddleLeft
+                    Text = item,
+                    Dock = DockStyle.Top,
+                    AutoSize = true,
+                    Font = new System.Drawing.Font("微軟正黑體", 12),
+                    BackColor = Color.FromArgb(64, 86, 141),
+                    ForeColor = Color.White,
+                    FlatStyle = FlatStyle.Flat,
+                    TextAlign = ContentAlignment.MiddleLeft
                 };
-                    NewTopicLabel.FlatAppearance.BorderColor = Color.White;
-                    Panel_MqttClientTopics.Controls.Add(NewTopicLabel);
-                }
+                NewTopicLabel.FlatAppearance.BorderColor = Color.White;
+                Panel_MqttClientTopics.Controls.Add(NewTopicLabel);
+                //if (item.Contains(mqttClientStatus.ClientId))
+                //{
+                    
+                //}
             }
         }
 
