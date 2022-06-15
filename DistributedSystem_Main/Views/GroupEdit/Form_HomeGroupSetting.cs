@@ -193,5 +193,17 @@ namespace DistributedSystem_Main.Views
             ColumnEditForm.ShowDialog();
             Combo_GroupName_SelectedIndexChanged(null, null);
         }
+
+        private void BTN_AutoSetByType_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("是否要捨棄原有設定並以SensorType自動分組?","Auto Set",MessageBoxButtons.YesNo) != DialogResult.Yes)
+            {
+                return;
+            }
+            Systems.cls_HomePageManager.AutoSetGroupsBySensorType();
+            LoadGroupInfo();
+            Combo_GroupName.SelectedIndex = Combo_GroupName.Items.Count - 1;
+            Combo_GroupName_SelectedIndexChanged(null, null);
+        }
     }
 }

@@ -93,7 +93,7 @@ namespace DistributedSystem_Main.Views
             {
                 return;
             }
-            Systems.cls_HomePageManager.SetSensorToRow(NowGroupName, NewRowName, CheckSensor);
+            Systems.cls_HomePageManager.ResetRowSensor(NowGroupName, NewRowName, CheckSensor);
             MessageBox.Show($"已加入選取的{CheckSensor.Count}個Sensor");
             this.Close();
         }

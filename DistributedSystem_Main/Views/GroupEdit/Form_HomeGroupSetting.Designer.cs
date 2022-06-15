@@ -55,6 +55,7 @@ namespace DistributedSystem_Main.Views
             this.BTN_SaveGroupParameters = new System.Windows.Forms.Button();
             this.BTN_DeleteRow = new System.Windows.Forms.Button();
             this.BTN_EditColumnNames = new System.Windows.Forms.Button();
+            this.BTN_AutoSetByType = new System.Windows.Forms.Button();
             this.TabControlEX_Main.SuspendLayout();
             this.TabPage_Custom.SuspendLayout();
             this.TabControl_CustomSetting.SuspendLayout();
@@ -85,7 +86,7 @@ namespace DistributedSystem_Main.Views
             // 
             // BTN_AddNewGroup
             // 
-            this.BTN_AddNewGroup.Location = new System.Drawing.Point(315, 20);
+            this.BTN_AddNewGroup.Location = new System.Drawing.Point(310, 17);
             this.BTN_AddNewGroup.Name = "BTN_AddNewGroup";
             this.BTN_AddNewGroup.Size = new System.Drawing.Size(89, 28);
             this.BTN_AddNewGroup.TabIndex = 2;
@@ -122,6 +123,7 @@ namespace DistributedSystem_Main.Views
             this.TabPage_Custom.Controls.Add(this.label1);
             this.TabPage_Custom.Controls.Add(this.Combo_GroupName);
             this.TabPage_Custom.Controls.Add(this.BTN_DeleteGroup);
+            this.TabPage_Custom.Controls.Add(this.BTN_AutoSetByType);
             this.TabPage_Custom.Controls.Add(this.BTN_AddNewGroup);
             this.TabPage_Custom.Font = new System.Drawing.Font("微軟正黑體", 10F);
             this.TabPage_Custom.Location = new System.Drawing.Point(-1, 24);
@@ -138,10 +140,10 @@ namespace DistributedSystem_Main.Views
             | System.Windows.Forms.AnchorStyles.Right)));
             this.TabControl_CustomSetting.Controls.Add(this.TabPage_EditSensorList);
             this.TabControl_CustomSetting.Controls.Add(this.tabPage3);
-            this.TabControl_CustomSetting.Location = new System.Drawing.Point(0, 74);
+            this.TabControl_CustomSetting.Location = new System.Drawing.Point(0, 100);
             this.TabControl_CustomSetting.Name = "TabControl_CustomSetting";
             this.TabControl_CustomSetting.SelectedIndex = 0;
-            this.TabControl_CustomSetting.Size = new System.Drawing.Size(506, 418);
+            this.TabControl_CustomSetting.Size = new System.Drawing.Size(506, 392);
             this.TabControl_CustomSetting.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.TabControl_CustomSetting.TabIndex = 7;
             // 
@@ -213,7 +215,7 @@ namespace DistributedSystem_Main.Views
             this.tabPage3.Location = new System.Drawing.Point(4, 26);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(498, 388);
+            this.tabPage3.Size = new System.Drawing.Size(498, 362);
             this.tabPage3.TabIndex = 1;
             this.tabPage3.Text = "Row Names";
             // 
@@ -274,12 +276,12 @@ namespace DistributedSystem_Main.Views
             this.Panel_RowSensor.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.Panel_RowSensor.Location = new System.Drawing.Point(43, 102);
             this.Panel_RowSensor.Name = "Panel_RowSensor";
-            this.Panel_RowSensor.Size = new System.Drawing.Size(412, 277);
+            this.Panel_RowSensor.Size = new System.Drawing.Size(412, 254);
             this.Panel_RowSensor.TabIndex = 4;
             // 
             // BTN_DeleteGroup
             // 
-            this.BTN_DeleteGroup.Location = new System.Drawing.Point(410, 20);
+            this.BTN_DeleteGroup.Location = new System.Drawing.Point(405, 17);
             this.BTN_DeleteGroup.Name = "BTN_DeleteGroup";
             this.BTN_DeleteGroup.Size = new System.Drawing.Size(89, 28);
             this.BTN_DeleteGroup.TabIndex = 2;
@@ -346,6 +348,16 @@ namespace DistributedSystem_Main.Views
             this.BTN_EditColumnNames.UseVisualStyleBackColor = true;
             this.BTN_EditColumnNames.Click += new System.EventHandler(this.BTN_EditColumnNames_Click);
             // 
+            // BTN_AutoSetByType
+            // 
+            this.BTN_AutoSetByType.Location = new System.Drawing.Point(310, 54);
+            this.BTN_AutoSetByType.Name = "BTN_AutoSetByType";
+            this.BTN_AutoSetByType.Size = new System.Drawing.Size(89, 40);
+            this.BTN_AutoSetByType.TabIndex = 2;
+            this.BTN_AutoSetByType.Text = "自動分組";
+            this.BTN_AutoSetByType.UseVisualStyleBackColor = true;
+            this.BTN_AutoSetByType.Click += new System.EventHandler(this.BTN_AutoSetByType_Click);
+            // 
             // Form_HomeGroupSetting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
@@ -401,5 +413,6 @@ namespace DistributedSystem_Main.Views
         private System.Windows.Forms.Button BTN_DeleteGroup;
         private System.Windows.Forms.Button BTN_DeleteRow;
         private System.Windows.Forms.Button BTN_EditColumnNames;
+        private System.Windows.Forms.Button BTN_AutoSetByType;
     }
 }
