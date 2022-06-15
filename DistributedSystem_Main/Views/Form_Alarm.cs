@@ -18,6 +18,8 @@ namespace DistributedSystem_Main.Views
             InitializeComponent();
         }
 
+        List<DataGridViewRow> List_AllDataRows = new List<DataGridViewRow>();
+
         public void InsertNewEventLog(SensorInfo NewSensorInfo,Dictionary<string, OutOfState> Dict_OutOfStatus )
         {
             string EQName = NewSensorInfo.EQName;
@@ -59,6 +61,7 @@ namespace DistributedSystem_Main.Views
                 return;
             }
             DGV_AlarmEvents.Rows.Add(EQName, UnitName, SensorName, Event,Description,"Reset");
+            List_AllDataRows.Add(DGV_AlarmEvents.Rows[DGV_AlarmEvents.Rows.Count - 1]);
             this.Show();
         }
 
@@ -106,6 +109,35 @@ namespace DistributedSystem_Main.Views
             }   
             e.Cancel = true;
             this.Hide();
+        }
+
+        private void BTN_Filter_Click(object sender, EventArgs e)
+        {
+            string FilterString = TXT_Filter.Text;
+            List<DataGridViewRow> List_FilterRows = new List<DataGridViewRow>();
+            foreach (var item in List_AllDataRows)
+            {
+                if (item.Cells.Cast<DataGridViewCell>().Any(cellitem => cellitem.Value.ToString().ToUpper().Contains(FilterString.ToUpper())))
+                {
+                    List_FilterRows.Add(item);
+                }
+            }
+            DGV_AlarmEvents.Rows.Clear();
+            DGV_AlarmEvents.Rows.AddRange(List_FilterRows.ToArray());
+        }
+
+
+        private void TXT_Filter_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (TXT_Filter.Text == "")
+            {
+                return;
+            }
+            if (e.KeyCode == Keys.Escape)
+            {
+                TXT_Filter.Text = "";
+                BTN_Filter_Click(null, null);
+            }
         }
     }
 }

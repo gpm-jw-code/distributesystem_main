@@ -13,6 +13,7 @@ namespace DistributedSystem_Main.Systems
     public class Staobj
     {
         public static Dictionary<string, cls_SensorDataProcess> Dict_SensorProcessObject = new Dictionary<string, cls_SensorDataProcess>();
+        public static Dictionary<string, cls_SensorDataProcess> Dict_SensorProcessObject_NotShow = new Dictionary<string, cls_SensorDataProcess>();
 
         public static Action<string> Event_ReceiveNewSensorInfo;
         public static Action<string> Event_UpdateSensorStatus;
@@ -135,20 +136,32 @@ namespace DistributedSystem_Main.Systems
             foreach (var item in List_SensorInfo)
             {
                 item.SensorName = $"{EdgeName}-{item.SensorName}";
-                if (Dict_SensorProcessObject.ContainsKey(item.SensorName))
-                    continue;
+                if (!item.IsOnlySaveData)
+                {
+                    if (Dict_SensorProcessObject.ContainsKey(item.SensorName))
+                        continue;
 
-                var SensorInfo = SensorParam.LoadSensorInfoFromFile(item, EdgeName);
-                var NewSensorProcessObject = new cls_SensorDataProcess(SensorInfo);
-                Dict_SensorProcessObject.Add(item.SensorName, NewSensorProcessObject);
+                    var SensorInfo = SensorParam.LoadSensorInfoFromFile(item, EdgeName);
+                    var NewSensorProcessObject = new cls_SensorDataProcess(SensorInfo);
+                    Dict_SensorProcessObject.Add(item.SensorName, NewSensorProcessObject);
 
-                var SensorThreshold = SensorParam.LoadThreasholdFromFile(item.SensorName);
-                NewSensorProcessObject.Dict_DataThreshold = SensorThreshold;
+                    var SensorThreshold = SensorParam.LoadThreasholdFromFile(item.SensorName);
+                    NewSensorProcessObject.Dict_DataThreshold = SensorThreshold;
 
-                NewSensorProcessObject.ISOCheckObject = SensorParam.LoadISOParameters(item.SensorName, SensorInfo.ISONumber);
+                    NewSensorProcessObject.ISOCheckObject = SensorParam.LoadISOParameters(item.SensorName, SensorInfo.ISONumber);
 
-                Event_ReceiveNewSensorInfo?.Invoke(item.SensorName);
-                Event_ReceiveSensorInfo_Websocket?.Invoke(Newtonsoft.Json.JsonConvert.SerializeObject(SensorInfo));
+                    Event_ReceiveNewSensorInfo?.Invoke(item.SensorName);
+                    Event_ReceiveSensorInfo_Websocket?.Invoke(Newtonsoft.Json.JsonConvert.SerializeObject(SensorInfo));
+                }
+                else
+                {
+                    if (Dict_SensorProcessObject_NotShow.ContainsKey(item.SensorName))
+                        continue;
+
+                    var SensorInfo = SensorParam.LoadSensorInfoFromFile(item, EdgeName);
+                    var NewSensorProcessObject = new cls_SensorDataProcess(SensorInfo);
+                    Dict_SensorProcessObject_NotShow.Add(item.SensorName, NewSensorProcessObject);
+                }
             }
         }
 
@@ -185,7 +198,7 @@ namespace DistributedSystem_Main.Systems
             public static SensorInfo LoadSensorInfoFromFile(cls_SensorInfo_Mqtt ReceiveInfo, string EdgeName)
             {
                 string SensorInfoFileName = System.IO.Path.Combine(SensorDataRootPath(ReceiveInfo.SensorName), "SensorInfo.json");
-                SensorInfo OutputData = new SensorInfo() { SensorName = ReceiveInfo.SensorName, IP = ReceiveInfo.IP, Port = ReceiveInfo.Port, SensorType = ReceiveInfo.SensorType, EdgeName = EdgeName, DataUnit = ReceiveInfo.DataUnit };
+                SensorInfo OutputData = new SensorInfo() { SensorName = ReceiveInfo.SensorName, IP = ReceiveInfo.IP, Port = ReceiveInfo.Port, SensorType = ReceiveInfo.SensorType, EdgeName = EdgeName, DataUnit = ReceiveInfo.DataUnit,IsOnlySaveData = ReceiveInfo.IsOnlySaveData };
 
                 if (System.IO.File.Exists(SensorInfoFileName))
                 {
