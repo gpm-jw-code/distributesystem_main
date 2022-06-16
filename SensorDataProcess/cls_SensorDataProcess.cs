@@ -113,6 +113,10 @@ namespace SensorDataProcess
                 var NewDataDictionary = Dict_ListNewData.ToDictionary(item => item.Key, item => item.Value[i]);
                 ImportNewSensorData(NewDataDictionary, List_TimeLog[i], true);
             }
+            if (SensorInfo.IsOnlySaveData)
+            {
+                return;
+            }
             var Dict_LastData = Dict_ListNewData.Select(item => new KeyValuePair<string, double>(item.Key, item.Value.Last())).ToDictionary(item => item.Key, item => item.Value);
 
             Event_UpdateChartSeries?.Invoke(SensorInfo.SensorName, Queue_TimeLog, Dict_SensorDataSeries);
@@ -169,6 +173,10 @@ namespace SensorDataProcess
                     var ISOCheckResult = ISOCheckObject.CalculateResult(Dict_NewData[SensorInfo.ISOCheckDataName]);
                     TxtDataSaver.WriteISOResult(ISOCheckResult, SensorInfo.ISONumber, TimeLog);
                 }
+            }
+            if (SensorInfo.IsOnlySaveData)
+            {
+                return;   
             }
 
             lock (RawDataDict_Lock)
@@ -452,6 +460,7 @@ namespace SensorDataProcess
         public string UnitName = "undefined";
         public string DataUnit = "";
         public string EdgeName = "";
+        public bool IsOnlySaveData = false;
         public string SensorNameWithOutEdgeName
         {
             get

@@ -54,12 +54,30 @@ namespace DistributedSystem_Main.Systems
             Dict_GroupObject.Remove(GroupName);
         }
 
+        public static void AutoSetGroupsBySensorType()
+        {
+            NowShowGroupName = "";
+            Dictionary<string, cls_GroupObject> Dict_SensorTypeGroup = new Dictionary<string, cls_GroupObject>();
+            foreach (var item in Staobj.Dict_SensorProcessObject)
+            {
+                string GroupName = item.Value.SensorInfo.SensorType;
+                if (!Dict_SensorTypeGroup.ContainsKey(GroupName))
+                {
+                    Dict_SensorTypeGroup.Add(GroupName, new cls_GroupObject(GroupName));
+                }
+                Dict_SensorTypeGroup[GroupName].AddNewSensorToGroup(new List<string>() { item.Key });
+                Dict_SensorTypeGroup[GroupName].SetSensorToRow(item.Key, item.Key);
+            }
+            Dict_GroupObject = Dict_SensorTypeGroup;
+            ChangeGroup(Dict_GroupObject.Keys.First());
+        }
+
         public static void AddSensorToGroup(string GroupName, List<string> List_SensorNames)
         {
             Dict_GroupObject[GroupName].AddNewSensorToGroup(List_SensorNames);
         }
 
-        public static void SetSensorToRow(string GroupName, string RowName, List<string> List_SensorName)
+        public static void ResetRowSensor(string GroupName, string RowName, List<string> List_SensorName)
         {
             Dict_GroupObject[GroupName].ResetRowSensor(RowName);
             foreach (var item in List_SensorName)
@@ -102,7 +120,7 @@ namespace DistributedSystem_Main.Systems
 
             DGV_DataTable.Columns.Clear();
             DGV_DataTable.Columns.Add("RowName", "Name");
-            if (Dict_GroupObject[NowShowGroupName].List_ShowColumnName == null)
+            if (Dict_GroupObject[NowShowGroupName].List_ShowColumnName == null|| Dict_GroupObject[NowShowGroupName].List_ShowColumnName.Count == 0 )
             {
                 Dict_GroupObject[NowShowGroupName].List_ShowColumnName = Dict_GroupObject[NowShowGroupName].List_AllColumnName;
             }
@@ -179,14 +197,17 @@ namespace DistributedSystem_Main.Systems
             }
             return Dict_GroupObject[GroupName].List_SensorName;
         }
+
         public static List<string> GetGroupColumnNames(string GroupName)
         {
             return Dict_GroupObject[GroupName].List_AllColumnName;
         }
+
         public static List<string> GetGroupShowColumnNames(string GroupName)
         {
             return Dict_GroupObject[GroupName].List_ShowColumnName;
         }
+
         internal static void SetGroupShowColumnNames(string GroupName, List<string> list_ShowColumnNames)
         {
             Dict_GroupObject[GroupName].List_ShowColumnName = list_ShowColumnNames;
@@ -199,7 +220,7 @@ namespace DistributedSystem_Main.Systems
 
         public static void SaveGroupParameters()
         {
-            using (FileStream FS = new FileStream(GroupParameterPath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.Read))
+            using (FileStream FS = new FileStream(GroupParameterPath, FileMode.Create, FileAccess.Write, FileShare.Read))
             {
                 using (StreamWriter SW = new StreamWriter(FS))
                 {

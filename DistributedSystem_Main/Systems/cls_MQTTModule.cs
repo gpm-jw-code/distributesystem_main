@@ -141,6 +141,23 @@ namespace DistributedSystem_Main.Systems
 
                     Event_ReceiveSensorRawData_Websocket?.Invoke(Newtonsoft.Json.JsonConvert.SerializeObject(RawData));
                 }
+                if (Staobj.Dict_SensorProcessObject_NotShow.ContainsKey(SensorName))
+                {
+                    var sensorPcrObj = Staobj.Dict_SensorProcessObject_NotShow[SensorName];
+
+                    if (NewData.IsArrayData)
+                    {
+                        sensorPcrObj.ImportContinuousSensorData(NewData.Dict_ListRawData, NewData.List_TimeLog);
+                    }
+                    else
+                    {
+                        if (NewData.Dict_RawData.Count == 0)
+                        {
+                            return;
+                        }
+                        sensorPcrObj.ImportNewSensorData(NewData.Dict_RawData, NewData.TimeLog);
+                    }
+                }
             }
 
         }
