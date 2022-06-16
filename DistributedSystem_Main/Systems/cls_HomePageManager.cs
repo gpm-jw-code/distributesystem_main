@@ -146,6 +146,18 @@ namespace DistributedSystem_Main.Systems
                 }
                 Staobj.Dict_SensorProcessObject[item].RefreshMainTable();
             }
+            ResetRowHeight();
+        }
+
+        public static void ResetRowHeight()
+        {
+            var TotalHeight = DGV_DataTable.Height;
+            int EachItemHeight = TotalHeight / 21;
+            DGV_DataTable.ColumnHeadersHeight = EachItemHeight;
+            foreach (var item in DGV_DataTable.Rows.Cast<DataGridViewRow>())
+            {
+                item.Height = EachItemHeight;
+            }
         }
 
         internal static void ResetNowGroupName()

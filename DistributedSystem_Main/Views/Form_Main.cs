@@ -39,6 +39,7 @@ namespace DistributedSystem_Main
             }
             SetISOFunctionUIEnable(Staobj.SystemParam.ISOEnable);
             EventRegist();
+            FormMain_SizeChanged(null,null);
         }
 
         #region System Initial
@@ -59,6 +60,10 @@ namespace DistributedSystem_Main
         }
 
 
+        private void FormMain_SizeChanged(object sender, EventArgs e)
+        {
+            Systems.cls_HomePageManager.ResetRowHeight();
+        }
 
         #endregion
 
@@ -322,6 +327,7 @@ namespace DistributedSystem_Main
                 return;
             }
         }
+
         #endregion
 
         #region ISO Chart
@@ -414,5 +420,6 @@ namespace DistributedSystem_Main
             Form_GroupSetting.ShowDialog();
         }
         #endregion
+
     }
 }

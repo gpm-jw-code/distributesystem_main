@@ -62,6 +62,7 @@ namespace DistributedSystem_Main.Views
             }
             DGV_AlarmEvents.Rows.Add(EQName, UnitName, SensorName, Event,Description,"Reset");
             List_AllDataRows.Add(DGV_AlarmEvents.Rows[DGV_AlarmEvents.Rows.Count - 1]);
+            ResetRowHeight();
             this.Show();
         }
 
@@ -100,6 +101,14 @@ namespace DistributedSystem_Main.Views
             }
         }
 
+        private void ResetRowHeight()
+        {
+            int EachHeight = DGV_AlarmEvents.Height / 21;
+            foreach (var item in DGV_AlarmEvents.Rows.Cast<DataGridViewRow>())
+            {
+                item.Height = EachHeight;
+            }
+        }
         private void Form_Alarm_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (e.CloseReason == CloseReason.ApplicationExitCall) //進行重啟的時候的時候

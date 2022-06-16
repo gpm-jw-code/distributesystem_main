@@ -883,10 +883,11 @@ namespace DistributedSystem_Main
             // 
             // GroupSwitch_HomePage
             // 
+            this.GroupSwitch_HomePage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupSwitch_HomePage.AutoScroll = true;
             this.GroupSwitch_HomePage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(43)))), ((int)(((byte)(54)))));
-            this.GroupSwitch_HomePage.Dock = System.Windows.Forms.DockStyle.Left;
-            this.GroupSwitch_HomePage.Font = new System.Drawing.Font("新細明體", 9.75F);
+            this.GroupSwitch_HomePage.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.GroupSwitch_HomePage.Location = new System.Drawing.Point(0, 0);
             this.GroupSwitch_HomePage.Name = "GroupSwitch_HomePage";
             this.GroupSwitch_HomePage.Size = new System.Drawing.Size(1021, 90);
@@ -894,6 +895,7 @@ namespace DistributedSystem_Main
             // 
             // BTN_HomeGroupSetting
             // 
+            this.BTN_HomeGroupSetting.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.BTN_HomeGroupSetting.Location = new System.Drawing.Point(1068, 21);
             this.BTN_HomeGroupSetting.Name = "BTN_HomeGroupSetting";
             this.BTN_HomeGroupSetting.Size = new System.Drawing.Size(75, 38);
@@ -943,6 +945,7 @@ namespace DistributedSystem_Main
             this.Name = "FormMain";
             this.Text = "Control Center";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
+            this.SizeChanged += new System.EventHandler(this.FormMain_SizeChanged);
             this.TableLayout_WholeView.ResumeLayout(false);
             this.TableLayout_SideBar.ResumeLayout(false);
             this.TableLayout_SideBar.PerformLayout();
