@@ -337,6 +337,7 @@ namespace DistributedSystem_Main.Views
             this.BTN_DeleteRow.TabIndex = 2;
             this.BTN_DeleteRow.Text = "Delete";
             this.BTN_DeleteRow.UseVisualStyleBackColor = true;
+            this.BTN_DeleteRow.Click += new System.EventHandler(this.BTN_DeleteRow_Click);
             // 
             // BTN_EditColumnNames
             // 

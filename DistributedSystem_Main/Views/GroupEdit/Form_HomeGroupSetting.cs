@@ -205,5 +205,27 @@ namespace DistributedSystem_Main.Views
             Combo_GroupName.SelectedIndex = Combo_GroupName.Items.Count - 1;
             Combo_GroupName_SelectedIndexChanged(null, null);
         }
+
+        private void BTN_DeleteRow_Click(object sender, EventArgs e)
+        {
+            string GroupName = Combo_GroupName.Text;
+            string RowName = Combo_Rows.Text;
+            if (string.IsNullOrEmpty(GroupName))
+            {
+                return;
+            }
+
+            if (MessageBox.Show($"是否要刪除Row:{RowName}", "Delete Row", MessageBoxButtons.YesNo) != DialogResult.Yes)
+            {
+                return;
+            }
+            Systems.cls_HomePageManager.DeleteRowFromGroup(GroupName,RowName);
+            Combo_Rows.Items.RemoveAt(Combo_Rows.SelectedIndex);
+            if (Combo_Rows.Items.Count == 0)
+            {
+                return;
+            }
+            Combo_Rows.SelectedIndex = 0;
+        }
     }
 }
