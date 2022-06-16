@@ -109,7 +109,7 @@ namespace DistributedSystem_Main.Systems
             else if (TopicName.ToUpper().Contains("UpdateSensorStatus".ToUpper()))
             {
                 cls_SensorStatus_Mqtt NewSensorStatus = Newtonsoft.Json.JsonConvert.DeserializeObject<cls_SensorStatus_Mqtt>(Data);
-                Staobj.UpdateSensorInfo(NewSensorStatus, EdgeName);
+                Staobj.UpdateSensorStatus(NewSensorStatus, EdgeName);
             }
             else
             {

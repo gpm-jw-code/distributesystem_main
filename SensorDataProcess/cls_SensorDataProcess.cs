@@ -94,6 +94,7 @@ namespace SensorDataProcess
             TxtDataSaver = new cls_txtDataSaver(SensorInfo);
             PassRateObjejct = new DataPassRateObject(TxtDataSaver);
             HourlyData = new cls_HourlyData(TxtDataSaver);
+            Status.ConnecStatus = true;
             try
             {
                 SQLDataSaver = new cls_PostgreSQLHandler(NewSensorInfo.EdgeName, NewSensorInfo.SensorNameWithOutEdgeName);

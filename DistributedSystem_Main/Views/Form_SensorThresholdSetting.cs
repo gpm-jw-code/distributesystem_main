@@ -27,7 +27,7 @@ namespace DistributedSystem_Main.Views
             this.SensorName = SensorInfo.SensorName;
         }
 
-        public void ImportThresholdSettings(Dictionary<string,double> Dict_Threshold)
+        public void ImportThresholdSettings(Dictionary<string, double> Dict_Threshold)
         {
             Combo_DataName.Items.Clear();
             this.Dict_Threshold = new Dictionary<string, double>();
@@ -46,14 +46,14 @@ namespace DistributedSystem_Main.Views
 
         private void BTN_Save_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("是否保存並應用設定","Save",MessageBoxButtons.YesNo) != DialogResult.Yes)
+            if (MessageBox.Show("是否保存並應用設定", "Save", MessageBoxButtons.YesNo) != DialogResult.Yes)
             {
                 return;
             }
             List<string> List_TargetSensor = new List<string>();
             if (CheckBox_ApplyToAll.Checked)
             {
-                List_TargetSensor = Systems.Staobj.Dict_SensorProcessObject.Where(item => item.Value.SensorInfo.SensorType == this.SensorType).Select(item=>item.Key).ToList();
+                List_TargetSensor = Systems.Staobj.Dict_SensorProcessObject.Where(item => item.Value.SensorInfo.SensorType == this.SensorType).Select(item => item.Key).ToList();
             }
             else
                 List_TargetSensor.Add(SensorName);
@@ -99,7 +99,7 @@ namespace DistributedSystem_Main.Views
 
         private void NUM_OOC_ValueChanged(object sender, EventArgs e)
         {
-            if (Combo_DataName.Text =="")
+            if (Combo_DataName.Text == "")
             {
                 return;
             }
@@ -135,7 +135,7 @@ namespace DistributedSystem_Main.Views
 
         private void BTN_AutoSetThreshold_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("是否自動設定本Sensor的所有閥值","AutoSet",MessageBoxButtons.YesNo)!= DialogResult.Yes)
+            if (MessageBox.Show("是否自動設定此Sensor所有閥值", "AutoSet", MessageBoxButtons.YesNo) != DialogResult.Yes)
             {
                 return;
             }
@@ -144,13 +144,50 @@ namespace DistributedSystem_Main.Views
             Task.Run(() =>
             {
                 Dict_Threshold = Systems.Staobj.Dict_SensorProcessObject[SensorName].CreateThresholdByTemData();
-                this.Invoke((MethodInvoker)delegate {
+                this.Invoke((MethodInvoker)delegate
+                {
                     Combo_DataName_SelectedIndexChanged(null, null);
                     MessageBox.Show("設定完成");
                     BTN_AutoSetThreshold.Text = "自動設定";
                     BTN_SaveToFile.Enabled = BTN_AutoSetThreshold.Enabled = NUM_OOC.Enabled = NUM_OOS.Enabled = true;
                 });
             });
+        }
+
+        private void BTN_AutoSetAllSensorThreshold_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("是否自動設定並儲存所有Sensor", "AutoSet", MessageBoxButtons.YesNo) != DialogResult.Yes)
+            {
+                return;
+            }
+            BTN_AutoSetAllSensorThreshold.Text = "自動設定中...";
+            BTN_AutoSetAllSensorThreshold.Enabled = false;
+            Panel_ThresholdSetting.Enabled = false;
+            CheckBox_ApplyToAll.Enabled = false;
+            BTN_SaveToFile.Enabled = false;
+
+            Task.Run(() =>
+            {
+                foreach (var item in Systems.Staobj.Dict_SensorProcessObject)
+                {
+                    var Dict_Threshold = item.Value.CreateThresholdByTemData();
+                    foreach (var DataThreshold in Dict_Threshold)
+                    {
+                        Systems.Staobj.Dict_SensorProcessObject[item.Key].Dict_DataThreshold[DataThreshold.Key] = Convert.ToDouble(DataThreshold.Value);
+                    }
+                    Systems.Staobj.Dict_SensorProcessObject[item.Key].RefreshThreshold();
+                    Systems.Staobj.SensorParam.SaveThresholdToFile(Systems.Staobj.Dict_SensorProcessObject[item.Key].Dict_DataThreshold, item.Key);
+                }
+                Invoke((MethodInvoker)delegate
+                {
+                    Combo_DataName_SelectedIndexChanged(null, null);
+                    MessageBox.Show("設定完成");
+                    BTN_AutoSetAllSensorThreshold.Text = "自動設定所有Sensor閥值";
+                    BTN_SaveToFile.Enabled = BTN_AutoSetThreshold.Enabled = NUM_OOC.Enabled = NUM_OOS.Enabled = true;
+                    Panel_ThresholdSetting.Enabled = true;
+                });
+            });
+
         }
     }
 }

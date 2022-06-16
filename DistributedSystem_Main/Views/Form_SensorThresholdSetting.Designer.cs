@@ -39,7 +39,7 @@ namespace DistributedSystem_Main.Views
             this.BTN_SaveToFile = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.LAB_SensorType = new System.Windows.Forms.Label();
-            this.Panel_MqttSetting = new System.Windows.Forms.Panel();
+            this.Panel_ThresholdSetting = new System.Windows.Forms.Panel();
             this.BTN_AutoSetThreshold = new System.Windows.Forms.Button();
             this.Combo_DataName = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -48,7 +48,8 @@ namespace DistributedSystem_Main.Views
             this.NUM_OOC = new System.Windows.Forms.NumericUpDown();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.Panel_MqttSetting.SuspendLayout();
+            this.BTN_AutoSetAllSensorThreshold = new System.Windows.Forms.Button();
+            this.Panel_ThresholdSetting.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NUM_OOS)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUM_OOC)).BeginInit();
             this.SuspendLayout();
@@ -57,7 +58,7 @@ namespace DistributedSystem_Main.Views
             // 
             this.CheckBox_ApplyToAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.CheckBox_ApplyToAll.AutoSize = true;
-            this.CheckBox_ApplyToAll.Location = new System.Drawing.Point(115, 389);
+            this.CheckBox_ApplyToAll.Location = new System.Drawing.Point(127, 438);
             this.CheckBox_ApplyToAll.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBox_ApplyToAll.Name = "CheckBox_ApplyToAll";
             this.CheckBox_ApplyToAll.Size = new System.Drawing.Size(172, 21);
@@ -137,7 +138,7 @@ namespace DistributedSystem_Main.Views
             // BTN_SaveToFile
             // 
             this.BTN_SaveToFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.BTN_SaveToFile.Location = new System.Drawing.Point(90, 418);
+            this.BTN_SaveToFile.Location = new System.Drawing.Point(97, 467);
             this.BTN_SaveToFile.Margin = new System.Windows.Forms.Padding(4);
             this.BTN_SaveToFile.Name = "BTN_SaveToFile";
             this.BTN_SaveToFile.Size = new System.Drawing.Size(108, 57);
@@ -169,28 +170,28 @@ namespace DistributedSystem_Main.Views
             this.LAB_SensorType.TabIndex = 21;
             this.LAB_SensorType.Text = "Sensor Type";
             // 
-            // Panel_MqttSetting
+            // Panel_ThresholdSetting
             // 
-            this.Panel_MqttSetting.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            this.Panel_MqttSetting.Controls.Add(this.BTN_AutoSetThreshold);
-            this.Panel_MqttSetting.Controls.Add(this.Combo_DataName);
-            this.Panel_MqttSetting.Controls.Add(this.label2);
-            this.Panel_MqttSetting.Controls.Add(this.NUM_OOS);
-            this.Panel_MqttSetting.Controls.Add(this.label3);
-            this.Panel_MqttSetting.Controls.Add(this.NUM_OOC);
-            this.Panel_MqttSetting.Controls.Add(this.label5);
-            this.Panel_MqttSetting.Controls.Add(this.label4);
-            this.Panel_MqttSetting.Location = new System.Drawing.Point(13, 195);
-            this.Panel_MqttSetting.Margin = new System.Windows.Forms.Padding(4);
-            this.Panel_MqttSetting.Name = "Panel_MqttSetting";
-            this.Panel_MqttSetting.Size = new System.Drawing.Size(285, 172);
-            this.Panel_MqttSetting.TabIndex = 23;
+            this.Panel_ThresholdSetting.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.Panel_ThresholdSetting.Controls.Add(this.BTN_AutoSetThreshold);
+            this.Panel_ThresholdSetting.Controls.Add(this.Combo_DataName);
+            this.Panel_ThresholdSetting.Controls.Add(this.label2);
+            this.Panel_ThresholdSetting.Controls.Add(this.NUM_OOS);
+            this.Panel_ThresholdSetting.Controls.Add(this.label3);
+            this.Panel_ThresholdSetting.Controls.Add(this.NUM_OOC);
+            this.Panel_ThresholdSetting.Controls.Add(this.label5);
+            this.Panel_ThresholdSetting.Controls.Add(this.label4);
+            this.Panel_ThresholdSetting.Location = new System.Drawing.Point(13, 256);
+            this.Panel_ThresholdSetting.Margin = new System.Windows.Forms.Padding(4);
+            this.Panel_ThresholdSetting.Name = "Panel_ThresholdSetting";
+            this.Panel_ThresholdSetting.Size = new System.Drawing.Size(285, 174);
+            this.Panel_ThresholdSetting.TabIndex = 23;
             // 
             // BTN_AutoSetThreshold
             // 
-            this.BTN_AutoSetThreshold.Location = new System.Drawing.Point(107, 132);
+            this.BTN_AutoSetThreshold.Location = new System.Drawing.Point(113, 132);
             this.BTN_AutoSetThreshold.Name = "BTN_AutoSetThreshold";
-            this.BTN_AutoSetThreshold.Size = new System.Drawing.Size(115, 32);
+            this.BTN_AutoSetThreshold.Size = new System.Drawing.Size(147, 32);
             this.BTN_AutoSetThreshold.TabIndex = 6;
             this.BTN_AutoSetThreshold.Text = "自動設定";
             this.BTN_AutoSetThreshold.UseVisualStyleBackColor = true;
@@ -199,9 +200,9 @@ namespace DistributedSystem_Main.Views
             // Combo_DataName
             // 
             this.Combo_DataName.FormattingEnabled = true;
-            this.Combo_DataName.Location = new System.Drawing.Point(108, 35);
+            this.Combo_DataName.Location = new System.Drawing.Point(114, 35);
             this.Combo_DataName.Name = "Combo_DataName";
-            this.Combo_DataName.Size = new System.Drawing.Size(121, 25);
+            this.Combo_DataName.Size = new System.Drawing.Size(153, 25);
             this.Combo_DataName.TabIndex = 5;
             this.Combo_DataName.SelectedIndexChanged += new System.EventHandler(this.Combo_DataName_SelectedIndexChanged);
             // 
@@ -220,7 +221,7 @@ namespace DistributedSystem_Main.Views
             // NUM_OOS
             // 
             this.NUM_OOS.DecimalPlaces = 2;
-            this.NUM_OOS.Location = new System.Drawing.Point(108, 100);
+            this.NUM_OOS.Location = new System.Drawing.Point(114, 100);
             this.NUM_OOS.Margin = new System.Windows.Forms.Padding(4);
             this.NUM_OOS.Maximum = new decimal(new int[] {
             999999,
@@ -228,7 +229,7 @@ namespace DistributedSystem_Main.Views
             0,
             0});
             this.NUM_OOS.Name = "NUM_OOS";
-            this.NUM_OOS.Size = new System.Drawing.Size(114, 25);
+            this.NUM_OOS.Size = new System.Drawing.Size(146, 25);
             this.NUM_OOS.TabIndex = 3;
             this.NUM_OOS.Value = new decimal(new int[] {
             1999,
@@ -241,7 +242,7 @@ namespace DistributedSystem_Main.Views
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.label3.Location = new System.Drawing.Point(19, 102);
+            this.label3.Location = new System.Drawing.Point(25, 102);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(46, 17);
@@ -251,7 +252,7 @@ namespace DistributedSystem_Main.Views
             // NUM_OOC
             // 
             this.NUM_OOC.DecimalPlaces = 2;
-            this.NUM_OOC.Location = new System.Drawing.Point(108, 67);
+            this.NUM_OOC.Location = new System.Drawing.Point(114, 67);
             this.NUM_OOC.Margin = new System.Windows.Forms.Padding(4);
             this.NUM_OOC.Maximum = new decimal(new int[] {
             999999,
@@ -259,7 +260,7 @@ namespace DistributedSystem_Main.Views
             0,
             0});
             this.NUM_OOC.Name = "NUM_OOC";
-            this.NUM_OOC.Size = new System.Drawing.Size(114, 25);
+            this.NUM_OOC.Size = new System.Drawing.Size(146, 25);
             this.NUM_OOC.TabIndex = 3;
             this.NUM_OOC.Value = new decimal(new int[] {
             999,
@@ -272,7 +273,7 @@ namespace DistributedSystem_Main.Views
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.label5.Location = new System.Drawing.Point(16, 38);
+            this.label5.Location = new System.Drawing.Point(22, 38);
             this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(85, 17);
@@ -283,20 +284,31 @@ namespace DistributedSystem_Main.Views
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.label4.Location = new System.Drawing.Point(19, 69);
+            this.label4.Location = new System.Drawing.Point(25, 69);
             this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(48, 17);
             this.label4.TabIndex = 1;
             this.label4.Text = "OOC : ";
             // 
+            // BTN_AutoSetAllSensorThreshold
+            // 
+            this.BTN_AutoSetAllSensorThreshold.Location = new System.Drawing.Point(14, 202);
+            this.BTN_AutoSetAllSensorThreshold.Name = "BTN_AutoSetAllSensorThreshold";
+            this.BTN_AutoSetAllSensorThreshold.Size = new System.Drawing.Size(285, 35);
+            this.BTN_AutoSetAllSensorThreshold.TabIndex = 6;
+            this.BTN_AutoSetAllSensorThreshold.Text = "自動設定所有Sensor閥值";
+            this.BTN_AutoSetAllSensorThreshold.UseVisualStyleBackColor = true;
+            this.BTN_AutoSetAllSensorThreshold.Click += new System.EventHandler(this.BTN_AutoSetAllSensorThreshold_Click);
+            // 
             // Form_SensorThresholdSetting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.ClientSize = new System.Drawing.Size(311, 488);
-            this.Controls.Add(this.Panel_MqttSetting);
+            this.ClientSize = new System.Drawing.Size(311, 537);
+            this.Controls.Add(this.BTN_AutoSetAllSensorThreshold);
+            this.Controls.Add(this.Panel_ThresholdSetting);
             this.Controls.Add(this.CheckBox_ApplyToAll);
             this.Controls.Add(this.LAB_SensorType);
             this.Controls.Add(this.label1);
@@ -314,8 +326,8 @@ namespace DistributedSystem_Main.Views
             this.Name = "Form_SensorThresholdSetting";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Threshold Setting";
-            this.Panel_MqttSetting.ResumeLayout(false);
-            this.Panel_MqttSetting.PerformLayout();
+            this.Panel_ThresholdSetting.ResumeLayout(false);
+            this.Panel_ThresholdSetting.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NUM_OOS)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUM_OOC)).EndInit();
             this.ResumeLayout(false);
@@ -335,7 +347,7 @@ namespace DistributedSystem_Main.Views
         private System.Windows.Forms.Button BTN_SaveToFile;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label LAB_SensorType;
-        private System.Windows.Forms.Panel Panel_MqttSetting;
+        private System.Windows.Forms.Panel Panel_ThresholdSetting;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.NumericUpDown NUM_OOC;
         private System.Windows.Forms.Label label4;
@@ -344,5 +356,6 @@ namespace DistributedSystem_Main.Views
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button BTN_AutoSetThreshold;
+        private System.Windows.Forms.Button BTN_AutoSetAllSensorThreshold;
     }
 }

@@ -165,7 +165,7 @@ namespace DistributedSystem_Main.Systems
             }
         }
 
-        internal static void UpdateSensorInfo(cls_SensorStatus_Mqtt newSensorStatus, string EdgeName)
+        internal static void UpdateSensorStatus(cls_SensorStatus_Mqtt newSensorStatus, string EdgeName)
         {
             var SensorName = $"{EdgeName}-{newSensorStatus.SensorName}";
             Dict_SensorProcessObject[SensorName].Status.ConnecStatus = newSensorStatus.ConnectStatus;
