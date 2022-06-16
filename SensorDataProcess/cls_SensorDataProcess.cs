@@ -58,7 +58,7 @@ namespace SensorDataProcess
         public Action<string> Event_RefreshSensorThreshold;
         public Action<string> Event_RefreshSensorISOSetting;
         public Action<string> Event_UpdateSensorCheckStates;
-        
+
 
         private object RawDataDict_Lock = new object();
 
@@ -130,8 +130,16 @@ namespace SensorDataProcess
 
         private void WirteSingleData(Dictionary<string, double> Dict_NewData, DateTime TimeLog)
         {
-            SQLDataSaver?.InsertRawData(Dict_NewData, TimeLog);
-            TxtDataSaver.WriteRawData(Dict_NewData, TimeLog);
+            try
+            {
+
+                SQLDataSaver?.InsertRawData(Dict_NewData, TimeLog);
+                TxtDataSaver.WriteRawData(Dict_NewData, TimeLog);
+            }
+            catch (Exception ex)
+            {
+
+            }
 
         }
 
@@ -219,7 +227,7 @@ namespace SensorDataProcess
             Event_RefreshSensorThreshold?.Invoke(SensorInfo.SensorName);
         }
 
-        
+
         Thread lastThread = null;
 
         public void RefreshSignalChart()
@@ -252,7 +260,7 @@ namespace SensorDataProcess
 
         private bool CheckThreshold(Dictionary<string, double> Dict_NewData, DateTime TimeLog)
         {
-            bool IsUpdateStatus = false;    
+            bool IsUpdateStatus = false;
             Dictionary<string, bool> Dict_OOCResult = new Dictionary<string, bool>();
             Dictionary<string, bool> Dict_OOSResult = new Dictionary<string, bool>();
             foreach (var item in Dict_NewData)
@@ -277,10 +285,10 @@ namespace SensorDataProcess
                 Dict_OOCResult.Add(DataName, Value > ooc_threshold);
                 Dict_OOSResult.Add(DataName, Value > oos_threshold);
 
-                var SingleDataIsUpdateStatus= UpdateCheckOutStatus(DataName, Dict_OOCResult[DataName],Dict_OOSResult[DataName]);
+                var SingleDataIsUpdateStatus = UpdateCheckOutStatus(DataName, Dict_OOCResult[DataName], Dict_OOSResult[DataName]);
                 IsUpdateStatus = SingleDataIsUpdateStatus || IsUpdateStatus;
             }
-            PassRateObjejct.AddNewCheckResult(Dict_OOCResult,Dict_OOSResult, TimeLog);
+            PassRateObjejct.AddNewCheckResult(Dict_OOCResult, Dict_OOSResult, TimeLog);
             return IsUpdateStatus;
         }
 
@@ -306,7 +314,7 @@ namespace SensorDataProcess
             return OutputData;
         }
 
-        private bool UpdateCheckOutStatus(string fieldKey, bool OOC,bool OOS)
+        private bool UpdateCheckOutStatus(string fieldKey, bool OOC, bool OOS)
         {
             OutOfState outofState = Dict_OutOfItemStates[fieldKey];
             bool IsUpdateStatus = false;
@@ -318,7 +326,7 @@ namespace SensorDataProcess
             if (!outofState.isOutofSPEC)
             {
                 outofState.isOutofSPEC = OOS;
-                IsUpdateStatus = OOS|| IsUpdateStatus;
+                IsUpdateStatus = OOS || IsUpdateStatus;
             }
             return IsUpdateStatus;
         }
@@ -399,7 +407,7 @@ namespace SensorDataProcess
             this.TXT_DataSaver = DataSaver;
         }
 
-        public void AddNewCheckResult(Dictionary<string,bool >Dict_New_OOC_Result,Dictionary<string,bool> Dict_New_OOS_Result, DateTime NewTimelog)
+        public void AddNewCheckResult(Dictionary<string, bool> Dict_New_OOC_Result, Dictionary<string, bool> Dict_New_OOS_Result, DateTime NewTimelog)
         {
             if (NewTimelog.Minute != this.TimeLog.Minute)
             {
@@ -416,7 +424,7 @@ namespace SensorDataProcess
 
             foreach (var item in Dict_New_OOC_Result)
             {
-                string DataName = item.Key; 
+                string DataName = item.Key;
                 if (!Dict_TotalCount.ContainsKey(DataName))
                 {
                     Dict_TotalCount.Add(DataName, 0);
