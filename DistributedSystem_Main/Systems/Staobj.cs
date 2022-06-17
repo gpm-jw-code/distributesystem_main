@@ -82,6 +82,12 @@ namespace DistributedSystem_Main.Systems
 
                 string RootDirectory = System.IO.Directory.GetDirectoryRoot(System.IO.Directory.GetCurrentDirectory());
                 DataSaveRootPath = SystemIniFile.IniReadAndWriteValue("Path", "RootPath", System.IO.Path.Combine(RootDirectory, "GPM", "DistributeSystem"));
+                if (!CheckRootPathExist(DataSaveRootPath))
+                {
+                    DataSaveRootPath = System.IO.Path.Combine(RootDirectory, "GPM", "DistributeSystem");
+                    SystemIniFile.IniWriteValue("Path", "RootPath", DataSaveRootPath);
+                }
+
 
                 SectionName = "WebSocket";
                 WebSocket.WebsocketIP = SystemIniFile.IniReadAndWriteValue(SectionName, "ServerIP", "0.0.0.0");
@@ -126,6 +132,20 @@ namespace DistributedSystem_Main.Systems
 
                 string SectionName = "Functions";
                 await SystemIniFile.IniWriteValue(SectionName, "ISO", ISOEnable.ToString());
+            }
+
+            private static bool CheckRootPathExist(string DirectoryPath)
+            {
+                var AllDriveInfo = DriveInfo.GetDrives();
+                string TargetRootPath = Directory.GetDirectoryRoot(DirectoryPath);
+                foreach (var item in AllDriveInfo)
+                {
+                    if (item.RootDirectory.Name == TargetRootPath)
+                    {
+                        return true;
+                    }
+                }
+                return false;
             }
 
         }
