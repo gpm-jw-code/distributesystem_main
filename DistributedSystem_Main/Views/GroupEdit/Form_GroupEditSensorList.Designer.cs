@@ -51,8 +51,9 @@ namespace DistributedSystem_Main.Views
             // 
             // Panel_AllSensorName
             // 
-            this.Panel_AllSensorName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
+            this.Panel_AllSensorName.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.Panel_AllSensorName.AutoScroll = true;
             this.Panel_AllSensorName.BackColor = System.Drawing.Color.White;
             this.Panel_AllSensorName.Location = new System.Drawing.Point(51, 158);
@@ -100,6 +101,7 @@ namespace DistributedSystem_Main.Views
             // 
             // TXT_Filter
             // 
+            this.TXT_Filter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.TXT_Filter.Location = new System.Drawing.Point(223, 123);
             this.TXT_Filter.Name = "TXT_Filter";
             this.TXT_Filter.Size = new System.Drawing.Size(126, 29);
@@ -108,6 +110,7 @@ namespace DistributedSystem_Main.Views
             // 
             // label3
             // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(171, 127);
             this.label3.Name = "label3";

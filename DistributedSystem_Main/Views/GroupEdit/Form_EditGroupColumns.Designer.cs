@@ -90,6 +90,7 @@ namespace DistributedSystem_Main.Views
             // 
             // BTN_MoveUp
             // 
+            this.BTN_MoveUp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.BTN_MoveUp.Location = new System.Drawing.Point(322, 183);
             this.BTN_MoveUp.Name = "BTN_MoveUp";
             this.BTN_MoveUp.Size = new System.Drawing.Size(63, 50);
@@ -100,6 +101,7 @@ namespace DistributedSystem_Main.Views
             // 
             // BTN_MoveDown
             // 
+            this.BTN_MoveDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.BTN_MoveDown.Location = new System.Drawing.Point(322, 273);
             this.BTN_MoveDown.Name = "BTN_MoveDown";
             this.BTN_MoveDown.Size = new System.Drawing.Size(63, 50);
@@ -110,6 +112,9 @@ namespace DistributedSystem_Main.Views
             // 
             // CheckListBox_ColumnNames
             // 
+            this.CheckListBox_ColumnNames.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.CheckListBox_ColumnNames.FormattingEnabled = true;
             this.CheckListBox_ColumnNames.Items.AddRange(new object[] {
             "Column1",
@@ -134,7 +139,7 @@ namespace DistributedSystem_Main.Views
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label1);
             this.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.Margin = new System.Windows.Forms.Padding(5);
             this.Name = "Form_EditGroupColumns";
             this.Text = "Form_EditGroupColumns";
             this.ResumeLayout(false);

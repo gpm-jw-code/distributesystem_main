@@ -48,16 +48,21 @@ namespace DistributedSystem_Main.Views
 
         private void Combo_GroupName_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var List_SensorNames = Systems.cls_HomePageManager.GetGroupSensorNames(Combo_GroupName.Text);
             Panel_CustomSensorList.Controls.Clear();
             Panel_ColumnNames.Controls.Clear();
             Panel_RowSensor.Controls.Clear();
+            if (Combo_GroupName.Text == "")
+            {
+                return;
+            }
+            var List_SensorNames = Systems.cls_HomePageManager.GetGroupSensorNames(Combo_GroupName.Text);
             foreach (var item in List_SensorNames)
             {
                 Label NewSensorLabel = new Label()
                 {
                     Text = item,
-                    Dock = DockStyle.Top
+                    Dock = DockStyle.Top,
+                    AutoSize = true
                 };
                 Panel_CustomSensorList.Controls.Add(NewSensorLabel);
             }
@@ -143,7 +148,25 @@ namespace DistributedSystem_Main.Views
 
         private void BTN_SaveGroupParameters_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("是否要儲存當前設定","Save Group Parmaeters",MessageBoxButtons.YesNo) != DialogResult.Yes)
+            List<string> List_NoRowGroupNames = new List<string>();
+            foreach (var item in Systems.cls_HomePageManager.GroupNames)
+            {
+                var RowInfo = Systems.cls_HomePageManager.GetRowsInfo(item);
+                if (RowInfo.Count == 0)
+                {
+                    List_NoRowGroupNames.Add(item);
+                }
+            }
+            if (List_NoRowGroupNames.Count !=0)
+            {
+                string NoRowGroupString = string.Join(Environment.NewLine, List_NoRowGroupNames);
+                string MessageBoxString = $"以下Group尚未設定Row，是否仍要儲存並關閉頁面{Environment.NewLine}{NoRowGroupString}";
+                if (MessageBox.Show(MessageBoxString,"Save Group Parameters",MessageBoxButtons.YesNo)!= DialogResult.Yes)
+                {
+                    return;
+                }
+            }
+            else if (MessageBox.Show("是否要儲存當前設定","Save Group Parmaeters",MessageBoxButtons.YesNo) != DialogResult.Yes)
             {
                 return;
             }
@@ -177,9 +200,13 @@ namespace DistributedSystem_Main.Views
             Combo_GroupName.Items.RemoveAt(Combo_GroupName.SelectedIndex);
             if (Combo_GroupName.Items.Count == 0)
             {
-                return;
+                Combo_GroupName.SelectedIndex = -1;
+                Combo_GroupName_SelectedIndexChanged(null, null);   //刪掉Item的時候SelectIndex會變成自動-1, 所以刪掉最後一個Item時要手動觸發這個事件
             }
-            Combo_GroupName.SelectedIndex = 0;
+            else
+            {
+                Combo_GroupName.SelectedIndex = 0;
+            }
         }
 
         private void BTN_EditColumnNames_Click(object sender, EventArgs e)

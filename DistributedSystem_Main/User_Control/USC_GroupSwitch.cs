@@ -26,6 +26,7 @@ namespace DistributedSystem_Main.User_Control
         {
             FlowPanel_Buttons.Controls.Clear();
             Dict_GroupButtons = new Dictionary<string, Button>();
+            NowGroupName = "";
         }
 
         public void AddGroupButton(string GroupName)

@@ -39,29 +39,34 @@ namespace DistributedSystem_Main.Views
             this.TabPage_EditSensorList = new System.Windows.Forms.TabPage();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.BTN_EditColumnNames = new System.Windows.Forms.Button();
             this.BTN_EditSensorList = new System.Windows.Forms.Button();
             this.Panel_ColumnNames = new System.Windows.Forms.Panel();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.BTN_EditRowSensor = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.BTN_AddNewRow = new System.Windows.Forms.Button();
+            this.BTN_DeleteRow = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.Combo_Rows = new System.Windows.Forms.ComboBox();
             this.Panel_RowSensor = new System.Windows.Forms.Panel();
             this.BTN_DeleteGroup = new System.Windows.Forms.Button();
+            this.BTN_AutoSetByType = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.Panel_Functions = new System.Windows.Forms.Panel();
             this.BTN_Cancel = new System.Windows.Forms.Button();
             this.BTN_SaveGroupParameters = new System.Windows.Forms.Button();
-            this.BTN_DeleteRow = new System.Windows.Forms.Button();
-            this.BTN_EditColumnNames = new System.Windows.Forms.Button();
-            this.BTN_AutoSetByType = new System.Windows.Forms.Button();
+            this.SplitContainer_SensorList = new System.Windows.Forms.SplitContainer();
             this.TabControlEX_Main.SuspendLayout();
             this.TabPage_Custom.SuspendLayout();
             this.TabControl_CustomSetting.SuspendLayout();
             this.TabPage_EditSensorList.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.Panel_Functions.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.SplitContainer_SensorList)).BeginInit();
+            this.SplitContainer_SensorList.Panel1.SuspendLayout();
+            this.SplitContainer_SensorList.Panel2.SuspendLayout();
+            this.SplitContainer_SensorList.SuspendLayout();
             this.SuspendLayout();
             // 
             // Combo_GroupName
@@ -96,13 +101,14 @@ namespace DistributedSystem_Main.Views
             // 
             // Panel_CustomSensorList
             // 
-            this.Panel_CustomSensorList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
+            this.Panel_CustomSensorList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.Panel_CustomSensorList.AutoScroll = true;
             this.Panel_CustomSensorList.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            this.Panel_CustomSensorList.Location = new System.Drawing.Point(15, 48);
+            this.Panel_CustomSensorList.Location = new System.Drawing.Point(12, 37);
             this.Panel_CustomSensorList.Name = "Panel_CustomSensorList";
-            this.Panel_CustomSensorList.Size = new System.Drawing.Size(218, 331);
+            this.Panel_CustomSensorList.Size = new System.Drawing.Size(217, 314);
             this.Panel_CustomSensorList.TabIndex = 3;
             // 
             // TabControlEX_Main
@@ -113,7 +119,7 @@ namespace DistributedSystem_Main.Views
             this.TabControlEX_Main.Location = new System.Drawing.Point(0, 0);
             this.TabControlEX_Main.Name = "TabControlEX_Main";
             this.TabControlEX_Main.SelectedIndex = 0;
-            this.TabControlEX_Main.Size = new System.Drawing.Size(505, 515);
+            this.TabControlEX_Main.Size = new System.Drawing.Size(508, 515);
             this.TabControlEX_Main.TabIndex = 4;
             // 
             // TabPage_Custom
@@ -129,7 +135,7 @@ namespace DistributedSystem_Main.Views
             this.TabPage_Custom.Location = new System.Drawing.Point(-1, 24);
             this.TabPage_Custom.Name = "TabPage_Custom";
             this.TabPage_Custom.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage_Custom.Size = new System.Drawing.Size(507, 492);
+            this.TabPage_Custom.Size = new System.Drawing.Size(510, 492);
             this.TabPage_Custom.TabIndex = 0;
             this.TabPage_Custom.Text = "Custom";
             // 
@@ -143,30 +149,25 @@ namespace DistributedSystem_Main.Views
             this.TabControl_CustomSetting.Location = new System.Drawing.Point(0, 100);
             this.TabControl_CustomSetting.Name = "TabControl_CustomSetting";
             this.TabControl_CustomSetting.SelectedIndex = 0;
-            this.TabControl_CustomSetting.Size = new System.Drawing.Size(506, 392);
+            this.TabControl_CustomSetting.Size = new System.Drawing.Size(509, 392);
             this.TabControl_CustomSetting.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.TabControl_CustomSetting.TabIndex = 7;
             // 
             // TabPage_EditSensorList
             // 
             this.TabPage_EditSensorList.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.TabPage_EditSensorList.Controls.Add(this.label2);
-            this.TabPage_EditSensorList.Controls.Add(this.label3);
-            this.TabPage_EditSensorList.Controls.Add(this.BTN_EditColumnNames);
-            this.TabPage_EditSensorList.Controls.Add(this.BTN_EditSensorList);
-            this.TabPage_EditSensorList.Controls.Add(this.Panel_ColumnNames);
-            this.TabPage_EditSensorList.Controls.Add(this.Panel_CustomSensorList);
+            this.TabPage_EditSensorList.Controls.Add(this.SplitContainer_SensorList);
             this.TabPage_EditSensorList.Location = new System.Drawing.Point(4, 26);
             this.TabPage_EditSensorList.Name = "TabPage_EditSensorList";
             this.TabPage_EditSensorList.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage_EditSensorList.Size = new System.Drawing.Size(498, 388);
+            this.TabPage_EditSensorList.Size = new System.Drawing.Size(501, 362);
             this.TabPage_EditSensorList.TabIndex = 0;
             this.TabPage_EditSensorList.Text = "Sensor List";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(253, 21);
+            this.label2.Location = new System.Drawing.Point(16, 13);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(67, 18);
             this.label2.TabIndex = 1;
@@ -175,15 +176,27 @@ namespace DistributedSystem_Main.Views
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(14, 20);
+            this.label3.Location = new System.Drawing.Point(11, 9);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(79, 18);
             this.label3.TabIndex = 1;
             this.label3.Text = "Sensor List";
             // 
+            // BTN_EditColumnNames
+            // 
+            this.BTN_EditColumnNames.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.BTN_EditColumnNames.Location = new System.Drawing.Point(203, 8);
+            this.BTN_EditColumnNames.Name = "BTN_EditColumnNames";
+            this.BTN_EditColumnNames.Size = new System.Drawing.Size(46, 27);
+            this.BTN_EditColumnNames.TabIndex = 6;
+            this.BTN_EditColumnNames.Text = "Edit";
+            this.BTN_EditColumnNames.UseVisualStyleBackColor = true;
+            this.BTN_EditColumnNames.Click += new System.EventHandler(this.BTN_EditColumnNames_Click);
+            // 
             // BTN_EditSensorList
             // 
-            this.BTN_EditSensorList.Location = new System.Drawing.Point(187, 17);
+            this.BTN_EditSensorList.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.BTN_EditSensorList.Location = new System.Drawing.Point(183, 6);
             this.BTN_EditSensorList.Name = "BTN_EditSensorList";
             this.BTN_EditSensorList.Size = new System.Drawing.Size(46, 25);
             this.BTN_EditSensorList.TabIndex = 6;
@@ -193,13 +206,14 @@ namespace DistributedSystem_Main.Views
             // 
             // Panel_ColumnNames
             // 
-            this.Panel_ColumnNames.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
+            this.Panel_ColumnNames.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.Panel_ColumnNames.AutoScroll = true;
             this.Panel_ColumnNames.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            this.Panel_ColumnNames.Location = new System.Drawing.Point(256, 48);
+            this.Panel_ColumnNames.Location = new System.Drawing.Point(13, 37);
             this.Panel_ColumnNames.Name = "Panel_ColumnNames";
-            this.Panel_ColumnNames.Size = new System.Drawing.Size(234, 331);
+            this.Panel_ColumnNames.Size = new System.Drawing.Size(236, 314);
             this.Panel_ColumnNames.TabIndex = 3;
             // 
             // tabPage3
@@ -215,12 +229,13 @@ namespace DistributedSystem_Main.Views
             this.tabPage3.Location = new System.Drawing.Point(4, 26);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(498, 362);
+            this.tabPage3.Size = new System.Drawing.Size(501, 362);
             this.tabPage3.TabIndex = 1;
             this.tabPage3.Text = "Row Names";
             // 
             // BTN_EditRowSensor
             // 
+            this.BTN_EditRowSensor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.BTN_EditRowSensor.Location = new System.Drawing.Point(398, 77);
             this.BTN_EditRowSensor.Name = "BTN_EditRowSensor";
             this.BTN_EditRowSensor.Size = new System.Drawing.Size(57, 25);
@@ -248,6 +263,16 @@ namespace DistributedSystem_Main.Views
             this.BTN_AddNewRow.UseVisualStyleBackColor = true;
             this.BTN_AddNewRow.Click += new System.EventHandler(this.BTN_AddNewRow_Click);
             // 
+            // BTN_DeleteRow
+            // 
+            this.BTN_DeleteRow.Location = new System.Drawing.Point(378, 24);
+            this.BTN_DeleteRow.Name = "BTN_DeleteRow";
+            this.BTN_DeleteRow.Size = new System.Drawing.Size(89, 28);
+            this.BTN_DeleteRow.TabIndex = 2;
+            this.BTN_DeleteRow.Text = "Delete";
+            this.BTN_DeleteRow.UseVisualStyleBackColor = true;
+            this.BTN_DeleteRow.Click += new System.EventHandler(this.BTN_DeleteRow_Click);
+            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -270,8 +295,9 @@ namespace DistributedSystem_Main.Views
             // 
             // Panel_RowSensor
             // 
-            this.Panel_RowSensor.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
+            this.Panel_RowSensor.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.Panel_RowSensor.AutoScroll = true;
             this.Panel_RowSensor.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.Panel_RowSensor.Location = new System.Drawing.Point(43, 102);
@@ -288,6 +314,16 @@ namespace DistributedSystem_Main.Views
             this.BTN_DeleteGroup.Text = "Delete";
             this.BTN_DeleteGroup.UseVisualStyleBackColor = true;
             this.BTN_DeleteGroup.Click += new System.EventHandler(this.BTN_DeleteGroup_Click);
+            // 
+            // BTN_AutoSetByType
+            // 
+            this.BTN_AutoSetByType.Location = new System.Drawing.Point(310, 54);
+            this.BTN_AutoSetByType.Name = "BTN_AutoSetByType";
+            this.BTN_AutoSetByType.Size = new System.Drawing.Size(89, 40);
+            this.BTN_AutoSetByType.TabIndex = 2;
+            this.BTN_AutoSetByType.Text = "自動分組";
+            this.BTN_AutoSetByType.UseVisualStyleBackColor = true;
+            this.BTN_AutoSetByType.Click += new System.EventHandler(this.BTN_AutoSetByType_Click);
             // 
             // tabPage2
             // 
@@ -306,7 +342,7 @@ namespace DistributedSystem_Main.Views
             this.Panel_Functions.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.Panel_Functions.Location = new System.Drawing.Point(0, 515);
             this.Panel_Functions.Name = "Panel_Functions";
-            this.Panel_Functions.Size = new System.Drawing.Size(505, 55);
+            this.Panel_Functions.Size = new System.Drawing.Size(508, 55);
             this.Panel_Functions.TabIndex = 5;
             // 
             // BTN_Cancel
@@ -329,42 +365,34 @@ namespace DistributedSystem_Main.Views
             this.BTN_SaveGroupParameters.UseVisualStyleBackColor = true;
             this.BTN_SaveGroupParameters.Click += new System.EventHandler(this.BTN_SaveGroupParameters_Click);
             // 
-            // BTN_DeleteRow
+            // SplitContainer_SensorList
             // 
-            this.BTN_DeleteRow.Location = new System.Drawing.Point(378, 24);
-            this.BTN_DeleteRow.Name = "BTN_DeleteRow";
-            this.BTN_DeleteRow.Size = new System.Drawing.Size(89, 28);
-            this.BTN_DeleteRow.TabIndex = 2;
-            this.BTN_DeleteRow.Text = "Delete";
-            this.BTN_DeleteRow.UseVisualStyleBackColor = true;
-            this.BTN_DeleteRow.Click += new System.EventHandler(this.BTN_DeleteRow_Click);
+            this.SplitContainer_SensorList.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.SplitContainer_SensorList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SplitContainer_SensorList.Location = new System.Drawing.Point(3, 3);
+            this.SplitContainer_SensorList.Name = "SplitContainer_SensorList";
             // 
-            // BTN_EditColumnNames
+            // SplitContainer_SensorList.Panel1
             // 
-            this.BTN_EditColumnNames.Location = new System.Drawing.Point(444, 17);
-            this.BTN_EditColumnNames.Name = "BTN_EditColumnNames";
-            this.BTN_EditColumnNames.Size = new System.Drawing.Size(46, 25);
-            this.BTN_EditColumnNames.TabIndex = 6;
-            this.BTN_EditColumnNames.Text = "Edit";
-            this.BTN_EditColumnNames.UseVisualStyleBackColor = true;
-            this.BTN_EditColumnNames.Click += new System.EventHandler(this.BTN_EditColumnNames_Click);
+            this.SplitContainer_SensorList.Panel1.Controls.Add(this.label3);
+            this.SplitContainer_SensorList.Panel1.Controls.Add(this.Panel_CustomSensorList);
+            this.SplitContainer_SensorList.Panel1.Controls.Add(this.BTN_EditSensorList);
             // 
-            // BTN_AutoSetByType
+            // SplitContainer_SensorList.Panel2
             // 
-            this.BTN_AutoSetByType.Location = new System.Drawing.Point(310, 54);
-            this.BTN_AutoSetByType.Name = "BTN_AutoSetByType";
-            this.BTN_AutoSetByType.Size = new System.Drawing.Size(89, 40);
-            this.BTN_AutoSetByType.TabIndex = 2;
-            this.BTN_AutoSetByType.Text = "自動分組";
-            this.BTN_AutoSetByType.UseVisualStyleBackColor = true;
-            this.BTN_AutoSetByType.Click += new System.EventHandler(this.BTN_AutoSetByType_Click);
+            this.SplitContainer_SensorList.Panel2.Controls.Add(this.label2);
+            this.SplitContainer_SensorList.Panel2.Controls.Add(this.Panel_ColumnNames);
+            this.SplitContainer_SensorList.Panel2.Controls.Add(this.BTN_EditColumnNames);
+            this.SplitContainer_SensorList.Size = new System.Drawing.Size(495, 356);
+            this.SplitContainer_SensorList.SplitterDistance = 234;
+            this.SplitContainer_SensorList.TabIndex = 7;
             // 
             // Form_HomeGroupSetting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.ClientSize = new System.Drawing.Size(505, 570);
+            this.ClientSize = new System.Drawing.Size(508, 570);
             this.ControlBox = false;
             this.Controls.Add(this.TabControlEX_Main);
             this.Controls.Add(this.Panel_Functions);
@@ -378,10 +406,15 @@ namespace DistributedSystem_Main.Views
             this.TabPage_Custom.PerformLayout();
             this.TabControl_CustomSetting.ResumeLayout(false);
             this.TabPage_EditSensorList.ResumeLayout(false);
-            this.TabPage_EditSensorList.PerformLayout();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
             this.Panel_Functions.ResumeLayout(false);
+            this.SplitContainer_SensorList.Panel1.ResumeLayout(false);
+            this.SplitContainer_SensorList.Panel1.PerformLayout();
+            this.SplitContainer_SensorList.Panel2.ResumeLayout(false);
+            this.SplitContainer_SensorList.Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.SplitContainer_SensorList)).EndInit();
+            this.SplitContainer_SensorList.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -415,5 +448,6 @@ namespace DistributedSystem_Main.Views
         private System.Windows.Forms.Button BTN_DeleteRow;
         private System.Windows.Forms.Button BTN_EditColumnNames;
         private System.Windows.Forms.Button BTN_AutoSetByType;
+        private System.Windows.Forms.SplitContainer SplitContainer_SensorList;
     }
 }

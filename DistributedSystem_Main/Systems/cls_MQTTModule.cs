@@ -1,4 +1,5 @@
-﻿using MQTTnet;
+﻿using EdgeModels.ToControlCenter;
+using MQTTnet;
 using MQTTnet.Client.Receiving;
 using MQTTnet.Protocol;
 using MQTTnet.Server;
@@ -115,7 +116,7 @@ namespace DistributedSystem_Main.Systems
             {
                 string OriginSensorName = TopicName.Split('/').Last();
                 string SensorName = $"{EdgeName}-{OriginSensorName}";
-                Systems.cls_SensorData_Mqtt NewData = Newtonsoft.Json.JsonConvert.DeserializeObject<cls_SensorData_Mqtt>(Data);
+                cls_SensorData_Mqtt NewData = Newtonsoft.Json.JsonConvert.DeserializeObject<cls_SensorData_Mqtt>(Data);
 
                 WebService.cls_RawData RawData = null;
                 if (Staobj.Dict_SensorProcessObject.ContainsKey(SensorName))

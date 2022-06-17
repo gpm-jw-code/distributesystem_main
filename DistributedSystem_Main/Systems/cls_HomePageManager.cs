@@ -122,8 +122,12 @@ namespace DistributedSystem_Main.Systems
         public static void ChangeGroup(string NewGroupName)
         {
             NowShowGroupName = NewGroupName;
-
             DGV_DataTable.Columns.Clear();
+            if (NowShowGroupName == "")
+            {
+                return;
+            }
+
             DGV_DataTable.Columns.Add("RowName", "Name");
             if (Dict_GroupObject[NowShowGroupName].List_ShowColumnName == null|| Dict_GroupObject[NowShowGroupName].List_ShowColumnName.Count == 0 )
             {
@@ -169,6 +173,7 @@ namespace DistributedSystem_Main.Systems
         {
             if (GroupNames.Count == 0)
             {
+                ChangeGroup("");
                 return;
             }
             GroupSwitch.ChangeSelectGroup(GroupNames[0]);

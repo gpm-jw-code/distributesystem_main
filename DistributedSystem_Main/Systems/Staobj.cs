@@ -1,4 +1,5 @@
-﻿using ISOInspection;
+﻿using EdgeModels.ToControlCenter;
+using ISOInspection;
 using Newtonsoft.Json;
 using SensorDataProcess;
 using System;
