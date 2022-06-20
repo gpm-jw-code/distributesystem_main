@@ -58,7 +58,7 @@ namespace DistributedSystem_Main.Views
             // 
             this.CheckBox_ApplyToAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.CheckBox_ApplyToAll.AutoSize = true;
-            this.CheckBox_ApplyToAll.Location = new System.Drawing.Point(127, 438);
+            this.CheckBox_ApplyToAll.Location = new System.Drawing.Point(126, 440);
             this.CheckBox_ApplyToAll.Margin = new System.Windows.Forms.Padding(4);
             this.CheckBox_ApplyToAll.Name = "CheckBox_ApplyToAll";
             this.CheckBox_ApplyToAll.Size = new System.Drawing.Size(172, 21);
@@ -138,13 +138,16 @@ namespace DistributedSystem_Main.Views
             // BTN_SaveToFile
             // 
             this.BTN_SaveToFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.BTN_SaveToFile.Location = new System.Drawing.Point(97, 467);
+            this.BTN_SaveToFile.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.BTN_SaveToFile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BTN_SaveToFile.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.BTN_SaveToFile.Location = new System.Drawing.Point(97, 469);
             this.BTN_SaveToFile.Margin = new System.Windows.Forms.Padding(4);
             this.BTN_SaveToFile.Name = "BTN_SaveToFile";
-            this.BTN_SaveToFile.Size = new System.Drawing.Size(108, 57);
+            this.BTN_SaveToFile.Size = new System.Drawing.Size(108, 41);
             this.BTN_SaveToFile.TabIndex = 15;
             this.BTN_SaveToFile.Text = "Save";
-            this.BTN_SaveToFile.UseVisualStyleBackColor = true;
+            this.BTN_SaveToFile.UseVisualStyleBackColor = false;
             this.BTN_SaveToFile.Click += new System.EventHandler(this.BTN_Save_Click);
             // 
             // label1
@@ -172,7 +175,7 @@ namespace DistributedSystem_Main.Views
             // 
             // Panel_ThresholdSetting
             // 
-            this.Panel_ThresholdSetting.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.Panel_ThresholdSetting.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(212)))), ((int)(((byte)(231)))));
             this.Panel_ThresholdSetting.Controls.Add(this.BTN_AutoSetThreshold);
             this.Panel_ThresholdSetting.Controls.Add(this.Combo_DataName);
             this.Panel_ThresholdSetting.Controls.Add(this.label2);
@@ -189,12 +192,15 @@ namespace DistributedSystem_Main.Views
             // 
             // BTN_AutoSetThreshold
             // 
+            this.BTN_AutoSetThreshold.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.BTN_AutoSetThreshold.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.BTN_AutoSetThreshold.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.BTN_AutoSetThreshold.Location = new System.Drawing.Point(113, 132);
             this.BTN_AutoSetThreshold.Name = "BTN_AutoSetThreshold";
             this.BTN_AutoSetThreshold.Size = new System.Drawing.Size(147, 32);
             this.BTN_AutoSetThreshold.TabIndex = 6;
             this.BTN_AutoSetThreshold.Text = "自動設定";
-            this.BTN_AutoSetThreshold.UseVisualStyleBackColor = true;
+            this.BTN_AutoSetThreshold.UseVisualStyleBackColor = false;
             this.BTN_AutoSetThreshold.Click += new System.EventHandler(this.BTN_AutoSetThreshold_Click);
             // 
             // Combo_DataName
@@ -293,6 +299,8 @@ namespace DistributedSystem_Main.Views
             // 
             // BTN_AutoSetAllSensorThreshold
             // 
+            this.BTN_AutoSetAllSensorThreshold.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.BTN_AutoSetAllSensorThreshold.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.BTN_AutoSetAllSensorThreshold.Location = new System.Drawing.Point(14, 202);
             this.BTN_AutoSetAllSensorThreshold.Name = "BTN_AutoSetAllSensorThreshold";
             this.BTN_AutoSetAllSensorThreshold.Size = new System.Drawing.Size(285, 35);
@@ -306,7 +314,7 @@ namespace DistributedSystem_Main.Views
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.ClientSize = new System.Drawing.Size(311, 537);
+            this.ClientSize = new System.Drawing.Size(311, 523);
             this.Controls.Add(this.BTN_AutoSetAllSensorThreshold);
             this.Controls.Add(this.Panel_ThresholdSetting);
             this.Controls.Add(this.CheckBox_ApplyToAll);

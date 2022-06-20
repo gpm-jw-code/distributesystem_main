@@ -20,6 +20,7 @@ namespace DistributedSystem_Main.User_Control
         /// <returns></returns>
         public static Color ColorFromHSV(double hue, double saturation, double value)
         {
+            hue = hue + 180;
             int hi = Convert.ToInt32(Math.Floor(hue / 60)) % 6;
             double f = hue / 60 - Math.Floor(hue / 60);
 

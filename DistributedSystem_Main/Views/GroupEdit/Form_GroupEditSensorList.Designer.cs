@@ -43,6 +43,7 @@ namespace DistributedSystem_Main.Views
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.ForeColor = System.Drawing.Color.DarkRed;
             this.label1.Location = new System.Drawing.Point(12, 26);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(111, 20);
@@ -56,33 +57,37 @@ namespace DistributedSystem_Main.Views
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Panel_AllSensorName.AutoScroll = true;
             this.Panel_AllSensorName.BackColor = System.Drawing.Color.White;
-            this.Panel_AllSensorName.Location = new System.Drawing.Point(51, 158);
+            this.Panel_AllSensorName.Location = new System.Drawing.Point(51, 119);
             this.Panel_AllSensorName.Name = "Panel_AllSensorName";
-            this.Panel_AllSensorName.Size = new System.Drawing.Size(280, 301);
+            this.Panel_AllSensorName.Size = new System.Drawing.Size(280, 284);
             this.Panel_AllSensorName.TabIndex = 1;
             // 
             // BTN_Save
             // 
             this.BTN_Save.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.BTN_Save.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.BTN_Save.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.BTN_Save.Location = new System.Drawing.Point(51, 499);
+            this.BTN_Save.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BTN_Save.Location = new System.Drawing.Point(51, 443);
             this.BTN_Save.Name = "BTN_Save";
             this.BTN_Save.Size = new System.Drawing.Size(98, 42);
             this.BTN_Save.TabIndex = 2;
             this.BTN_Save.Text = "Save";
-            this.BTN_Save.UseVisualStyleBackColor = true;
+            this.BTN_Save.UseVisualStyleBackColor = false;
             this.BTN_Save.Click += new System.EventHandler(this.BTN_Save_Click);
             // 
             // BTN_Cancel
             // 
             this.BTN_Cancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.BTN_Cancel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.BTN_Cancel.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.BTN_Cancel.Location = new System.Drawing.Point(233, 499);
+            this.BTN_Cancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BTN_Cancel.Location = new System.Drawing.Point(233, 443);
             this.BTN_Cancel.Name = "BTN_Cancel";
             this.BTN_Cancel.Size = new System.Drawing.Size(98, 42);
             this.BTN_Cancel.TabIndex = 2;
             this.BTN_Cancel.Text = "Cancel";
-            this.BTN_Cancel.UseVisualStyleBackColor = true;
+            this.BTN_Cancel.UseVisualStyleBackColor = false;
             this.BTN_Cancel.Click += new System.EventHandler(this.BTN_Cancel_Click);
             // 
             // TXT_GroupName
@@ -95,7 +100,8 @@ namespace DistributedSystem_Main.Views
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(29, 127);
+            this.label2.ForeColor = System.Drawing.Color.Brown;
+            this.label2.Location = new System.Drawing.Point(30, 88);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(93, 20);
             this.label2.TabIndex = 5;
@@ -104,7 +110,7 @@ namespace DistributedSystem_Main.Views
             // TXT_Filter
             // 
             this.TXT_Filter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.TXT_Filter.Location = new System.Drawing.Point(223, 123);
+            this.TXT_Filter.Location = new System.Drawing.Point(224, 84);
             this.TXT_Filter.Name = "TXT_Filter";
             this.TXT_Filter.Size = new System.Drawing.Size(126, 29);
             this.TXT_Filter.TabIndex = 10;
@@ -114,7 +120,8 @@ namespace DistributedSystem_Main.Views
             // 
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(171, 127);
+            this.label3.ForeColor = System.Drawing.Color.Brown;
+            this.label3.Location = new System.Drawing.Point(172, 88);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(46, 20);
             this.label3.TabIndex = 9;
@@ -124,7 +131,7 @@ namespace DistributedSystem_Main.Views
             // 
             this.CheckBox_ShowNoneSet.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.CheckBox_ShowNoneSet.AutoSize = true;
-            this.CheckBox_ShowNoneSet.Location = new System.Drawing.Point(156, 469);
+            this.CheckBox_ShowNoneSet.Location = new System.Drawing.Point(156, 413);
             this.CheckBox_ShowNoneSet.Name = "CheckBox_ShowNoneSet";
             this.CheckBox_ShowNoneSet.Size = new System.Drawing.Size(175, 24);
             this.CheckBox_ShowNoneSet.TabIndex = 11;
@@ -136,7 +143,8 @@ namespace DistributedSystem_Main.Views
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(388, 548);
+            this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.ClientSize = new System.Drawing.Size(388, 492);
             this.Controls.Add(this.CheckBox_ShowNoneSet);
             this.Controls.Add(this.TXT_Filter);
             this.Controls.Add(this.label3);

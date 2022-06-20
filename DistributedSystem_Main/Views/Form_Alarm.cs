@@ -81,7 +81,7 @@ namespace DistributedSystem_Main.Views
                 Dict_AllDataRows[SensorName].Cells[4].Value = Description;
                 return;
             }
-            if (DGV_AlarmEvents.Rows.Count>ShowRowNumber)
+            if (DGV_AlarmEvents.Rows.Count>=ShowRowNumber)
             {
                 DataGridViewRow row = (DataGridViewRow)DGV_AlarmEvents.Rows[0].Clone();
                 row.SetValues(EQName, UnitName, SensorName, Event, Description, "Reset");

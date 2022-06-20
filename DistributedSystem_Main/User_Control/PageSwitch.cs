@@ -85,11 +85,13 @@ namespace DistributedSystem_Main.User_Control
                 {
                     item.BackColor = Color.FromArgb(0, 123, 255);
                     item.ForeColor = Color.White;
+                    item.FlatAppearance.BorderColor = Color.FromArgb(0, 123, 255);
                 }
                 else
                 {
                     item.BackColor = Color.Transparent;
                     item.ForeColor = Color.Black;
+                    item.FlatAppearance.BorderColor = Color.Black;
                 }
             }
             BTN_Preview.Enabled = NowPage > 1;

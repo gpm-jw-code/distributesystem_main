@@ -97,13 +97,13 @@ namespace DistributedSystem_Main.User_Control
             }
             foreach (var item in Dict_DataSeries)
             {
-                IntForColor += 1;
                 if (!Dict_SensorSeries.ContainsKey(item.Key))
                 {
                     Color NewSeriesColor = cls_Functions.ColorFromHSV(360 * IntForColor / Dict_DataSeries.Count, 1, 1);
                     Color StripLineColor = cls_Functions.ColorFromHSV(360 * IntForColor / Dict_DataSeries.Count, 1, 0.5);
                     CreateNewSensorUIObjects(item.Key, NewSeriesColor, StripLineColor);
                 }
+                IntForColor += 1;
                 Dict_SensorSeries[item.Key].Points.DataBindXY(TimeLogSeries, item.Value);
             }
             LastUpdateTime = DateTime.Now;
@@ -133,10 +133,10 @@ namespace DistributedSystem_Main.User_Control
 
                 if (!Dict_SensorSeries.ContainsKey(DataName))
                 {
-                    IntForColor += 1;
                     Color NewSeriesColor = cls_Functions.ColorFromHSV(360 * IntForColor / (Dict_Threshold.Count / 2), 1, 1);
                     Color StripLineColor = cls_Functions.ColorFromHSV(360 * IntForColor / (Dict_Threshold.Count / 2), 1, 0.5);
                     CreateNewSensorUIObjects(DataName, NewSeriesColor, StripLineColor);
+                    IntForColor += 1;
                 }
 
                 ///Series 跟 StripLine 都重新Show出來

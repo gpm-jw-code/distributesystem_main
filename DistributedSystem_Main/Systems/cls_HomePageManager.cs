@@ -51,6 +51,20 @@ namespace DistributedSystem_Main.Systems
             Dict_GroupObject.Add(NewGroupName, new cls_GroupObject(NewGroupName));
         }
 
+        public static bool ChangeGroupName(string NewGroupName,string OriginGroupName)
+        {
+            if (!Dict_GroupObject.ContainsKey(OriginGroupName))
+            {
+                return false;
+            }
+            var OriginGroupItem = Dict_GroupObject[OriginGroupName];
+            OriginGroupItem.GroupName = NewGroupName;
+            Dict_GroupObject.Remove(OriginGroupName);
+            Dict_GroupObject.Add(NewGroupName, OriginGroupItem);
+            ChangeGroup("");
+            return true;
+        }
+
         public static void DeleteGroup(string GroupName)
         {
             if (!Dict_GroupObject.ContainsKey(GroupName))
@@ -103,6 +117,11 @@ namespace DistributedSystem_Main.Systems
         {
             if (string.IsNullOrEmpty(NowShowGroupName))
             {
+                return;
+            }
+            if (!Dict_GroupObject.ContainsKey(NowShowGroupName))
+            {
+                ResetNowGroupName();
                 return;
             }
             if (!Dict_GroupObject[NowShowGroupName].List_SensorName.Contains(SensorName))

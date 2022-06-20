@@ -53,7 +53,7 @@ namespace DistributedSystem_Main.Views
 
         public void SetGroupName(string GroupName = "")
         {
-            TXT_GroupName.Enabled = GroupName == "";
+            //TXT_GroupName.Enabled = GroupName == "";
             if (GroupName == "")
             {
                 GroupName = $"Group{Systems.cls_HomePageManager.GroupNames.Count}";
@@ -75,6 +75,7 @@ namespace DistributedSystem_Main.Views
             {
                 return;
             }
+
             if (IsNewGroup)
             {
                 string NewGroupName = TXT_GroupName.Text;
@@ -85,6 +86,25 @@ namespace DistributedSystem_Main.Views
                 }
                 Systems.cls_HomePageManager.AddNewGroup(NewGroupName);
                 this.GroupName = NewGroupName;
+            }
+            if (IsEditGroup)
+            {
+                string NewGroupName = TXT_GroupName.Text;
+                if (NewGroupName != GroupName)
+                {
+                    if (MessageBox.Show($"是否要變更Group名稱為:{NewGroupName}","Edit Group Name",MessageBoxButtons.YesNo)!= DialogResult.Yes)
+                    {
+                        TXT_GroupName.Text = GroupName;
+                        return;
+                    }
+                    if (Systems.cls_HomePageManager.GroupNames.Contains(NewGroupName))
+                    {
+                        MessageBox.Show("已存在相同Group名稱");
+                        return;
+                    }
+                    Systems.cls_HomePageManager.ChangeGroupName(NewGroupName, GroupName);
+                    this.GroupName = NewGroupName;
+                }
             }
             
             Systems.cls_HomePageManager.AddSensorToGroup(this.GroupName, ListSensorNames);
