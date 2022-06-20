@@ -1,0 +1,3 @@
+[submodule "edgemodels"]
+	path = edgemodels
+	url = http://gitlab.gpmcorp.com.tw/IoT_Project/distribute_monitor_system/edgemodels.git
