@@ -13,8 +13,12 @@ namespace DistributedSystem_Main.Systems
         public static string NowShowGroupName;
         private static Dictionary<string, cls_GroupObject> Dict_GroupObject = new Dictionary<string, cls_GroupObject>();
 
+        private static int ShowRowNumber = 20;
+
         public static DataGridView DGV_DataTable;
         private static User_Control.USC_GroupSwitch GroupSwitch;
+        private static User_Control.PageSwitch USC_PageSwitch;
+        private static Panel Panel_PageSwitch;
         public static List<string> GroupNames { get { return Dict_GroupObject.Keys.ToList(); } }
 
         public static string GroupParameterPath
@@ -26,13 +30,17 @@ namespace DistributedSystem_Main.Systems
         }
 
 
-        public static void InitialManager(DataGridView MainDataGridView, User_Control.USC_GroupSwitch MainGroupSwitch)
+        public static void InitialManager(DataGridView MainDataGridView, User_Control.USC_GroupSwitch MainGroupSwitch,User_Control.PageSwitch MainPageSwitch,Panel MainPageSwitchPanel)
         {
             DGV_DataTable = MainDataGridView;
             GroupSwitch = MainGroupSwitch;
+            USC_PageSwitch = MainPageSwitch;
+            Panel_PageSwitch = MainPageSwitchPanel;
             GroupSwitch.Event_ChangeGroupName += ChangeGroup;
+            USC_PageSwitch.Event_PageChange += ChangeShowPage;
             LoadGroupParameters();
         }
+
 
         public static void AddNewGroup(string NewGroupName)
         {
@@ -129,11 +137,12 @@ namespace DistributedSystem_Main.Systems
             }
 
             DGV_DataTable.Columns.Add("RowName", "Name");
-            if (Dict_GroupObject[NowShowGroupName].List_ShowColumnName == null|| Dict_GroupObject[NowShowGroupName].List_ShowColumnName.Count == 0 )
+            var NowShowGroup = Dict_GroupObject[NowShowGroupName];
+            if (NowShowGroup.List_ShowColumnName == null|| NowShowGroup.List_ShowColumnName.Count == 0 )
             {
-                Dict_GroupObject[NowShowGroupName].List_ShowColumnName = Dict_GroupObject[NowShowGroupName].List_AllColumnName;
+                NowShowGroup.List_ShowColumnName = NowShowGroup.List_AllColumnName;
             }
-            foreach (var item in Dict_GroupObject[NowShowGroupName].List_ShowColumnName)
+            foreach (var item in NowShowGroup.List_ShowColumnName)
             {
                 DGV_DataTable.Columns.Add($"Column_{item}", item);
             }
@@ -143,9 +152,24 @@ namespace DistributedSystem_Main.Systems
                 item.ReadOnly = true;
             }
 
-            foreach (var item in Dict_GroupObject[NowShowGroupName].Dict_RowListSensor)
+            Panel_PageSwitch.Visible = NowShowGroup.Dict_RowListSensor.Count > ShowRowNumber;
+
+            USC_PageSwitch.SetMaximumPageNumber((int)Math.Ceiling(NowShowGroup.Dict_RowListSensor.Count / (double)ShowRowNumber));
+            USC_PageSwitch.NowPageNumber = 1;
+            ChangeShowPage(1);
+        }
+
+        private static void ChangeShowPage(int NewPageNumber)
+        {
+            DGV_DataTable.Rows.Clear();
+            var SensorNamesArray = Dict_GroupObject[NowShowGroupName].Dict_RowListSensor.Keys.ToArray();
+            for (int i = (USC_PageSwitch.NowPageNumber - 1) * ShowRowNumber; i < USC_PageSwitch.NowPageNumber * ShowRowNumber; i++)
             {
-                DGV_DataTable.Rows.Add(item.Key);
+                if (i == SensorNamesArray.Length)
+                {
+                    break;
+                }
+                DGV_DataTable.Rows.Add(SensorNamesArray[i]);
             }
             foreach (var item in Dict_GroupObject[NowShowGroupName].List_SensorName)
             {

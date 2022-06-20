@@ -42,25 +42,30 @@ namespace DistributedSystem_Main.Views
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(40, 33);
+            this.label1.Font = new System.Drawing.Font("微軟正黑體", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.label1.ForeColor = System.Drawing.Color.DarkRed;
+            this.label1.Location = new System.Drawing.Point(21, 33);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(111, 20);
+            this.label1.Size = new System.Drawing.Size(130, 24);
             this.label1.TabIndex = 1;
             this.label1.Text = "Group Name:";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("微軟正黑體", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.label2.ForeColor = System.Drawing.Color.DarkRed;
             this.label2.Location = new System.Drawing.Point(157, 33);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(66, 20);
+            this.label2.Size = new System.Drawing.Size(78, 24);
             this.label2.TabIndex = 1;
             this.label2.Text = "Group1";
             // 
             // BTN_Cancel
             // 
             this.BTN_Cancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.BTN_Cancel.Location = new System.Drawing.Point(199, 419);
+            this.BTN_Cancel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.BTN_Cancel.Location = new System.Drawing.Point(198, 378);
             this.BTN_Cancel.Name = "BTN_Cancel";
             this.BTN_Cancel.Size = new System.Drawing.Size(98, 42);
             this.BTN_Cancel.TabIndex = 8;
@@ -71,7 +76,8 @@ namespace DistributedSystem_Main.Views
             // BTN_Save
             // 
             this.BTN_Save.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.BTN_Save.Location = new System.Drawing.Point(44, 419);
+            this.BTN_Save.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.BTN_Save.Location = new System.Drawing.Point(43, 378);
             this.BTN_Save.Name = "BTN_Save";
             this.BTN_Save.Size = new System.Drawing.Size(98, 42);
             this.BTN_Save.TabIndex = 9;
@@ -82,7 +88,7 @@ namespace DistributedSystem_Main.Views
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(40, 95);
+            this.label4.Location = new System.Drawing.Point(39, 78);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(134, 20);
             this.label4.TabIndex = 1;
@@ -91,7 +97,8 @@ namespace DistributedSystem_Main.Views
             // BTN_MoveUp
             // 
             this.BTN_MoveUp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.BTN_MoveUp.Location = new System.Drawing.Point(322, 183);
+            this.BTN_MoveUp.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.BTN_MoveUp.Location = new System.Drawing.Point(321, 152);
             this.BTN_MoveUp.Name = "BTN_MoveUp";
             this.BTN_MoveUp.Size = new System.Drawing.Size(63, 50);
             this.BTN_MoveUp.TabIndex = 13;
@@ -102,7 +109,8 @@ namespace DistributedSystem_Main.Views
             // BTN_MoveDown
             // 
             this.BTN_MoveDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.BTN_MoveDown.Location = new System.Drawing.Point(322, 273);
+            this.BTN_MoveDown.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.BTN_MoveDown.Location = new System.Drawing.Point(321, 242);
             this.BTN_MoveDown.Name = "BTN_MoveDown";
             this.BTN_MoveDown.Size = new System.Drawing.Size(63, 50);
             this.BTN_MoveDown.TabIndex = 13;
@@ -119,7 +127,7 @@ namespace DistributedSystem_Main.Views
             this.CheckListBox_ColumnNames.Items.AddRange(new object[] {
             "Column1",
             "Column2"});
-            this.CheckListBox_ColumnNames.Location = new System.Drawing.Point(44, 132);
+            this.CheckListBox_ColumnNames.Location = new System.Drawing.Point(43, 101);
             this.CheckListBox_ColumnNames.Name = "CheckListBox_ColumnNames";
             this.CheckListBox_ColumnNames.Size = new System.Drawing.Size(253, 268);
             this.CheckListBox_ColumnNames.TabIndex = 14;
@@ -129,7 +137,7 @@ namespace DistributedSystem_Main.Views
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(404, 473);
+            this.ClientSize = new System.Drawing.Size(404, 432);
             this.Controls.Add(this.CheckListBox_ColumnNames);
             this.Controls.Add(this.BTN_MoveDown);
             this.Controls.Add(this.BTN_MoveUp);

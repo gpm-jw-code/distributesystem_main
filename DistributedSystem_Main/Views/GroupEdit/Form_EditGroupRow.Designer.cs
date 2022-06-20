@@ -49,6 +49,7 @@ namespace DistributedSystem_Main.Views
             // BTN_Cancel
             // 
             this.BTN_Cancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.BTN_Cancel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.BTN_Cancel.Location = new System.Drawing.Point(224, 413);
             this.BTN_Cancel.Name = "BTN_Cancel";
             this.BTN_Cancel.Size = new System.Drawing.Size(98, 42);
@@ -60,6 +61,7 @@ namespace DistributedSystem_Main.Views
             // BTN_Save
             // 
             this.BTN_Save.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.BTN_Save.Cursor = System.Windows.Forms.Cursors.Hand;
             this.BTN_Save.Location = new System.Drawing.Point(47, 413);
             this.BTN_Save.Name = "BTN_Save";
             this.BTN_Save.Size = new System.Drawing.Size(98, 42);

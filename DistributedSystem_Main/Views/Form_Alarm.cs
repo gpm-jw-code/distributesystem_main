@@ -16,11 +16,32 @@ namespace DistributedSystem_Main.Views
         public Form_Alarm()
         {
             InitializeComponent();
+            PageSwitch_Alarm.Event_PageChange += PageChange;
         }
 
-        List<DataGridViewRow> List_AllDataRows = new List<DataGridViewRow>();
+        private void PageChange(int NewPageNumber)
+        {
+            DGV_AlarmEvents.Rows.Clear();
+            if (List_FilterDataRows.Count == 0)
+            {
+                List_FilterDataRows = Dict_AllDataRows.Values.ToList();
+            }
+            for (int i = (PageSwitch_Alarm.NowPageNumber - 1) * ShowRowNumber; i < PageSwitch_Alarm.NowPageNumber * ShowRowNumber; i++)
+            {
+                if (i>=List_FilterDataRows.Count)
+                {
+                    break;
+                }
+                DGV_AlarmEvents.Rows.Add(List_FilterDataRows[i]);
+            }
+            ResetRowHeight();
+        }
 
-        public void InsertNewEventLog(SensorInfo NewSensorInfo,Dictionary<string, OutOfState> Dict_OutOfStatus )
+        Dictionary<string,DataGridViewRow> Dict_AllDataRows = new Dictionary<string, DataGridViewRow>();
+        List<DataGridViewRow> List_FilterDataRows = new List<DataGridViewRow>();
+        int ShowRowNumber = 10;
+
+        public void InsertNewEventLog(SensorInfo NewSensorInfo, Dictionary<string, OutOfState> Dict_OutOfStatus)
         {
             string EQName = NewSensorInfo.EQName;
             string UnitName = NewSensorInfo.UnitName;
@@ -53,15 +74,25 @@ namespace DistributedSystem_Main.Views
                 Event = "OOS";
                 Description = $"OOS: {string.Join(", ", List_OOS_Items)}; {Description}";
             }
-            var TargetRow = DGV_AlarmEvents.Rows.Cast<DataGridViewRow>().Where(item => item.Cells[2].Value.ToString() == SensorName).ToList();
-            if (TargetRow.Count > 0)
+
+            if (Dict_AllDataRows.ContainsKey(SensorName))
             {
-                TargetRow[0].Cells[3].Value = Event;
-                TargetRow[0].Cells[4].Value = Description;
+                Dict_AllDataRows[SensorName].Cells[3].Value = Event;
+                Dict_AllDataRows[SensorName].Cells[4].Value = Description;
                 return;
             }
-            DGV_AlarmEvents.Rows.Add(EQName, UnitName, SensorName, Event,Description,"Reset");
-            List_AllDataRows.Add(DGV_AlarmEvents.Rows[DGV_AlarmEvents.Rows.Count - 1]);
+            if (DGV_AlarmEvents.Rows.Count>ShowRowNumber)
+            {
+                DataGridViewRow row = (DataGridViewRow)DGV_AlarmEvents.Rows[0].Clone();
+                row.SetValues(EQName, UnitName, SensorName, Event, Description, "Reset");
+                Dict_AllDataRows.Add(SensorName,row);
+                PageSwitch_Alarm.SetMaximumPageNumber((int)Math.Ceiling(Dict_AllDataRows.Count / (double)ShowRowNumber));
+            }
+            else
+            {
+                DGV_AlarmEvents.Rows.Add(EQName, UnitName, SensorName, Event, Description, "Reset");
+                Dict_AllDataRows.Add(SensorName, DGV_AlarmEvents.Rows[DGV_AlarmEvents.Rows.Count - 1]);
+            }
             ResetRowHeight();
             this.Show();
         }
@@ -72,15 +103,18 @@ namespace DistributedSystem_Main.Views
             {
                 return;
             }
-            foreach (DataGridViewRow item in DGV_AlarmEvents.Rows)
+            foreach (var item in Dict_AllDataRows)
             {
-                string SensorName = item.Cells[2].Value.ToString();
+                string SensorName = item.Key;
                 foreach (var statesItem in Systems.Staobj.Dict_SensorProcessObject[SensorName].Dict_OutOfItemStates)
                 {
                     statesItem.Value.RESET();
                 }
             }
+            PageSwitch_Alarm.SetMaximumPageNumber(1);
             DGV_AlarmEvents.Rows.Clear();
+            Dict_AllDataRows.Clear();
+            List_FilterDataRows.Clear();
         }
 
         private void DGV_AlarmEvents_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -103,7 +137,7 @@ namespace DistributedSystem_Main.Views
 
         private void ResetRowHeight()
         {
-            int EachHeight = DGV_AlarmEvents.Height / 21;
+            int EachHeight = DGV_AlarmEvents.Height / (ShowRowNumber+1);
             foreach (var item in DGV_AlarmEvents.Rows.Cast<DataGridViewRow>())
             {
                 item.Height = EachHeight;
@@ -123,16 +157,16 @@ namespace DistributedSystem_Main.Views
         private void BTN_Filter_Click(object sender, EventArgs e)
         {
             string FilterString = TXT_Filter.Text;
-            List<DataGridViewRow> List_FilterRows = new List<DataGridViewRow>();
-            foreach (var item in List_AllDataRows)
+            List_FilterDataRows= new List<DataGridViewRow>();
+            foreach (var item in Dict_AllDataRows.Values)
             {
                 if (item.Cells.Cast<DataGridViewCell>().Any(cellitem => cellitem.Value.ToString().ToUpper().Contains(FilterString.ToUpper())))
                 {
-                    List_FilterRows.Add(item);
+                    List_FilterDataRows.Add(item);
                 }
             }
-            DGV_AlarmEvents.Rows.Clear();
-            DGV_AlarmEvents.Rows.AddRange(List_FilterRows.ToArray());
+            PageSwitch_Alarm.SetMaximumPageNumber((int)Math.Ceiling(List_FilterDataRows.Count / (double)ShowRowNumber));
+            PageChange(PageSwitch_Alarm.NowPageNumber);
         }
 
 
@@ -147,6 +181,11 @@ namespace DistributedSystem_Main.Views
                 TXT_Filter.Text = "";
                 BTN_Filter_Click(null, null);
             }
+        }
+
+        private void Form_Alarm_SizeChanged(object sender, EventArgs e)
+        {
+            ResetRowHeight();
         }
     }
 }

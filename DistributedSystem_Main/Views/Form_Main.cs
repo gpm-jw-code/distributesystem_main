@@ -28,7 +28,7 @@ namespace DistributedSystem_Main
             cls_ISOChartManager.InitialManager(TablePanel_ISOChart, PageSwitch_ISOChart);
             cls_ISOChartManager.SetChartRowColumnNumber(Staobj.SystemParam.ChartSetting.RowNumber, Staobj.SystemParam.ChartSetting.ColumnNumber);
 
-            cls_HomePageManager.InitialManager(DGV_HomePaeTable, GroupSwitch_HomePage);
+            cls_HomePageManager.InitialManager(DGV_HomePaeTable, GroupSwitch_HomePage,PageSwitch_HomePage,Panel_HomePageSwitch);
 
             Systems.cls_MQTTModule.BuildServer(Staobj.SystemParam.Mqtt.MqttServerIP, Staobj.SystemParam.Mqtt.MqttServerPort);
             SensorDataProcess.cls_txtDataSaver.RootPath = Staobj.SystemParam.DataSaveRootPath;
@@ -62,6 +62,10 @@ namespace DistributedSystem_Main
 
         private void FormMain_SizeChanged(object sender, EventArgs e)
         {
+            if (this.WindowState == FormWindowState.Minimized)
+            {
+                return;
+            }
             Systems.cls_HomePageManager.ResetRowHeight();
         }
 
