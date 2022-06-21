@@ -54,7 +54,7 @@ namespace Ini
         /// Key Name
         /// <PARAM name="Value"></PARAM>
         /// Value Name
-        public async Task<bool> IniWriteValue(string Section, string Key, string Value)
+        public bool IniWriteValue(string Section, string Key, string Value)
         {
             try
             {

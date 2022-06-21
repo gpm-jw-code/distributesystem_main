@@ -253,8 +253,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DistributeMain128.ico" />
-    <Content Include="DistributeMain128_New.ico" />
     <Content Include="DistributeMain256.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -11,7 +11,6 @@ namespace DistributedSystem_Main.WebService
     public class cls_WebSocketModule
     {
         WebSocketServer _server;
-        cls_PostgreSQL_Tool.SQL_controller SqlQueryItem;
         public cls_WebSocketModule(string IP, int Port)
         {
             try

@@ -22,7 +22,6 @@ namespace DistributedSystem_Main.User_Control
         private string _SensorName = "";
         private string _EQName = "";
         private string _UnitName = "";
-        private string _SensorType = "";
 
         public string SensorName
         {
