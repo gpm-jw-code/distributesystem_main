@@ -30,7 +30,7 @@ namespace DistributedSystem_Main
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.TableLayout_WholeView = new System.Windows.Forms.TableLayoutPanel();
             this.TableLayout_SideBar = new System.Windows.Forms.TableLayoutPanel();
             this.PictureBox_Icon = new System.Windows.Forms.PictureBox();
@@ -57,6 +57,9 @@ namespace DistributedSystem_Main
             this.BTN_AlarmEvent = new System.Windows.Forms.Button();
             this.BTN_OpenSystemSetting = new System.Windows.Forms.Button();
             this.Panel_MainArea = new System.Windows.Forms.Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.LAB_MQTTServerState = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.TabControl_Main = new DistributedSystem_Main.User_Control.TabControlEx();
             this.TabPage_Signal = new System.Windows.Forms.TabPage();
             this.TablePanel_SignalChart = new System.Windows.Forms.TableLayoutPanel();
@@ -85,14 +88,11 @@ namespace DistributedSystem_Main
             this.PageSwitch_ISOChart = new DistributedSystem_Main.User_Control.PageSwitch();
             this.TabPage_HomePage = new System.Windows.Forms.TabPage();
             this.DGV_HomePaeTable = new System.Windows.Forms.DataGridView();
+            this.Panel_HomePageSwitch = new System.Windows.Forms.Panel();
+            this.PageSwitch_HomePage = new DistributedSystem_Main.User_Control.PageSwitch();
             this.Panel_HomePageFunctions = new System.Windows.Forms.Panel();
             this.GroupSwitch_HomePage = new DistributedSystem_Main.User_Control.USC_GroupSwitch();
             this.BTN_HomeGroupSetting = new System.Windows.Forms.Button();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.LAB_MQTTServerState = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.PageSwitch_HomePage = new DistributedSystem_Main.User_Control.PageSwitch();
-            this.Panel_HomePageSwitch = new System.Windows.Forms.Panel();
             this.TableLayout_WholeView.SuspendLayout();
             this.TableLayout_SideBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox_Icon)).BeginInit();
@@ -112,6 +112,7 @@ namespace DistributedSystem_Main
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox19)).BeginInit();
             this.TablePanel_SideBarFunctions.SuspendLayout();
             this.Panel_MainArea.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.TabControl_Main.SuspendLayout();
             this.TabPage_Signal.SuspendLayout();
             this.Panel_Signals_Function.SuspendLayout();
@@ -122,9 +123,8 @@ namespace DistributedSystem_Main
             this.panel1.SuspendLayout();
             this.TabPage_HomePage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGV_HomePaeTable)).BeginInit();
-            this.Panel_HomePageFunctions.SuspendLayout();
-            this.panel2.SuspendLayout();
             this.Panel_HomePageSwitch.SuspendLayout();
+            this.Panel_HomePageFunctions.SuspendLayout();
             this.SuspendLayout();
             // 
             // TableLayout_WholeView
@@ -531,6 +531,35 @@ namespace DistributedSystem_Main
             this.Panel_MainArea.Size = new System.Drawing.Size(1178, 704);
             this.Panel_MainArea.TabIndex = 9;
             // 
+            // panel2
+            // 
+            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(43)))), ((int)(((byte)(54)))));
+            this.panel2.Controls.Add(this.LAB_MQTTServerState);
+            this.panel2.Controls.Add(this.label2);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel2.Location = new System.Drawing.Point(0, 676);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(1178, 28);
+            this.panel2.TabIndex = 6;
+            // 
+            // LAB_MQTTServerState
+            // 
+            this.LAB_MQTTServerState.BackColor = System.Drawing.Color.Red;
+            this.LAB_MQTTServerState.Location = new System.Drawing.Point(101, 6);
+            this.LAB_MQTTServerState.Name = "LAB_MQTTServerState";
+            this.LAB_MQTTServerState.Size = new System.Drawing.Size(19, 17);
+            this.LAB_MQTTServerState.TabIndex = 1;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.ForeColor = System.Drawing.Color.BurlyWood;
+            this.label2.Location = new System.Drawing.Point(6, 5);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(93, 17);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "MQTT Server :";
+            // 
             // TabControl_Main
             // 
             this.TabControl_Main.Appearance = System.Windows.Forms.TabAppearance.FlatButtons;
@@ -631,10 +660,10 @@ namespace DistributedSystem_Main
             // TabPage_Log
             // 
             this.TabPage_Log.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(43)))), ((int)(((byte)(54)))));
-            this.TabPage_Log.Location = new System.Drawing.Point(-1, 22);
+            this.TabPage_Log.Location = new System.Drawing.Point(-1, 18);
             this.TabPage_Log.Margin = new System.Windows.Forms.Padding(4);
             this.TabPage_Log.Name = "TabPage_Log";
-            this.TabPage_Log.Size = new System.Drawing.Size(1180, 655);
+            this.TabPage_Log.Size = new System.Drawing.Size(1180, 659);
             this.TabPage_Log.TabIndex = 2;
             this.TabPage_Log.Text = "Log";
             // 
@@ -643,10 +672,10 @@ namespace DistributedSystem_Main
             this.TabPage_SensorInfo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(7)))), ((int)(((byte)(54)))), ((int)(((byte)(66)))));
             this.TabPage_SensorInfo.Controls.Add(this.DGV_SensorInfo);
             this.TabPage_SensorInfo.Controls.Add(this.Panel_EditSensorInfo);
-            this.TabPage_SensorInfo.Location = new System.Drawing.Point(-1, 22);
+            this.TabPage_SensorInfo.Location = new System.Drawing.Point(-1, 18);
             this.TabPage_SensorInfo.Name = "TabPage_SensorInfo";
             this.TabPage_SensorInfo.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage_SensorInfo.Size = new System.Drawing.Size(1180, 655);
+            this.TabPage_SensorInfo.Size = new System.Drawing.Size(1180, 659);
             this.TabPage_SensorInfo.TabIndex = 4;
             this.TabPage_SensorInfo.Text = "SensorInfo";
             // 
@@ -666,13 +695,13 @@ namespace DistributedSystem_Main
             this.DGV_SensorInfo.Location = new System.Drawing.Point(3, 46);
             this.DGV_SensorInfo.Name = "DGV_SensorInfo";
             this.DGV_SensorInfo.RowHeadersVisible = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
-            this.DGV_SensorInfo.RowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
+            this.DGV_SensorInfo.RowsDefaultCellStyle = dataGridViewCellStyle2;
             this.DGV_SensorInfo.RowTemplate.Height = 24;
             this.DGV_SensorInfo.ShowCellErrors = false;
-            this.DGV_SensorInfo.Size = new System.Drawing.Size(1174, 606);
+            this.DGV_SensorInfo.Size = new System.Drawing.Size(1174, 610);
             this.DGV_SensorInfo.TabIndex = 1;
             this.DGV_SensorInfo.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DGV_SensorInfo_CellMouseClick);
             // 
@@ -778,9 +807,9 @@ namespace DistributedSystem_Main
             this.TabPage_ISO.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(43)))), ((int)(((byte)(54)))));
             this.TabPage_ISO.Controls.Add(this.TablePanel_ISOChart);
             this.TabPage_ISO.Controls.Add(this.panel1);
-            this.TabPage_ISO.Location = new System.Drawing.Point(-1, 22);
+            this.TabPage_ISO.Location = new System.Drawing.Point(-1, 18);
             this.TabPage_ISO.Name = "TabPage_ISO";
-            this.TabPage_ISO.Size = new System.Drawing.Size(1180, 655);
+            this.TabPage_ISO.Size = new System.Drawing.Size(1180, 659);
             this.TabPage_ISO.TabIndex = 5;
             this.TabPage_ISO.Text = "ISO 10816";
             // 
@@ -799,7 +828,7 @@ namespace DistributedSystem_Main
             this.TablePanel_ISOChart.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.TablePanel_ISOChart.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.TablePanel_ISOChart.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.TablePanel_ISOChart.Size = new System.Drawing.Size(1180, 612);
+            this.TablePanel_ISOChart.Size = new System.Drawing.Size(1180, 616);
             this.TablePanel_ISOChart.TabIndex = 2;
             // 
             // panel1
@@ -853,10 +882,10 @@ namespace DistributedSystem_Main
             this.TabPage_HomePage.Controls.Add(this.DGV_HomePaeTable);
             this.TabPage_HomePage.Controls.Add(this.Panel_HomePageSwitch);
             this.TabPage_HomePage.Controls.Add(this.Panel_HomePageFunctions);
-            this.TabPage_HomePage.Location = new System.Drawing.Point(-1, 22);
+            this.TabPage_HomePage.Location = new System.Drawing.Point(-1, 18);
             this.TabPage_HomePage.Name = "TabPage_HomePage";
             this.TabPage_HomePage.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage_HomePage.Size = new System.Drawing.Size(1180, 655);
+            this.TabPage_HomePage.Size = new System.Drawing.Size(1180, 659);
             this.TabPage_HomePage.TabIndex = 6;
             this.TabPage_HomePage.Text = "Home Page";
             this.TabPage_HomePage.UseVisualStyleBackColor = true;
@@ -871,8 +900,31 @@ namespace DistributedSystem_Main
             this.DGV_HomePaeTable.Name = "DGV_HomePaeTable";
             this.DGV_HomePaeTable.RowHeadersVisible = false;
             this.DGV_HomePaeTable.RowTemplate.Height = 24;
-            this.DGV_HomePaeTable.Size = new System.Drawing.Size(1174, 526);
+            this.DGV_HomePaeTable.Size = new System.Drawing.Size(1174, 530);
             this.DGV_HomePaeTable.TabIndex = 0;
+            // 
+            // Panel_HomePageSwitch
+            // 
+            this.Panel_HomePageSwitch.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(43)))), ((int)(((byte)(54)))));
+            this.Panel_HomePageSwitch.Controls.Add(this.PageSwitch_HomePage);
+            this.Panel_HomePageSwitch.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.Panel_HomePageSwitch.Location = new System.Drawing.Point(3, 625);
+            this.Panel_HomePageSwitch.Name = "Panel_HomePageSwitch";
+            this.Panel_HomePageSwitch.Size = new System.Drawing.Size(1174, 31);
+            this.Panel_HomePageSwitch.TabIndex = 3;
+            // 
+            // PageSwitch_HomePage
+            // 
+            this.PageSwitch_HomePage.AutoSize = true;
+            this.PageSwitch_HomePage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(92)))), ((int)(((byte)(131)))), ((int)(((byte)(169)))));
+            this.PageSwitch_HomePage.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.PageSwitch_HomePage.Location = new System.Drawing.Point(1, 2);
+            this.PageSwitch_HomePage.Margin = new System.Windows.Forms.Padding(4);
+            this.PageSwitch_HomePage.MinimumSize = new System.Drawing.Size(0, 27);
+            this.PageSwitch_HomePage.Name = "PageSwitch_HomePage";
+            this.PageSwitch_HomePage.NowPageNumber = 1;
+            this.PageSwitch_HomePage.Size = new System.Drawing.Size(92, 27);
+            this.PageSwitch_HomePage.TabIndex = 2;
             // 
             // Panel_HomePageFunctions
             // 
@@ -901,65 +953,16 @@ namespace DistributedSystem_Main
             // BTN_HomeGroupSetting
             // 
             this.BTN_HomeGroupSetting.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.BTN_HomeGroupSetting.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(212)))), ((int)(((byte)(231)))));
+            this.BTN_HomeGroupSetting.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.BTN_HomeGroupSetting.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BTN_HomeGroupSetting.Location = new System.Drawing.Point(1068, 21);
             this.BTN_HomeGroupSetting.Name = "BTN_HomeGroupSetting";
             this.BTN_HomeGroupSetting.Size = new System.Drawing.Size(75, 38);
             this.BTN_HomeGroupSetting.TabIndex = 0;
             this.BTN_HomeGroupSetting.Text = "Setting";
-            this.BTN_HomeGroupSetting.UseVisualStyleBackColor = true;
+            this.BTN_HomeGroupSetting.UseVisualStyleBackColor = false;
             this.BTN_HomeGroupSetting.Click += new System.EventHandler(this.BTN_HomeGroupSetting_Click);
-            // 
-            // panel2
-            // 
-            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(43)))), ((int)(((byte)(54)))));
-            this.panel2.Controls.Add(this.LAB_MQTTServerState);
-            this.panel2.Controls.Add(this.label2);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 676);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1178, 28);
-            this.panel2.TabIndex = 6;
-            // 
-            // LAB_MQTTServerState
-            // 
-            this.LAB_MQTTServerState.BackColor = System.Drawing.Color.Red;
-            this.LAB_MQTTServerState.Location = new System.Drawing.Point(101, 6);
-            this.LAB_MQTTServerState.Name = "LAB_MQTTServerState";
-            this.LAB_MQTTServerState.Size = new System.Drawing.Size(19, 17);
-            this.LAB_MQTTServerState.TabIndex = 1;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.ForeColor = System.Drawing.Color.BurlyWood;
-            this.label2.Location = new System.Drawing.Point(6, 5);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(93, 17);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "MQTT Server :";
-            // 
-            // PageSwitch_HomePage
-            // 
-            this.PageSwitch_HomePage.AutoSize = true;
-            this.PageSwitch_HomePage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(92)))), ((int)(((byte)(131)))), ((int)(((byte)(169)))));
-            this.PageSwitch_HomePage.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.PageSwitch_HomePage.Location = new System.Drawing.Point(1, 2);
-            this.PageSwitch_HomePage.Margin = new System.Windows.Forms.Padding(4);
-            this.PageSwitch_HomePage.MinimumSize = new System.Drawing.Size(0, 27);
-            this.PageSwitch_HomePage.Name = "PageSwitch_HomePage";
-            this.PageSwitch_HomePage.NowPageNumber = 1;
-            this.PageSwitch_HomePage.Size = new System.Drawing.Size(92, 27);
-            this.PageSwitch_HomePage.TabIndex = 2;
-            // 
-            // Panel_HomePageSwitch
-            // 
-            this.Panel_HomePageSwitch.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(43)))), ((int)(((byte)(54)))));
-            this.Panel_HomePageSwitch.Controls.Add(this.PageSwitch_HomePage);
-            this.Panel_HomePageSwitch.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.Panel_HomePageSwitch.Location = new System.Drawing.Point(3, 621);
-            this.Panel_HomePageSwitch.Name = "Panel_HomePageSwitch";
-            this.Panel_HomePageSwitch.Size = new System.Drawing.Size(1174, 31);
-            this.Panel_HomePageSwitch.TabIndex = 3;
             // 
             // FormMain
             // 
@@ -969,6 +972,7 @@ namespace DistributedSystem_Main
             this.ClientSize = new System.Drawing.Size(1354, 710);
             this.Controls.Add(this.TableLayout_WholeView);
             this.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FormMain";
             this.Text = "Control Center";
@@ -994,6 +998,8 @@ namespace DistributedSystem_Main
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox19)).EndInit();
             this.TablePanel_SideBarFunctions.ResumeLayout(false);
             this.Panel_MainArea.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.TabControl_Main.ResumeLayout(false);
             this.TabPage_Signal.ResumeLayout(false);
             this.TabPage_Signal.PerformLayout();
@@ -1008,11 +1014,9 @@ namespace DistributedSystem_Main
             this.panel1.PerformLayout();
             this.TabPage_HomePage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.DGV_HomePaeTable)).EndInit();
-            this.Panel_HomePageFunctions.ResumeLayout(false);
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
             this.Panel_HomePageSwitch.ResumeLayout(false);
             this.Panel_HomePageSwitch.PerformLayout();
+            this.Panel_HomePageFunctions.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

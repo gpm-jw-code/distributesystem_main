@@ -29,6 +29,7 @@ namespace DataQuery
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_DataQuery));
             this.Panel_Data = new System.Windows.Forms.Panel();
             this.SplitContainer_Sensor_Chart = new System.Windows.Forms.SplitContainer();
             this.TreeView_SensorList = new System.Windows.Forms.TreeView();
@@ -300,6 +301,7 @@ namespace DataQuery
             this.Controls.Add(this.Panel_Functions);
             this.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.ForeColor = System.Drawing.Color.White;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsMdiContainer = true;
             this.Margin = new System.Windows.Forms.Padding(5);
             this.Name = "Form_DataQuery";

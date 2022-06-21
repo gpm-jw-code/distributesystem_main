@@ -15,6 +15,9 @@ namespace DistributedSystem_Main.Views
         bool IsNewRow = false;
         string NowGroupName = "";
         List<CheckBox> List_AllSensorComboBox = new List<CheckBox>();
+        string OriginRowName = "";
+        bool IsEditRow = false;
+
         public Form_EditGroupRow(string GroupName, string RowName = "")
         {
             InitializeComponent();
@@ -62,11 +65,13 @@ namespace DistributedSystem_Main.Views
 
         private void SetRowInfo(string RowName)
         {
-            TXT_RowName.Enabled = RowName == "";
+            //TXT_RowName.Enabled = RowName == "";
+            IsEditRow = RowName != "";
             if (RowName == "")
             {
                 RowName = $"Row{Systems.cls_HomePageManager.GetRowsInfo(NowGroupName).Count}";
             }
+            OriginRowName = RowName;
             TXT_RowName.Text = RowName;
         }
 
@@ -89,10 +94,24 @@ namespace DistributedSystem_Main.Views
                 MessageBox.Show("未選取任何Sensor");
                 return;
             }
-            if (MessageBox.Show($"是否要加入選取的{CheckSensor.Count}個Sensor", "Add Sensor", MessageBoxButtons.YesNo) != DialogResult.Yes)
+            if (MessageBox.Show($"是否要變更為選取的{CheckSensor.Count}個Sensor", "Add Sensor", MessageBoxButtons.YesNo) != DialogResult.Yes)
             {
                 return;
             }
+
+            if (IsEditRow)
+            {
+                if (OriginRowName!=NewRowName)
+                {
+                    if (MessageBox.Show($"是否要變更Row名稱為:{NewRowName}","Change Row Name",MessageBoxButtons.YesNo)!= DialogResult.Yes)
+                    {
+                        TXT_RowName.Text = OriginRowName;
+                        return;
+                    }
+                    Systems.cls_HomePageManager.ChangeRowName(NowGroupName, OriginRowName, NewRowName);
+                }
+            }
+
             Systems.cls_HomePageManager.ResetRowSensor(NowGroupName, NewRowName, CheckSensor);
             MessageBox.Show($"已加入選取的{CheckSensor.Count}個Sensor");
             this.Close();

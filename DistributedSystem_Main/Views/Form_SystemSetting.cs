@@ -38,6 +38,7 @@ namespace DistributedSystem_Main.Views
             Systems.Staobj.SystemParam.ChartSetting.RowNumber = (int)NUM_Chart_RowNumber.Value;
             Systems.Staobj.SystemParam.ChartSetting.ColumnNumber = (int)NUM_Chart_ColumnNumber.Value;
             Systems.cls_SignalsChartManager.SetChartRowColumnNumber(Systems.Staobj.SystemParam.ChartSetting.RowNumber, Systems.Staobj.SystemParam.ChartSetting.ColumnNumber);
+            Systems.cls_ISOChartManager.SetChartRowColumnNumber(Systems.Staobj.SystemParam.ChartSetting.RowNumber, Systems.Staobj.SystemParam.ChartSetting.ColumnNumber);
             Systems.Staobj.SystemParam.SaveChartSetting();
         }
         private void BTN_CancelChartSetting_Click(object sender, EventArgs e)

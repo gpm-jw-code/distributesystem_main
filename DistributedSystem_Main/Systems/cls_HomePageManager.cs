@@ -99,6 +99,11 @@ namespace DistributedSystem_Main.Systems
             Dict_GroupObject[GroupName].AddNewSensorToGroup(List_SensorNames);
         }
 
+        public static bool ChangeRowName(string GroupName,string OriginRowName,string NewRowName)
+        {
+            return Dict_GroupObject[GroupName].ChangeRowName(OriginRowName, NewRowName);
+        }
+
         public static void DeleteRowFromGroup(string GroupName,string RowName)
         {
             Dict_GroupObject[GroupName].DeleteRow( RowName);
@@ -376,6 +381,18 @@ namespace DistributedSystem_Main.Systems
                 {
                     Dict_RowListSensor[RowName].Add(SensorName);
                 }
+            }
+
+            public bool ChangeRowName(string OriginRowName,string NewRowName)
+            {
+                if (!Dict_RowListSensor.ContainsKey(OriginRowName))
+                {
+                    return false;
+                }
+                var TargetRowObject = Dict_RowListSensor[OriginRowName];
+                Dict_RowListSensor.Remove(OriginRowName);
+                Dict_RowListSensor.Add(NewRowName, TargetRowObject);
+                return true;
             }
 
             public void DeleteRow(string RowName)

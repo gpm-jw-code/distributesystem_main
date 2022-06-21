@@ -32,10 +32,11 @@ namespace DistributedSystem_Main.Views
             {
                 return;
             }
+            int SelectedIndex = Combo_GroupName.SelectedIndex;
             Form_GroupEditSensorList EditSensorForm = new Form_GroupEditSensorList(Combo_GroupName.Text);
             EditSensorForm.ShowDialog();
             LoadGroupInfo();
-            Combo_GroupName.SelectedIndex = Combo_GroupName.Items.Count - 1;
+            Combo_GroupName.SelectedIndex = SelectedIndex;
             Combo_GroupName_SelectedIndexChanged(null, null);
         }
 
