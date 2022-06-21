@@ -31,14 +31,27 @@ namespace DistributedSystem_Main.WebService.WebsocketBehaviors
         private void ResetAlarm(string eqgeName, string eqid, string field)
         {
 
-            cls_SensorDataProcess sensor = Staobj.Dict_SensorProcessObject.Values.First(s => s.SensorInfo.EdgeName == eqgeName && s.SensorInfo.GetEQIDForWebsocket() == eqid && s.SensorInfo.SensorType == field);
-            if (sensor == null) return;
-
-            if (sensor.Dict_OutOfItemStates.TryGetValue(field, out OutOfState state))
+            if (eqid == "all" && field == "all")
             {
-                state.RESET();
+                var edgeSensors = Staobj.Dict_SensorProcessObject.Values.ToList().FindAll(s => s.SensorInfo.EdgeName == eqgeName);
+                foreach (var item in edgeSensors)
+                {
+                    foreach (OutOfState state in item.Dict_OutOfItemStates.Values)
+                    {
+                        state.RESET();
+                    }
+                }
             }
+            else
+            {
+                cls_SensorDataProcess sensor = Staobj.Dict_SensorProcessObject.Values.First(s => s.SensorInfo.EdgeName == eqgeName && s.SensorInfo.GetEQIDForWebsocket() == eqid && s.SensorInfo.SensorType == field);
+                if (sensor == null) return;
+                if (sensor.Dict_OutOfItemStates.TryGetValue(field, out OutOfState state))
+                {
+                    state.RESET();
+                }
 
+            }
         }
     }
 
