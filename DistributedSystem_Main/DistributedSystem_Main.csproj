@@ -120,8 +120,9 @@
     <Compile Include="Views\Form_ISOSetting.designer.cs">
       <DependentUpon>Form_ISOSetting.cs</DependentUpon>
     </Compile>
-    <Compile Include="webService\cls_WebSocketModule.cs" />
-    <Compile Include="webService\cls_WebsocketSendDataItem.cs" />
+    <Compile Include="WebService\WebsocketBehaviors\AlarmResetBehavior.cs" />
+    <Compile Include="WebService\cls_WebSocketModule.cs" />
+    <Compile Include="WebService\cls_WebsocketSendDataItem.cs" />
     <Compile Include="Systems\cls_SignalsChartManager.cs" />
     <Compile Include="Systems\INI_utility.cs" />
     <Compile Include="Systems\Staobj.cs" />
@@ -161,6 +162,13 @@
     <Compile Include="Views\Form_SystemSetting.Designer.cs">
       <DependentUpon>Form_SystemSetting.cs</DependentUpon>
     </Compile>
+    <Compile Include="WebService\WebsocketBehaviors\GetEqListOfEdgeBehavior.cs" />
+    <Compile Include="WebService\WebsocketBehaviors\QuerySensorDataBehavior.cs" />
+    <Compile Include="WebService\WebsocketBehaviors\SensorInfoBehavior.cs" />
+    <Compile Include="WebService\WebsocketBehaviors\SensorRawDataBehavior.cs" />
+    <Compile Include="WebService\WebsocketBehaviors\SensorStatusBehavior.cs" />
+    <Compile Include="WebService\WebsocketBehaviors\ThresholdValueSettingBehavior.cs" />
+    <Compile Include="WebService\WebsocketExtensions\Extension.cs" />
     <EmbeddedResource Include="User_Control\PageSwitch.resx">
       <DependentUpon>PageSwitch.cs</DependentUpon>
     </EmbeddedResource>
