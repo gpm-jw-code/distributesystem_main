@@ -13,10 +13,14 @@ namespace DistributedSystem_Main.Systems
 {
     public class SystemExceptionHandler
     {
-        public static string saveFolder = Path.Combine(Path.GetTempPath(), "System Exception");
+        public static string saveFolder = Path.Combine(Directory.GetCurrentDirectory(), "System Exception");
 
         public static void Startup()
         {
+            if (!Directory.Exists(saveFolder))
+            {
+                Directory.CreateDirectory(saveFolder);
+            }
             DeleteOldScreenshotImagesAsync(30);
             Application.ThreadException += new ThreadExceptionEventHandler(OnThreadException);
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(OnUnhandleException);
