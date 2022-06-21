@@ -1,4 +1,5 @@
 ﻿using DistributedSystem_Main.Systems;
+using DistributedSystem_Main.WebService.WebsocketExtensions;
 using SensorDataProcess;
 using System;
 using System.Linq;
@@ -30,7 +31,7 @@ namespace DistributedSystem_Main.WebService.WebsocketBehaviors
         private void ResetAlarm(string eqgeName, string eqid, string field)
         {
 
-            cls_SensorDataProcess sensor = Staobj.Dict_SensorProcessObject.Values.First(s => s.SensorInfo.EdgeName == eqgeName && s.SensorInfo.IP == eqid && s.SensorInfo.SensorType == field);
+            cls_SensorDataProcess sensor = Staobj.Dict_SensorProcessObject.Values.First(s => s.SensorInfo.EdgeName == eqgeName && s.SensorInfo.GetEQIDForWebsocket() == eqid && s.SensorInfo.SensorType == field);
             if (sensor == null) return;
 
             if (sensor.Dict_OutOfItemStates.TryGetValue(field, out OutOfState state))
