@@ -30,7 +30,7 @@ namespace DataQuery.Functions
 
         public static cls_RawDataObject QueryIntervalRawData(DateTime StartTime,DateTime EndTime,SensorInfo SensorInfo)
         {
-            cls_RawDataObject OutputData = new cls_RawDataObject();
+            cls_RawDataObject OutputData;
             if ((EndTime-StartTime).TotalDays>7) //讀HourlyRawData
             {
                 List<string> IntervalFileNames = GetIntervalFileNames(HourlyRawDataDirectoryPath(SensorInfo), StartTime, EndTime, new List<string>() { "yyyyMMdd" });

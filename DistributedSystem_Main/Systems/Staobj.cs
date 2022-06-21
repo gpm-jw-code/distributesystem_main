@@ -110,29 +110,29 @@ namespace DistributedSystem_Main.Systems
                 ISOEnable = Convert.ToBoolean(SystemIniFile.IniReadAndWriteValue(SectionName, "ISO", false.ToString()));
             }
 
-            public static async void SaveMqttParam()
+            public static  void SaveMqttParam()
             {
                 string SectionName = "MqttSetting";
                 Ini.IniFile SystemIniFile = new Ini.IniFile(SystemIniFilePath);
-                await SystemIniFile.IniWriteValue(SectionName, "ServerIP", Mqtt.MqttServerIP);
-                await SystemIniFile.IniWriteValue(SectionName, "ServerPort", Mqtt.MqttServerPort.ToString());
+                 SystemIniFile.IniWriteValue(SectionName, "ServerIP", Mqtt.MqttServerIP);
+                 SystemIniFile.IniWriteValue(SectionName, "ServerPort", Mqtt.MqttServerPort.ToString());
             }
 
-            public static async void SaveChartSetting()
+            public static  void SaveChartSetting()
             {
                 Ini.IniFile SystemIniFile = new Ini.IniFile(SystemIniFilePath);
 
                 string SectionName = "ChartSetting";
-                await SystemIniFile.IniWriteValue(SectionName, "RowNumber", ChartSetting.RowNumber.ToString());
-                await SystemIniFile.IniWriteValue(SectionName, "ColumnNumber", ChartSetting.ColumnNumber.ToString());
+                 SystemIniFile.IniWriteValue(SectionName, "RowNumber", ChartSetting.RowNumber.ToString());
+                 SystemIniFile.IniWriteValue(SectionName, "ColumnNumber", ChartSetting.ColumnNumber.ToString());
             }
 
-            public static async void SaveFuncionSetting()
+            public static void SaveFuncionSetting()
             {
                 Ini.IniFile SystemIniFile = new Ini.IniFile(SystemIniFilePath);
 
                 string SectionName = "Functions";
-                await SystemIniFile.IniWriteValue(SectionName, "ISO", ISOEnable.ToString());
+                SystemIniFile.IniWriteValue(SectionName, "ISO", ISOEnable.ToString());
             }
 
             private static bool CheckRootPathExist(string DirectoryPath)

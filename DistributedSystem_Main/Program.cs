@@ -12,16 +12,7 @@ namespace DistributedSystem_Main
         [STAThread]
         static void Main()
         {
-
-            //var config = new HttpSelfHostConfiguration("http://localhost:8080");
-            //config.Routes.MapHttpRoute(
-            //    "API Default", "api/{controller}/{id}",
-            //    new { id = RouteParameter.Optional });
-            //HttpSelfHostServer server = new HttpSelfHostServer(config);
-            //server.OpenAsync().Wait();
-
-            //var jsonFormatter = new JsonMediaTypeFormatter();
-            //config.Services.Replace(typeof(IContentNegotiator), new JsonContentNegotiator(jsonFormatter));
+            Systems.SystemExceptionHandler.Startup(); //用來抓例外事件
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
