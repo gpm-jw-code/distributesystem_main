@@ -76,6 +76,10 @@ namespace DistributedSystem_Main
         private void BTN_AlarmEvent_Click(object sender, EventArgs e)
         {
             Staobj.Forms.Form_AlarmEvent.Show();
+            if (Staobj.Forms.Form_AlarmEvent.WindowState == FormWindowState.Minimized)
+            {
+                Staobj.Forms.Form_AlarmEvent.WindowState = FormWindowState.Normal;
+            }
             Staobj.Forms.Form_AlarmEvent.BringToFront();
         }
 
@@ -259,7 +263,6 @@ namespace DistributedSystem_Main
                 Dict_NewBackColor.Add(item.Key, default);
             }
             Invoke((MethodInvoker)delegate { Systems.cls_HomePageManager.UpdateSensorData(SensorName, Dict_LastData,Dict_NewBackColor); });
-            
         }
 
         private void UpdateSensorCheckStates(string SensorName)
@@ -347,6 +350,16 @@ namespace DistributedSystem_Main
             }
         }
 
+        private void BTN_CancelEditSensorInfo_Click(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow item in DGV_SensorInfo.Rows)
+            {
+                string SensorName = item.Cells[3].Value.ToString();
+                item.Cells[1].Value = Staobj.Dict_SensorProcessObject[SensorName].SensorInfo.EQName;
+                item.Cells[2].Value = Staobj.Dict_SensorProcessObject[SensorName].SensorInfo.UnitName;
+            }
+            SetDGVSensorInfoEditEnable(false);
+        }
         #endregion
 
         #region ISO Chart
@@ -436,6 +449,7 @@ namespace DistributedSystem_Main
         private void BTN_HomeGroupSetting_Click(object sender, EventArgs e)
         {
             Views.Form_HomeGroupSetting Form_GroupSetting = new Views.Form_HomeGroupSetting();
+            Form_GroupSetting.SetSelectGroup(GroupSwitch_HomePage.NowGroupName);
             Form_GroupSetting.ShowDialog();
         }
         #endregion

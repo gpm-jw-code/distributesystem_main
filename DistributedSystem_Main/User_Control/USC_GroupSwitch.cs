@@ -13,8 +13,8 @@ namespace DistributedSystem_Main.User_Control
     public partial class USC_GroupSwitch : UserControl
     {
         public Dictionary<string, Button> Dict_GroupButtons = new Dictionary<string, Button>();
-        string NowGroupName = "";
-
+        string _NowGroupName = "";
+        public string NowGroupName { get { return _NowGroupName; } }
         public Action<string> Event_ChangeGroupName;
 
         public USC_GroupSwitch()
@@ -26,7 +26,7 @@ namespace DistributedSystem_Main.User_Control
         {
             FlowPanel_Buttons.Controls.Clear();
             Dict_GroupButtons = new Dictionary<string, Button>();
-            NowGroupName = "";
+            _NowGroupName = "";
         }
 
         public void AddGroupButton(string GroupName)
@@ -49,19 +49,19 @@ namespace DistributedSystem_Main.User_Control
 
         public void ChangeSelectGroup(string NewGroupName)
         {
-            if (NowGroupName != "")
+            if (_NowGroupName != "")
             {
-                Dict_GroupButtons[NowGroupName].BackColor = Color.White;
+                Dict_GroupButtons[_NowGroupName].BackColor = Color.White;
             }
             Dict_GroupButtons[NewGroupName].BackColor = Color.FromArgb(15, 173, 255);
-            NowGroupName = NewGroupName;
+            _NowGroupName = NewGroupName;
         }
 
         private void GroupButton_MouseClick(object sender, MouseEventArgs e)
         {
             var TargetBTN = sender as Button;
             ChangeSelectGroup(TargetBTN.Text);
-            Event_ChangeGroupName?.Invoke(NowGroupName);
+            Event_ChangeGroupName?.Invoke(_NowGroupName);
         }
     }
 }

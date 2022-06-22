@@ -30,8 +30,8 @@ namespace DistributedSystem_Main.Views
         private void InitializeComponent()
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.Panel_Function = new System.Windows.Forms.Panel();
-            this.PageSwitch_Alarm = new DistributedSystem_Main.User_Control.PageSwitch();
             this.BTN_Filter = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.TXT_Filter = new System.Windows.Forms.TextBox();
@@ -43,6 +43,7 @@ namespace DistributedSystem_Main.Views
             this.Column_Event = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column_Decription = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column_reset = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.PageSwitch_Alarm = new DistributedSystem_Main.User_Control.PageSwitch();
             this.Panel_Function.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGV_AlarmEvents)).BeginInit();
             this.SuspendLayout();
@@ -61,19 +62,6 @@ namespace DistributedSystem_Main.Views
             this.Panel_Function.Name = "Panel_Function";
             this.Panel_Function.Size = new System.Drawing.Size(870, 50);
             this.Panel_Function.TabIndex = 0;
-            // 
-            // PageSwitch_Alarm
-            // 
-            this.PageSwitch_Alarm.AutoSize = true;
-            this.PageSwitch_Alarm.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
-            this.PageSwitch_Alarm.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.PageSwitch_Alarm.Location = new System.Drawing.Point(13, 13);
-            this.PageSwitch_Alarm.Margin = new System.Windows.Forms.Padding(4);
-            this.PageSwitch_Alarm.MinimumSize = new System.Drawing.Size(0, 27);
-            this.PageSwitch_Alarm.Name = "PageSwitch_Alarm";
-            this.PageSwitch_Alarm.NowPageNumber = 1;
-            this.PageSwitch_Alarm.Size = new System.Drawing.Size(92, 27);
-            this.PageSwitch_Alarm.TabIndex = 4;
             // 
             // BTN_Filter
             // 
@@ -128,7 +116,9 @@ namespace DistributedSystem_Main.Views
             // 
             this.DGV_AlarmEvents.AllowUserToAddRows = false;
             this.DGV_AlarmEvents.AllowUserToDeleteRows = false;
-            this.DGV_AlarmEvents.BackgroundColor = System.Drawing.SystemColors.ActiveCaptionText;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(236)))), ((int)(((byte)(255)))));
+            this.DGV_AlarmEvents.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            this.DGV_AlarmEvents.BackgroundColor = System.Drawing.SystemColors.Control;
             this.DGV_AlarmEvents.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DGV_AlarmEvents.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column_EQName,
@@ -142,8 +132,9 @@ namespace DistributedSystem_Main.Views
             this.DGV_AlarmEvents.Margin = new System.Windows.Forms.Padding(4);
             this.DGV_AlarmEvents.Name = "DGV_AlarmEvents";
             this.DGV_AlarmEvents.RowHeadersVisible = false;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.DGV_AlarmEvents.RowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(228)))), ((int)(((byte)(242)))));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.DGV_AlarmEvents.RowsDefaultCellStyle = dataGridViewCellStyle2;
             this.DGV_AlarmEvents.RowTemplate.Height = 24;
             this.DGV_AlarmEvents.Size = new System.Drawing.Size(870, 434);
             this.DGV_AlarmEvents.TabIndex = 1;
@@ -189,6 +180,19 @@ namespace DistributedSystem_Main.Views
             this.Column_reset.HeaderText = "Reset";
             this.Column_reset.Name = "Column_reset";
             this.Column_reset.ReadOnly = true;
+            // 
+            // PageSwitch_Alarm
+            // 
+            this.PageSwitch_Alarm.AutoSize = true;
+            this.PageSwitch_Alarm.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
+            this.PageSwitch_Alarm.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.PageSwitch_Alarm.Location = new System.Drawing.Point(13, 13);
+            this.PageSwitch_Alarm.Margin = new System.Windows.Forms.Padding(4);
+            this.PageSwitch_Alarm.MinimumSize = new System.Drawing.Size(0, 27);
+            this.PageSwitch_Alarm.Name = "PageSwitch_Alarm";
+            this.PageSwitch_Alarm.NowPageNumber = 1;
+            this.PageSwitch_Alarm.Size = new System.Drawing.Size(92, 27);
+            this.PageSwitch_Alarm.TabIndex = 4;
             // 
             // Form_Alarm
             // 

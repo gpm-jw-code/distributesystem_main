@@ -30,7 +30,9 @@ namespace DistributedSystem_Main
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.TableLayout_WholeView = new System.Windows.Forms.TableLayoutPanel();
             this.TableLayout_SideBar = new System.Windows.Forms.TableLayoutPanel();
             this.PictureBox_Icon = new System.Windows.Forms.PictureBox();
@@ -666,10 +668,10 @@ namespace DistributedSystem_Main
             this.DGV_SensorInfo.Location = new System.Drawing.Point(3, 46);
             this.DGV_SensorInfo.Name = "DGV_SensorInfo";
             this.DGV_SensorInfo.RowHeadersVisible = false;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
-            this.DGV_SensorInfo.RowsDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
+            this.DGV_SensorInfo.RowsDefaultCellStyle = dataGridViewCellStyle1;
             this.DGV_SensorInfo.RowTemplate.Height = 24;
             this.DGV_SensorInfo.ShowCellErrors = false;
             this.DGV_SensorInfo.Size = new System.Drawing.Size(1174, 606);
@@ -743,6 +745,7 @@ namespace DistributedSystem_Main
             this.BTN_CancelEditSensorInfo.Text = "Cancel";
             this.BTN_CancelEditSensorInfo.UseVisualStyleBackColor = false;
             this.BTN_CancelEditSensorInfo.Visible = false;
+            this.BTN_CancelEditSensorInfo.Click += new System.EventHandler(this.BTN_CancelEditSensorInfo_Click);
             // 
             // BTN_SaveSensorInfo
             // 
@@ -865,11 +868,15 @@ namespace DistributedSystem_Main
             // 
             this.DGV_HomePaeTable.AllowUserToAddRows = false;
             this.DGV_HomePaeTable.AllowUserToDeleteRows = false;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(228)))), ((int)(((byte)(242)))));
+            this.DGV_HomePaeTable.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
             this.DGV_HomePaeTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DGV_HomePaeTable.Dock = System.Windows.Forms.DockStyle.Fill;
             this.DGV_HomePaeTable.Location = new System.Drawing.Point(3, 95);
             this.DGV_HomePaeTable.Name = "DGV_HomePaeTable";
             this.DGV_HomePaeTable.RowHeadersVisible = false;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(236)))), ((int)(((byte)(255)))));
+            this.DGV_HomePaeTable.RowsDefaultCellStyle = dataGridViewCellStyle3;
             this.DGV_HomePaeTable.RowTemplate.Height = 24;
             this.DGV_HomePaeTable.Size = new System.Drawing.Size(1174, 526);
             this.DGV_HomePaeTable.TabIndex = 0;

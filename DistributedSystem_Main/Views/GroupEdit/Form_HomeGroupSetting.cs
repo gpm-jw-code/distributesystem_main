@@ -257,5 +257,11 @@ namespace DistributedSystem_Main.Views
             }
             Combo_Rows.SelectedIndex = 0;
         }
+
+        internal void SetSelectGroup(string nowGroupName)
+        {
+            Combo_GroupName.SelectedItem = nowGroupName;
+            Combo_GroupName_SelectedIndexChanged(null,null);
+        }
     }
 }
