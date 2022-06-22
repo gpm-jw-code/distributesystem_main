@@ -21,9 +21,11 @@ namespace DistributedSystem_Main.Systems
             {
                 Directory.CreateDirectory(saveFolder);
             }
-            DeleteOldScreenshotImagesAsync(30);
+            DeleteOldScreenshotImagesAsync(30); 
+            Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
             Application.ThreadException += new ThreadExceptionEventHandler(OnThreadException);
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(OnUnhandleException);
+
             TaskScheduler.UnobservedTaskException += (o, e) =>
             {
                 e.SetObserved();
@@ -66,10 +68,13 @@ namespace DistributedSystem_Main.Systems
             {
                 lock (lockObj)
                 {
-                    using (StreamWriter streamWriter = new StreamWriter(logPath, true))
+                    using (FileStream FS = new FileStream(logPath,FileMode.Append,FileAccess.Write,FileShare.ReadWrite))
                     {
-                        string inner = exp.InnerException?.StackTrace;
-                        streamWriter.WriteLine($"{DateTime.Now} |{source}|\r\n[Screenshoot Save]:{(!screenShootSuccess ? "Screen Shoot FAIL...No any Image be Saved" : screenShootImageSavedPath)}\r\n[Message]:{exp.Message}\r\n[StackTrace]:{inner}\r\n{exp.StackTrace}");
+                        using (StreamWriter streamWriter = new StreamWriter(FS))
+                        {
+                            string inner = exp.InnerException?.StackTrace;
+                            streamWriter.WriteLine($"{DateTime.Now} |{source}|\r\n[Screenshoot Save]:{(!screenShootSuccess ? "Screen Shoot FAIL...No any Image be Saved" : screenShootImageSavedPath)}\r\n[Message]:{exp.Message}\r\n[StackTrace]:{inner}\r\n{exp.StackTrace}");
+                        }
                     }
                 }
             }
