@@ -31,6 +31,7 @@ namespace DistributedSystem_Main.Views
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.Panel_Function = new System.Windows.Forms.Panel();
+            this.PageSwitch_Alarm = new DistributedSystem_Main.User_Control.PageSwitch();
             this.BTN_Filter = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.TXT_Filter = new System.Windows.Forms.TextBox();
@@ -42,14 +43,13 @@ namespace DistributedSystem_Main.Views
             this.Column_Event = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column_Decription = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column_reset = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.PageSwitch_Alarm = new DistributedSystem_Main.User_Control.PageSwitch();
             this.Panel_Function.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGV_AlarmEvents)).BeginInit();
             this.SuspendLayout();
             // 
             // Panel_Function
             // 
-            this.Panel_Function.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(245)))), ((int)(((byte)(247)))));
+            this.Panel_Function.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(233)))), ((int)(((byte)(238)))), ((int)(((byte)(247)))));
             this.Panel_Function.Controls.Add(this.PageSwitch_Alarm);
             this.Panel_Function.Controls.Add(this.BTN_Filter);
             this.Panel_Function.Controls.Add(this.label1);
@@ -62,12 +62,25 @@ namespace DistributedSystem_Main.Views
             this.Panel_Function.Size = new System.Drawing.Size(870, 50);
             this.Panel_Function.TabIndex = 0;
             // 
+            // PageSwitch_Alarm
+            // 
+            this.PageSwitch_Alarm.AutoSize = true;
+            this.PageSwitch_Alarm.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
+            this.PageSwitch_Alarm.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.PageSwitch_Alarm.Location = new System.Drawing.Point(13, 13);
+            this.PageSwitch_Alarm.Margin = new System.Windows.Forms.Padding(4);
+            this.PageSwitch_Alarm.MinimumSize = new System.Drawing.Size(0, 27);
+            this.PageSwitch_Alarm.Name = "PageSwitch_Alarm";
+            this.PageSwitch_Alarm.NowPageNumber = 1;
+            this.PageSwitch_Alarm.Size = new System.Drawing.Size(92, 27);
+            this.PageSwitch_Alarm.TabIndex = 4;
+            // 
             // BTN_Filter
             // 
             this.BTN_Filter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.BTN_Filter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(233)))), ((int)(((byte)(238)))), ((int)(((byte)(247)))));
+            this.BTN_Filter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(228)))), ((int)(((byte)(242)))));
             this.BTN_Filter.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.BTN_Filter.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(207)))), ((int)(((byte)(221)))), ((int)(((byte)(246)))));
+            this.BTN_Filter.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(161)))), ((int)(((byte)(192)))), ((int)(((byte)(226)))));
             this.BTN_Filter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BTN_Filter.Location = new System.Drawing.Point(660, 13);
             this.BTN_Filter.Name = "BTN_Filter";
@@ -99,9 +112,9 @@ namespace DistributedSystem_Main.Views
             // BTN_ResetAll
             // 
             this.BTN_ResetAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.BTN_ResetAll.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(233)))), ((int)(((byte)(238)))), ((int)(((byte)(247)))));
+            this.BTN_ResetAll.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(228)))), ((int)(((byte)(242)))));
             this.BTN_ResetAll.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.BTN_ResetAll.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(207)))), ((int)(((byte)(221)))), ((int)(((byte)(246)))));
+            this.BTN_ResetAll.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(161)))), ((int)(((byte)(192)))), ((int)(((byte)(226)))));
             this.BTN_ResetAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BTN_ResetAll.Location = new System.Drawing.Point(767, 13);
             this.BTN_ResetAll.Name = "BTN_ResetAll";
@@ -176,19 +189,6 @@ namespace DistributedSystem_Main.Views
             this.Column_reset.HeaderText = "Reset";
             this.Column_reset.Name = "Column_reset";
             this.Column_reset.ReadOnly = true;
-            // 
-            // PageSwitch_Alarm
-            // 
-            this.PageSwitch_Alarm.AutoSize = true;
-            this.PageSwitch_Alarm.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
-            this.PageSwitch_Alarm.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.PageSwitch_Alarm.Location = new System.Drawing.Point(13, 13);
-            this.PageSwitch_Alarm.Margin = new System.Windows.Forms.Padding(4);
-            this.PageSwitch_Alarm.MinimumSize = new System.Drawing.Size(0, 27);
-            this.PageSwitch_Alarm.Name = "PageSwitch_Alarm";
-            this.PageSwitch_Alarm.NowPageNumber = 1;
-            this.PageSwitch_Alarm.Size = new System.Drawing.Size(92, 27);
-            this.PageSwitch_Alarm.TabIndex = 4;
             // 
             // Form_Alarm
             // 

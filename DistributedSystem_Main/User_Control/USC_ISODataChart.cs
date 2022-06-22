@@ -44,8 +44,8 @@ namespace DistributedSystem_Main.User_Control
         }
 
 
-        List<Color> List_Color = new List<Color> { Color.Green, Color.Yellow, Color.Orange, Color.Red };
-        List<StripLine> List_StripLine = new List<StripLine>();
+        List<Color> List_ISOColor = new List<Color> { Color.Green, Color.Yellow, Color.Orange, Color.Red };
+        List<StripLine> List_ISOStripLine = new List<StripLine>();
 
         private void InitialBackColorStripLine()
         {
@@ -53,28 +53,28 @@ namespace DistributedSystem_Main.User_Control
             {
                 StripLine NewStripLine = new StripLine()
                 {
-                    BackColor = Color.FromArgb(100, List_Color[i]),
+                    BackColor = Color.FromArgb(100, List_ISOColor[i]),
                     BorderWidth = 0,
                     Interval = 0
                 };
                 ChartForShow.ChartAreas[0].AxisY.StripLines.Add(NewStripLine);
-                List_StripLine.Add(NewStripLine);
+                List_ISOStripLine.Add(NewStripLine);
             }
         }
 
         public void SetBackColorThreshold(double ThresholdA, double ThresholdB, double ThresholdC)
         {
-            List_StripLine[0].StripWidth = ThresholdA;
-            List_StripLine[0].IntervalOffset = 0;
+            List_ISOStripLine[0].StripWidth = ThresholdA;
+            List_ISOStripLine[0].IntervalOffset = 0;
 
-            List_StripLine[1].StripWidth = ThresholdB-ThresholdA;
-            List_StripLine[1].IntervalOffset = ThresholdA;
+            List_ISOStripLine[1].StripWidth = ThresholdB-ThresholdA;
+            List_ISOStripLine[1].IntervalOffset = ThresholdA;
 
-            List_StripLine[2].StripWidth = ThresholdC-ThresholdB;
-            List_StripLine[2].IntervalOffset = ThresholdB;
+            List_ISOStripLine[2].StripWidth = ThresholdC-ThresholdB;
+            List_ISOStripLine[2].IntervalOffset = ThresholdB;
 
-            List_StripLine[3].StripWidth = 100;
-            List_StripLine[3].IntervalOffset = ThresholdC;
+            List_ISOStripLine[3].StripWidth = 100;
+            List_ISOStripLine[3].IntervalOffset = ThresholdC;
         }
 
         public void ImportISODataSeries(Queue<DateTime> TimeLogSeries, Queue<double> DataSeries)

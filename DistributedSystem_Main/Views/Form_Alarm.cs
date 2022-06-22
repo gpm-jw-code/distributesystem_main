@@ -115,6 +115,7 @@ namespace DistributedSystem_Main.Views
             DGV_AlarmEvents.Rows.Clear();
             Dict_AllDataRows.Clear();
             List_FilterDataRows.Clear();
+            Systems.cls_HomePageManager.ResetAlarm();
         }
 
         private void DGV_AlarmEvents_CellContentClick(object sender, DataGridViewCellEventArgs e)

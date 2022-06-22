@@ -241,9 +241,24 @@ namespace DistributedSystem_Main
             AddNewSensor_ISO(SensorName);
         }
 
-        private void UpdateMainTable(string SensorName, Dictionary<string, double> Dict_LastData)
+        private void UpdateMainTable(string SensorName, Dictionary<string, double> Dict_LastData,Dictionary<string,SensorDataProcess.OutOfState> Dict_OutStatus)
         {
-            Invoke((MethodInvoker)delegate { Systems.cls_HomePageManager.UpdateSensorData(SensorName, Dict_LastData); });
+            Dictionary<string, Color> Dict_NewBackColor = new Dictionary<string, Color>();
+            foreach (var item in Dict_OutStatus)
+            {
+                if (item.Value.isOutofSPEC)
+                {
+                    Dict_NewBackColor.Add(item.Key, Color.FromArgb(255, 192, 192));
+                    continue;
+                }
+                if (item.Value.isOutofControl)
+                {
+                    Dict_NewBackColor.Add(item.Key, Color.FromArgb(255, 255, 192));
+                    continue;
+                }
+                Dict_NewBackColor.Add(item.Key, default);
+            }
+            Invoke((MethodInvoker)delegate { Systems.cls_HomePageManager.UpdateSensorData(SensorName, Dict_LastData,Dict_NewBackColor); });
             
         }
 

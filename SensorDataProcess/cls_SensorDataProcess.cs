@@ -50,7 +50,7 @@ namespace SensorDataProcess
         public delegate void UpdateSeriesDataEventHandler(string SensorName, Queue<DateTime> Queue_Time, Dictionary<string, Queue<double>> Dict_DataQueue);
         public event UpdateSeriesDataEventHandler Event_UpdateChartSeries;
 
-        public delegate void UpdateSensorLastDataPoint(string SensorName, Dictionary<string, double> Dict_LastData);
+        public delegate void UpdateSensorLastDataPoint(string SensorName, Dictionary<string, double> Dict_LastData,Dictionary<string,OutOfState> Dict_stateData);
         public event UpdateSensorLastDataPoint Event_UpdateMainTable;
 
 
@@ -121,7 +121,7 @@ namespace SensorDataProcess
             var Dict_LastData = Dict_ListNewData.Select(item => new KeyValuePair<string, double>(item.Key, item.Value.Last())).ToDictionary(item => item.Key, item => item.Value);
 
             Event_UpdateChartSeries?.Invoke(SensorInfo.SensorName, Queue_TimeLog, Dict_SensorDataSeries);
-            Event_UpdateMainTable?.Invoke(SensorInfo.SensorName, Dict_LastData);
+            Event_UpdateMainTable?.Invoke(SensorInfo.SensorName, Dict_LastData, Dict_OutOfItemStates);
 
             if (IsUpdateCheckStatus_ContinuousData)
                 Event_UpdateSensorCheckStates?.Invoke(SensorInfo.SensorName);
@@ -211,7 +211,7 @@ namespace SensorDataProcess
             if (IsUpdateCheckStatus)
                 Event_UpdateSensorCheckStates?.Invoke(SensorInfo.SensorName);
             Event_UpdateChartSeries?.Invoke(SensorInfo.SensorName, Queue_TimeLog, Dict_SensorDataSeries);
-            Event_UpdateMainTable?.Invoke(SensorInfo.SensorName, Dict_NewData);
+            Event_UpdateMainTable?.Invoke(SensorInfo.SensorName, Dict_NewData,Dict_OutOfItemStates);
         }
 
 
@@ -264,7 +264,7 @@ namespace SensorDataProcess
                 .ToDictionary(item => item.Key, item => item.Value);
             }
 
-            Event_UpdateMainTable?.Invoke(SensorInfo.SensorName, Dict_NewTableData);
+            Event_UpdateMainTable?.Invoke(SensorInfo.SensorName, Dict_NewTableData,Dict_OutOfItemStates);
         }
 
         private bool CheckThreshold(Dictionary<string, double> Dict_NewData, DateTime TimeLog)

@@ -86,7 +86,6 @@ namespace DistributedSystem_Main.User_Control
             this.ChartForShow.Legends.Add(legend1);
             this.ChartForShow.Location = new System.Drawing.Point(0, 26);
             this.ChartForShow.Name = "ChartForShow";
-            series1.BorderWidth = 2;
             series1.ChartArea = "ChartArea1";
             series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
             series1.Color = System.Drawing.Color.DeepSkyBlue;

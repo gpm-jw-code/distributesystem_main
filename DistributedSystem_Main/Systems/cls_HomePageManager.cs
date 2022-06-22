@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -118,7 +119,18 @@ namespace DistributedSystem_Main.Systems
             }
         }
 
-        public static void UpdateSensorData(string SensorName, Dictionary<string, double> Dict_DataValue)
+        internal static void ResetAlarm()
+        {
+            foreach (var item in DGV_DataTable.Rows.Cast<DataGridViewRow>())
+            {
+                foreach (var Cells in item.Cells.Cast<DataGridViewCell>())
+                {
+                    Cells.Style.BackColor = default;    
+                }
+            }
+        }
+
+        public static void UpdateSensorData(string SensorName, Dictionary<string, double> Dict_DataValue,Dictionary<string,Color> Dict_BackColor)
         {
             if (string.IsNullOrEmpty(NowShowGroupName))
             {
@@ -147,6 +159,10 @@ namespace DistributedSystem_Main.Systems
                 if (ColumnNames.Contains($"Column_{item.Key}"))
                 {
                     TargetRow.Cells[$"Column_{item.Key}"].Value = item.Value;
+                }
+                if (Dict_BackColor[item.Key] != default)
+                {
+                    TargetRow.Cells[$"Column_{item.Key}"].Style.BackColor = Dict_BackColor[item.Key];
                 }
             }
         }
