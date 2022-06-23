@@ -134,24 +134,28 @@ namespace DistributedSystem_Main.Views
             // 
             // BTN_CancelFuncionsSetting
             // 
+            this.BTN_CancelFuncionsSetting.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.BTN_CancelFuncionsSetting.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.BTN_CancelFuncionsSetting.Location = new System.Drawing.Point(152, 76);
+            this.BTN_CancelFuncionsSetting.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BTN_CancelFuncionsSetting.Location = new System.Drawing.Point(149, 76);
             this.BTN_CancelFuncionsSetting.Name = "BTN_CancelFuncionsSetting";
-            this.BTN_CancelFuncionsSetting.Size = new System.Drawing.Size(56, 32);
+            this.BTN_CancelFuncionsSetting.Size = new System.Drawing.Size(65, 32);
             this.BTN_CancelFuncionsSetting.TabIndex = 5;
             this.BTN_CancelFuncionsSetting.Text = "Cancel";
-            this.BTN_CancelFuncionsSetting.UseVisualStyleBackColor = true;
+            this.BTN_CancelFuncionsSetting.UseVisualStyleBackColor = false;
             this.BTN_CancelFuncionsSetting.Click += new System.EventHandler(this.BTN_CancelFuncionsSetting_Click);
             // 
             // BTN_SaveFunctionEnable
             // 
+            this.BTN_SaveFunctionEnable.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.BTN_SaveFunctionEnable.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.BTN_SaveFunctionEnable.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BTN_SaveFunctionEnable.Location = new System.Drawing.Point(81, 76);
             this.BTN_SaveFunctionEnable.Name = "BTN_SaveFunctionEnable";
-            this.BTN_SaveFunctionEnable.Size = new System.Drawing.Size(56, 32);
+            this.BTN_SaveFunctionEnable.Size = new System.Drawing.Size(65, 32);
             this.BTN_SaveFunctionEnable.TabIndex = 5;
             this.BTN_SaveFunctionEnable.Text = "Save";
-            this.BTN_SaveFunctionEnable.UseVisualStyleBackColor = true;
+            this.BTN_SaveFunctionEnable.UseVisualStyleBackColor = false;
             this.BTN_SaveFunctionEnable.Click += new System.EventHandler(this.BTN_SaveFunctionEnable_Click);
             // 
             // label11
@@ -191,24 +195,28 @@ namespace DistributedSystem_Main.Views
             // 
             // BTN_CancelChartSetting
             // 
+            this.BTN_CancelChartSetting.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.BTN_CancelChartSetting.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.BTN_CancelChartSetting.Location = new System.Drawing.Point(152, 104);
+            this.BTN_CancelChartSetting.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BTN_CancelChartSetting.Location = new System.Drawing.Point(149, 104);
             this.BTN_CancelChartSetting.Name = "BTN_CancelChartSetting";
-            this.BTN_CancelChartSetting.Size = new System.Drawing.Size(56, 32);
+            this.BTN_CancelChartSetting.Size = new System.Drawing.Size(65, 32);
             this.BTN_CancelChartSetting.TabIndex = 5;
             this.BTN_CancelChartSetting.Text = "Cancel";
-            this.BTN_CancelChartSetting.UseVisualStyleBackColor = true;
+            this.BTN_CancelChartSetting.UseVisualStyleBackColor = false;
             this.BTN_CancelChartSetting.Click += new System.EventHandler(this.BTN_CancelChartSetting_Click);
             // 
             // BTN_SaveChartSetting
             // 
+            this.BTN_SaveChartSetting.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.BTN_SaveChartSetting.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.BTN_SaveChartSetting.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BTN_SaveChartSetting.Location = new System.Drawing.Point(81, 104);
             this.BTN_SaveChartSetting.Name = "BTN_SaveChartSetting";
-            this.BTN_SaveChartSetting.Size = new System.Drawing.Size(56, 32);
+            this.BTN_SaveChartSetting.Size = new System.Drawing.Size(65, 32);
             this.BTN_SaveChartSetting.TabIndex = 5;
             this.BTN_SaveChartSetting.Text = "Save";
-            this.BTN_SaveChartSetting.UseVisualStyleBackColor = true;
+            this.BTN_SaveChartSetting.UseVisualStyleBackColor = false;
             this.BTN_SaveChartSetting.Click += new System.EventHandler(this.BTN_SaveChartSetting_Click);
             // 
             // label7
@@ -454,23 +462,27 @@ namespace DistributedSystem_Main.Views
             // 
             // BTN_CancelMqttParam
             // 
+            this.BTN_CancelMqttParam.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.BTN_CancelMqttParam.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.BTN_CancelMqttParam.Location = new System.Drawing.Point(152, 97);
+            this.BTN_CancelMqttParam.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BTN_CancelMqttParam.Location = new System.Drawing.Point(149, 97);
             this.BTN_CancelMqttParam.Name = "BTN_CancelMqttParam";
-            this.BTN_CancelMqttParam.Size = new System.Drawing.Size(56, 32);
+            this.BTN_CancelMqttParam.Size = new System.Drawing.Size(59, 32);
             this.BTN_CancelMqttParam.TabIndex = 5;
             this.BTN_CancelMqttParam.Text = "Cancel";
-            this.BTN_CancelMqttParam.UseVisualStyleBackColor = true;
+            this.BTN_CancelMqttParam.UseVisualStyleBackColor = false;
             // 
             // BTN_SaveMqttParameter
             // 
+            this.BTN_SaveMqttParameter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.BTN_SaveMqttParameter.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.BTN_SaveMqttParameter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BTN_SaveMqttParameter.Location = new System.Drawing.Point(81, 97);
             this.BTN_SaveMqttParameter.Name = "BTN_SaveMqttParameter";
-            this.BTN_SaveMqttParameter.Size = new System.Drawing.Size(56, 32);
+            this.BTN_SaveMqttParameter.Size = new System.Drawing.Size(61, 32);
             this.BTN_SaveMqttParameter.TabIndex = 5;
             this.BTN_SaveMqttParameter.Text = "Save";
-            this.BTN_SaveMqttParameter.UseVisualStyleBackColor = true;
+            this.BTN_SaveMqttParameter.UseVisualStyleBackColor = false;
             this.BTN_SaveMqttParameter.Click += new System.EventHandler(this.BTN_SaveMqttParameter_Click);
             // 
             // label8

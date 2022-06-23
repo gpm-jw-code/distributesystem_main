@@ -164,6 +164,7 @@
       <DependentUpon>Form_SystemSetting.cs</DependentUpon>
     </Compile>
     <Compile Include="WebService\WebsocketBehaviors\GetEqListOfEdgeBehavior.cs" />
+    <Compile Include="WebService\WebsocketBehaviors\GroupInfoBehavior.cs" />
     <Compile Include="WebService\WebsocketBehaviors\QuerySensorDataBehavior.cs" />
     <Compile Include="WebService\WebsocketBehaviors\SensorInfoBehavior.cs" />
     <Compile Include="WebService\WebsocketBehaviors\SensorRawDataBehavior.cs" />

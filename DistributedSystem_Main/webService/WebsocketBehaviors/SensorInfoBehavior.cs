@@ -9,7 +9,7 @@ namespace DistributedSystem_Main.WebService.WebsocketBehaviors
     {
         protected override void OnOpen()
         {
-            Staobj.Event_ReceiveSensorInfo_Websocket += SendSensorInfo;
+            Staobj.Event_ReceiveSensorInfo_Websocket = SendSensorInfo;
             foreach (var item in Staobj.Dict_SensorProcessObject.ToArray())
             {
                 SendSensorInfo(JsonConvert.SerializeObject(item.Value.SensorInfo));

@@ -59,7 +59,7 @@ namespace DistributedSystem_Main.Systems
         }
 
         private static object lockObj = new object();
-        private static void HandleException(string source, Exception exp)
+        public static void HandleException(string source, Exception exp)
         {
             string screenShootImageSavedPath;
             bool screenShootSuccess = TryGetScreenShot(out screenShootImageSavedPath);

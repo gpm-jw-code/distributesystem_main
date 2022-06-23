@@ -12,7 +12,7 @@ namespace DistributedSystem_Main.Systems
     public class cls_HomePageManager
     {
         public static string NowShowGroupName;
-        private static Dictionary<string, cls_GroupObject> Dict_GroupObject = new Dictionary<string, cls_GroupObject>();
+        private static Dictionary<string, cls_GroupObject> _Dict_GroupObject = new Dictionary<string, cls_GroupObject>();
 
         private static int ShowRowNumber = 20;
 
@@ -20,7 +20,10 @@ namespace DistributedSystem_Main.Systems
         private static User_Control.USC_GroupSwitch GroupSwitch;
         private static User_Control.PageSwitch USC_PageSwitch;
         private static Panel Panel_PageSwitch;
-        public static List<string> GroupNames { get { return Dict_GroupObject.Keys.ToList(); } }
+        public static List<string> GroupNames { get { return _Dict_GroupObject.Keys.ToList(); } }
+        public static Dictionary<string, cls_GroupObject> Dict_GroupObject { get { return _Dict_GroupObject; } }
+
+        public static Action<Dictionary<string, cls_GroupObject>> Event_GroupSettingChange;
 
         public static string GroupParameterPath
         {
@@ -45,36 +48,36 @@ namespace DistributedSystem_Main.Systems
 
         public static void AddNewGroup(string NewGroupName)
         {
-            if (Dict_GroupObject == null)
+            if (_Dict_GroupObject == null)
             {
-                Dict_GroupObject = new Dictionary<string, cls_GroupObject>();
+                _Dict_GroupObject = new Dictionary<string, cls_GroupObject>();
             }
-            Dict_GroupObject.Add(NewGroupName, new cls_GroupObject(NewGroupName));
+            _Dict_GroupObject.Add(NewGroupName, new cls_GroupObject(NewGroupName));
         }
 
         public static bool ChangeGroupName(string NewGroupName,string OriginGroupName)
         {
-            if (!Dict_GroupObject.ContainsKey(OriginGroupName))
+            if (!_Dict_GroupObject.ContainsKey(OriginGroupName))
             {
                 return false;
             }
-            var OriginGroupItem = Dict_GroupObject[OriginGroupName];
+            var OriginGroupItem = _Dict_GroupObject[OriginGroupName];
             OriginGroupItem.GroupName = NewGroupName;
-            Dict_GroupObject.Remove(OriginGroupName);
-            Dict_GroupObject.Add(NewGroupName, OriginGroupItem);
+            _Dict_GroupObject.Remove(OriginGroupName);
+            _Dict_GroupObject.Add(NewGroupName, OriginGroupItem);
             ChangeGroup("");
             return true;
         }
 
         public static void DeleteGroup(string GroupName)
         {
-            if (!Dict_GroupObject.ContainsKey(GroupName))
+            if (!_Dict_GroupObject.ContainsKey(GroupName))
             {
                 return;
             }
 
                 NowShowGroupName = "";
-            Dict_GroupObject.Remove(GroupName);
+            _Dict_GroupObject.Remove(GroupName);
         }
 
         public static void AutoSetGroupsBySensorType()
@@ -91,31 +94,31 @@ namespace DistributedSystem_Main.Systems
                 Dict_SensorTypeGroup[GroupName].AddNewSensorToGroup(new List<string>() { item.Key });
                 Dict_SensorTypeGroup[GroupName].SetSensorToRow(item.Key, item.Key);
             }
-            Dict_GroupObject = Dict_SensorTypeGroup;
-            ChangeGroup(Dict_GroupObject.Keys.First());
+            _Dict_GroupObject = Dict_SensorTypeGroup;
+            ChangeGroup(_Dict_GroupObject.Keys.First());
         }
 
         public static void AddSensorToGroup(string GroupName, List<string> List_SensorNames)
         {
-            Dict_GroupObject[GroupName].AddNewSensorToGroup(List_SensorNames);
+            _Dict_GroupObject[GroupName].AddNewSensorToGroup(List_SensorNames);
         }
 
         public static bool ChangeRowName(string GroupName,string OriginRowName,string NewRowName)
         {
-            return Dict_GroupObject[GroupName].ChangeRowName(OriginRowName, NewRowName);
+            return _Dict_GroupObject[GroupName].ChangeRowName(OriginRowName, NewRowName);
         }
 
         public static void DeleteRowFromGroup(string GroupName,string RowName)
         {
-            Dict_GroupObject[GroupName].DeleteRow( RowName);
+            _Dict_GroupObject[GroupName].DeleteRow( RowName);
         }
 
         public static void ResetRowSensor(string GroupName, string RowName, List<string> List_SensorName)
         {
-            Dict_GroupObject[GroupName].ResetRowSensor(RowName);
+            _Dict_GroupObject[GroupName].ResetRowSensor(RowName);
             foreach (var item in List_SensorName)
             {
-                Dict_GroupObject[GroupName].SetSensorToRow(RowName, item);
+                _Dict_GroupObject[GroupName].SetSensorToRow(RowName, item);
             }
         }
 
@@ -136,16 +139,16 @@ namespace DistributedSystem_Main.Systems
             {
                 return;
             }
-            if (!Dict_GroupObject.ContainsKey(NowShowGroupName))
+            if (!_Dict_GroupObject.ContainsKey(NowShowGroupName))
             {
                 ResetNowGroupName();
                 return;
             }
-            if (!Dict_GroupObject[NowShowGroupName].List_SensorName.Contains(SensorName))
+            if (!_Dict_GroupObject[NowShowGroupName].List_SensorName.Contains(SensorName))
             {
                 return;
             }
-            string RowName = Dict_GroupObject[NowShowGroupName].FindRowNameWithSensorName(SensorName);
+            string RowName = _Dict_GroupObject[NowShowGroupName].FindRowNameWithSensorName(SensorName);
             var TargetRow = DGV_DataTable.Rows.Cast<DataGridViewRow>().Where(r => r.Cells["RowName"].Value.ToString() == RowName).FirstOrDefault();
             if (TargetRow == default)
             {
@@ -177,7 +180,7 @@ namespace DistributedSystem_Main.Systems
             }
 
             DGV_DataTable.Columns.Add("RowName", "Name");
-            var NowShowGroup = Dict_GroupObject[NowShowGroupName];
+            var NowShowGroup = _Dict_GroupObject[NowShowGroupName];
             if (NowShowGroup.List_ShowColumnName == null|| NowShowGroup.List_ShowColumnName.Count == 0 )
             {
                 NowShowGroup.List_ShowColumnName = NowShowGroup.List_AllColumnName;
@@ -202,7 +205,7 @@ namespace DistributedSystem_Main.Systems
         private static void ChangeShowPage(int NewPageNumber)
         {
             DGV_DataTable.Rows.Clear();
-            var SensorNamesArray = Dict_GroupObject[NowShowGroupName].Dict_RowListSensor.Keys.ToArray();
+            var SensorNamesArray = _Dict_GroupObject[NowShowGroupName].Dict_RowListSensor.Keys.ToArray();
             for (int i = (USC_PageSwitch.NowPageNumber - 1) * ShowRowNumber; i < USC_PageSwitch.NowPageNumber * ShowRowNumber; i++)
             {
                 if (i == SensorNamesArray.Length)
@@ -211,7 +214,7 @@ namespace DistributedSystem_Main.Systems
                 }
                 DGV_DataTable.Rows.Add(SensorNamesArray[i]);
             }
-            foreach (var item in Dict_GroupObject[NowShowGroupName].List_SensorName)
+            foreach (var item in _Dict_GroupObject[NowShowGroupName].List_SensorName)
             {
                 if (!Staobj.Dict_SensorProcessObject.ContainsKey(item))
                 {
@@ -250,7 +253,7 @@ namespace DistributedSystem_Main.Systems
             List<string> List_FreeSensorList = new List<string>();
             foreach (var item in AllSensorList)
             {
-                bool IsUsed = Dict_GroupObject.Any(EachGroup => EachGroup.Value.List_SensorName.Contains(item));
+                bool IsUsed = _Dict_GroupObject.Any(EachGroup => EachGroup.Value.List_SensorName.Contains(item));
                 if (!IsUsed)
                 {
                     List_FreeSensorList.Add(item);
@@ -277,31 +280,31 @@ namespace DistributedSystem_Main.Systems
 
         public static List<string> GetGroupSensorNames(string GroupName)
         {
-            if (!Dict_GroupObject.ContainsKey(GroupName))
+            if (!_Dict_GroupObject.ContainsKey(GroupName))
             {
                 return new List<string>();
             }
-            return Dict_GroupObject[GroupName].List_SensorName;
+            return _Dict_GroupObject[GroupName].List_SensorName;
         }
 
         public static List<string> GetGroupColumnNames(string GroupName)
         {
-            return Dict_GroupObject[GroupName].List_AllColumnName;
+            return _Dict_GroupObject[GroupName].List_AllColumnName;
         }
 
         public static List<string> GetGroupShowColumnNames(string GroupName)
         {
-            return Dict_GroupObject[GroupName].List_ShowColumnName;
+            return _Dict_GroupObject[GroupName].List_ShowColumnName;
         }
 
         internal static void SetGroupShowColumnNames(string GroupName, List<string> list_ShowColumnNames)
         {
-            Dict_GroupObject[GroupName].List_ShowColumnName = list_ShowColumnNames;
+            _Dict_GroupObject[GroupName].List_ShowColumnName = list_ShowColumnNames;
         }
 
         public static Dictionary<string, List<string>> GetRowsInfo(string GroupName)
         {
-            return Dict_GroupObject[GroupName].Dict_RowListSensor;
+            return _Dict_GroupObject[GroupName].Dict_RowListSensor;
         }
 
         public static void SaveGroupParameters()
@@ -310,15 +313,16 @@ namespace DistributedSystem_Main.Systems
             {
                 using (StreamWriter SW = new StreamWriter(FS))
                 {
-                    SW.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(Dict_GroupObject, Newtonsoft.Json.Formatting.Indented));
+                    SW.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(_Dict_GroupObject, Newtonsoft.Json.Formatting.Indented));
                 }
             }
             GroupSwitch.InitializeGroupButtons(); 
-            foreach (var item in Dict_GroupObject.Keys)
+            foreach (var item in _Dict_GroupObject.Keys)
             {
                 GroupSwitch.AddGroupButton(item);
             }
             ResetNowGroupName();
+            Event_GroupSettingChange?.Invoke(Dict_GroupObject);
         }
 
         public static void LoadGroupParameters()
@@ -328,14 +332,14 @@ namespace DistributedSystem_Main.Systems
             {
                 using (StreamReader SR = new StreamReader(FS))
                 {
-                    Dict_GroupObject = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, Systems.cls_HomePageManager.cls_GroupObject>>(SR.ReadToEnd());
+                    _Dict_GroupObject = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, Systems.cls_HomePageManager.cls_GroupObject>>(SR.ReadToEnd());
                 }
             }
-            if (Dict_GroupObject == null)
+            if (_Dict_GroupObject == null)
             {
-                Dict_GroupObject = new Dictionary<string, cls_GroupObject>();
+                _Dict_GroupObject = new Dictionary<string, cls_GroupObject>();
             }
-            foreach (var item in Dict_GroupObject.Keys)
+            foreach (var item in _Dict_GroupObject.Keys)
             {
                 GroupSwitch.AddGroupButton(item);
             }

@@ -7,7 +7,7 @@ namespace DistributedSystem_Main.WebService.WebsocketBehaviors
     {
         protected override void OnOpen()
         {
-            Staobj.Event_UpdateSensorStatus_Websocket += SendSensorStatus;
+            Staobj.Event_UpdateSensorStatus_Websocket = SendSensorStatus;
         }
 
         private void SendSensorStatus(string obj)

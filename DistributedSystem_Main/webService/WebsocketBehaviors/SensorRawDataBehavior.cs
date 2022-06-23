@@ -7,7 +7,7 @@ namespace DistributedSystem_Main.WebService.WebsocketBehaviors
     {
         protected override void OnOpen()
         {
-            cls_MQTTModule.Event_ReceiveSensorRawData_Websocket += SendRawData;
+            cls_MQTTModule.Event_ReceiveSensorRawData_Websocket = SendRawData;
         }
 
         private void SendRawData(string obj)

@@ -19,27 +19,35 @@ namespace DistributedSystem_Main
 
         public FormMain()
         {
-            InitializeComponent();
-            Staobj.Forms.Form_Main = this;
-            Staobj.SystemParam.LoadSystemParam();
-            Systems.cls_SignalsChartManager.InitialManager(TablePanel_SignalChart, PageSwitch_Signals);
-            Systems.cls_SignalsChartManager.SetChartRowColumnNumber(Staobj.SystemParam.ChartSetting.RowNumber, Staobj.SystemParam.ChartSetting.ColumnNumber);
-
-            cls_ISOChartManager.InitialManager(TablePanel_ISOChart, PageSwitch_ISOChart);
-            cls_ISOChartManager.SetChartRowColumnNumber(Staobj.SystemParam.ChartSetting.RowNumber, Staobj.SystemParam.ChartSetting.ColumnNumber);
-
-            cls_HomePageManager.InitialManager(DGV_HomePaeTable, GroupSwitch_HomePage,PageSwitch_HomePage,Panel_HomePageSwitch);
-
-            Systems.cls_MQTTModule.BuildServer(Staobj.SystemParam.Mqtt.MqttServerIP, Staobj.SystemParam.Mqtt.MqttServerPort);
-            SensorDataProcess.cls_txtDataSaver.RootPath = Staobj.SystemParam.DataSaveRootPath;
-            TabControl_Main.ItemSize = new Size(0, 1);
-            foreach (TabPage item in TabControl_Main.TabPages)
+            try
             {
-                item.Text = "";
+                InitializeComponent();
+                Staobj.Forms.Form_Main = this;
+                Staobj.SystemParam.LoadSystemParam();
+                Systems.cls_SignalsChartManager.InitialManager(TablePanel_SignalChart, PageSwitch_Signals);
+                Systems.cls_SignalsChartManager.SetChartRowColumnNumber(Staobj.SystemParam.ChartSetting.RowNumber, Staobj.SystemParam.ChartSetting.ColumnNumber);
+
+                cls_ISOChartManager.InitialManager(TablePanel_ISOChart, PageSwitch_ISOChart);
+                cls_ISOChartManager.SetChartRowColumnNumber(Staobj.SystemParam.ChartSetting.RowNumber, Staobj.SystemParam.ChartSetting.ColumnNumber);
+
+                cls_HomePageManager.InitialManager(DGV_HomePaeTable, GroupSwitch_HomePage, PageSwitch_HomePage, Panel_HomePageSwitch);
+
+                Systems.cls_MQTTModule.BuildServer(Staobj.SystemParam.Mqtt.MqttServerIP, Staobj.SystemParam.Mqtt.MqttServerPort);
+                SensorDataProcess.cls_txtDataSaver.RootPath = Staobj.SystemParam.DataSaveRootPath;
+                TabControl_Main.ItemSize = new Size(0, 1);
+                foreach (TabPage item in TabControl_Main.TabPages)
+                {
+                    item.Text = "";
+                }
+                SetISOFunctionUIEnable(Staobj.SystemParam.ISOEnable);
+                EventRegist();
+                FormMain_SizeChanged(null, null);
+
             }
-            SetISOFunctionUIEnable(Staobj.SystemParam.ISOEnable);
-            EventRegist();
-            FormMain_SizeChanged(null,null);
+            catch (Exception exp)
+            {
+                Systems.SystemExceptionHandler.HandleException("MainFormInitial", exp);
+            }
         }
 
         #region System Initial

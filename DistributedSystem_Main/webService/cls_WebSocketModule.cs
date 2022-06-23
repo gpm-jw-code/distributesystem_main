@@ -23,6 +23,7 @@ namespace DistributedSystem_Main.WebService
                 _server.AddWebSocketService<GetEqListOfEdgeBehavior>("/GPM/Query");
                 _server.AddWebSocketService<ThresholdValueSettingBehavior>("/GPM/ThresholdSetting");
                 _server.AddWebSocketService<AlarmResetBehavior>("/GPM/AlarmReset"); ///GPM/AlarmReset/?edgeName={edgename}&edid={eqid}&field={field}
+                _server.AddWebSocketService<GroupInfoBehavior>("/GPM/GroupSetting");
                 _server.Start();
             }
             catch (Exception)
