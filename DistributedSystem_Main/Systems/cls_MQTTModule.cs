@@ -128,7 +128,7 @@ namespace DistributedSystem_Main.Systems
                     if (NewData.IsArrayData)
                     {
                         sensorPcrObj.ImportContinuousSensorData(NewData.Dict_ListRawData, NewData.List_TimeLog);
-                        RawData = new WebService.cls_RawData(OriginSensorName, EdgeName, NewData.List_TimeLog, NewData.Dict_ListRawData, sensorPcrObj.Dict_DataThreshold, sensorPcrObj.Dict_OutOfItemStates);
+                        RawData = new WebService.cls_RawData(SensorName, EdgeName, NewData.List_TimeLog, NewData.Dict_ListRawData, sensorPcrObj.Dict_DataThreshold, sensorPcrObj.Dict_OutOfItemStates);
                     }
                     else
                     {
@@ -137,7 +137,7 @@ namespace DistributedSystem_Main.Systems
                             return;
                         }
                         sensorPcrObj.ImportNewSensorData(NewData.Dict_RawData, NewData.TimeLog);
-                        RawData = new WebService.cls_RawData(OriginSensorName, EdgeName, NewData.TimeLog, NewData.Dict_RawData, sensorPcrObj.Dict_DataThreshold, sensorPcrObj.Dict_OutOfItemStates);
+                        RawData = new WebService.cls_RawData(SensorName, EdgeName, NewData.TimeLog, NewData.Dict_RawData, sensorPcrObj.Dict_DataThreshold, sensorPcrObj.Dict_OutOfItemStates);
                     }
 
                     Event_ReceiveSensorRawData_Websocket?.Invoke(Newtonsoft.Json.JsonConvert.SerializeObject(RawData));
