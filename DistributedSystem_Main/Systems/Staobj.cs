@@ -135,7 +135,18 @@ namespace DistributedSystem_Main.Systems
                 SystemIniFile.IniWriteValue(SectionName, "ISO", ISOEnable.ToString());
             }
 
-            private static bool CheckRootPathExist(string DirectoryPath)
+            public static bool SaveDataPathSetting(string NewPath)
+            {
+                if (!CheckRootPathExist(NewPath))
+                {
+                    return false;
+                }
+                Ini.IniFile SystemIniFile = new Ini.IniFile(SystemIniFilePath);
+                SystemIniFile.IniWriteValue("Path", "RootPath", NewPath);
+                return true;
+            }
+
+            public static bool CheckRootPathExist(string DirectoryPath)
             {
                 var AllDriveInfo = DriveInfo.GetDrives();
                 string TargetRootPath = Directory.GetDirectoryRoot(DirectoryPath);

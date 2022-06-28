@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.WindowsAPICodePack.Dialogs;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -19,7 +20,7 @@ namespace DistributedSystem_Main.Views
             ReloadGeneralSetting();
         }
 
-        bool IsFunctionsEnableChange =false;
+        bool IsFunctionsEnableChange = false;
         private void Form_SystemSetting_FormClosing(object sender, FormClosingEventArgs e)
         {
             this.DialogResult = IsFunctionsEnableChange ? DialogResult.OK : DialogResult.Cancel;
@@ -32,6 +33,7 @@ namespace DistributedSystem_Main.Views
             NUM_Chart_RowNumber.Value = (decimal)Systems.Staobj.SystemParam.ChartSetting.RowNumber;
             NUM_Chart_ColumnNumber.Value = (decimal)Systems.Staobj.SystemParam.ChartSetting.ColumnNumber;
             ToggleSwitch_ISO.IsOn = Systems.Staobj.SystemParam.ISOEnable;
+            TXT_DataSavePath.Text = Systems.Staobj.SystemParam.DataSaveRootPath;
         }
         private void BTN_SaveChartSetting_Click(object sender, EventArgs e)
         {
@@ -59,6 +61,38 @@ namespace DistributedSystem_Main.Views
         private void BTN_CancelFuncionsSetting_Click(object sender, EventArgs e)
         {
             ToggleSwitch_ISO.IsOn = Systems.Staobj.SystemParam.ISOEnable;
+        }
+        private void BTN_SelectDataPath_Click(object sender, EventArgs e)
+        {
+            CommonOpenFileDialog pathDialog = new CommonOpenFileDialog();
+            pathDialog.IsFolderPicker = true;
+            if (pathDialog.ShowDialog() != CommonFileDialogResult.Ok)
+                return;
+
+            string Path = pathDialog.FileName;
+            if (Systems.Staobj.SystemParam.CheckRootPathExist(Path))
+            {
+                TXT_DataSavePath.Text = Path;
+            }
+            else
+            {
+                MessageBox.Show("硬碟路徑不存在或有誤");
+            }
+        }
+        private void BTN_SavePath_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("是否儲存路徑設定", "Path Setting", MessageBoxButtons.YesNo) == DialogResult.No)
+            {
+                return;
+            }
+            if (!Systems.Staobj.SystemParam.SaveDataPathSetting(TXT_DataSavePath.Text))
+            {
+                MessageBox.Show("硬碟路徑不存在或有誤");
+            }
+        }
+        private void BTN_CancelPathSetting_Click(object sender, EventArgs e)
+        {
+            TXT_DataSavePath.Text = Systems.Staobj.SystemParam.DataSaveRootPath;
         }
 
         #endregion
@@ -115,8 +149,8 @@ namespace DistributedSystem_Main.Views
                 return;
             }
             TXT_MqttServerIP.Text = Systems.Staobj.SystemParam.Mqtt.MqttServerIP;
-            NUM_MqttPort.Value= Systems.Staobj.SystemParam.Mqtt.MqttServerPort ;
-            ListBox_ClientList.Items.Clear(); 
+            NUM_MqttPort.Value = Systems.Staobj.SystemParam.Mqtt.MqttServerPort;
+            ListBox_ClientList.Items.Clear();
             List_MqttClients = Systems.cls_MQTTModule.GetClientList();
             foreach (var item in List_MqttClients)
             {
@@ -126,5 +160,6 @@ namespace DistributedSystem_Main.Views
 
 
         #endregion
+
     }
 }
