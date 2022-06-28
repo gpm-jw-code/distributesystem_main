@@ -436,6 +436,13 @@ namespace DistributedSystem_Main.Systems
                     return List_RowNames[0];
                 }
             }
+
+            public List<string> GetSensorNameByRowColumnName(string RowName,string ColumnName)
+            {
+                var RowSensorList = Dict_RowListSensor[RowName];
+                var List_OutputSensorNames = RowSensorList.Where(item => Staobj.Dict_SensorProcessObject[item].List_DataNames.Contains(ColumnName)).Select(item => item).ToList();
+                return List_OutputSensorNames;
+            }
         }
     }
 }

@@ -16,12 +16,12 @@ namespace DistributedSystem_Main.WebService.WebsocketBehaviors
             base.OnOpen();
             try
             {
-                string edgeName = Context.QueryString[0];
-                string eqid = Context.QueryString[1];
-                string field = Context.QueryString[2];
+                string GroupName = Context.QueryString[0];
+                string RowName = Context.QueryString[1];
+                string DataName = Context.QueryString[2];
                 string threshold_type = Context.QueryString[3];
                 string value = Context.QueryString[4];
-                SettingThresholdValue(edgeName, eqid, field, threshold_type, double.Parse(value));
+                SettingThresholdValue(GroupName, RowName, DataName, threshold_type, double.Parse(value));
                 Send("ok"); //TODO 
             }
             catch (Exception ex)
@@ -29,23 +29,38 @@ namespace DistributedSystem_Main.WebService.WebsocketBehaviors
                 Send(ex.Message);
             }
         }
-        private void SettingThresholdValue(string edgeName, string eqid, string field, string thresholdType, double thresholdValue)
+        private void SettingThresholdValue(string GroupName,string RowName,string DataName, string thresholdType, double thresholdValue)
         {
-            SensorDataProcess.cls_SensorDataProcess sensor = Staobj.Dict_SensorProcessObject.Values.First(s => s.SensorInfo.EdgeName == edgeName && s.SensorInfo.GetEQIDForWebsocket() == eqid && s.SensorInfo.SensorType == field);
-            string thresholdKey = field + "_" + thresholdType;
-            double _thresholdValue;
-            bool thresholdExist = sensor.Dict_DataThreshold.TryGetValue(thresholdKey, out _thresholdValue);
-            if (thresholdExist)
+            string ThresholdKey = $"{DataName}_{thresholdType}";
+            var List_SensorName =Systems.cls_HomePageManager.Dict_GroupObject[GroupName].GetSensorNameByRowColumnName(RowName, DataName);
+            foreach (var item in List_SensorName)
             {
-                sensor.Dict_DataThreshold[thresholdKey] = thresholdValue;
+                var TargetSensorItem = Staobj.Dict_SensorProcessObject[item];
+                if (!TargetSensorItem.Dict_DataThreshold.ContainsKey(ThresholdKey))
+                {
+                    TargetSensorItem.Dict_DataThreshold.Add(ThresholdKey, 0);
+                }
+                TargetSensorItem.Dict_DataThreshold[ThresholdKey] = thresholdValue;
+                Systems.Staobj.SensorParam.SaveThresholdToFile(TargetSensorItem.Dict_DataThreshold, TargetSensorItem.SensorInfo.SensorName);
             }
-            else
-            {
-                sensor.Dict_DataThreshold.Add(thresholdKey, thresholdValue);
-            }
-            Systems.Staobj.SensorParam.SaveThresholdToFile(sensor.Dict_DataThreshold, sensor.SensorInfo.SensorName);
-
         }
+        //private void SettingThresholdValue(string edgeName, string eqid, string field, string thresholdType, double thresholdValue)
+        //{
+        //    SensorDataProcess.cls_SensorDataProcess sensor = Staobj.Dict_SensorProcessObject.Values.First(s => s.SensorInfo.EdgeName == edgeName && s.SensorInfo.GetEQIDForWebsocket() == eqid && s.SensorInfo.SensorType == field);
+        //    string thresholdKey = field + "_" + thresholdType;
+        //    double _thresholdValue;
+        //    bool thresholdExist = sensor.Dict_DataThreshold.TryGetValue(thresholdKey, out _thresholdValue);
+        //    if (thresholdExist)
+        //    {
+        //        sensor.Dict_DataThreshold[thresholdKey] = thresholdValue;
+        //    }
+        //    else
+        //    {
+        //        sensor.Dict_DataThreshold.Add(thresholdKey, thresholdValue);
+        //    }
+        //    Systems.Staobj.SensorParam.SaveThresholdToFile(sensor.Dict_DataThreshold, sensor.SensorInfo.SensorName);
+
+        //}
     }
 
 }
