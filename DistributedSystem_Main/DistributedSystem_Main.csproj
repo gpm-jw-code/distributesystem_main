@@ -127,6 +127,7 @@
     <Compile Include="Views\Form_ISOSetting.designer.cs">
       <DependentUpon>Form_ISOSetting.cs</DependentUpon>
     </Compile>
+    <Compile Include="WebService\WebsocketBehaviors\GetThresholdSetting.cs" />
     <Compile Include="WebService\WebsocketBehaviors\AlarmResetBehavior.cs" />
     <Compile Include="WebService\cls_WebSocketModule.cs" />
     <Compile Include="WebService\cls_WebsocketSendDataItem.cs" />

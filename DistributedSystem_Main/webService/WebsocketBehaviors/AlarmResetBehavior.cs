@@ -17,10 +17,10 @@ namespace DistributedSystem_Main.WebService.WebsocketBehaviors
             base.OnOpen();
             try
             {
-                string edgeName = Context.QueryString[0];
-                string eqid = Context.QueryString[1];
-                string field = Context.QueryString[2];
-                ResetAlarm(edgeName, eqid, field);
+                string GroupName = Context.QueryString[0];
+                string RowName = Context.QueryString[1];
+                string DataName = Context.QueryString[2];
+                ResetAlarm(GroupName, RowName, DataName);
                 Send("ok");
             }
             catch (Exception ex)
@@ -28,30 +28,34 @@ namespace DistributedSystem_Main.WebService.WebsocketBehaviors
                 Send(ex.Message);
             }
         }
-        private void ResetAlarm(string eqgeName, string eqid, string field)
+        private void ResetAlarm(string GroupName, string RowName, string DataName)
         {
-
-            if (eqid == "all" && field == "all")
+            var List_SensorName = Systems.cls_HomePageManager.Dict_GroupObject[GroupName].GetSensorNameByRowColumnName(RowName, DataName);
+            foreach (var item in List_SensorName)
             {
-                var edgeSensors = Staobj.Dict_SensorProcessObject.Values.ToList().FindAll(s => s.SensorInfo.EdgeName == eqgeName);
-                foreach (var item in edgeSensors)
-                {
-                    foreach (OutOfState state in item.Dict_OutOfItemStates.Values)
-                    {
-                        state.RESET();
-                    }
-                }
+                Staobj.Dict_SensorProcessObject[item].Dict_OutOfItemStates[DataName].RESET();
             }
-            else
-            {
-                cls_SensorDataProcess sensor = Staobj.Dict_SensorProcessObject.Values.First(s => s.SensorInfo.EdgeName == eqgeName && s.SensorInfo.GetEQIDForWebsocket() == eqid && s.SensorInfo.SensorType == field);
-                if (sensor == null) return;
-                if (sensor.Dict_OutOfItemStates.TryGetValue(field, out OutOfState state))
-                {
-                    state.RESET();
-                }
+            //if (eqid == "all" && field == "all")
+            //{
+            //    var edgeSensors = Staobj.Dict_SensorProcessObject.Values.ToList().FindAll(s => s.SensorInfo.EdgeName == eqgeName);
+            //    foreach (var item in edgeSensors)
+            //    {
+            //        foreach (OutOfState state in item.Dict_OutOfItemStates.Values)
+            //        {
+            //            state.RESET();
+            //        }
+            //    }
+            //}
+            //else
+            //{
+            //    cls_SensorDataProcess sensor = Staobj.Dict_SensorProcessObject.Values.First(s => s.SensorInfo.EdgeName == eqgeName && s.SensorInfo.GetEQIDForWebsocket() == eqid && s.SensorInfo.SensorType == field);
+            //    if (sensor == null) return;
+            //    if (sensor.Dict_OutOfItemStates.TryGetValue(field, out OutOfState state))
+            //    {
+            //        state.RESET();
+            //    }
 
-            }
+            //}
         }
     }
 

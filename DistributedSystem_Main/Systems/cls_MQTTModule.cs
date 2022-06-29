@@ -118,7 +118,7 @@ namespace DistributedSystem_Main.Systems
                 string SensorName = $"{EdgeName}-{OriginSensorName}";
                 cls_SensorData_Mqtt NewData = Newtonsoft.Json.JsonConvert.DeserializeObject<cls_SensorData_Mqtt>(Data);
 
-                WebService.cls_RawData RawData = null;
+                WebService.cls_RawData WS_RawData = null;
                 if (Staobj.Dict_SensorProcessObject.ContainsKey(SensorName))
                 {
 
@@ -128,7 +128,7 @@ namespace DistributedSystem_Main.Systems
                     if (NewData.IsArrayData)
                     {
                         sensorPcrObj.ImportContinuousSensorData(NewData.Dict_ListRawData, NewData.List_TimeLog);
-                        RawData = new WebService.cls_RawData(SensorName, EdgeName, NewData.List_TimeLog, NewData.Dict_ListRawData, sensorPcrObj.Dict_DataThreshold, sensorPcrObj.Dict_OutOfItemStates);
+                        WS_RawData = new WebService.cls_RawData(SensorName, EdgeName, NewData.List_TimeLog, NewData.Dict_ListRawData, sensorPcrObj.Dict_DataThreshold, sensorPcrObj.Dict_OutOfItemStates);
                     }
                     else
                     {
@@ -137,10 +137,10 @@ namespace DistributedSystem_Main.Systems
                             return;
                         }
                         sensorPcrObj.ImportNewSensorData(NewData.Dict_RawData, NewData.TimeLog);
-                        RawData = new WebService.cls_RawData(SensorName, EdgeName, NewData.TimeLog, NewData.Dict_RawData, sensorPcrObj.Dict_DataThreshold, sensorPcrObj.Dict_OutOfItemStates);
+                        WS_RawData = new WebService.cls_RawData(SensorName, EdgeName, NewData.TimeLog, NewData.Dict_RawData, sensorPcrObj.Dict_DataThreshold, sensorPcrObj.Dict_OutOfItemStates);
                     }
 
-                    Event_ReceiveSensorRawData_Websocket?.Invoke(Newtonsoft.Json.JsonConvert.SerializeObject(RawData));
+                    Event_ReceiveSensorRawData_Websocket?.Invoke(Newtonsoft.Json.JsonConvert.SerializeObject(WS_RawData));
                 }
                 if (Staobj.Dict_SensorProcessObject_NotShow.ContainsKey(SensorName))
                 {
