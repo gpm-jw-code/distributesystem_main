@@ -230,7 +230,7 @@ namespace DistributedSystem_Main.Views
             this.NUM_OOS.Location = new System.Drawing.Point(114, 100);
             this.NUM_OOS.Margin = new System.Windows.Forms.Padding(4);
             this.NUM_OOS.Maximum = new decimal(new int[] {
-            999999,
+            9999999,
             0,
             0,
             0});
@@ -261,7 +261,7 @@ namespace DistributedSystem_Main.Views
             this.NUM_OOC.Location = new System.Drawing.Point(114, 67);
             this.NUM_OOC.Margin = new System.Windows.Forms.Padding(4);
             this.NUM_OOC.Maximum = new decimal(new int[] {
-            999999,
+            9999999,
             0,
             0,
             0});

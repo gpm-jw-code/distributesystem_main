@@ -139,11 +139,13 @@ namespace DistributedSystem_Main.Views
             {
                 return;
             }
+            bool IsAllReplace = MessageBox.Show("是否覆蓋原有設定，若存在的話?", "Replace Setting", MessageBoxButtons.YesNo) == DialogResult.Yes;
+
             BTN_AutoSetThreshold.Text = "自動設定中...";
             BTN_SaveToFile.Enabled = BTN_AutoSetThreshold.Enabled = NUM_OOC.Enabled = NUM_OOS.Enabled = false;
             Task.Run(() =>
             {
-                Dict_Threshold = Systems.Staobj.Dict_SensorProcessObject[SensorName].CreateThresholdByTemData();
+                Dict_Threshold = Systems.Staobj.Dict_SensorProcessObject[SensorName].CreateThresholdByTemData(IsAllReplace);
                 this.Invoke((MethodInvoker)delegate
                 {
                     Combo_DataName_SelectedIndexChanged(null, null);
@@ -160,6 +162,7 @@ namespace DistributedSystem_Main.Views
             {
                 return;
             }
+            bool IsAllReplace = MessageBox.Show("是否覆蓋原有設定，若存在的話?", "Replace Setting", MessageBoxButtons.YesNo) == DialogResult.Yes;
             BTN_AutoSetAllSensorThreshold.Text = "自動設定中...";
             BTN_AutoSetAllSensorThreshold.Enabled = false;
             Panel_ThresholdSetting.Enabled = false;
@@ -170,7 +173,7 @@ namespace DistributedSystem_Main.Views
             {
                 foreach (var item in Systems.Staobj.Dict_SensorProcessObject)
                 {
-                    var Dict_Threshold = item.Value.CreateThresholdByTemData();
+                    var Dict_Threshold = item.Value.CreateThresholdByTemData(IsAllReplace);
                     foreach (var DataThreshold in Dict_Threshold)
                     {
                         Systems.Staobj.Dict_SensorProcessObject[item.Key].Dict_DataThreshold[DataThreshold.Key] = Convert.ToDouble(DataThreshold.Value);

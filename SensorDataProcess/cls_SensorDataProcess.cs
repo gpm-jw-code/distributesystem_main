@@ -301,7 +301,7 @@ namespace SensorDataProcess
             return IsUpdateStatus;
         }
 
-        public Dictionary<string, double> CreateThresholdByTemData()
+        public Dictionary<string, double> CreateThresholdByTemData(bool IsReplaceAll )
         {
             while (Queue_TimeLog.Count < 100)
             {
@@ -317,8 +317,27 @@ namespace SensorDataProcess
                 string DataName = item.Key;
                 double DataAverage = item.Value.Average();
                 double DataDeviation = clsMathTool.standardDeviation(item.Value);
-                OutputData.Add($"{DataName}_OOC", DataAverage + 3 * DataDeviation);
-                OutputData.Add($"{DataName}_OOS", DataAverage + 3.5 * DataDeviation);
+                string OOCName = $"{DataName}_OOC";
+                string OOSName = $"{DataName}_OOS";
+
+                if (IsReplaceAll)
+                {
+                    OutputData.Add(OOCName, DataAverage + 3 * DataDeviation);
+                    OutputData.Add(OOSName, DataAverage + 3.5 * DataDeviation);
+                }
+                else
+                {
+                    if (Dict_DataThreshold.ContainsKey(OOCName)&&Dict_DataThreshold[OOCName]!= 999999)
+                        OutputData.Add(OOCName, Dict_DataThreshold[OOCName]);
+                    else
+                        OutputData.Add(OOCName, DataAverage + 3 * DataDeviation);
+
+                    if (Dict_DataThreshold.ContainsKey(OOSName) && Dict_DataThreshold[OOSName] != 999999)
+                        OutputData.Add(OOSName, Dict_DataThreshold[OOSName]);
+                    else
+                        OutputData.Add(OOSName, DataAverage + 3.5 * DataDeviation);
+                }
+               
             }
             return OutputData;
         }
