@@ -29,7 +29,7 @@ namespace DistributedSystem_Main.Systems
         {
             get
             {
-                return System.IO.Path.Combine("Parameters", "GroupParameters.json");
+                return System.IO.Path.Combine(Staobj.SystemParam.ParmSaveFolderName, "GroupParameters.json");
             }
         }
 

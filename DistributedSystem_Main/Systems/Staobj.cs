@@ -54,7 +54,7 @@ namespace DistributedSystem_Main.Systems
             {
                 public static bool Enable = true;
                 public static string WebsocketIP = "0.0.0.0";
-                public static int WebsocketPort = 8080;
+                public static int WebsocketPort = 8090;
             }
 
             public struct PostgreSQL
