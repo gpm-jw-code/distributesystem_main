@@ -101,4 +101,12 @@ namespace DistributedSystem_Main.WebService
         public bool isOutofSpec { get; set; }
         public bool isOutofControl { get; set; }
     }
+
+    public class QueryResult
+    {
+        public string GroupName { get; set; }
+        public string RowName { get; set; }
+        public string SensorType { get; set; }
+        public cls_QueryReturn QueryData { get; set; }
+    }
 }
