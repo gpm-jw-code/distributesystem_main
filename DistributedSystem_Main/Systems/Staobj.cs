@@ -35,12 +35,12 @@ namespace DistributedSystem_Main.Systems
         {
             public static string DataSaveRootPath = "";
             public static bool ISOEnable = true;
-
+            public static string ParmSaveFolderName = "Parameters";
             public static string SystemIniFilePath
             {
                 get
                 {
-                    return System.IO.Path.Combine("Parameters", "SystemParameters.ini");
+                    return System.IO.Path.Combine(ParmSaveFolderName, "SystemParameters.ini");
                 }
             }
 
@@ -72,7 +72,10 @@ namespace DistributedSystem_Main.Systems
                 public static int RowNumber = 2;
                 public static int ColumnNumber = 2;
             }
-
+            internal static void ParamsSaveFolderCheck()
+            {
+                Directory.CreateDirectory(ParmSaveFolderName);
+            }
             public static void LoadSystemParam()
             {
                 Ini.IniFile SystemIniFile = new Ini.IniFile(SystemIniFilePath);
@@ -110,21 +113,21 @@ namespace DistributedSystem_Main.Systems
                 ISOEnable = Convert.ToBoolean(SystemIniFile.IniReadAndWriteValue(SectionName, "ISO", false.ToString()));
             }
 
-            public static  void SaveMqttParam()
+            public static void SaveMqttParam()
             {
                 string SectionName = "MqttSetting";
                 Ini.IniFile SystemIniFile = new Ini.IniFile(SystemIniFilePath);
-                 SystemIniFile.IniWriteValue(SectionName, "ServerIP", Mqtt.MqttServerIP);
-                 SystemIniFile.IniWriteValue(SectionName, "ServerPort", Mqtt.MqttServerPort.ToString());
+                SystemIniFile.IniWriteValue(SectionName, "ServerIP", Mqtt.MqttServerIP);
+                SystemIniFile.IniWriteValue(SectionName, "ServerPort", Mqtt.MqttServerPort.ToString());
             }
 
-            public static  void SaveChartSetting()
+            public static void SaveChartSetting()
             {
                 Ini.IniFile SystemIniFile = new Ini.IniFile(SystemIniFilePath);
 
                 string SectionName = "ChartSetting";
-                 SystemIniFile.IniWriteValue(SectionName, "RowNumber", ChartSetting.RowNumber.ToString());
-                 SystemIniFile.IniWriteValue(SectionName, "ColumnNumber", ChartSetting.ColumnNumber.ToString());
+                SystemIniFile.IniWriteValue(SectionName, "RowNumber", ChartSetting.RowNumber.ToString());
+                SystemIniFile.IniWriteValue(SectionName, "ColumnNumber", ChartSetting.ColumnNumber.ToString());
             }
 
             public static void SaveFuncionSetting()
@@ -159,6 +162,7 @@ namespace DistributedSystem_Main.Systems
                 }
                 return false;
             }
+
 
         }
 
@@ -230,7 +234,7 @@ namespace DistributedSystem_Main.Systems
             public static SensorInfo LoadSensorInfoFromFile(cls_SensorInfo_Mqtt ReceiveInfo, string EdgeName)
             {
                 string SensorInfoFileName = System.IO.Path.Combine(SensorDataRootPath(ReceiveInfo.SensorName), "SensorInfo.json");
-                SensorInfo OutputData = new SensorInfo() { SensorName = ReceiveInfo.SensorName, IP = ReceiveInfo.IP, Port = ReceiveInfo.Port, SensorType = ReceiveInfo.SensorType, EdgeName = EdgeName, DataUnit = ReceiveInfo.DataUnit,IsOnlySaveData = ReceiveInfo.IsOnlySaveData };
+                SensorInfo OutputData = new SensorInfo() { SensorName = ReceiveInfo.SensorName, IP = ReceiveInfo.IP, Port = ReceiveInfo.Port, SensorType = ReceiveInfo.SensorType, EdgeName = EdgeName, DataUnit = ReceiveInfo.DataUnit, IsOnlySaveData = ReceiveInfo.IsOnlySaveData };
 
                 if (System.IO.File.Exists(SensorInfoFileName))
                 {
@@ -287,7 +291,7 @@ namespace DistributedSystem_Main.Systems
                 }
             }
 
-            public static ISObase LoadISOParameters(string SensorName,Enum_ISOInspectionNumber ISONumber)
+            public static ISObase LoadISOParameters(string SensorName, Enum_ISOInspectionNumber ISONumber)
             {
                 ISObase ISOCheckObject = null;
                 string Filepath = Path.Combine(SensorDataRootPath(SensorName), "ISOParameters.json");
@@ -324,7 +328,7 @@ namespace DistributedSystem_Main.Systems
                     return ISOCheckObject;
                 }
             }
-            public static void SaveISOParameters(string SensorName,ISObase ISOData)
+            public static void SaveISOParameters(string SensorName, ISObase ISOData)
             {
                 string Filepath = Path.Combine(SensorDataRootPath(SensorName), "ISOParameters.json");
                 using (FileStream FS = new FileStream(Filepath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.Read))

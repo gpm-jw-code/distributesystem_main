@@ -23,6 +23,7 @@ namespace DistributedSystem_Main
             {
                 InitializeComponent();
                 Staobj.Forms.Form_Main = this;
+                Staobj.SystemParam.ParamsSaveFolderCheck();
                 Staobj.SystemParam.LoadSystemParam();
                 Systems.cls_SignalsChartManager.InitialManager(TablePanel_SignalChart, PageSwitch_Signals);
                 Systems.cls_SignalsChartManager.SetChartRowColumnNumber(Staobj.SystemParam.ChartSetting.RowNumber, Staobj.SystemParam.ChartSetting.ColumnNumber);
@@ -248,12 +249,12 @@ namespace DistributedSystem_Main
             TargetSensorProcessObject.Event_UpdateChartSeries += UpdateSensorChart;
             TargetSensorProcessObject.Event_RefreshSensorInfo += UpdateSensorInfo;
             TargetSensorProcessObject.Event_RefreshSensorThreshold += UpdateSensorThreshold;
-            TargetSensorProcessObject.Event_UpdateSensorCheckStates += UpdateSensorCheckStates; 
+            TargetSensorProcessObject.Event_UpdateSensorCheckStates += UpdateSensorCheckStates;
 
             AddNewSensor_ISO(SensorName);
         }
 
-        private void UpdateMainTable(string SensorName, Dictionary<string, double> Dict_LastData,Dictionary<string,SensorDataProcess.OutOfState> Dict_OutStatus)
+        private void UpdateMainTable(string SensorName, Dictionary<string, double> Dict_LastData, Dictionary<string, SensorDataProcess.OutOfState> Dict_OutStatus)
         {
             Dictionary<string, Color> Dict_NewBackColor = new Dictionary<string, Color>();
             foreach (var item in Dict_OutStatus)
@@ -270,7 +271,7 @@ namespace DistributedSystem_Main
                 }
                 Dict_NewBackColor.Add(item.Key, default);
             }
-            Invoke((MethodInvoker)delegate { Systems.cls_HomePageManager.UpdateSensorData(SensorName, Dict_LastData,Dict_NewBackColor); });
+            Invoke((MethodInvoker)delegate { Systems.cls_HomePageManager.UpdateSensorData(SensorName, Dict_LastData, Dict_NewBackColor); });
         }
 
         private void UpdateSensorCheckStates(string SensorName)
