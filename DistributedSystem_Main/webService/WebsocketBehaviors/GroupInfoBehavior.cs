@@ -14,10 +14,21 @@ namespace DistributedSystem_Main.WebService.WebsocketBehaviors
         protected override void OnOpen()
         {
             base.OnOpen();
-            //var action = Context.QueryString[0];
-            //var edgeName = Context.QueryString[1];
-            Send(JsonConvert.SerializeObject(Systems.cls_HomePageManager.Dict_GroupObject));
-            Systems.cls_HomePageManager.Event_GroupSettingChange = SendGroupSetting;
+
+            if (Context.QueryString.Count != 0)
+            {
+                var action = Context.QueryString[0];
+                if (action.ToUpper() == "GET_GROUP_LIST")
+                {
+                    Send(JsonConvert.SerializeObject(cls_HomePageManager.Dict_GroupObject.Keys));
+                }
+
+            }
+            else
+            {
+                Send(JsonConvert.SerializeObject(Systems.cls_HomePageManager.Dict_GroupObject));
+                Systems.cls_HomePageManager.Event_GroupSettingChange = SendGroupSetting;
+            }
         }
 
         private void SendGroupSetting(Dictionary<string, cls_HomePageManager.cls_GroupObject> obj)
