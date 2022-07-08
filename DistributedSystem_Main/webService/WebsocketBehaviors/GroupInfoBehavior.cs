@@ -33,7 +33,13 @@ namespace DistributedSystem_Main.WebService.WebsocketBehaviors
 
         private void SendGroupSetting(Dictionary<string, cls_HomePageManager.cls_GroupObject> obj)
         {
-            Send(JsonConvert.SerializeObject(obj));
+            try
+            {
+                Send(JsonConvert.SerializeObject(obj));
+            }
+            catch (Exception ex)
+            {
+            }
         }
     }
 }
